@@ -1,7 +1,7 @@
 // Caper.cpp : Defines the entry point for the console application.
 //
 
-#include "caper.h";
+#include "Caper.h"
 
 class Caper;
 

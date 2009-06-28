@@ -53,8 +53,8 @@ private:
   void SafeSeek( long aTargetSeek );
   
   void RebuildCaches( int aLeft );
-  MappingCache* MapviewMappingEngine::RebuildCache( int lStartingIndex );
-  MappingCache* MapviewMappingEngine::GetCorrectCache( int aLeft, int aRight );
+  MappingCache* RebuildCache( int lStartingIndex );
+  MappingCache* GetCorrectCache( int aLeft, int aRight );
 public:
   static int GetNormalizedIndex( string aValue );
   static int GetNormalizedIndex( int aValue );

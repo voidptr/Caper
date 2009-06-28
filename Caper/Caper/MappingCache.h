@@ -29,5 +29,5 @@ public:
 
 private:
   	bool Initialize( char * aBuffer );
-    int MappingCache::PrivateIndex( int aPublicIndex );
+    int PrivateIndex( int aPublicIndex );
 };

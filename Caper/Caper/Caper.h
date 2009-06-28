@@ -13,5 +13,5 @@ public:
   static void UserInterface(int argc, char * const argv[] );
   static bool IsValid( string lInput );
   static void GetParameters( string aLine, string* aBits );
-  static string Caper::PadLeft( int aCount );
+  static string PadLeft( int aCount );
 };
