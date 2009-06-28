@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Caper", "Caper\Caper.vcproj", "{F75A21A2-E0A5-4DDE-86D0-8E6D646D844F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Caper", "..\Caper\Caper.vcproj", "{F75A21A2-E0A5-4DDE-86D0-8E6D646D844F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaperSharp", "CaperSharp\CaperSharp.csproj", "{695A4957-2784-405A-86F0-7E64DC133BD9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaperSharp", "..\CaperSharp\CaperSharp.csproj", "{695A4957-2784-405A-86F0-7E64DC133BD9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
