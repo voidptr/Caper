@@ -1,3 +1,0 @@
-@Stop.TerminateProcess = SetString False
-@Stop.ExitProcess = SetString False
-@Stop.Detach = SetString True
