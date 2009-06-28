@@ -1,0 +1,19 @@
+@Ending.If_target's_File_->_Exit_is_selected.ExitOptions = SetString 0
+@Running.FastBuffer.Collect_profile_data = SetString True
+@Running.Function_calls.ThresholdTime = SetString 0
+@Running.Function_calls.ThresholdTime.Items = StringCollection.Create
+StringCollection.Add @Running.Function_calls.ThresholdTime.Items <none>
+StringCollection.Add @Running.Function_calls.ThresholdTime.Items 0.1
+StringCollection.Add @Running.Function_calls.ThresholdTime.Items 0.5
+StringCollection.Add @Running.Function_calls.ThresholdTime.Items 1.0
+StringCollection.Add @Running.Function_calls.ThresholdTime.Items 5.0
+StringCollection.Add @Running.Function_calls.ThresholdTime.Items 10.
+StringCollection.Add @Running.Function_calls.ThresholdTime.Items 50.
+StringCollection.Add @Running.Function_calls.ThresholdTime.Items 100
+StringCollection.Add @Running.Function_calls.ThresholdTime.Items 500
+StringCollection.Add @Running.Function_calls.ThresholdTime.Items 1000
+StringCollection.Add @Running.Function_calls.ThresholdTime.Items 5000
+@Running.Function_calls.TriggerFunction = SetString 0
+@Running.Function_calls.TriggerFunction.Items = StringCollection.Create
+StringCollection.Add @Running.Function_calls.TriggerFunction.Items <always>
+StringCollection.Add @Running.Function_calls.TriggerFunction.Items <never>

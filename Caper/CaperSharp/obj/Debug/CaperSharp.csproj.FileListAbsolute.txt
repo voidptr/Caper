@@ -1,0 +1,10 @@
+D:\Users\a27cmgt\My Documents\Fuzzball\CaperSharp\obj\Debug\ResolveAssemblyReference.cache
+D:\Users\a27cmgt\My Documents\Fuzzball\CaperSharp\bin\Debug\CaperSharp.exe
+D:\Users\a27cmgt\My Documents\Fuzzball\CaperSharp\bin\Debug\CaperSharp.pdb
+D:\Users\a27cmgt\My Documents\Fuzzball\CaperSharp\obj\Debug\CaperSharp.exe
+D:\Users\a27cmgt\My Documents\Fuzzball\CaperSharp\obj\Debug\CaperSharp.pdb
+C:\Documents and Settings\James T. Kirk\My Documents\Visual Studio 2008\Projects\Caper\CaperSharp\obj\Debug\CaperSharp.exe
+C:\Documents and Settings\James T. Kirk\My Documents\Visual Studio 2008\Projects\Caper\CaperSharp\obj\Debug\CaperSharp.pdb
+C:\Documents and Settings\James T. Kirk\My Documents\Visual Studio 2008\Projects\Caper\CaperSharp\bin\Debug\CaperSharp.exe
+C:\Documents and Settings\James T. Kirk\My Documents\Visual Studio 2008\Projects\Caper\CaperSharp\bin\Debug\CaperSharp.pdb
+C:\Documents and Settings\James T. Kirk\My Documents\Visual Studio 2008\Projects\Caper\CaperSharp\obj\Debug\ResolveAssemblyReference.cache

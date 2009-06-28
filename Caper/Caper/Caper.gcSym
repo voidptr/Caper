@@ -1,0 +1,485 @@
+#GlowCode symbol file v1.1
+#Module, C:\Documents and Settings\James T. Kirk\My Documents\Visual Studio 2008\Projects\Caper\Debug\Caper.exe
+#ModuleTime, 06/28/2009 02:43:26 UTC
+#CommandLine, "C:\Program Files\GlowCode 7.0\gcSym.exe" /module:"C:\Documents and Settings\James T. Kirk\My Documents\Visual Studio 2008\Projects\Caper\Debug\Caper.exe" /out:"Caper.gcSym" /search:""
+NativeModuleTable.Open, C:\Documents and Settings\James T. Kirk\My Documents\Visual Studio 2008\Projects\Caper\Debug\Caper.exe
+#SymCallbackProc: CBA_DEFERRED_SYMBOL_LOAD_START C:\Documents and Settings\James T. Kirk\My Documents\Visual Studio 2008\Projects\Caper\Debug\Caper.exe
+#SymCallbackProc: CBA_DEFERRED_SYMBOL_LOAD_PARTIAL C:\Documents and Settings\James T. Kirk\My Documents\Visual Studio 2008\Projects\Caper\Debug\Caper.exe
+#SymCallbackProc: CBA_EVENT DBGHELP: No header for C:\Documents and Settings\James T. Kirk\My Documents\Visual Studio 2008\Projects\Caper\Debug\Caper.exe.  Searching for image on disk 
+#SymCallbackProc: CBA_EVENT DBGHELP: C:\Documents and Settings\James T. Kirk\My Documents\Visual Studio 2008\Projects\Caper\Debug\Caper.exe - OK 
+#SymCallbackProc: CBA_DEFERRED_SYMBOL_LOAD_COMPLETE C:\Documents and Settings\James T. Kirk\My Documents\Visual Studio 2008\Projects\Caper\Debug\Caper.exe
+#SymCallbackProc: CBA_EVENT DBGHELP: Caper - private symbols & lines           C:\Documents and Settings\James T. Kirk\My Documents\Visual Studio 2008\Projects\Caper\Debug\Caper.pdb 
+#SymGetModuleInfo64 pdb:C:\Documents and Settings\James T. Kirk\My Documents\Visual Studio 2008\Projects\Caper\Debug\Caper.pdb, C:\Documents and Settings\James T. Kirk\My Documents\Visual Studio 2008\Projects\Caper\Debug\Caper.exe, C:\Documents and Settings\James T. Kirk\My Documents\Visual Studio 2008\Projects\Caper\Debug\Caper.exe, Caper, NumSyms:0
+#EnumPdbUsingDIA
+#SrcFile, hook=true, 0, c:\documents and settings\james t. kirk\my documents\visual studio 2008\projects\caper\caper\sequencereader.cpp
+NativeModuleTable.SetSrcFile, c:\documents and settings\james t. kirk\my documents\visual studio 2008\projects\caper\caper\sequencereader.cpp
+NativeModuleTable.AddFunc, true, 0, 173, 0x0001AA80, 0x5, SequenceReader::SequenceReader, 4
+NativeModuleTable.AddFunc, true, 0, 945, 0x0001AB60, 0x5, SequenceReader::Read, 9
+NativeModuleTable.AddFunc, true, 0, 73, 0x0001B000, 0x5, SequenceReader::~SequenceReader, 38
+#SrcFile, hook=true, 0, c:\documents and settings\james t. kirk\my documents\visual studio 2008\projects\caper\caper\sequence.cpp
+NativeModuleTable.SetSrcFile, c:\documents and settings\james t. kirk\my documents\visual studio 2008\projects\caper\caper\sequence.cpp
+NativeModuleTable.AddFunc, true, 0, 259, 0x0001A850, 0x5, Sequence::Sequence, 4
+NativeModuleTable.AddFunc, true, 0, 88, 0x0001A9A0, 0x5, Sequence::`scalar deleting destructor', 0
+NativeModuleTable.AddFunc, true, 0, 85, 0x0001AA10, 0x5, Sequence::~Sequence, 9
+#SrcFile, hook=true, 0, c:\documents and settings\james t. kirk\my documents\visual studio 2008\projects\caper\caper\mapviewmappingengine.cpp
+NativeModuleTable.SetSrcFile, c:\documents and settings\james t. kirk\my documents\visual studio 2008\projects\caper\caper\mapviewmappingengine.cpp
+NativeModuleTable.AddFunc, true, 0, 391, 0x00018D60, 0x5, MapviewMappingEngine::MapviewMappingEngine, 4
+NativeModuleTable.AddFunc, true, 0, 211, 0x00018F50, 0x5, MapviewMappingEngine::Initialize, 20
+NativeModuleTable.AddFunc, true, 0, 1756, 0x00019060, 0x5, MapviewMappingEngine::FindNextIndexStart, 44
+NativeModuleTable.AddFunc, true, 0, 171, 0x00019900, 0x5, MapviewMappingEngine::SafeSeek, 124
+NativeModuleTable.AddFunc, true, 0, 227, 0x000199E0, 0x5, MapviewMappingEngine::GetNormalizedIndex, 134
+NativeModuleTable.AddFunc, true, 0, 43, 0x00019B00, 0x5, MapviewMappingEngine::GetNormalizedIndex, 139
+NativeModuleTable.AddFunc, true, 0, 502, 0x00019B40, 0x5, MapviewMappingEngine::GetIndex, 144
+NativeModuleTable.AddFunc, true, 0, 390, 0x00019DC0, 0x5, MapviewMappingEngine::InitFileInformation, 158
+NativeModuleTable.AddFunc, true, 0, 565, 0x00019FB0, 0x5, MapviewMappingEngine::GetReads, 172
+NativeModuleTable.AddFunc, true, 0, 252, 0x0001A280, 0x5, MapviewMappingEngine::RebuildCaches, 201
+NativeModuleTable.AddFunc, true, 0, 88, 0x0001A3C0, 0x5, MappingCache::`scalar deleting destructor', 0
+NativeModuleTable.AddFunc, true, 0, 177, 0x0001A430, 0x5, MapviewMappingEngine::GetCorrectCache, 214
+NativeModuleTable.AddFunc, true, 0, 372, 0x0001A510, 0x5, MapviewMappingEngine::RebuildCache, 227
+NativeModuleTable.AddFunc, true, 0, 205, 0x0001A700, 0x5, MapviewMappingEngine::~MapviewMappingEngine, 254
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\iosfwd
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\iosfwd
+NativeModuleTable.AddFunc, true, 0, 53, 0x0001A800, 0x5, std::fpos<int>::operator long, 78
+#SrcFile, hook=true, 0, c:\documents and settings\james t. kirk\my documents\visual studio 2008\projects\caper\caper\mappingcache.cpp
+NativeModuleTable.SetSrcFile, c:\documents and settings\james t. kirk\my documents\visual studio 2008\projects\caper\caper\mappingcache.cpp
+NativeModuleTable.AddFunc, true, 0, 317, 0x00013E10, 0x5, MappingCache::MappingCache, 4
+NativeModuleTable.AddFunc, true, 0, 150, 0x00013FA0, 0x5, std::vector<Mapping *,std::allocator<Mapping *> >::`vector deleting destructor', 0
+NativeModuleTable.AddFunc, true, 0, 1453, 0x00014060, 0x5, MappingCache::Initialize, 14
+NativeModuleTable.AddFunc, true, 0, 352, 0x00014780, 0x5, MappingCache::GetReads, 50
+NativeModuleTable.AddFunc, true, 0, 54, 0x00014940, 0x5, MappingCache::PrivateIndex, 66
+NativeModuleTable.AddFunc, true, 0, 119, 0x00014990, 0x5, MappingCache::~MappingCache, 71
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\xstring
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\xstring
+NativeModuleTable.AddFunc, true, 0, 55, 0x00014A30, 0x5, std::basic_string<char,std::char_traits<char>,std::allocator<char> >::_Has_debug_it::_Has_debug_it, 555
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\vector
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\vector
+NativeModuleTable.AddFunc, true, 0, 146, 0x00014A80, 0x5, std::vector<Mapping *,std::allocator<Mapping *> >::vector<Mapping *,std::allocator<Mapping *> >, 470
+NativeModuleTable.AddFunc, true, 0, 325, 0x00014B40, 0x5, std::vector<Mapping *,std::allocator<Mapping *> >::vector<Mapping *,std::allocator<Mapping *> >, 500
+NativeModuleTable.AddFunc, true, 0, 70, 0x00014CE0, 0x5, std::vector<Mapping *,std::allocator<Mapping *> >::empty, 735
+NativeModuleTable.AddFunc, true, 0, 295, 0x00014D40, 0x5, std::vector<Mapping *,std::allocator<Mapping *> >::push_back, 809
+NativeModuleTable.AddFunc, true, 0, 63, 0x00014EB0, 0x5, std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> >::~_Vector_const_iterator<Mapping *,std::allocator<Mapping *> >, 0
+NativeModuleTable.AddFunc, true, 0, 63, 0x00014F00, 0x5, std::_Vector_iterator<Mapping *,std::allocator<Mapping *> >::~_Vector_iterator<Mapping *,std::allocator<Mapping *> >, 0
+NativeModuleTable.AddFunc, true, 0, 84, 0x00014F50, 0x5, std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> >::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> >, 0
+NativeModuleTable.AddFunc, true, 0, 63, 0x00014FC0, 0x5, std::_Ranit<Mapping *,int,Mapping * const *,Mapping * const &>::~_Ranit<Mapping *,int,Mapping * const *,Mapping * const &>, 0
+NativeModuleTable.AddFunc, true, 0, 72, 0x00015010, 0x5, std::_Ranit<Mapping *,int,Mapping * const *,Mapping * const &>::_Ranit<Mapping *,int,Mapping * const *,Mapping * const &>, 0
+NativeModuleTable.AddFunc, true, 0, 63, 0x00015070, 0x5, std::_Iterator_with_base<std::random_access_iterator_tag,Mapping *,int,Mapping * const *,Mapping * const &,std::_Iterator_base>::~_Iterator_with_base<std::random_access_iterator_tag,Mapping *,int,Mapping * const *,Mapping * const &,std::_Iterator_base>, 0
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\xutility
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\xutility
+NativeModuleTable.AddFunc, true, 0, 202, 0x000150C0, 0x5, std::_Iterator_base::~_Iterator_base, 159
+NativeModuleTable.AddFunc, true, 0, 173, 0x000151C0, 0x5, std::_Iterator_base::_Orphan_me, 180
+NativeModuleTable.AddFunc, true, 0, 72, 0x000152A0, 0x5, std::_Iterator_with_base<std::random_access_iterator_tag,Mapping *,int,Mapping * const *,Mapping * const &,std::_Iterator_base>::_Iterator_with_base<std::random_access_iterator_tag,Mapping *,int,Mapping * const *,Mapping * const &,std::_Iterator_base>, 0
+NativeModuleTable.AddFunc, true, 0, 91, 0x00015300, 0x5, std::_Iterator_base::_Iterator_base, 143
+NativeModuleTable.AddFunc, true, 0, 234, 0x00015380, 0x5, std::_Iterator_base::operator=, 148
+NativeModuleTable.AddFunc, true, 0, 254, 0x000154B0, 0x5, std::_Iterator_base::_Adopt, 165
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\vector
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\vector
+NativeModuleTable.AddFunc, true, 0, 90, 0x000155F0, 0x5, std::vector<Mapping *,std::allocator<Mapping *> >::capacity, 634
+NativeModuleTable.AddFunc, true, 0, 104, 0x00015660, 0x5, std::vector<Mapping *,std::allocator<Mapping *> >::begin, 645
+NativeModuleTable.AddFunc, true, 0, 104, 0x000156F0, 0x5, std::vector<Mapping *,std::allocator<Mapping *> >::end, 650
+NativeModuleTable.AddFunc, true, 0, 104, 0x00015780, 0x5, std::vector<Mapping *,std::allocator<Mapping *> >::end, 655
+NativeModuleTable.AddFunc, true, 0, 399, 0x00015810, 0x5, std::vector<Mapping *,std::allocator<Mapping *> >::insert, 875
+NativeModuleTable.AddFunc, true, 0, 172, 0x00015A10, 0x5, std::vector<Mapping *,std::allocator<Mapping *> >::_Buy, 1107
+NativeModuleTable.AddFunc, true, 0, 93, 0x00015AF0, 0x5, std::vector<Mapping *,std::allocator<Mapping *> >::_Ufill, 1251
+NativeModuleTable.AddFunc, true, 0, 218, 0x00015B70, 0x5, std::vector<Mapping *,std::allocator<Mapping *> >::_Orphan_range, 1273
+NativeModuleTable.AddFunc, true, 0, 101, 0x00015C80, 0x5, std::_Vector_val<Mapping *,std::allocator<Mapping *> >::_Vector_val<Mapping *,std::allocator<Mapping *> >, 425
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\xmemory
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\xmemory
+NativeModuleTable.AddFunc, true, 0, 45, 0x00015D00, 0x5, std::allocator<Mapping *>::allocator<Mapping *>, 119
+NativeModuleTable.AddFunc, true, 0, 47, 0x00015D40, 0x5, std::allocator<Mapping *>::allocator<Mapping *>, 123
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\vector
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\vector
+NativeModuleTable.AddFunc, true, 0, 104, 0x00015D80, 0x5, std::vector<Mapping *,std::allocator<Mapping *> >::begin, 640
+NativeModuleTable.AddFunc, true, 0, 66, 0x00015E10, 0x5, std::vector<Mapping *,std::allocator<Mapping *> >::max_size, 730
+NativeModuleTable.AddFunc, true, 0, 1098, 0x00015E70, 0x5, std::vector<Mapping *,std::allocator<Mapping *> >::_Insert_n, 1158
+NativeModuleTable.AddFunc, true, 0, 188, 0x000163D0, 0x5, std::vector<Mapping *,std::allocator<Mapping *> >::_Xlen, 1257
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\stdexcept
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\stdexcept
+NativeModuleTable.AddFunc, true, 0, 81, 0x000164C0, 0x5, std::length_error::length_error, 105
+NativeModuleTable.AddFunc, true, 0, 168, 0x00016530, 0x5, std::logic_error::logic_error, 26
+NativeModuleTable.AddFunc, true, 0, 76, 0x00016610, 0x5, std::logic_error::what, 34
+NativeModuleTable.AddFunc, true, 0, 88, 0x00016670, 0x5, std::logic_error::`vector deleting destructor', 0
+NativeModuleTable.AddFunc, true, 0, 103, 0x000166E0, 0x5, std::logic_error::~logic_error, 30
+NativeModuleTable.AddFunc, true, 0, 72, 0x00016760, 0x5, std::length_error::~length_error, 109
+NativeModuleTable.AddFunc, true, 0, 88, 0x000167C0, 0x5, std::length_error::`vector deleting destructor', 0
+NativeModuleTable.AddFunc, true, 0, 175, 0x00016830, 0x5, std::logic_error::logic_error, 0
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\xutility
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\xutility
+NativeModuleTable.AddFunc, true, 0, 78, 0x00016910, 0x5, std::_Container_base_aux_alloc_empty<std::allocator<Mapping *> >::_Container_base_aux_alloc_empty<std::allocator<Mapping *> >, 618
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\xmemory
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\xmemory
+NativeModuleTable.AddFunc, true, 0, 71, 0x00016980, 0x5, std::allocator<Mapping *>::allocate, 144
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\vector
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\vector
+NativeModuleTable.AddFunc, true, 0, 254, 0x000169E0, 0x5, std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> >::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> >, 68
+NativeModuleTable.AddFunc, true, 0, 84, 0x00016B20, 0x5, std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> >::operator-, 186
+NativeModuleTable.AddFunc, true, 0, 76, 0x00016B90, 0x5, std::_Vector_iterator<Mapping *,std::allocator<Mapping *> >::_Vector_iterator<Mapping *,std::allocator<Mapping *> >, 321
+NativeModuleTable.AddFunc, true, 0, 221, 0x00016BF0, 0x5, std::_Vector_iterator<Mapping *,std::allocator<Mapping *> >::operator+, 380
+NativeModuleTable.AddFunc, true, 0, 81, 0x00016D10, 0x5, std::length_error::length_error, 0
+NativeModuleTable.AddFunc, true, 0, 66, 0x00016D80, 0x5, std::_Ranit<Mapping *,int,Mapping * const *,Mapping * const &>::_Ranit<Mapping *,int,Mapping * const *,Mapping * const &>, 0
+NativeModuleTable.AddFunc, true, 0, 72, 0x00016DE0, 0x5, std::_Vector_iterator<Mapping *,std::allocator<Mapping *> >::_Vector_iterator<Mapping *,std::allocator<Mapping *> >, 0
+NativeModuleTable.AddFunc, true, 0, 66, 0x00016E40, 0x5, std::_Iterator_with_base<std::random_access_iterator_tag,Mapping *,int,Mapping * const *,Mapping * const &,std::_Iterator_base>::_Iterator_with_base<std::random_access_iterator_tag,Mapping *,int,Mapping * const *,Mapping * const &,std::_Iterator_base>, 0
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\xutility
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\xutility
+NativeModuleTable.AddFunc, true, 0, 64, 0x00016EA0, 0x5, std::_Iterator_base::_Iterator_base, 138
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\xmemory
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\xmemory
+NativeModuleTable.AddFunc, true, 0, 82, 0x00016EF0, 0x5, std::allocator<Mapping *>::max_size, 164
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\vector
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\vector
+NativeModuleTable.AddFunc, true, 0, 197, 0x00016F60, 0x5, std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> >::_Compat, 248
+NativeModuleTable.AddFunc, true, 0, 72, 0x00017060, 0x5, std::_Vector_iterator<Mapping *,std::allocator<Mapping *> >::operator+=, 374
+NativeModuleTable.AddFunc, true, 0, 317, 0x000170C0, 0x5, std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> >::operator+=, 159
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\xutility
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\xutility
+NativeModuleTable.AddFunc, true, 0, 47, 0x00017250, 0x5, std::_Iterator_base::_Getmycont, 196
+NativeModuleTable.AddFunc, true, 0, 55, 0x00017290, 0x5, std::_Iterator_base::_Has_container, 206
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\vector
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\vector
+NativeModuleTable.AddFunc, true, 0, 248, 0x000172E0, 0x5, std::vector<Mapping *,std::allocator<Mapping *> >::_Ucopy<std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> > >, 1143
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\memory
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\memory
+NativeModuleTable.AddFunc, true, 0, 120, 0x00017420, 0x5, stdext::unchecked_uninitialized_fill_n<Mapping * *,unsigned int,Mapping *,std::allocator<Mapping *> >, 920
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\vector
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\vector
+NativeModuleTable.AddFunc, true, 0, 84, 0x000174C0, 0x5, std::vector<Mapping *,std::allocator<Mapping *> >::_Umove<Mapping * *>, 1150
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\xutility
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\xutility
+NativeModuleTable.AddFunc, true, 0, 88, 0x00017530, 0x5, std::fill<Mapping * *,Mapping *>, 3160
+NativeModuleTable.AddFunc, true, 0, 157, 0x000175A0, 0x5, stdext::_Unchecked_move_backward<Mapping * *,Mapping * *>, 3668
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\xmemory
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\xmemory
+NativeModuleTable.AddFunc, true, 0, 123, 0x00017670, 0x5, std::_Allocate<Mapping *>, 36
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\exception
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\exception
+NativeModuleTable.AddFunc, true, 0, 91, 0x00017710, 0x5, std::bad_alloc::bad_alloc, 371
+NativeModuleTable.AddFunc, true, 0, 82, 0x00017790, 0x5, std::bad_alloc::~bad_alloc, 380
+NativeModuleTable.AddFunc, true, 0, 88, 0x00017800, 0x5, std::bad_alloc::`vector deleting destructor', 0
+NativeModuleTable.AddFunc, true, 0, 91, 0x00017870, 0x5, std::bad_alloc::bad_alloc, 0
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\memory
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\memory
+NativeModuleTable.AddFunc, true, 0, 292, 0x000178F0, 0x5, stdext::unchecked_uninitialized_copy<std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> >,Mapping * *,std::allocator<Mapping *> >, 809
+NativeModuleTable.AddFunc, true, 0, 70, 0x00017A60, 0x5, std::_Uninit_fill_n<Mapping * *,unsigned int,Mapping *,std::allocator<Mapping *> >, 414
+NativeModuleTable.AddFunc, true, 0, 134, 0x00017AC0, 0x5, stdext::_Unchecked_uninitialized_move<Mapping * *,Mapping * *,std::allocator<Mapping *> >, 849
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\xutility
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\xutility
+NativeModuleTable.AddFunc, true, 0, 114, 0x00017B70, 0x5, std::_Checked_base<Mapping * *>, 1163
+NativeModuleTable.AddFunc, true, 0, 107, 0x00017C00, 0x5, std::_Fill<Mapping * *,Mapping *>, 3130
+NativeModuleTable.AddFunc, true, 0, 85, 0x00017C90, 0x5, std::_Iter_random<Mapping * *,Mapping * *>, 993
+NativeModuleTable.AddFunc, true, 0, 85, 0x00017D00, 0x5, std::_Move_cat<Mapping * *>, 1200
+NativeModuleTable.AddFunc, true, 0, 121, 0x00017D70, 0x5, std::_Move_backward_opt<Mapping * *,Mapping * *,std::random_access_iterator_tag,std::_Undefined_move_tag>, 2726
+NativeModuleTable.AddFunc, true, 0, 146, 0x00017E10, 0x5, std::_Checked_base<std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> > >, 1163
+NativeModuleTable.AddFunc, true, 0, 85, 0x00017ED0, 0x5, std::_Ptr_cat<std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> >,Mapping * *>, 1483
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\memory
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\memory
+NativeModuleTable.AddFunc, true, 0, 331, 0x00017F40, 0x5, std::_Uninit_copy<std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> >,Mapping * *,std::allocator<Mapping *> >, 143
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\xutility
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\xutility
+NativeModuleTable.AddFunc, true, 0, 109, 0x000180E0, 0x5, stdext::unchecked_fill_n<Mapping * *,unsigned int,Mapping *>, 3694
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\memory
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\memory
+NativeModuleTable.AddFunc, true, 0, 74, 0x00018170, 0x5, std::_Uninit_move<Mapping * *,Mapping * *,std::allocator<Mapping *>,std::_Undefined_move_tag>, 204
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\xutility
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\xutility
+NativeModuleTable.AddFunc, true, 0, 42, 0x000181D0, 0x5, std::_Checked_base<Mapping * *>, 1146
+NativeModuleTable.AddFunc, true, 0, 97, 0x00018210, 0x5, std::_Debug_range<Mapping * *>, 1571
+NativeModuleTable.AddFunc, true, 0, 181, 0x00018290, 0x5, std::_Copy_backward_opt<Mapping * *,Mapping * *,std::random_access_iterator_tag>, 2672
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\vector
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\vector
+NativeModuleTable.AddFunc, true, 0, 212, 0x00018380, 0x5, std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> >::operator*, 91
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\xutility
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\xutility
+NativeModuleTable.AddFunc, true, 0, 90, 0x00018490, 0x5, std::_Checked_base<std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> > >, 1146
+NativeModuleTable.AddFunc, true, 0, 237, 0x00018500, 0x5, std::_Debug_range<std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> > >, 1571
+NativeModuleTable.AddFunc, true, 0, 87, 0x00018630, 0x5, std::_Debug_pointer<Mapping *>, 1544
+NativeModuleTable.AddFunc, true, 0, 85, 0x000186A0, 0x5, std::_Iter_cat<Mapping * *>, 952
+NativeModuleTable.AddFunc, true, 0, 107, 0x00018710, 0x5, std::_Fill_n<Mapping * *,unsigned int,Mapping *>, 3224
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\memory
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\memory
+NativeModuleTable.AddFunc, true, 0, 138, 0x000187A0, 0x5, stdext::unchecked_uninitialized_copy<Mapping * *,Mapping * *,std::allocator<Mapping *> >, 809
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\xutility
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\xutility
+NativeModuleTable.AddFunc, true, 0, 137, 0x00018850, 0x5, std::_Debug_range2<Mapping * *>, 1559
+NativeModuleTable.AddFunc, true, 0, 85, 0x00018900, 0x5, std::_Iter_cat<std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> > >, 952
+NativeModuleTable.AddFunc, true, 0, 235, 0x00018970, 0x5, std::_Debug_range2<std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> > >, 1559
+NativeModuleTable.AddFunc, true, 0, 75, 0x00018AA0, 0x5, std::_Fill_n<Mapping * *,unsigned int,Mapping *>, 3170
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\memory
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\memory
+NativeModuleTable.AddFunc, true, 0, 171, 0x00018B00, 0x5, std::_Uninit_copy<Mapping * *,Mapping * *,std::allocator<Mapping *> >, 143
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\vector
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\vector
+NativeModuleTable.AddFunc, true, 0, 79, 0x00018BE0, 0x5, std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> >::operator!=, 215
+NativeModuleTable.AddFunc, true, 0, 85, 0x00018C50, 0x5, std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> >::operator<, 220
+NativeModuleTable.AddFunc, true, 0, 86, 0x00018CC0, 0x5, std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> >::operator==, 203
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\xutility
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\xutility
+NativeModuleTable.AddFunc, true, 0, 37, 0x00018D30, 0x5, std::_Debug_pointer<std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> > >, 1532
+#SrcFile, hook=true, 0, c:\documents and settings\james t. kirk\my documents\visual studio 2008\projects\caper\caper\mapping.cpp
+NativeModuleTable.SetSrcFile, c:\documents and settings\james t. kirk\my documents\visual studio 2008\projects\caper\caper\mapping.cpp
+NativeModuleTable.AddFunc, true, 0, 66, 0x00013D00, 0x5, Mapping::Mapping, 4
+NativeModuleTable.AddFunc, true, 0, 135, 0x00013D60, 0x5, Mapping::~Mapping, 11
+#SrcFile, hook=true, 0, c:\documents and settings\james t. kirk\my documents\visual studio 2008\projects\caper\caper\main.cpp
+NativeModuleTable.SetSrcFile, c:\documents and settings\james t. kirk\my documents\visual studio 2008\projects\caper\caper\main.cpp
+NativeModuleTable.AddFunc, true, 0, 68, 0x00013CA0, 0x5, _main, 9
+#SrcFile, hook=true, 0, c:\documents and settings\james t. kirk\my documents\visual studio 2008\projects\caper\caper\caper.cpp
+NativeModuleTable.SetSrcFile, c:\documents and settings\james t. kirk\my documents\visual studio 2008\projects\caper\caper\caper.cpp
+NativeModuleTable.AddFunc, true, 0, 2062, 0x00011CD0, 0x5, Caper::UserInterface, 6
+NativeModuleTable.AddFunc, true, 0, 303, 0x000126F0, 0x5, Caper::PadLeft, 84
+NativeModuleTable.AddFunc, true, 0, 644, 0x00012870, 0x5, Caper::IsValid, 95
+NativeModuleTable.AddFunc, true, 0, 337, 0x00012BA0, 0x5, Caper::GetParameters, 121
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\vector
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\vector
+NativeModuleTable.AddFunc, true, 0, 127, 0x00012D50, 0x5, std::vector<Mapping *,std::allocator<Mapping *> >::~vector<Mapping *,std::allocator<Mapping *> >, 558
+NativeModuleTable.AddFunc, true, 0, 57, 0x00012DF0, 0x5, std::vector<Mapping *,std::allocator<Mapping *> >::size, 725
+NativeModuleTable.AddFunc, true, 0, 302, 0x00012E40, 0x5, std::vector<Mapping *,std::allocator<Mapping *> >::operator[], 774
+NativeModuleTable.AddFunc, true, 0, 63, 0x00012FC0, 0x5, std::_Vector_val<Mapping *,std::allocator<Mapping *> >::~_Vector_val<Mapping *,std::allocator<Mapping *> >, 0
+NativeModuleTable.AddFunc, true, 0, 168, 0x00013010, 0x5, std::vector<Mapping *,std::allocator<Mapping *> >::_Tidy, 1128
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\xutility
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\xutility
+NativeModuleTable.AddFunc, true, 0, 73, 0x000130F0, 0x5, std::_Container_base_aux_alloc_empty<std::allocator<Mapping *> >::~_Container_base_aux_alloc_empty<std::allocator<Mapping *> >, 627
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\vector
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\vector
+NativeModuleTable.AddFunc, true, 0, 80, 0x00013150, 0x5, std::vector<Mapping *,std::allocator<Mapping *> >::_Destroy, 1123
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\xmemory
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\xmemory
+NativeModuleTable.AddFunc, true, 0, 69, 0x000131C0, 0x5, std::allocator<Mapping *>::deallocate, 139
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\ostream
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\ostream
+NativeModuleTable.AddFunc, true, 0, 1120, 0x00013220, 0x5, std::operator<<<std::char_traits<char> >, 741
+NativeModuleTable.AddFunc, true, 0, 274, 0x000137A0, 0x5, std::basic_ostream<char,std::char_traits<char> >::sentry::sentry, 95
+NativeModuleTable.AddFunc, true, 0, 161, 0x00013900, 0x5, std::basic_ostream<char,std::char_traits<char> >::sentry::~sentry, 102
+NativeModuleTable.AddFunc, true, 0, 48, 0x000139D0, 0x5, std::basic_ostream<char,std::char_traits<char> >::sentry::operator bool, 115
+NativeModuleTable.AddFunc, true, 0, 149, 0x00013A10, 0x5, std::basic_ostream<char,std::char_traits<char> >::_Sentry_base::_Sentry_base, 75
+NativeModuleTable.AddFunc, true, 0, 136, 0x00013AD0, 0x5, std::basic_ostream<char,std::char_traits<char> >::_Sentry_base::~_Sentry_base, 81
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\xmemory
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\xmemory
+NativeModuleTable.AddFunc, true, 0, 100, 0x00013B80, 0x5, std::_Destroy_range<std::allocator<Mapping *> >, 224
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\xutility
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\xutility
+NativeModuleTable.AddFunc, true, 0, 85, 0x00013C00, 0x5, std::_Ptr_cat<Mapping * *,Mapping * *>, 1483
+#SrcFile, hook=true, 0, c:\program files\microsoft visual studio 9.0\vc\include\xmemory
+NativeModuleTable.SetSrcFile, c:\program files\microsoft visual studio 9.0\vc\include\xmemory
+NativeModuleTable.AddFunc, true, 0, 37, 0x00013C70, 0x5, std::_Destroy_range<std::allocator<Mapping *> >, 241
+#SrcFile, hook=true, 0, f:\dd\vctools\crt_bld\self_x86\crt\src\newaop.cpp
+NativeModuleTable.SetSrcFile, f:\dd\vctools\crt_bld\self_x86\crt\src\newaop.cpp
+NativeModuleTable.AddFunc, true, 0, 19, 0x0001B140, 0x5, operator new[], 6
+NativeModuleTable.AddFunc, true, 0, 176, 0x0001B390, 0x5, `eh vector constructor iterator', 0
+NativeModuleTable.AddFunc, true, 0, 174, 0x0001B1C0, 0x5, `eh vector destructor iterator', 0
+#SrcFile, hook=true, 0, f:\dd\vctools\crt_bld\self_x86\crt\prebuild\eh\ehvecdtr.cpp
+NativeModuleTable.SetSrcFile, f:\dd\vctools\crt_bld\self_x86\crt\prebuild\eh\ehvecdtr.cpp
+NativeModuleTable.AddFunc, true, 0, 140, 0x0001B2A0, 0x5, __ArrayUnwind, 119
+NativeModuleTable.AddFunc, true, 0, 46, 0x0001B350, 0x5, ArrayUnwindFilter, 97
+#SrcFile, hook=true, 0, f:\dd\vctools\crt_bld\self_x86\crt\prebuild\eh\unhandld.cpp
+NativeModuleTable.SetSrcFile, f:\dd\vctools\crt_bld\self_x86\crt\prebuild\eh\unhandld.cpp
+NativeModuleTable.AddFunc, true, 0, 103, 0x0001CB80, 0x5, __CxxUnhandledExceptionFilter, 67
+NativeModuleTable.AddFunc, true, 0, 20, 0x0001CC00, 0x5, ___CxxSetUnhandledExceptionFilter, 86
+#SrcFile, hook=true, 0, f:\dd\vctools\crt_bld\self_x86\crt\src\atonexit.c
+NativeModuleTable.SetSrcFile, f:\dd\vctools\crt_bld\self_x86\crt\src\atonexit.c
+NativeModuleTable.AddFunc, true, 0, 261, 0x0001CD40, 0x5, __onexit, 79
+NativeModuleTable.AddFunc, true, 0, 28, 0x0001CE90, 0x5, _atexit, 126
+#SrcFile, hook=true, 0, f:\dd\vctools\crt_bld\self_x86\crt\src\crtexe.c
+NativeModuleTable.SetSrcFile, f:\dd\vctools\crt_bld\self_x86\crt\src\crtexe.c
+NativeModuleTable.AddFunc, true, 0, 155, 0x0001B910, 0x5, pre_c_init, 217
+NativeModuleTable.AddFunc, true, 0, 90, 0x0001B9E0, 0x5, pre_cpp_init, 306
+NativeModuleTable.AddFunc, true, 0, 17, 0x0001BA50, 0x5, _mainCRTStartup, 389
+NativeModuleTable.AddFunc, true, 0, 582, 0x0001BA70, 0x5, __tmainCRTStartup, 406
+#SrcFile, hook=true, 0, f:\dd\public\sdk\inc\winnt.h
+NativeModuleTable.SetSrcFile, f:\dd\public\sdk\inc\winnt.h
+NativeModuleTable.AddFunc, true, 0, 13, 0x0001BD50, 0x5, _NtCurrentTeb, 12961
+#SrcFile, hook=true, 0, f:\dd\vctools\crt_bld\self_x86\crt\src\crtexe.c
+NativeModuleTable.SetSrcFile, f:\dd\vctools\crt_bld\self_x86\crt\src\crtexe.c
+NativeModuleTable.AddFunc, true, 0, 175, 0x0001BD60, 0x5, check_managed_app, 643
+#SrcFile, hook=true, 0, f:\dd\vctools\crt_bld\self_x86\crt\src\dllargv.c
+NativeModuleTable.SetSrcFile, f:\dd\vctools\crt_bld\self_x86\crt\src\dllargv.c
+NativeModuleTable.AddFunc, true, 0, 9, 0x0001CCC0, 0x5, __setargv, 56
+#SrcFile, hook=true, 0, f:\dd\vctools\crt_bld\self_x86\crt\src\gs_report.c
+NativeModuleTable.SetSrcFile, f:\dd\vctools\crt_bld\self_x86\crt\src\gs_report.c
+NativeModuleTable.AddFunc, true, 0, 270, 0x0001BE80, 0x5, ___report_gsfailure, 140
+#SrcFile, hook=true, 0, f:\dd\vctools\crt_bld\self_x86\crt\src\gs_support.c
+NativeModuleTable.SetSrcFile, f:\dd\vctools\crt_bld\self_x86\crt\src\gs_support.c
+NativeModuleTable.AddFunc, true, 0, 219, 0x0001CED0, 0x5, ___security_init_cookie, 97
+#SrcFile, hook=true, 0, f:\dd\vctools\crt_bld\self_x86\crt\src\merr.c
+NativeModuleTable.SetSrcFile, f:\dd\vctools\crt_bld\self_x86\crt\src\merr.c
+NativeModuleTable.AddFunc, true, 0, 9, 0x0001CCB0, 0x5, __matherr, 37
+#SrcFile, hook=true, 0, f:\dd\vctools\crt_bld\self_x86\crt\src\pesect.c
+NativeModuleTable.SetSrcFile, f:\dd\vctools\crt_bld\self_x86\crt\src\pesect.c
+NativeModuleTable.AddFunc, true, 0, 95, 0x0001D000, 0x5, __ValidateImageBase, 44
+NativeModuleTable.AddFunc, true, 0, 117, 0x0001D080, 0x5, __FindPESection, 92
+NativeModuleTable.AddFunc, true, 0, 274, 0x0001D120, 0x5, __IsNonwritableInCurrentImage, 149
+#SrcFile, hook=true, 0, f:\dd\vctools\crt_bld\self_x86\crt\src\ti_inst.cpp
+NativeModuleTable.SetSrcFile, f:\dd\vctools\crt_bld\self_x86\crt\src\ti_inst.cpp
+NativeModuleTable.AddFunc, true, 0, 27, 0x0001B700, 0x5, type_info::type_info, 32
+NativeModuleTable.AddFunc, true, 0, 108, 0x0001B730, 0x5, type_info::`vector deleting destructor', 0
+NativeModuleTable.AddFunc, true, 0, 18, 0x0001B7C0, 0x5, type_info::operator=, 36
+NativeModuleTable.AddFunc, true, 0, 41, 0x0001BE40, 0x5, __except_handler4, 0
+#SrcFile, hook=true, 0, f:\dd\vctools\crt_bld\self_x86\crt\prebuild\tran\i386\cpu_disp.c
+NativeModuleTable.SetSrcFile, f:\dd\vctools\crt_bld\self_x86\crt\prebuild\tran\i386\cpu_disp.c
+NativeModuleTable.AddFunc, true, 0, 113, 0x0001C9F0, 0x5, __get_sse2_info, 59
+NativeModuleTable.AddFunc, true, 0, 173, 0x0001CA80, 0x5, has_osfxsr_set, 41
+NativeModuleTable.AddFunc, true, 0, 19, 0x0001CB60, 0x5, ___sse2_available_init, 111
+#SrcFile, hook=true, 0, f:\dd\vctools\crt_bld\self_x86\crt\src\intel\fp8.c
+NativeModuleTable.SetSrcFile, f:\dd\vctools\crt_bld\self_x86\crt\src\intel\fp8.c
+NativeModuleTable.AddFunc, true, 0, 55, 0x0001CC20, 0x5, __setdefaultprecision, 30
+#SrcFile, hook=true, 0, f:\dd\vctools\crt_bld\self_x86\crt\src\internal.h
+NativeModuleTable.SetSrcFile, f:\dd\vctools\crt_bld\self_x86\crt\src\internal.h
+NativeModuleTable.AddFunc, true, 0, 43, 0x0001CC70, 0x5, __invoke_watson_if_error, 750
+#SrcFile, hook=true, 0, f:\dd\vctools\crt_bld\SELF_X86\crt\prebuild\tran\i386\ftol2.asm
+NativeModuleTable.SetSrcFile, f:\dd\vctools\crt_bld\SELF_X86\crt\prebuild\tran\i386\ftol2.asm
+NativeModuleTable.AddFunc, true, 0, 19, 0x0001B839, 0x5, __ftol2_pentium4, 49
+NativeModuleTable.AddFunc, true, 0, 117, 0x0001B866, 0x5, __ftol2, 89
+NativeModuleTable.AddFunc, true, 0, 9, 0x0001B830, 0x5, __ftol2_sse, 38
+NativeModuleTable.AddFunc, true, 0, 26, 0x0001B84C, 0x5, __ftol2_sse_excpt, 69
+#SrcFile, hook=true, 0, f:\dd\vctools\crt_bld\self_x86\crt\src\intel\secchk.c
+NativeModuleTable.SetSrcFile, f:\dd\vctools\crt_bld\self_x86\crt\src\intel\secchk.c
+NativeModuleTable.AddFunc, true, 0, 15, 0x0001B480, 0x5, @__security_check_cookie@4, 52
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001C910, 0x5, __RTC_NumErrors, 0
+NativeModuleTable.AddFunc, true, 0, 26, 0x0001C920, 0x5, __RTC_GetErrDesc, 0
+NativeModuleTable.AddFunc, true, 0, 37, 0x0001C940, 0x5, __RTC_SetErrorType, 0
+NativeModuleTable.AddFunc, true, 0, 31, 0x0001C970, 0x5, __RTC_SetErrorFunc, 0
+NativeModuleTable.AddFunc, true, 0, 31, 0x0001C9A0, 0x5, __RTC_SetErrorFuncW, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001C9D0, 0x5, _RTC_GetErrorFunc, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001C9E0, 0x5, _RTC_GetErrorFuncW, 0
+NativeModuleTable.AddFunc, true, 0, 37, 0x0001B4A0, 0x5, __RTC_CheckEsp, 0
+NativeModuleTable.AddFunc, true, 0, 95, 0x0001B4D0, 0x5, @_RTC_CheckStackVars@8, 0
+NativeModuleTable.AddFunc, true, 0, 50, 0x0001B550, 0x5, @_RTC_AllocaHelper@12, 0
+NativeModuleTable.AddFunc, true, 0, 213, 0x0001B590, 0x5, @_RTC_CheckStackVars2@12, 0
+NativeModuleTable.AddFunc, true, 0, 704, 0x0001D290, 0x5, _RTC_GetSrcLine, 0
+NativeModuleTable.AddFunc, true, 0, 470, 0x0001D600, 0x5, GetPdbDll, 0
+NativeModuleTable.AddFunc, true, 0, 38, 0x0001CCD0, 0x5, __RTC_Initialize, 0
+NativeModuleTable.AddFunc, true, 0, 38, 0x0001CD00, 0x5, __RTC_Terminate, 0
+NativeModuleTable.AddFunc, true, 0, 41, 0x0001B6A0, 0x5, __RTC_InitBase, 0
+NativeModuleTable.AddFunc, true, 0, 19, 0x0001B6E0, 0x5, __RTC_Shutdown, 0
+NativeModuleTable.AddFunc, true, 0, 36, 0x0001BFE0, 0x5, _DebuggerKnownHandle, 0
+NativeModuleTable.AddFunc, true, 0, 138, 0x0001C010, 0x5, DebuggerProbe, 0
+NativeModuleTable.AddFunc, true, 0, 81, 0x0001C0C0, 0x5, _RTC_Failure, 0
+NativeModuleTable.AddFunc, true, 0, 519, 0x0001C130, 0x5, failwithmessage, 0
+NativeModuleTable.AddFunc, true, 0, 156, 0x0001C3C0, 0x5, DebuggerRuntime, 0
+NativeModuleTable.AddFunc, true, 0, 252, 0x0001C490, 0x5, _RTC_StackFailure, 0
+NativeModuleTable.AddFunc, true, 0, 307, 0x0001C5D0, 0x5, _RTC_AllocaFailure, 0
+NativeModuleTable.AddFunc, true, 0, 111, 0x0001C750, 0x5, _getMemBlockDataString, 0
+NativeModuleTable.AddFunc, true, 0, 233, 0x0001C7E0, 0x5, __RTC_UninitUse, 0
+#SrcFile, hook=true, 0, <public symbols-unknown file>
+NativeModuleTable.SetSrcFile, <public symbols-unknown file>
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B812, 0xa, std::exception::what, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001D876, 0xa, _InterlockedExchange@8, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001D8C4, 0xa, _GetProcAddress@8, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B38A, 0xa, _atoi, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B176, 0xa, std::_Lockit::_Lockit, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B7D6, 0xa, __invalid_parameter, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B0AA, 0xa, std::getline<char,std::char_traits<char>,std::allocator<char> >, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B0F8, 0xa, std::ios_base::flags, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001CEB4, 0xa, __encode_pointer, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B074, 0xa, std::basic_string<char,std::char_traits<char>,std::allocator<char> >::`default constructor closure', 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B18E, 0xa, std::basic_ifstream<char,std::char_traits<char> >::basic_ifstream<char,std::char_traits<char> >, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001CEBA, 0xa, ___set_app_type, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B0C2, 0xa, std::_Container_base_secure::~_Container_base_secure, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B17C, 0xa, std::_Container_base_secure::_Container_base_secure, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B0E6, 0xa, std::basic_streambuf<char,std::char_traits<char> >::sputc, 0
+#SrcFile, hook=true, 0, f:\dd\vctools\crt_bld\self_x86\crt\src\crtexe.c
+NativeModuleTable.SetSrcFile, f:\dd\vctools\crt_bld\self_x86\crt\src\crtexe.c
+NativeModuleTable.AddFunc, true, 0, 330, 0x0001B906, 0xa, _exit, 217
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001D8B8, 0xa, _MultiByteToWideChar@24, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001D84C, 0xa, type_info::_type_info_dtor_internal_method, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B0BC, 0xa, std::_Container_base_secure::_Orphan_all, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001D85E, 0xa, __unlock, 0
+NativeModuleTable.AddFunc, true, 0, 20, 0x0001B46C, 0xa, ___CxxFrameHandler3, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001D27C, 0xa, __initterm_e, 0
+NativeModuleTable.AddFunc, true, 0, 12, 0x0001BE74, 0xa, terminate, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B0D4, 0xa, std::basic_streambuf<char,std::char_traits<char> >::sputn, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B0E0, 0xa, std::char_traits<char>::eof, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B0F2, 0xa, std::basic_ios<char,std::char_traits<char> >::fill, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001D8CA, 0xa, _LoadLibraryA@4, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B7E8, 0xa, operator delete[], 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B0A4, 0xa, std::basic_istringstream<char,std::char_traits<char>,std::allocator<char> >::`vbase destructor', 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001D8A0, 0xa, _IsDebuggerPresent@0, 0
+NativeModuleTable.AddFunc, true, 0, 10, 0x0001CCA6, 0xa, ___setusermatherr, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B1B2, 0xa, std::basic_string<char,std::char_traits<char>,std::allocator<char> >::operator=, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B122, 0xa, std::uncaught_exception, 0
+NativeModuleTable.AddFunc, true, 0, 12, 0x0001CFF4, 0xa, __CrtSetCheckCount, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B188, 0xa, std::basic_string<char,std::char_traits<char>,std::allocator<char> >::operator=, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001D86A, 0xa, __lock, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001D894, 0xa, _UnhandledExceptionFilter@4, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B194, 0xa, std::basic_ifstream<char,std::char_traits<char> >::open, 0
+NativeModuleTable.AddFunc, true, 0, 18, 0x0001B81E, 0xa, _ceil, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B1AC, 0xa, std::basic_ifstream<char,std::char_traits<char> >::close, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B128, 0xa, std::basic_streambuf<char,std::char_traits<char> >::_Lock, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B0EC, 0xa, std::basic_ios<char,std::char_traits<char> >::rdbuf, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B068, 0xa, std::basic_string<char,std::char_traits<char>,std::allocator<char> >::length, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001D87C, 0xa, _Sleep@4, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B09E, 0xa, std::basic_string<char,std::char_traits<char>,std::allocator<char> >::append, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001D906, 0xa, _VirtualQuery@12, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B0B6, 0xa, std::_Debug_message, 0
+NativeModuleTable.AddFunc, true, 0, 8, 0x0001D288, 0xa, __crt_debugger_hook, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001CD30, 0xa, ___p__commode, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001D8DC, 0xa, _GetCurrentThreadId@0, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B7EE, 0xa, operator new, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001CFE8, 0xa, __XcptFilter, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B110, 0xa, std::basic_ios<char,std::char_traits<char> >::tie, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001D8A6, 0xa, _RaiseException@16, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B7E2, 0xa, operator delete, 0
+NativeModuleTable.AddFunc, true, 0, 18, 0x0001B12E, 0xa, std::basic_streambuf<char,std::char_traits<char> >::_Unlock, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B080, 0xa, std::ios_base::operator void *, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001D900, 0xa, _GetModuleFileNameW@12, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B164, 0xa, std::basic_istream<char,std::char_traits<char> >::getline, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001D84C, 0xa, type_info::~type_info, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001D864, 0xa, ___dllonexit, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001D870, 0xa, __decode_pointer, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B116, 0xa, std::ios_base::good, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001D8E2, 0xa, _GetCurrentProcessId@0, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B170, 0xa, std::_Lockit::~_Lockit, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001D282, 0xa, __except_handler4_common, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B104, 0xa, std::char_traits<char>::length, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001D276, 0xa, __initterm, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001D8F4, 0xa, _HeapAlloc@12, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B1A6, 0xa, std::basic_istream<char,std::char_traits<char> >::read, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001D858, 0xa, __invoke_watson, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B19A, 0xa, std::basic_istream<char,std::char_traits<char> >::seekg, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B062, 0xa, std::basic_ostream<char,std::char_traits<char> >::operator<<, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B158, 0xa, std::operator>><char,std::char_traits<char> >, 0
+NativeModuleTable.AddFunc, true, 0, 10, 0x0001C9E6, 0xa, __CRT_RTC_INITW, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001D8E8, 0xa, _GetSystemTimeAsFileTime@4, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001CC1A, 0xa, __configthreadlocale, 0
+NativeModuleTable.AddFunc, true, 0, 10, 0x0001CEC6, 0xa, ___getmainargs, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001D882, 0xa, _InterlockedCompareExchange@12, 0
+NativeModuleTable.AddFunc, true, 0, 14068, 0x0001D90C, 0xa, _FreeLibrary@4, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001D8BE, 0xa, _lstrlenA@4, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001D8EE, 0xa, _HeapFree@12, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B0CE, 0xa, std::ios_base::width, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B0B0, 0xa, std::basic_istringstream<char,std::char_traits<char>,std::allocator<char> >::basic_istringstream<char,std::char_traits<char>,std::allocator<char> >, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B16A, 0xa, std::basic_string<char,std::char_traits<char>,std::allocator<char> >::basic_string<char,std::char_traits<char>,std::allocator<char> >, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001D8FA, 0xa, _GetProcessHeap@0, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B086, 0xa, std::operator>><char,std::char_traits<char>,std::allocator<char> >, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B0DA, 0xa, std::char_traits<char>::eq_int_type, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B7FA, 0xa, std::exception::exception, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B10A, 0xa, std::basic_ostream<char,std::char_traits<char> >::flush, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B05C, 0xa, std::basic_string<char,std::char_traits<char>,std::allocator<char> >::substr, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B7F4, 0xa, __CxxThrowException@8, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B7DC, 0xa, __CrtDbgReportW, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001D8D6, 0xa, _GetTickCount@0, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B0C8, 0xa, std::basic_ios<char,std::char_traits<char> >::setstate, 0
+NativeModuleTable.AddFunc, true, 0, 10, 0x0001CD36, 0xa, ___p__fmode, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B800, 0xa, std::exception::~exception, 0
+NativeModuleTable.AddFunc, true, 0, 8, 0x0001B1B8, 0xa, std::ios_base::operator!, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B08C, 0xa, std::basic_string<char,std::char_traits<char>,std::allocator<char> >::~basic_string<char,std::char_traits<char>,std::allocator<char> >, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001D852, 0xa, __controlfp_s, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B092, 0xa, std::operator<<<char,std::char_traits<char>,std::allocator<char> >, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001D89A, 0xa, _SetUnhandledExceptionFilter@4, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B07A, 0xa, std::basic_string<char,std::char_traits<char>,std::allocator<char> >::basic_string<char,std::char_traits<char>,std::allocator<char> >, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001D888, 0xa, _TerminateProcess@8, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B06E, 0xa, std::basic_string<char,std::char_traits<char>,std::allocator<char> >::c_str, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B182, 0xa, std::basic_ifstream<char,std::char_traits<char> >::`vbase destructor', 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001CEC0, 0xa, __amsg_exit, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B098, 0xa, std::basic_string<char,std::char_traits<char>,std::allocator<char> >::basic_string<char,std::char_traits<char>,std::allocator<char> >, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B0FE, 0xa, std::ios_base::width, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B806, 0xa, std::exception::exception, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B80C, 0xa, std::exception::exception, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001D88E, 0xa, _GetCurrentProcess@0, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B818, 0xa, _memmove_s, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001CFEE, 0xa, __cexit, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001D8B2, 0xa, _WideCharToMultiByte@32, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001D8AC, 0xa, _DebugBreak@0, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001D8D0, 0xa, _QueryPerformanceCounter@4, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B11C, 0xa, std::basic_ostream<char,std::char_traits<char> >::_Osfx, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B15E, 0xa, std::basic_istream<char,std::char_traits<char> >::gcount, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001B1A0, 0xa, std::basic_istream<char,std::char_traits<char> >::tellg, 0
+NativeModuleTable.AddFunc, true, 0, 6, 0x0001CFE2, 0xa, __exit, 0
+NativeModuleTable.Close, 333 functions

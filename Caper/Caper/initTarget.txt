@@ -1,0 +1,8 @@
+@Target.SymbolPath = SetString C:\Documents and Settings\James T. Kirk\My Documents\Visual Studio 2008\Projects\Caper\Debug
+@Target.Start_mode.StartMode = SetString 1
+@Target.Service = SetString False
+@Target.ASP.net = SetString False
+@Target.Application = SetString True
+@Target.InitDir = SetString C:\Documents and Settings\James T. Kirk\My Documents\Visual Studio 2008\Projects\Caper\Debug
+@Target.Name = SetString C:\Documents and Settings\James T. Kirk\My Documents\Visual Studio 2008\Projects\Caper\Debug\Caper.exe
+@Target.Args = SetString 

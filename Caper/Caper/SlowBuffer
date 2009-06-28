@@ -1,0 +1,461 @@
+0x1 0x0 EventBuffersOpened 0xad4 0xb2c, c:\Documents and Settings\James T. Kirk\My Documents\Visual Studio 2008\Projects\Caper\Debug\Caper.exe, Sat Jun 27 22:44:29 2009
+0x1 0x0 CpuFreq 539390000
+0x1 0x0 ModuleNative 0x00400000 0x2a000 "c:\Documents and Settings\James T. Kirk\My Documents\Visual Studio 2008\Projects\Caper\Debug\Caper.exe"
+0x1 0x0 ModuleNative 0x7c900000 0xb2000 "C:\WINDOWS\system32\ntdll.dll"
+0x1 0x0 ModuleNative 0x7c800000 0xf6000 "C:\WINDOWS\system32\kernel32.dll"
+0x1 0x0 ModuleNative 0x10480000 0xd6000 "C:\WINDOWS\WinSxS\x86_Microsoft.VC90.DebugCRT_1fc8b3b9a1e18e3b_9.0.21022.8_x-ww_597c3456\MSVCP90D.dll"
+0x1 0x0 ModuleNative 0x10200000 0x123000 "C:\WINDOWS\WinSxS\x86_Microsoft.VC90.DebugCRT_1fc8b3b9a1e18e3b_9.0.21022.8_x-ww_597c3456\MSVCR90D.dll"
+0x1 0x0 ModuleNative 0x10000000 0x1c3000 "C:\Program Files\GlowCode 7.0\gc6prof.dll"
+0x1 0x0 ModuleNative 0x76bf0000 0xb000 "C:\WINDOWS\system32\PSAPI.DLL"
+0x1 0x0 ModuleNative 0x7e410000 0x91000 "C:\WINDOWS\system32\USER32.dll"
+0x1 0x0 ModuleNative 0x77f10000 0x49000 "C:\WINDOWS\system32\GDI32.dll"
+0x1 0x0 ModuleNative 0x77dd0000 0x9b000 "C:\WINDOWS\system32\ADVAPI32.dll"
+0x1 0x0 ModuleNative 0x77e70000 0x92000 "C:\WINDOWS\system32\RPCRT4.dll"
+0x1 0x0 ModuleNative 0x77fe0000 0x11000 "C:\WINDOWS\system32\Secur32.dll"
+0x1 0x0 ModuleNative 0x774e0000 0x13d000 "C:\WINDOWS\system32\ole32.dll"
+0x1 0x0 ModuleNative 0x77c10000 0x58000 "C:\WINDOWS\system32\msvcrt.dll"
+0x1 0x0 GenericName GenericClassId 1 Kernel32::FreeLibrary
+0x1 0x0 GenericName GenericMethodId 1 FreeLibrary
+0x1 0x0 GenericName GenericMethodId 2 LoadLibraryExW
+0x1 0x14fa GenericName GenericClassId 2 Kernel32::CloseHandle
+0x1 0x14fa GenericName GenericMethodId 3 CloseHandle
+0x1 0x14fa GenericName GenericMethodId 4 OpenProcess
+0x1 0x14fa GenericName GenericMethodId 5 CreateThread
+0x1 0x14fa GenericName GenericMethodId 6 CreateRemoteThread
+0x1 0x14fa GenericName GenericMethodId 7 CreateFileW
+0x1 0x14fa GenericName GenericMethodId 8 CreateFileMappingW
+0x1 0x14fa GenericName GenericMethodId 9 OpenFileMappingW
+0x1 0x14fa GenericName GenericMethodId 10 CreateEventW
+0x1 0x14fa GenericName GenericMethodId 11 OpenEventW
+0x1 0x14fa GenericName GenericMethodId 12 CreateSemaphoreW
+0x1 0x14fa GenericName GenericMethodId 13 OpenSemaphoreW
+0x1 0x14fa GenericName GenericMethodId 14 CreateMutexW
+0x1 0x14fa GenericName GenericMethodId 15 OpenMutexW
+0x1 0x14fa GenericName GenericMethodId 16 CreatePipe
+0x1 0x14fa GenericName GenericMethodId 17 CreateNamedPipeW
+0x1 0x14fa GenericName GenericMethodId 18 CreateMailslotW
+0x1 0x14fa GenericName GenericClassId 3 Gdi32::DeleteObject
+0x1 0x14fa GenericName GenericMethodId 19 DeleteObject
+0x1 0x14fa GenericName GenericMethodId 20 CreateBitmap
+0x1 0x14fa GenericName GenericMethodId 21 CreateCompatibleBitmap
+0x1 0x14fa GenericName GenericMethodId 22 CreateDIBSection
+0x1 0x14fa GenericName GenericMethodId 23 CreateDIBitmap
+0x1 0x14fa GenericName GenericMethodId 24 CreateDIBPatternBrush
+0x1 0x14fa GenericName GenericMethodId 25 CreateDIBPatternBrushPt
+0x1 0x14fa GenericName GenericMethodId 26 CreateDiscardableBitmap
+0x1 0x14fa GenericName GenericMethodId 27 CreateEllipticRgn
+0x1 0x14fa GenericName GenericMethodId 28 CreateEllipticRgnIndirect
+0x1 0x14fa GenericName GenericMethodId 29 CreateFontA
+0x1 0x14fa GenericName GenericMethodId 30 CreateFontW
+0x1 0x14fa GenericName GenericMethodId 31 CreateHalftonePalette
+0x1 0x14fa GenericName GenericMethodId 32 CreateHatchBrush
+0x1 0x14fa GenericName GenericMethodId 33 CreatePalette
+0x1 0x14fa GenericName GenericMethodId 34 CreatePatternBrush
+0x1 0x14fa GenericName GenericMethodId 35 CreatePen
+0x1 0x14fa GenericName GenericMethodId 36 CreatePolygonRgn
+0x1 0x14fa GenericName GenericMethodId 37 CreateSolidBrush
+0x1 0x14fa GenericName GenericMethodId 38 CreateRectRgn
+0x1 0x14fa GenericName GenericMethodId 39 LoadBitmapA
+0x1 0x14fa GenericName GenericMethodId 40 LoadBitmapW
+0x1 0x14fa GenericName GenericClassId 4 Gdi32::DeleteDC
+0x1 0x14fa GenericName GenericMethodId 41 DeleteDC
+0x1 0x14fa GenericName GenericMethodId 42 CreateCompatibleDC
+0x1 0x14fa GenericName GenericMethodId 43 CreateDCA
+0x1 0x14fa GenericName GenericMethodId 44 CreateDCW
+0x1 0x14fa GenericName GenericMethodId 45 CreateICA
+0x1 0x14fa GenericName GenericMethodId 46 CreateICW
+0x1 0x14fa GenericName GenericClassId 5 User32::ReleaseDC
+0x1 0x14fa GenericName GenericMethodId 47 ReleaseDC
+0x1 0x14fa GenericName GenericMethodId 48 GetDC
+0x1 0x14fa GenericName GenericMethodId 49 GetDCEx
+0x1 0x14fa GenericName GenericMethodId 50 GetWindowDC
+0x1 0x14fa GenericName GenericClassId 6 Ole32:IMalloc
+0x1 0x154b ModuleNative 0x5ad70000 0x38000 "C:\WINDOWS\system32\uxtheme.dll"
+0x1 0x15c1 ModuleNative 0x77e70000 0x92000 "C:\WINDOWS\system32\RPCRT4.dll"
+0x1 0x160f ModuleNative 0x00c10000 0x2c5000 "C:\WINDOWS\system32\xpsp2res.dll"
+0x1 0x160f GenericName GenericClassId 7 Oleaut32:SysFreeString
+0x1 0x160f GenericName GenericMethodId 51 SysFreeString
+0x1 0x1613 GenericName GenericMethodId 52 SysAllocString
+0x1 0x1617 GenericName GenericMethodId 53 SysAllocStringLen
+0x1 0x161b GenericName GenericMethodId 54 SysAllocStringByteLen
+0x1 0x161f GenericName GenericClassId 8 User32::DestroyMenu
+0x1 0x161f GenericName GenericMethodId 55 DestroyMenu
+0x1 0x161f GenericName GenericMethodId 56 CreateMenu
+0x1 0x161f GenericName GenericMethodId 57 CreatePopupMenu
+0x1 0x161f GenericName GenericMethodId 58 LoadMenuIndirectA
+0x1 0x161f GenericName GenericMethodId 59 LoadMenuIndirectW
+0x1 0x161f GenericName GenericMethodId 60 LoadMenuA
+0x1 0x161f GenericName GenericMethodId 61 LoadMenuW
+0x1 0x161f GenericName GenericClassId 9 Ntdll::NtFreeVirtualMemory
+0x1 0x161f GenericName GenericMethodId 62 NtFreeVirtualMemory
+0x1 0x161f GenericName GenericMethodId 63 NtAllocateVirtualMemory
+0x1 0x1629 SetSrcfile 1 "c:\documents and settings\james t. kirk\my documents\visual studio 2008\projects\caper\caper\sequencereader.cpp"
+0x1 0x1629 SetSrcfile 2 "c:\documents and settings\james t. kirk\my documents\visual studio 2008\projects\caper\caper\sequence.cpp"
+0x1 0x1629 SetSrcfile 3 "c:\documents and settings\james t. kirk\my documents\visual studio 2008\projects\caper\caper\mapviewmappingengine.cpp"
+0x1 0x1629 SetSrcfile 4 "c:\program files\microsoft visual studio 9.0\vc\include\iosfwd"
+0x1 0x1629 SetSrcfile 5 "c:\documents and settings\james t. kirk\my documents\visual studio 2008\projects\caper\caper\mappingcache.cpp"
+0x1 0x1629 SetSrcfile 6 "c:\program files\microsoft visual studio 9.0\vc\include\xstring"
+0x1 0x1629 SetSrcfile 7 "c:\program files\microsoft visual studio 9.0\vc\include\vector"
+0x1 0x1629 SetSrcfile 8 "c:\program files\microsoft visual studio 9.0\vc\include\xutility"
+0x1 0x1629 SetSrcfile 9 "c:\program files\microsoft visual studio 9.0\vc\include\xmemory"
+0x1 0x1629 SetSrcfile 10 "c:\program files\microsoft visual studio 9.0\vc\include\stdexcept"
+0x1 0x1629 SetSrcfile 11 "c:\program files\microsoft visual studio 9.0\vc\include\memory"
+0x1 0x1629 SetSrcfile 12 "c:\program files\microsoft visual studio 9.0\vc\include\exception"
+0x1 0x1629 SetSrcfile 13 "c:\documents and settings\james t. kirk\my documents\visual studio 2008\projects\caper\caper\mapping.cpp"
+0x1 0x1629 SetSrcfile 14 "c:\documents and settings\james t. kirk\my documents\visual studio 2008\projects\caper\caper\main.cpp"
+0x1 0x1629 SetSrcfile 15 "c:\documents and settings\james t. kirk\my documents\visual studio 2008\projects\caper\caper\caper.cpp"
+0x1 0x1629 SetSrcfile 16 "c:\program files\microsoft visual studio 9.0\vc\include\ostream"
+0x1 0x1629 SetSrcfile 17 "f:\dd\vctools\crt_bld\self_x86\crt\src\newaop.cpp"
+0x1 0x1629 SetSrcfile 18 "f:\dd\vctools\crt_bld\self_x86\crt\prebuild\eh\ehvecdtr.cpp"
+0x1 0x1629 SetSrcfile 19 "f:\dd\vctools\crt_bld\self_x86\crt\prebuild\eh\unhandld.cpp"
+0x1 0x1629 SetSrcfile 20 "f:\dd\vctools\crt_bld\self_x86\crt\src\atonexit.c"
+0x1 0x1629 SetSrcfile 21 "f:\dd\vctools\crt_bld\self_x86\crt\src\crtexe.c"
+0x1 0x1629 SetSrcfile 22 "f:\dd\public\sdk\inc\winnt.h"
+0x1 0x1629 SetSrcfile 23 "f:\dd\vctools\crt_bld\self_x86\crt\src\dllargv.c"
+0x1 0x1629 SetSrcfile 24 "f:\dd\vctools\crt_bld\self_x86\crt\src\gs_report.c"
+0x1 0x1629 SetSrcfile 25 "f:\dd\vctools\crt_bld\self_x86\crt\src\gs_support.c"
+0x1 0x1629 SetSrcfile 26 "f:\dd\vctools\crt_bld\self_x86\crt\src\merr.c"
+0x1 0x1629 SetSrcfile 27 "f:\dd\vctools\crt_bld\self_x86\crt\src\pesect.c"
+0x1 0x1629 SetSrcfile 28 "f:\dd\vctools\crt_bld\self_x86\crt\src\ti_inst.cpp"
+0x1 0x1629 SetSrcfile 29 "f:\dd\vctools\crt_bld\self_x86\crt\prebuild\tran\i386\cpu_disp.c"
+0x1 0x1629 SetSrcfile 30 "f:\dd\vctools\crt_bld\self_x86\crt\src\intel\fp8.c"
+0x1 0x1629 SetSrcfile 31 "f:\dd\vctools\crt_bld\self_x86\crt\src\internal.h"
+0x1 0x1629 SetSrcfile 32 "f:\dd\vctools\crt_bld\SELF_X86\crt\prebuild\tran\i386\ftol2.asm"
+0x1 0x1629 SetSrcfile 33 "f:\dd\vctools\crt_bld\self_x86\crt\src\intel\secchk.c"
+0x1 0x1629 SetSrcfile 34 "<public symbols-unknown file>"
+0x1 0x163b ModuleNative 0x00400000 0x2a000 "c:\Documents and Settings\James T. Kirk\My Documents\Visual Studio 2008\Projects\Caper\Debug\Caper.exe"
+0x1 0x163b Function native 0x0041ceba 0x0001ceba 6 0 0x00400000 34 "CAPER!___set_app_type" Success
+0x1 0x163b Function native 0x0041b0ec 0x0001b0ec 6 0 0x00400000 21 "CAPER!std::basic_ios<char,std::char_traits<char> >::rdbuf" Success
+0x1 0x163b Function native 0x0041b46c 0x0001b46c 20 0 0x00400000 21 "CAPER!___CxxFrameHandler3" Success
+0x1 0x163b Function native 0x0041b15e 0x0001b15e 6 0 0x00400000 21 "CAPER!std::basic_istream<char,std::char_traits<char> >::gcount" Success
+0x1 0x163b Function native 0x0041d85e 0x0001d85e 6 0 0x00400000 21 "CAPER!__unlock" Success
+0x1 0x163b Function native 0x00418630 0x00018630 87 1544 0x00400000 8 "CAPER!std::_Debug_pointer<Mapping *>" Success
+0x1 0x163b Function native 0x00418d30 0x00018d30 37 1532 0x00400000 8 "CAPER!std::_Debug_pointer<std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> > >" Success
+0x1 0x163b Function native 0x00419fb0 0x00019fb0 565 172 0x00400000 3 "CAPER!MapviewMappingEngine::GetReads" Success
+0x1 0x163b Function native 0x0041a430 0x0001a430 177 214 0x00400000 3 "CAPER!MapviewMappingEngine::GetCorrectCache" Success
+0x1 0x163b Function native 0x0041b0b0 0x0001b0b0 6 0 0x00400000 21 "CAPER!std::basic_istringstream<char,std::char_traits<char>,std::allocator<char> >::basic_istringstream<char,std::char_traits<char>,std::allocator<char> >" Success
+0x1 0x163b Function native 0x00000000 0x0001b730 108 0 0x00400000 28 "CAPER!type_info::`vector deleting destructor'" Failed: Did not hook name with ` prefix
+0x1 0x163b Function native 0x0041b830 0x0001b830 9 38 0x00400000 32 "CAPER!__ftol2_sse" Failed: Cannot verify good prefix: 83 3d ac 56 42 00 00 74
+0x1 0x163b Function native 0x00414a30 0x00014a30 55 555 0x00400000 6 "CAPER!std::basic_string<char,std::char_traits<char>,std::allocator<char> >::_Has_debug_it::_Has_debug_it" Success
+0x1 0x163b Function native 0x00414eb0 0x00014eb0 63 0 0x00400000 7 "CAPER!std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> >::~_Vector_const_iterator<Mapping *,std::allocator<Mapping *> >" Success
+0x1 0x163b Function native 0x004154b0 0x000154b0 254 165 0x00400000 8 "CAPER!std::_Iterator_base::_Adopt" Success
+0x1 0x163b Function native 0x00416530 0x00016530 168 26 0x00400000 10 "CAPER!std::logic_error::logic_error" Success
+0x1 0x163b Function native 0x00416830 0x00016830 175 0 0x00400000 10 "CAPER!std::logic_error::logic_error:1" Success
+0x1 0x163b Function native 0x00417530 0x00017530 88 3160 0x00400000 8 "CAPER!std::fill<Mapping * *,Mapping *>" Success
+0x1 0x163b Function native 0x0041c130 0x0001c130 519 0 0x00400000 33 "CAPER!failwithmessage" Success
+0x1 0x163b Function native 0x0041ccb0 0x0001ccb0 9 37 0x00400000 26 "CAPER!__matherr" Success
+0x1 0x163b Function native 0x0041cd30 0x0001cd30 6 0 0x00400000 21 "CAPER!___p__commode" Success
+0x1 0x163b Function native 0x0041b062 0x0001b062 6 0 0x00400000 21 "CAPER!std::basic_ostream<char,std::char_traits<char> >::operator<<" Success
+0x1 0x163b Function native 0x0041b7e2 0x0001b7e2 6 0 0x00400000 21 "CAPER!operator delete" Success
+0x1 0x163b Function native 0x0041cfe2 0x0001cfe2 6 0 0x00400000 21 "CAPER!__exit" Success
+0x1 0x163b Function native 0x0041d8e2 0x0001d8e2 6 0 0x00400000 21 "CAPER!_GetCurrentProcessId@0" Success
+0x1 0x163b Function native 0x0041b0d4 0x0001b0d4 6 0 0x00400000 21 "CAPER!std::basic_streambuf<char,std::char_traits<char> >::sputn" Success
+0x1 0x163b Function native 0x0041b086 0x0001b086 6 0 0x00400000 21 "CAPER!std::operator>><char,std::char_traits<char>,std::allocator<char> >" Success
+0x1 0x163b Function native 0x0041b806 0x0001b806 6 0 0x00400000 21 "CAPER!std::exception::exception" Success
+0x1 0x163b Function native 0x0041b906 0x0001b906 330 217 0x00400000 21 "CAPER!_exit" Success
+0x1 0x163b Function native 0x0041d906 0x0001d906 6 0 0x00400000 21 "CAPER!_VirtualQuery@12" Success
+0x1 0x163b Function native 0x0041b0f8 0x0001b0f8 6 0 0x00400000 34 "CAPER!std::ios_base::flags" Success
+0x1 0x163b Function native 0x0041b0aa 0x0001b0aa 6 0 0x00400000 34 "CAPER!std::getline<char,std::char_traits<char>,std::allocator<char> >" Success
+0x1 0x163b Function native 0x0041b05c 0x0001b05c 6 0 0x00400000 21 "CAPER!std::basic_string<char,std::char_traits<char>,std::allocator<char> >::substr" Success
+0x1 0x163b Function native 0x0041b11c 0x0001b11c 6 0 0x00400000 21 "CAPER!std::basic_ostream<char,std::char_traits<char> >::_Osfx" Success
+0x1 0x163b Function native 0x0041b7dc 0x0001b7dc 6 0 0x00400000 21 "CAPER!__CrtDbgReportW" Success
+0x1 0x163b Function native 0x0041d8dc 0x0001d8dc 6 0 0x00400000 21 "CAPER!_GetCurrentThreadId@0" Success
+0x1 0x163b Function native 0x0041b0ce 0x0001b0ce 6 0 0x00400000 21 "CAPER!std::ios_base::width" Success
+0x1 0x163b Function native 0x0041b18e 0x0001b18e 6 0 0x00400000 34 "CAPER!std::basic_ifstream<char,std::char_traits<char> >::basic_ifstream<char,std::char_traits<char> >" Success
+0x1 0x163b Function native 0x0041d88e 0x0001d88e 6 0 0x00400000 21 "CAPER!_GetCurrentProcess@0" Success
+0x1 0x163b Function native 0x004180e0 0x000180e0 109 3694 0x00400000 8 "CAPER!stdext::unchecked_fill_n<Mapping * *,unsigned int,Mapping *>" Success
+0x1 0x163b Function native 0x004186a0 0x000186a0 85 952 0x00400000 8 "CAPER!std::_Iter_cat<Mapping * *>" Success
+0x1 0x163b Function native 0x004187a0 0x000187a0 138 809 0x00400000 11 "CAPER!stdext::unchecked_uninitialized_copy<Mapping * *,Mapping * *,std::allocator<Mapping *> >" Success
+0x1 0x163b Function native 0x00418aa0 0x00018aa0 75 3170 0x00400000 8 "CAPER!std::_Fill_n<Mapping * *,unsigned int,Mapping *>" Success
+0x1 0x163b Function native 0x00418be0 0x00018be0 79 215 0x00400000 7 "CAPER!std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> >::operator!=" Success
+0x1 0x163b Function native 0x00418d60 0x00018d60 391 4 0x00400000 3 "CAPER!MapviewMappingEngine::MapviewMappingEngine" Success
+0x1 0x163b Function native 0x00419060 0x00019060 1756 44 0x00400000 3 "CAPER!MapviewMappingEngine::FindNextIndexStart" Success
+0x1 0x163b Function native 0x004199e0 0x000199e0 227 134 0x00400000 3 "CAPER!MapviewMappingEngine::GetNormalizedIndex" Success
+0x1 0x163b Function native 0x00000000 0x0001a9a0 88 0 0x00400000 2 "CAPER!Sequence::`scalar deleting destructor'" Failed: Did not hook name with ` prefix
+0x1 0x163b Function native 0x0041ab60 0x0001ab60 945 9 0x00400000 1 "CAPER!SequenceReader::Read" Success
+0x1 0x163b Function native 0x0041b0e0 0x0001b0e0 6 0 0x00400000 21 "CAPER!std::char_traits<char>::eof" Success
+0x1 0x163b Function native 0x0041b1a0 0x0001b1a0 6 0 0x00400000 21 "CAPER!std::basic_istream<char,std::char_traits<char> >::tellg" Success
+0x1 0x163b Function native 0x0041b2a0 0x0001b2a0 140 119 0x00400000 18 "CAPER!__ArrayUnwind" Success
+0x1 0x163b Function native 0x0041b4a0 0x0001b4a0 37 0 0x00400000 33 "CAPER!__RTC_CheckEsp" Failed: Cannot verify good prefix: 75 01 c3 55 8b ec 83 ec
+0x1 0x163b Function native 0x0041b6a0 0x0001b6a0 41 0 0x00400000 33 "CAPER!__RTC_InitBase" Failed: Cannot verify good prefix: 80 3d 58 52 42 00 00 75
+0x1 0x163b Function native 0x0041b6e0 0x0001b6e0 19 0 0x00400000 33 "CAPER!__RTC_Shutdown" Failed: Cannot verify good prefix: 6a 01 6a 01 6a 00 6a 00
+0x1 0x163b Function native 0x0041b9e0 0x0001b9e0 90 306 0x00400000 21 "CAPER!pre_cpp_init" Success
+0x1 0x163b Function native 0x0041bd60 0x0001bd60 175 643 0x00400000 21 "CAPER!check_managed_app" Success
+0x1 0x163b Function native 0x0041bfe0 0x0001bfe0 36 0 0x00400000 33 "CAPER!_DebuggerKnownHandle" Failed: Cannot verify good prefix: ff 15 48 63 42 00 85 c0
+0x1 0x163b Function native 0x00412ba0 0x00012ba0 337 121 0x00400000 15 "CAPER!Caper::GetParameters" Success
+0x1 0x163b Function native 0x00413220 0x00013220 1120 741 0x00400000 16 "CAPER!std::operator<<<std::char_traits<char> >" Success
+0x1 0x163b Function native 0x004137a0 0x000137a0 274 95 0x00400000 16 "CAPER!std::basic_ostream<char,std::char_traits<char> >::sentry::sentry" Success
+0x1 0x163b Function native 0x00413ca0 0x00013ca0 68 9 0x00400000 14 "CAPER!_main" Success
+0x1 0x163b Function native 0x00413d60 0x00013d60 135 11 0x00400000 13 "CAPER!Mapping::~Mapping" Success
+0x1 0x163b Function native 0x00000000 0x00013fa0 150 0 0x00400000 5 "CAPER!std::vector<Mapping *,std::allocator<Mapping *> >::`vector deleting destructor'" Failed: Did not hook name with ` prefix
+0x1 0x163b Function native 0x00414060 0x00014060 1453 14 0x00400000 5 "CAPER!MappingCache::Initialize" Success
+0x1 0x163b Function native 0x00414ce0 0x00014ce0 70 735 0x00400000 7 "CAPER!std::vector<Mapping *,std::allocator<Mapping *> >::empty" Success
+0x1 0x163b Function native 0x004152a0 0x000152a0 72 0 0x00400000 8 "CAPER!std::_Iterator_with_base<std::random_access_iterator_tag,Mapping *,int,Mapping * const *,Mapping * const &,std::_Iterator_base>::_Iterator_with_base<std::random_access_iterator_tag,Mapping *,int,Mapping * const *,Mapping * const &,std::_Iterator_base>" Success
+0x1 0x163b Function native 0x00415660 0x00015660 104 645 0x00400000 7 "CAPER!std::vector<Mapping *,std::allocator<Mapping *> >::begin" Success
+0x1 0x163b Function native 0x004166e0 0x000166e0 103 30 0x00400000 10 "CAPER!std::logic_error::~logic_error" Success
+0x1 0x163b Function native 0x00416760 0x00016760 72 109 0x00400000 10 "CAPER!std::length_error::~length_error" Success
+0x1 0x163b Function native 0x004169e0 0x000169e0 254 68 0x00400000 7 "CAPER!std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> >::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> >" Success
+0x1 0x163b Function native 0x00416b20 0x00016b20 84 186 0x00400000 7 "CAPER!std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> >::operator-" Success
+0x1 0x163b Function native 0x00416de0 0x00016de0 72 0 0x00400000 7 "CAPER!std::_Vector_iterator<Mapping *,std::allocator<Mapping *> >::_Vector_iterator<Mapping *,std::allocator<Mapping *> >" Success
+0x1 0x163b Function native 0x00416ea0 0x00016ea0 64 138 0x00400000 8 "CAPER!std::_Iterator_base::_Iterator_base" Success
+0x1 0x163b Function native 0x00416f60 0x00016f60 197 248 0x00400000 7 "CAPER!std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> >::_Compat" Success
+0x1 0x163b Function native 0x00417060 0x00017060 72 374 0x00400000 7 "CAPER!std::_Vector_iterator<Mapping *,std::allocator<Mapping *> >::operator+=" Success
+0x1 0x163b Function native 0x004172e0 0x000172e0 248 1143 0x00400000 7 "CAPER!std::vector<Mapping *,std::allocator<Mapping *> >::_Ucopy<std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> > >" Success
+0x1 0x163b Function native 0x00417420 0x00017420 120 920 0x00400000 11 "CAPER!stdext::unchecked_uninitialized_fill_n<Mapping * *,unsigned int,Mapping *,std::allocator<Mapping *> >" Success
+0x1 0x163b Function native 0x004175a0 0x000175a0 157 3668 0x00400000 8 "CAPER!stdext::_Unchecked_move_backward<Mapping * *,Mapping * *>" Success
+0x1 0x163b Function native 0x00417a60 0x00017a60 70 414 0x00400000 11 "CAPER!std::_Uninit_fill_n<Mapping * *,unsigned int,Mapping *,std::allocator<Mapping *> >" Success
+0x1 0x163b Function native 0x0041c7e0 0x0001c7e0 233 0 0x00400000 33 "CAPER!__RTC_UninitUse" Success
+0x1 0x163b Function native 0x0041c920 0x0001c920 26 0 0x00400000 33 "CAPER!__RTC_GetErrDesc" Success
+0x1 0x163b Function native 0x0041c9a0 0x0001c9a0 31 0 0x00400000 33 "CAPER!__RTC_SetErrorFuncW" Success
+0x1 0x163b Function native 0x0041c9e0 0x0001c9e0 6 0 0x00400000 33 "CAPER!_RTC_GetErrorFuncW" Failed: Cannot verify good prefix: a1 54 56 42 00 c3 ff 25
+0x1 0x163b Function native 0x0041cb60 0x0001cb60 19 111 0x00400000 29 "CAPER!___sse2_available_init" Success
+0x1 0x163b Function native 0x0041cc20 0x0001cc20 55 30 0x00400000 30 "CAPER!__setdefaultprecision" Success
+0x1 0x163b Function native 0x0041d120 0x0001d120 274 149 0x00400000 27 "CAPER!__IsNonwritableInCurrentImage" Success
+0x1 0x163b Function native 0x0041d8a0 0x0001d8a0 6 0 0x00400000 21 "CAPER!_IsDebuggerPresent@0" Success
+0x1 0x163b Function native 0x0041b092 0x0001b092 6 0 0x00400000 21 "CAPER!std::operator<<<char,std::char_traits<char>,std::allocator<char> >" Success
+0x1 0x163b Function native 0x0041b812 0x0001b812 6 0 0x00400000 34 "CAPER!std::exception::what" Success
+0x1 0x163b Function native 0x0041d852 0x0001d852 6 0 0x00400000 21 "CAPER!__controlfp_s" Success
+0x1 0x163b Function native 0x0041b104 0x0001b104 6 0 0x00400000 21 "CAPER!std::char_traits<char>::length" Success
+0x1 0x163b Function native 0x0041d8c4 0x0001d8c4 6 0 0x00400000 34 "CAPER!_GetProcAddress@8" Success
+0x1 0x163b Function native 0x0041b0b6 0x0001b0b6 6 0 0x00400000 21 "CAPER!std::_Debug_message" Success
+0x1 0x163b Function native 0x0041b176 0x0001b176 6 0 0x00400000 34 "CAPER!std::_Lockit::_Lockit" Success
+0x1 0x163b Function native 0x0041cd36 0x0001cd36 10 0 0x00400000 21 "CAPER!___p__fmode" Success
+0x1 0x163b Function native 0x0041d276 0x0001d276 6 0 0x00400000 21 "CAPER!__initterm" Success
+0x1 0x163b Function native 0x0041d876 0x0001d876 6 0 0x00400000 34 "CAPER!_InterlockedExchange@8" Success
+0x1 0x163b Function native 0x0041b068 0x0001b068 6 0 0x00400000 21 "CAPER!std::basic_string<char,std::char_traits<char>,std::allocator<char> >::length" Success
+0x1 0x163b Function native 0x0041b128 0x0001b128 6 0 0x00400000 21 "CAPER!std::basic_streambuf<char,std::char_traits<char> >::_Lock" Success
+0x1 0x163b Function native 0x0041b7e8 0x0001b7e8 6 0 0x00400000 21 "CAPER!operator delete[]" Success
+0x1 0x163b Function native 0x0041cfe8 0x0001cfe8 6 0 0x00400000 21 "CAPER!__XcptFilter" Success
+0x1 0x163b Function native 0x0041d8e8 0x0001d8e8 6 0 0x00400000 21 "CAPER!_GetSystemTimeAsFileTime@4" Success
+0x1 0x163b Function native 0x0041b0da 0x0001b0da 6 0 0x00400000 21 "CAPER!std::char_traits<char>::eq_int_type" Success
+0x1 0x163b Function native 0x0041b19a 0x0001b19a 6 0 0x00400000 21 "CAPER!std::basic_istream<char,std::char_traits<char> >::seekg" Success
+0x1 0x163b Function native 0x0041cc1a 0x0001cc1a 6 0 0x00400000 21 "CAPER!__configthreadlocale" Success
+0x1 0x163b Function native 0x0041d89a 0x0001d89a 6 0 0x00400000 21 "CAPER!_SetUnhandledExceptionFilter@4" Success
+0x1 0x163b Function native 0x0041b08c 0x0001b08c 6 0 0x00400000 21 "CAPER!std::basic_string<char,std::char_traits<char>,std::allocator<char> >::~basic_string<char,std::char_traits<char>,std::allocator<char> >" Success
+0x1 0x163b Function native 0x0041b80c 0x0001b80c 6 0 0x00400000 21 "CAPER!std::exception::exception:1" Success
+0x1 0x163b Function native 0x0041b84c 0x0001b84c 26 69 0x00400000 32 "CAPER!__ftol2_sse_excpt" Failed: Cannot verify good prefix: 83 3d ac 56 42 00 00 74
+0x1 0x163b Function native 0x0041d84c 0x0001d84c 6 0 0x00400000 21 "CAPER!type_info::_type_info_dtor_internal_method" Success
+0x1 0x163b Function native 0x0041d90c 0x0001d90c 14068 0 0x00400000 21 "CAPER!_FreeLibrary@4" Success
+0x1 0x163b Function native 0x0041b0fe 0x0001b0fe 6 0 0x00400000 21 "CAPER!std::ios_base::width:1" Success
+0x1 0x163b Function native 0x0041d8be 0x0001d8be 6 0 0x00400000 21 "CAPER!_lstrlenA@4" Success
+0x1 0x163b Function native 0x004181d0 0x000181d0 42 1146 0x00400000 8 "CAPER!std::_Checked_base<Mapping * *>" Success
+0x1 0x163b Function native 0x00418210 0x00018210 97 1571 0x00400000 8 "CAPER!std::_Debug_range<Mapping * *>" Success
+0x1 0x163b Function native 0x00418290 0x00018290 181 2672 0x00400000 8 "CAPER!std::_Copy_backward_opt<Mapping * *,Mapping * *,std::random_access_iterator_tag>" Success
+0x1 0x163b Function native 0x00418490 0x00018490 90 1146 0x00400000 8 "CAPER!std::_Checked_base<std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> > >" Success
+0x1 0x163b Function native 0x00418710 0x00018710 107 3224 0x00400000 8 "CAPER!std::_Fill_n<Mapping * *,unsigned int,Mapping *>:1" Success
+0x1 0x163b Function native 0x00418850 0x00018850 137 1559 0x00400000 8 "CAPER!std::_Debug_range2<Mapping * *>" Success
+0x1 0x163b Function native 0x00418c50 0x00018c50 85 220 0x00400000 7 "CAPER!std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> >::operator<" Success
+0x1 0x163b Function native 0x00418f50 0x00018f50 211 20 0x00400000 3 "CAPER!MapviewMappingEngine::Initialize" Success
+0x1 0x163b Function native 0x0041a510 0x0001a510 372 227 0x00400000 3 "CAPER!MapviewMappingEngine::RebuildCache" Success
+0x1 0x163b Function native 0x0041a850 0x0001a850 259 4 0x00400000 2 "CAPER!Sequence::Sequence" Success
+0x1 0x163b Function native 0x0041aa10 0x0001aa10 85 9 0x00400000 2 "CAPER!Sequence::~Sequence" Success
+0x1 0x163b Function native 0x0041b110 0x0001b110 6 0 0x00400000 21 "CAPER!std::basic_ios<char,std::char_traits<char> >::tie" Success
+0x1 0x163b Function native 0x0041b350 0x0001b350 46 97 0x00400000 18 "CAPER!ArrayUnwindFilter" Success
+0x1 0x163b Function native 0x00000000 0x0001b390 176 0 0x00400000 17 "CAPER!`eh vector constructor iterator'" Failed: Did not hook name with ` prefix
+0x1 0x163b Function native 0x0041b4d0 0x0001b4d0 95 0 0x00400000 33 "CAPER!@_RTC_CheckStackVars@8" Success
+0x1 0x163b Function native 0x0041b550 0x0001b550 50 0 0x00400000 33 "CAPER!@_RTC_AllocaHelper@12" Success
+0x1 0x163b Function native 0x0041b590 0x0001b590 213 0 0x00400000 33 "CAPER!@_RTC_CheckStackVars2@12" Success
+0x1 0x163b Function native 0x0041b910 0x0001b910 155 217 0x00400000 21 "CAPER!pre_c_init" Success
+0x1 0x163b Function native 0x0041ba50 0x0001ba50 17 389 0x00400000 21 "CAPER!_mainCRTStartup" Success
+0x1 0x163b Function native 0x0041bd50 0x0001bd50 13 12961 0x00400000 22 "CAPER!_NtCurrentTeb" Success
+0x1 0x163b Function native 0x00411cd0 0x00011cd0 2062 6 0x00400000 15 "CAPER!Caper::UserInterface" Success
+0x1 0x163b Function native 0x00412d50 0x00012d50 127 558 0x00400000 7 "CAPER!std::vector<Mapping *,std::allocator<Mapping *> >::~vector<Mapping *,std::allocator<Mapping *> >" Success
+0x1 0x163b Function native 0x00413010 0x00013010 168 1128 0x00400000 7 "CAPER!std::vector<Mapping *,std::allocator<Mapping *> >::_Tidy" Success
+0x1 0x163b Function native 0x00413150 0x00013150 80 1123 0x00400000 7 "CAPER!std::vector<Mapping *,std::allocator<Mapping *> >::_Destroy" Success
+0x1 0x163b Function native 0x004139d0 0x000139d0 48 115 0x00400000 16 "CAPER!std::basic_ostream<char,std::char_traits<char> >::sentry::operator bool" Success
+0x1 0x163b Function native 0x00413a10 0x00013a10 149 75 0x00400000 16 "CAPER!std::basic_ostream<char,std::char_traits<char> >::_Sentry_base::_Sentry_base" Success
+0x1 0x163b Function native 0x00413ad0 0x00013ad0 136 81 0x00400000 16 "CAPER!std::basic_ostream<char,std::char_traits<char> >::_Sentry_base::~_Sentry_base" Success
+0x1 0x163b Function native 0x00413e10 0x00013e10 317 4 0x00400000 5 "CAPER!MappingCache::MappingCache" Success
+0x1 0x163b Function native 0x00414990 0x00014990 119 71 0x00400000 5 "CAPER!MappingCache::~MappingCache" Success
+0x1 0x163b Function native 0x00414f50 0x00014f50 84 0 0x00400000 7 "CAPER!std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> >::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> >:1" Success
+0x1 0x163b Function native 0x00415010 0x00015010 72 0 0x00400000 7 "CAPER!std::_Ranit<Mapping *,int,Mapping * const *,Mapping * const &>::_Ranit<Mapping *,int,Mapping * const *,Mapping * const &>" Success
+0x1 0x163b Function native 0x00415810 0x00015810 399 875 0x00400000 7 "CAPER!std::vector<Mapping *,std::allocator<Mapping *> >::insert" Success
+0x1 0x163b Function native 0x00415a10 0x00015a10 172 1107 0x00400000 7 "CAPER!std::vector<Mapping *,std::allocator<Mapping *> >::_Buy" Success
+0x1 0x163b Function native 0x00415e10 0x00015e10 66 730 0x00400000 7 "CAPER!std::vector<Mapping *,std::allocator<Mapping *> >::max_size" Success
+0x1 0x163b Function native 0x004163d0 0x000163d0 188 1257 0x00400000 7 "CAPER!std::vector<Mapping *,std::allocator<Mapping *> >::_Xlen" Success
+0x1 0x163b Function native 0x00416610 0x00016610 76 34 0x00400000 10 "CAPER!std::logic_error::what" Success
+0x1 0x163b Function native 0x00416910 0x00016910 78 618 0x00400000 8 "CAPER!std::_Container_base_aux_alloc_empty<std::allocator<Mapping *> >::_Container_base_aux_alloc_empty<std::allocator<Mapping *> >" Success
+0x1 0x163b Function native 0x00416b90 0x00016b90 76 321 0x00400000 7 "CAPER!std::_Vector_iterator<Mapping *,std::allocator<Mapping *> >::_Vector_iterator<Mapping *,std::allocator<Mapping *> >:1" Success
+0x1 0x163b Function native 0x00416d10 0x00016d10 81 0 0x00400000 7 "CAPER!std::length_error::length_error" Success
+0x1 0x163b Function native 0x00417250 0x00017250 47 196 0x00400000 8 "CAPER!std::_Iterator_base::_Getmycont" Success
+0x1 0x163b Function native 0x00417290 0x00017290 55 206 0x00400000 8 "CAPER!std::_Iterator_base::_Has_container" Success
+0x1 0x163b Function native 0x00417710 0x00017710 91 371 0x00400000 12 "CAPER!std::bad_alloc::bad_alloc" Success
+0x1 0x163b Function native 0x00417790 0x00017790 82 380 0x00400000 12 "CAPER!std::bad_alloc::~bad_alloc" Success
+0x1 0x163b Function native 0x00417c90 0x00017c90 85 993 0x00400000 8 "CAPER!std::_Iter_random<Mapping * *,Mapping * *>" Success
+0x1 0x163b Function native 0x00417e10 0x00017e10 146 1163 0x00400000 8 "CAPER!std::_Checked_base<std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> > >:1" Success
+0x1 0x163b Function native 0x00417ed0 0x00017ed0 85 1483 0x00400000 8 "CAPER!std::_Ptr_cat<std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> >,Mapping * *>" Success
+0x1 0x163b Function native 0x0041b839 0x0001b839 19 49 0x00400000 32 "CAPER!__ftol2_pentium4" Success
+0x1 0x163b Function native 0x0041c010 0x0001c010 138 0 0x00400000 33 "CAPER!DebuggerProbe" Success
+0x1 0x163b Function native 0x0041c490 0x0001c490 252 0 0x00400000 33 "CAPER!_RTC_StackFailure" Success
+0x1 0x163b Function native 0x0041c5d0 0x0001c5d0 307 0 0x00400000 33 "CAPER!_RTC_AllocaFailure" Success
+0x1 0x163b Function native 0x0041c750 0x0001c750 111 0 0x00400000 33 "CAPER!_getMemBlockDataString" Success
+0x1 0x163b Function native 0x0041c910 0x0001c910 6 0 0x00400000 33 "CAPER!__RTC_NumErrors" Failed: Cannot verify good prefix: b8 05 00 00 00 c3 cc cc
+0x1 0x163b Function native 0x0041c9d0 0x0001c9d0 6 0 0x00400000 33 "CAPER!_RTC_GetErrorFunc" Failed: Cannot verify good prefix: a1 50 56 42 00 c3 cc cc
+0x1 0x163b Function native 0x0041ccd0 0x0001ccd0 38 0 0x00400000 33 "CAPER!__RTC_Initialize" Failed: Cannot verify good prefix: 8b ff 56 be bc 37 42 00
+0x1 0x163b Function native 0x0041ce90 0x0001ce90 28 126 0x00400000 20 "CAPER!_atexit" Success
+0x1 0x163b Function native 0x0041ced0 0x0001ced0 219 97 0x00400000 25 "CAPER!___security_init_cookie" Success
+0x1 0x163b Function native 0x0041d290 0x0001d290 704 0 0x00400000 33 "CAPER!_RTC_GetSrcLine" Success
+0x1 0x163b Function native 0x0041d8d0 0x0001d8d0 6 0 0x00400000 21 "CAPER!_QueryPerformanceCounter@4" Success
+0x1 0x163b Function native 0x0041b0c2 0x0001b0c2 6 0 0x00400000 34 "CAPER!std::_Container_base_secure::~_Container_base_secure" Success
+0x1 0x163b Function native 0x00000000 0x0001b182 6 0 0x00400000 21 "CAPER!std::basic_ifstream<char,std::char_traits<char> >::`vbase destructor'" Failed: Did not hook name with ` prefix
+0x1 0x163b Function native 0x0041d282 0x0001d282 6 0 0x00400000 21 "CAPER!__except_handler4_common" Success
+0x1 0x163b Function native 0x0041d882 0x0001d882 6 0 0x00400000 21 "CAPER!_InterlockedCompareExchange@12" Success
+0x1 0x163b Function native 0x00000000 0x0001b074 6 0 0x00400000 34 "CAPER!std::basic_string<char,std::char_traits<char>,std::allocator<char> >::`default constructor closure'" Failed: Did not hook name with ` prefix
+0x1 0x163b Function native 0x0041b7f4 0x0001b7f4 6 0 0x00400000 21 "CAPER!__CxxThrowException@8" Success
+0x1 0x163b Function native 0x0041be74 0x0001be74 12 0 0x00400000 21 "CAPER!terminate" Success
+0x1 0x163b Function native 0x0041ceb4 0x0001ceb4 6 0 0x00400000 34 "CAPER!__encode_pointer" Success
+0x1 0x163b Function native 0x0041cff4 0x0001cff4 12 0 0x00400000 21 "CAPER!__CrtSetCheckCount" Success
+0x1 0x163b Function native 0x0041d8f4 0x0001d8f4 6 0 0x00400000 21 "CAPER!_HeapAlloc@12" Success
+0x1 0x163b Function native 0x0041b0e6 0x0001b0e6 6 0 0x00400000 34 "CAPER!std::basic_streambuf<char,std::char_traits<char> >::sputc" Success
+0x1 0x163b Function native 0x0041b1a6 0x0001b1a6 6 0 0x00400000 21 "CAPER!std::basic_istream<char,std::char_traits<char> >::read" Success
+0x1 0x163b Function native 0x0041b866 0x0001b866 117 89 0x00400000 32 "CAPER!__ftol2" Success
+0x1 0x163b Function native 0x0041c9e6 0x0001c9e6 10 0 0x00400000 21 "CAPER!__CRT_RTC_INITW" Success
+0x1 0x163b Function native 0x0041cca6 0x0001cca6 10 0 0x00400000 21 "CAPER!___setusermatherr" Success
+0x1 0x163b Function native 0x0041d8a6 0x0001d8a6 6 0 0x00400000 21 "CAPER!_RaiseException@16" Success
+0x1 0x163b Function native 0x0041b098 0x0001b098 6 0 0x00400000 21 "CAPER!std::basic_string<char,std::char_traits<char>,std::allocator<char> >::basic_string<char,std::char_traits<char>,std::allocator<char> >" Success
+0x1 0x163b Function native 0x0041b158 0x0001b158 6 0 0x00400000 21 "CAPER!std::operator>><char,std::char_traits<char> >" Success
+0x1 0x163b Function native 0x0041b818 0x0001b818 6 0 0x00400000 21 "CAPER!_memmove_s" Success
+0x1 0x163b Function native 0x0041d858 0x0001d858 6 0 0x00400000 21 "CAPER!__invoke_watson" Success
+0x1 0x163b Function native 0x0041b10a 0x0001b10a 6 0 0x00400000 21 "CAPER!std::basic_ostream<char,std::char_traits<char> >::flush" Success
+0x1 0x163b Function native 0x0041b38a 0x0001b38a 6 0 0x00400000 34 "CAPER!_atoi" Success
+0x1 0x163b Function native 0x0041d8ca 0x0001d8ca 6 0 0x00400000 21 "CAPER!_LoadLibraryA@4" Success
+0x1 0x163b Function native 0x0041b0bc 0x0001b0bc 6 0 0x00400000 21 "CAPER!std::_Container_base_secure::_Orphan_all" Success
+0x1 0x163b Function native 0x0041b17c 0x0001b17c 6 0 0x00400000 34 "CAPER!std::_Container_base_secure::_Container_base_secure" Success
+0x1 0x163b Function native 0x0041d27c 0x0001d27c 6 0 0x00400000 21 "CAPER!__initterm_e" Success
+0x1 0x163b Function native 0x0041d87c 0x0001d87c 6 0 0x00400000 21 "CAPER!_Sleep@4" Success
+0x1 0x163b Function native 0x0041b06e 0x0001b06e 6 0 0x00400000 21 "CAPER!std::basic_string<char,std::char_traits<char>,std::allocator<char> >::c_str" Success
+0x1 0x163b Function native 0x0041b12e 0x0001b12e 18 0 0x00400000 21 "CAPER!std::basic_streambuf<char,std::char_traits<char> >::_Unlock" Success
+0x1 0x163b Function native 0x0041b7ee 0x0001b7ee 6 0 0x00400000 21 "CAPER!operator new" Success
+0x1 0x163b Function native 0x0041cfee 0x0001cfee 6 0 0x00400000 21 "CAPER!__cexit" Success
+0x1 0x163b Function native 0x0041d8ee 0x0001d8ee 6 0 0x00400000 21 "CAPER!_HeapFree@12" Success
+0x1 0x163b Function native 0x00418380 0x00018380 212 91 0x00400000 7 "CAPER!std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> >::operator*" Success
+0x1 0x163b Function native 0x00418500 0x00018500 237 1571 0x00400000 8 "CAPER!std::_Debug_range<std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> > >" Success
+0x1 0x163b Function native 0x00418900 0x00018900 85 952 0x00400000 8 "CAPER!std::_Iter_cat<std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> > >" Success
+0x1 0x163b Function native 0x00418b00 0x00018b00 171 143 0x00400000 11 "CAPER!std::_Uninit_copy<Mapping * *,Mapping * *,std::allocator<Mapping *> >" Success
+0x1 0x163b Function native 0x00418cc0 0x00018cc0 86 203 0x00400000 7 "CAPER!std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> >::operator==" Success
+0x1 0x163b Function native 0x00419900 0x00019900 171 124 0x00400000 3 "CAPER!MapviewMappingEngine::SafeSeek" Success
+0x1 0x163b Function native 0x00419b00 0x00019b00 43 139 0x00400000 3 "CAPER!MapviewMappingEngine::GetNormalizedIndex:1" Success
+0x1 0x163b Function native 0x00419b40 0x00019b40 502 144 0x00400000 3 "CAPER!MapviewMappingEngine::GetIndex" Success
+0x1 0x163b Function native 0x00419dc0 0x00019dc0 390 158 0x00400000 3 "CAPER!MapviewMappingEngine::InitFileInformation" Success
+0x1 0x163b Function native 0x0041a280 0x0001a280 252 201 0x00400000 3 "CAPER!MapviewMappingEngine::RebuildCaches" Success
+0x1 0x163b Function native 0x00000000 0x0001a3c0 88 0 0x00400000 3 "CAPER!MappingCache::`scalar deleting destructor'" Failed: Did not hook name with ` prefix
+0x1 0x163b Function native 0x0041a700 0x0001a700 205 254 0x00400000 3 "CAPER!MapviewMappingEngine::~MapviewMappingEngine" Failed: Suspicious opcode (0xec) in function body at 0x41a74b
+0x1 0x163b Function native 0x0041a800 0x0001a800 53 78 0x00400000 4 "CAPER!std::fpos<int>::operator long" Success
+0x1 0x163b Function native 0x0041aa80 0x0001aa80 173 4 0x00400000 1 "CAPER!SequenceReader::SequenceReader" Success
+0x1 0x163b Function native 0x0041b000 0x0001b000 73 38 0x00400000 1 "CAPER!SequenceReader::~SequenceReader" Success
+0x1 0x163b Function native 0x0041b080 0x0001b080 6 0 0x00400000 21 "CAPER!std::ios_base::operator void *" Success
+0x1 0x163b Function native 0x0041b140 0x0001b140 19 6 0x00400000 17 "CAPER!operator new[]" Success
+0x1 0x163b Function native 0x00000000 0x0001b1c0 174 0 0x00400000 17 "CAPER!`eh vector destructor iterator'" Failed: Did not hook name with ` prefix
+0x1 0x163b Function native 0x0041b480 0x0001b480 15 52 0x00400000 33 "CAPER!@__security_check_cookie@4" Failed: Cannot verify good prefix: 3b 0d e0 50 42 00 75 02
+0x1 0x163b Function native 0x0041b700 0x0001b700 27 32 0x00400000 28 "CAPER!type_info::type_info" Success
+0x1 0x163b Function native 0x0041b7c0 0x0001b7c0 18 36 0x00400000 28 "CAPER!type_info::operator=" Success
+0x1 0x163b Function native 0x0041b800 0x0001b800 6 0 0x00400000 21 "CAPER!std::exception::~exception" Success
+0x1 0x163b Function native 0x0041be40 0x0001be40 41 0 0x00400000 28 "CAPER!__except_handler4" Success
+0x1 0x163b Function native 0x0041be80 0x0001be80 270 140 0x00400000 24 "CAPER!___report_gsfailure" Success
+0x1 0x163b Function native 0x00412e40 0x00012e40 302 774 0x00400000 7 "CAPER!std::vector<Mapping *,std::allocator<Mapping *> >::operator[]" Success
+0x1 0x163b Function native 0x00412fc0 0x00012fc0 63 0 0x00400000 7 "CAPER!std::_Vector_val<Mapping *,std::allocator<Mapping *> >::~_Vector_val<Mapping *,std::allocator<Mapping *> >" Success
+0x1 0x163b Function native 0x004131c0 0x000131c0 69 139 0x00400000 9 "CAPER!std::allocator<Mapping *>::deallocate" Success
+0x1 0x163b Function native 0x00413900 0x00013900 161 102 0x00400000 16 "CAPER!std::basic_ostream<char,std::char_traits<char> >::sentry::~sentry" Success
+0x1 0x163b Function native 0x00413b80 0x00013b80 100 224 0x00400000 9 "CAPER!std::_Destroy_range<std::allocator<Mapping *> >" Success
+0x1 0x163b Function native 0x00413c00 0x00013c00 85 1483 0x00400000 8 "CAPER!std::_Ptr_cat<Mapping * *,Mapping * *>" Success
+0x1 0x163b Function native 0x00413d00 0x00013d00 66 4 0x00400000 13 "CAPER!Mapping::Mapping" Success
+0x1 0x163b Function native 0x00414780 0x00014780 352 50 0x00400000 5 "CAPER!MappingCache::GetReads" Success
+0x1 0x163b Function native 0x00414940 0x00014940 54 66 0x00400000 5 "CAPER!MappingCache::PrivateIndex" Success
+0x1 0x163b Function native 0x00414a80 0x00014a80 146 470 0x00400000 7 "CAPER!std::vector<Mapping *,std::allocator<Mapping *> >::vector<Mapping *,std::allocator<Mapping *> >" Success
+0x1 0x163b Function native 0x00414b40 0x00014b40 325 500 0x00400000 7 "CAPER!std::vector<Mapping *,std::allocator<Mapping *> >::vector<Mapping *,std::allocator<Mapping *> >:1" Success
+0x1 0x163b Function native 0x00414d40 0x00014d40 295 809 0x00400000 7 "CAPER!std::vector<Mapping *,std::allocator<Mapping *> >::push_back" Success
+0x1 0x163b Function native 0x00414f00 0x00014f00 63 0 0x00400000 7 "CAPER!std::_Vector_iterator<Mapping *,std::allocator<Mapping *> >::~_Vector_iterator<Mapping *,std::allocator<Mapping *> >" Success
+0x1 0x163b Function native 0x00414fc0 0x00014fc0 63 0 0x00400000 7 "CAPER!std::_Ranit<Mapping *,int,Mapping * const *,Mapping * const &>::~_Ranit<Mapping *,int,Mapping * const *,Mapping * const &>" Success
+0x1 0x163b Function native 0x004150c0 0x000150c0 202 159 0x00400000 8 "CAPER!std::_Iterator_base::~_Iterator_base" Success
+0x1 0x163b Function native 0x004151c0 0x000151c0 173 180 0x00400000 8 "CAPER!std::_Iterator_base::_Orphan_me" Success
+0x1 0x163b Function native 0x00415300 0x00015300 91 143 0x00400000 8 "CAPER!std::_Iterator_base::_Iterator_base:1" Success
+0x1 0x163b Function native 0x00415380 0x00015380 234 148 0x00400000 8 "CAPER!std::_Iterator_base::operator=" Success
+0x1 0x163b Function native 0x00415780 0x00015780 104 655 0x00400000 7 "CAPER!std::vector<Mapping *,std::allocator<Mapping *> >::end" Success
+0x1 0x163b Function native 0x00415c80 0x00015c80 101 425 0x00400000 7 "CAPER!std::_Vector_val<Mapping *,std::allocator<Mapping *> >::_Vector_val<Mapping *,std::allocator<Mapping *> >" Success
+0x1 0x163b Function native 0x00415d00 0x00015d00 45 119 0x00400000 9 "CAPER!std::allocator<Mapping *>::allocator<Mapping *>" Success
+0x1 0x163b Function native 0x00415d40 0x00015d40 47 123 0x00400000 9 "CAPER!std::allocator<Mapping *>::allocator<Mapping *>:1" Success
+0x1 0x163b Function native 0x00415d80 0x00015d80 104 640 0x00400000 7 "CAPER!std::vector<Mapping *,std::allocator<Mapping *> >::begin:1" Success
+0x1 0x163b Function native 0x004164c0 0x000164c0 81 105 0x00400000 10 "CAPER!std::length_error::length_error:1" Success
+0x1 0x163b Function native 0x00000000 0x000167c0 88 0 0x00400000 10 "CAPER!std::length_error::`vector deleting destructor'" Failed: Did not hook name with ` prefix
+0x1 0x163b Function native 0x00416980 0x00016980 71 144 0x00400000 9 "CAPER!std::allocator<Mapping *>::allocate" Success
+0x1 0x163b Function native 0x00416d80 0x00016d80 66 0 0x00400000 7 "CAPER!std::_Ranit<Mapping *,int,Mapping * const *,Mapping * const &>::_Ranit<Mapping *,int,Mapping * const *,Mapping * const &>:1" Success
+0x1 0x163b Function native 0x00416e40 0x00016e40 66 0 0x00400000 7 "CAPER!std::_Iterator_with_base<std::random_access_iterator_tag,Mapping *,int,Mapping * const *,Mapping * const &,std::_Iterator_base>::_Iterator_with_base<std::random_access_iterator_tag,Mapping *,int,Mapping * const *,Mapping * const &,std::_Iterator_base>:1" Success
+0x1 0x163b Function native 0x004170c0 0x000170c0 317 159 0x00400000 7 "CAPER!std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> >::operator+=" Success
+0x1 0x163b Function native 0x004174c0 0x000174c0 84 1150 0x00400000 7 "CAPER!std::vector<Mapping *,std::allocator<Mapping *> >::_Umove<Mapping * *>" Success
+0x1 0x163b Function native 0x00000000 0x00017800 88 0 0x00400000 12 "CAPER!std::bad_alloc::`vector deleting destructor'" Failed: Did not hook name with ` prefix
+0x1 0x163b Function native 0x00417ac0 0x00017ac0 134 849 0x00400000 11 "CAPER!stdext::_Unchecked_uninitialized_move<Mapping * *,Mapping * *,std::allocator<Mapping *> >" Success
+0x1 0x163b Function native 0x00417c00 0x00017c00 107 3130 0x00400000 8 "CAPER!std::_Fill<Mapping * *,Mapping *>" Success
+0x1 0x163b Function native 0x00417d00 0x00017d00 85 1200 0x00400000 8 "CAPER!std::_Move_cat<Mapping * *>" Success
+0x1 0x163b Function native 0x00417f40 0x00017f40 331 143 0x00400000 11 "CAPER!std::_Uninit_copy<std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> >,Mapping * *,std::allocator<Mapping *> >" Success
+0x1 0x163b Function native 0x0041c0c0 0x0001c0c0 81 0 0x00400000 33 "CAPER!_RTC_Failure" Success
+0x1 0x163b Function native 0x0041c3c0 0x0001c3c0 156 0 0x00400000 33 "CAPER!DebuggerRuntime" Success
+0x1 0x163b Function native 0x0041c940 0x0001c940 37 0 0x00400000 33 "CAPER!__RTC_SetErrorType" Success
+0x1 0x163b Function native 0x0041ca80 0x0001ca80 173 41 0x00400000 29 "CAPER!has_osfxsr_set" Success
+0x1 0x163b Function native 0x0041cb80 0x0001cb80 103 67 0x00400000 19 "CAPER!__CxxUnhandledExceptionFilter" Success
+0x1 0x163b Function native 0x0041cc00 0x0001cc00 20 86 0x00400000 19 "CAPER!___CxxSetUnhandledExceptionFilter" Success
+0x1 0x163b Function native 0x0041ccc0 0x0001ccc0 9 56 0x00400000 23 "CAPER!__setargv" Success
+0x1 0x163b Function native 0x0041cd00 0x0001cd00 38 0 0x00400000 33 "CAPER!__RTC_Terminate" Failed: Cannot verify good prefix: 8b ff 56 be e8 3a 42 00
+0x1 0x163b Function native 0x0041cd40 0x0001cd40 261 79 0x00400000 20 "CAPER!__onexit" Success
+0x1 0x163b Function native 0x0041cec0 0x0001cec0 6 0 0x00400000 21 "CAPER!__amsg_exit" Success
+0x1 0x163b Function native 0x0041d000 0x0001d000 95 44 0x00400000 27 "CAPER!__ValidateImageBase" Success
+0x1 0x163b Function native 0x0041d080 0x0001d080 117 92 0x00400000 27 "CAPER!__FindPESection" Success
+0x1 0x163b Function native 0x0041d600 0x0001d600 470 0 0x00400000 33 "CAPER!GetPdbDll" Success
+0x1 0x163b Function native 0x0041d900 0x0001d900 6 0 0x00400000 21 "CAPER!_GetModuleFileNameW@12" Success
+0x1 0x163b Function native 0x0041b0f2 0x0001b0f2 6 0 0x00400000 21 "CAPER!std::basic_ios<char,std::char_traits<char> >::fill" Success
+0x1 0x163b Function native 0x0041b1b2 0x0001b1b2 6 0 0x00400000 21 "CAPER!std::basic_string<char,std::char_traits<char>,std::allocator<char> >::operator=" Success
+0x1 0x163b Function native 0x0041d8b2 0x0001d8b2 6 0 0x00400000 21 "CAPER!_WideCharToMultiByte@32" Success
+0x1 0x163b Function native 0x00000000 0x0001b0a4 6 0 0x00400000 21 "CAPER!std::basic_istringstream<char,std::char_traits<char>,std::allocator<char> >::`vbase destructor'" Failed: Did not hook name with ` prefix
+0x1 0x163b Function native 0x0041b164 0x0001b164 6 0 0x00400000 21 "CAPER!std::basic_istream<char,std::char_traits<char> >::getline" Success
+0x1 0x163b Function native 0x0041d864 0x0001d864 6 0 0x00400000 21 "CAPER!___dllonexit" Success
+0x1 0x163b Function native 0x0041b116 0x0001b116 6 0 0x00400000 21 "CAPER!std::ios_base::good" Success
+0x1 0x163b Function native 0x0041b7d6 0x0001b7d6 6 0 0x00400000 34 "CAPER!__invalid_parameter" Success
+0x1 0x163b Function native 0x0041d8d6 0x0001d8d6 6 0 0x00400000 21 "CAPER!_GetTickCount@0" Success
+0x1 0x163b Function native 0x0041b0c8 0x0001b0c8 6 0 0x00400000 21 "CAPER!std::basic_ios<char,std::char_traits<char> >::setstate" Success
+0x1 0x163b Function native 0x0041b188 0x0001b188 6 0 0x00400000 21 "CAPER!std::basic_string<char,std::char_traits<char>,std::allocator<char> >::operator=:1" Success
+0x1 0x163b Function native 0x0041d288 0x0001d288 8 0 0x00400000 21 "CAPER!__crt_debugger_hook" Failed: Cannot verify good prefix: cc 25 34 65 42 00 cc cc
+0x1 0x163b Function native 0x0041d888 0x0001d888 6 0 0x00400000 21 "CAPER!_TerminateProcess@8" Success
+0x1 0x163b Function native 0x0041b07a 0x0001b07a 6 0 0x00400000 21 "CAPER!std::basic_string<char,std::char_traits<char>,std::allocator<char> >::basic_string<char,std::char_traits<char>,std::allocator<char> >:1" Success
+0x1 0x163b Function native 0x0041b7fa 0x0001b7fa 6 0 0x00400000 21 "CAPER!std::exception::exception:2" Success
+0x1 0x163b Function native 0x0041d8fa 0x0001d8fa 6 0 0x00400000 21 "CAPER!_GetProcessHeap@0" Success
+0x1 0x163b Function native 0x0041b1ac 0x0001b1ac 6 0 0x00400000 21 "CAPER!std::basic_ifstream<char,std::char_traits<char> >::close" Success
+0x1 0x163b Function native 0x0041d8ac 0x0001d8ac 6 0 0x00400000 21 "CAPER!_DebugBreak@0" Success
+0x1 0x163b Function native 0x0041b09e 0x0001b09e 6 0 0x00400000 21 "CAPER!std::basic_string<char,std::char_traits<char>,std::allocator<char> >::append" Success
+0x1 0x163b Function native 0x0041b81e 0x0001b81e 18 0 0x00400000 21 "CAPER!_ceil" Success
+0x1 0x163b Function native 0x00418170 0x00018170 74 204 0x00400000 11 "CAPER!std::_Uninit_move<Mapping * *,Mapping * *,std::allocator<Mapping *>,std::_Undefined_move_tag>" Success
+0x1 0x163b Function native 0x00418970 0x00018970 235 1559 0x00400000 8 "CAPER!std::_Debug_range2<std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> > >" Success
+0x1 0x163b Function native 0x0041b170 0x0001b170 6 0 0x00400000 21 "CAPER!std::_Lockit::~_Lockit" Success
+0x1 0x163b Function native 0x0041ba70 0x0001ba70 582 406 0x00400000 21 "CAPER!__tmainCRTStartup" Success
+0x1 0x163b Function native 0x004126f0 0x000126f0 303 84 0x00400000 15 "CAPER!Caper::PadLeft" Success
+0x1 0x163b Function native 0x00412870 0x00012870 644 95 0x00400000 15 "CAPER!Caper::IsValid" Success
+0x1 0x163b Function native 0x00412df0 0x00012df0 57 725 0x00400000 7 "CAPER!std::vector<Mapping *,std::allocator<Mapping *> >::size" Success
+0x1 0x163b Function native 0x004130f0 0x000130f0 73 627 0x00400000 8 "CAPER!std::_Container_base_aux_alloc_empty<std::allocator<Mapping *> >::~_Container_base_aux_alloc_empty<std::allocator<Mapping *> >" Success
+0x1 0x163b Function native 0x00413c70 0x00013c70 37 241 0x00400000 9 "CAPER!std::_Destroy_range<std::allocator<Mapping *> >:1" Success
+0x1 0x163b Function native 0x00415070 0x00015070 63 0 0x00400000 7 "CAPER!std::_Iterator_with_base<std::random_access_iterator_tag,Mapping *,int,Mapping * const *,Mapping * const &,std::_Iterator_base>::~_Iterator_with_base<std::random_access_iterator_tag,Mapping *,int,Mapping * const *,Mapping * const &,std::_Iterator_base>" Success
+0x1 0x163b Function native 0x004155f0 0x000155f0 90 634 0x00400000 7 "CAPER!std::vector<Mapping *,std::allocator<Mapping *> >::capacity" Success
+0x1 0x163b Function native 0x004156f0 0x000156f0 104 650 0x00400000 7 "CAPER!std::vector<Mapping *,std::allocator<Mapping *> >::end:1" Success
+0x1 0x163b Function native 0x00415af0 0x00015af0 93 1251 0x00400000 7 "CAPER!std::vector<Mapping *,std::allocator<Mapping *> >::_Ufill" Success
+0x1 0x163b Function native 0x00415b70 0x00015b70 218 1273 0x00400000 7 "CAPER!std::vector<Mapping *,std::allocator<Mapping *> >::_Orphan_range" Success
+0x1 0x163b Function native 0x00415e70 0x00015e70 1098 1158 0x00400000 7 "CAPER!std::vector<Mapping *,std::allocator<Mapping *> >::_Insert_n" Success
+0x1 0x163b Function native 0x00000000 0x00016670 88 0 0x00400000 10 "CAPER!std::logic_error::`vector deleting destructor'" Failed: Did not hook name with ` prefix
+0x1 0x163b Function native 0x00416bf0 0x00016bf0 221 380 0x00400000 7 "CAPER!std::_Vector_iterator<Mapping *,std::allocator<Mapping *> >::operator+" Success
+0x1 0x163b Function native 0x00416ef0 0x00016ef0 82 164 0x00400000 9 "CAPER!std::allocator<Mapping *>::max_size" Success
+0x1 0x163b Function native 0x00417670 0x00017670 123 36 0x00400000 9 "CAPER!std::_Allocate<Mapping *>" Success
+0x1 0x163b Function native 0x00417870 0x00017870 91 0 0x00400000 12 "CAPER!std::bad_alloc::bad_alloc:1" Success
+0x1 0x163b Function native 0x004178f0 0x000178f0 292 809 0x00400000 11 "CAPER!stdext::unchecked_uninitialized_copy<std::_Vector_const_iterator<Mapping *,std::allocator<Mapping *> >,Mapping * *,std::allocator<Mapping *> >" Success
+0x1 0x163b Function native 0x00417b70 0x00017b70 114 1163 0x00400000 8 "CAPER!std::_Checked_base<Mapping * *>:1" Success
+0x1 0x163b Function native 0x00417d70 0x00017d70 121 2726 0x00400000 8 "CAPER!std::_Move_backward_opt<Mapping * *,Mapping * *,std::random_access_iterator_tag,std::_Undefined_move_tag>" Success
+0x1 0x163b Function native 0x0041c970 0x0001c970 31 0 0x00400000 33 "CAPER!__RTC_SetErrorFunc" Success
+0x1 0x163b Function native 0x0041c9f0 0x0001c9f0 113 59 0x00400000 29 "CAPER!__get_sse2_info" Success
+0x1 0x163b Function native 0x0041cc70 0x0001cc70 43 750 0x00400000 31 "CAPER!__invoke_watson_if_error" Success
+0x1 0x163b Function native 0x0041d870 0x0001d870 6 0 0x00400000 21 "CAPER!__decode_pointer" Success
+0x1 0x163b Function native 0x0041b122 0x0001b122 6 0 0x00400000 21 "CAPER!std::uncaught_exception" Success
+0x1 0x163b Function native 0x0041b194 0x0001b194 6 0 0x00400000 21 "CAPER!std::basic_ifstream<char,std::char_traits<char> >::open" Success
+0x1 0x163b Function native 0x0041d894 0x0001d894 6 0 0x00400000 21 "CAPER!_UnhandledExceptionFilter@4" Success
+0x1 0x163b Function native 0x0041cec6 0x0001cec6 10 0 0x00400000 21 "CAPER!___getmainargs" Success
+0x1 0x163b Function native 0x0041b1b8 0x0001b1b8 8 0 0x00400000 21 "CAPER!std::ios_base::operator!" Success
+0x1 0x163b Function native 0x0041d8b8 0x0001d8b8 6 0 0x00400000 21 "CAPER!_MultiByteToWideChar@24" Success
+0x1 0x163b Function native 0x0041b16a 0x0001b16a 6 0 0x00400000 21 "CAPER!std::basic_string<char,std::char_traits<char>,std::allocator<char> >::basic_string<char,std::char_traits<char>,std::allocator<char> >:2" Success
+0x1 0x163b Function native 0x0041d86a 0x0001d86a 6 0 0x00400000 21 "CAPER!__lock" Success
+0x1 0x395887 ProcessDetachBegin 0xad4 0xb2c, c:\Documents and Settings\James T. Kirk\My Documents\Visual Studio 2008\Projects\Caper\Debug\Caper.exe, Sat Jun 27 22:55:05 2009
+0x1 0x395888 ProcessDetachEnd 0xad4 0xb2c, c:\Documents and Settings\James T. Kirk\My Documents\Visual Studio 2008\Projects\Caper\Debug\Caper.exe, Sat Jun 27 22:55:05 2009
+0x1 0x395889 EventBuffersClosed 0xad4 0xb2c, c:\Documents and Settings\James T. Kirk\My Documents\Visual Studio 2008\Projects\Caper\Debug\Caper.exe, Sat Jun 27 22:55:05 2009

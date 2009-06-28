@@ -1,0 +1,245 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8DD76F6A0486A84900D96B5E /* Caper.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = C6859E8B029090EE04C91782 /* Caper.1 */; };
+		D8E20DDC0FF7285500EAB729 /* Caper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D8E20DCE0FF7285500EAB729 /* Caper.cpp */; };
+		D8E20DDD0FF7285500EAB729 /* Main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D8E20DD00FF7285500EAB729 /* Main.cpp */; };
+		D8E20DDE0FF7285500EAB729 /* Mapping.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D8E20DD10FF7285500EAB729 /* Mapping.cpp */; };
+		D8E20DDF0FF7285500EAB729 /* MappingCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D8E20DD30FF7285500EAB729 /* MappingCache.cpp */; };
+		D8E20DE00FF7285500EAB729 /* MapviewMappingEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D8E20DD50FF7285500EAB729 /* MapviewMappingEngine.cpp */; };
+		D8E20DE10FF7285500EAB729 /* Sequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D8E20DD70FF7285500EAB729 /* Sequence.cpp */; };
+		D8E20DE20FF7285500EAB729 /* SequenceReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D8E20DD90FF7285500EAB729 /* SequenceReader.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8DD76F690486A84900D96B5E /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 8;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				8DD76F6A0486A84900D96B5E /* Caper.1 in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		8DD76F6C0486A84900D96B5E /* CaperXCode */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CaperXCode; sourceTree = BUILT_PRODUCTS_DIR; };
+		C6859E8B029090EE04C91782 /* Caper.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = Caper.1; sourceTree = "<group>"; };
+		D8E20DCE0FF7285500EAB729 /* Caper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Caper.cpp; path = ../Caper/Caper.cpp; sourceTree = SOURCE_ROOT; };
+		D8E20DCF0FF7285500EAB729 /* Caper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Caper.h; path = ../Caper/Caper.h; sourceTree = SOURCE_ROOT; };
+		D8E20DD00FF7285500EAB729 /* Main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Main.cpp; path = ../Caper/Main.cpp; sourceTree = SOURCE_ROOT; };
+		D8E20DD10FF7285500EAB729 /* Mapping.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Mapping.cpp; path = ../Caper/Mapping.cpp; sourceTree = SOURCE_ROOT; };
+		D8E20DD20FF7285500EAB729 /* Mapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mapping.h; path = ../Caper/Mapping.h; sourceTree = SOURCE_ROOT; };
+		D8E20DD30FF7285500EAB729 /* MappingCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MappingCache.cpp; path = ../Caper/MappingCache.cpp; sourceTree = SOURCE_ROOT; };
+		D8E20DD40FF7285500EAB729 /* MappingCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MappingCache.h; path = ../Caper/MappingCache.h; sourceTree = SOURCE_ROOT; };
+		D8E20DD50FF7285500EAB729 /* MapviewMappingEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MapviewMappingEngine.cpp; path = ../Caper/MapviewMappingEngine.cpp; sourceTree = SOURCE_ROOT; };
+		D8E20DD60FF7285500EAB729 /* MapviewMappingEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapviewMappingEngine.h; path = ../Caper/MapviewMappingEngine.h; sourceTree = SOURCE_ROOT; };
+		D8E20DD70FF7285500EAB729 /* Sequence.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Sequence.cpp; path = ../Caper/Sequence.cpp; sourceTree = SOURCE_ROOT; };
+		D8E20DD80FF7285500EAB729 /* Sequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Sequence.h; path = ../Caper/Sequence.h; sourceTree = SOURCE_ROOT; };
+		D8E20DD90FF7285500EAB729 /* SequenceReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SequenceReader.cpp; path = ../Caper/SequenceReader.cpp; sourceTree = SOURCE_ROOT; };
+		D8E20DDA0FF7285500EAB729 /* SequenceReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SequenceReader.h; path = ../Caper/SequenceReader.h; sourceTree = SOURCE_ROOT; };
+		D8E20DDB0FF7285500EAB729 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stdafx.h; path = ../Caper/stdafx.h; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8DD76F660486A84900D96B5E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		08FB7794FE84155DC02AAC07 /* CaperXCode */ = {
+			isa = PBXGroup;
+			children = (
+				08FB7795FE84155DC02AAC07 /* Source */,
+				C6859E8C029090F304C91782 /* Documentation */,
+				1AB674ADFE9D54B511CA2CBB /* Products */,
+			);
+			name = CaperXCode;
+			sourceTree = "<group>";
+		};
+		08FB7795FE84155DC02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				D8E20DCE0FF7285500EAB729 /* Caper.cpp */,
+				D8E20DCF0FF7285500EAB729 /* Caper.h */,
+				D8E20DD00FF7285500EAB729 /* Main.cpp */,
+				D8E20DD10FF7285500EAB729 /* Mapping.cpp */,
+				D8E20DD20FF7285500EAB729 /* Mapping.h */,
+				D8E20DD30FF7285500EAB729 /* MappingCache.cpp */,
+				D8E20DD40FF7285500EAB729 /* MappingCache.h */,
+				D8E20DD50FF7285500EAB729 /* MapviewMappingEngine.cpp */,
+				D8E20DD60FF7285500EAB729 /* MapviewMappingEngine.h */,
+				D8E20DD70FF7285500EAB729 /* Sequence.cpp */,
+				D8E20DD80FF7285500EAB729 /* Sequence.h */,
+				D8E20DD90FF7285500EAB729 /* SequenceReader.cpp */,
+				D8E20DDA0FF7285500EAB729 /* SequenceReader.h */,
+				D8E20DDB0FF7285500EAB729 /* stdafx.h */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		1AB674ADFE9D54B511CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8DD76F6C0486A84900D96B5E /* CaperXCode */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C6859E8C029090F304C91782 /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+				C6859E8B029090EE04C91782 /* Caper.1 */,
+			);
+			name = Documentation;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8DD76F620486A84900D96B5E /* Caper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB923108733DC60010E9CD /* Build configuration list for PBXNativeTarget "Caper" */;
+			buildPhases = (
+				8DD76F640486A84900D96B5E /* Sources */,
+				8DD76F660486A84900D96B5E /* Frameworks */,
+				8DD76F690486A84900D96B5E /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Caper;
+			productInstallPath = "$(HOME)/bin";
+			productName = CaperXCode;
+			productReference = 8DD76F6C0486A84900D96B5E /* CaperXCode */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB923508733DC60010E9CD /* Build configuration list for PBXProject "CaperXCode" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 08FB7794FE84155DC02AAC07 /* CaperXCode */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8DD76F620486A84900D96B5E /* Caper */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8DD76F640486A84900D96B5E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D8E20DDC0FF7285500EAB729 /* Caper.cpp in Sources */,
+				D8E20DDD0FF7285500EAB729 /* Main.cpp in Sources */,
+				D8E20DDE0FF7285500EAB729 /* Mapping.cpp in Sources */,
+				D8E20DDF0FF7285500EAB729 /* MappingCache.cpp in Sources */,
+				D8E20DE00FF7285500EAB729 /* MapviewMappingEngine.cpp in Sources */,
+				D8E20DE10FF7285500EAB729 /* Sequence.cpp in Sources */,
+				D8E20DE20FF7285500EAB729 /* SequenceReader.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB923208733DC60010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"_GLIBCXX_DEBUG=1",
+					"_GLIBCXX_DEBUG_PEDANTIC=1",
+				);
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = CaperXCode;
+			};
+			name = Debug;
+		};
+		1DEB923308733DC60010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = CaperXCode;
+			};
+			name = Release;
+		};
+		1DEB923608733DC60010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Debug;
+		};
+		1DEB923708733DC60010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB923108733DC60010E9CD /* Build configuration list for PBXNativeTarget "Caper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB923208733DC60010E9CD /* Debug */,
+				1DEB923308733DC60010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB923508733DC60010E9CD /* Build configuration list for PBXProject "CaperXCode" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB923608733DC60010E9CD /* Debug */,
+				1DEB923708733DC60010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}
