@@ -1,0 +1,2 @@
+g++ ../Caper/Main.cpp ../Caper/Caper.cpp ../Caper/MapviewMappingEngine.cpp ../Caper/MappingCache.cpp ../Caper/Mapping.cpp ../Caper/Sequence.cpp ../Caper/SequenceReader.cpp -o Caper
+
