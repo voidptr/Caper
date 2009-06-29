@@ -19,8 +19,8 @@ namespace CaperSharp
         return;
       }
 
-      SequenceReader lSequenceReader = new FASequenceReader( args[ 0 ] );
-      Sequence lReferenceSequence = lSequenceReader.Read();
+      SequenceEngine lSequenceReader = new FASequenceEngine( args[ 0 ] );
+      lSequenceReader.Initialize();
 
       MappingEngine lMappingReader = new MapviewMappingEngine( args[ 1 ], lReferenceSequence );
       lMappingReader.Initialize();

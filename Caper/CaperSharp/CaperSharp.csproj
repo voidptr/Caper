@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{695A4957-2784-405A-86F0-7E64DC133BD9}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -31,16 +31,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="FASequenceReader.cs" />
+    <Compile Include="BowtieMappingEngine.cs" />
+    <Compile Include="FASequenceEngine.cs" />
     <Compile Include="Mapping.cs" />
     <Compile Include="MappingCache.cs" />
     <Compile Include="MappingEngine.cs" />
-    <Compile Include="MappingStreamReader.cs" />
+    <Compile Include="DecoupledStreamReader.cs" />
     <Compile Include="MapviewMappingEngine.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sequence.cs" />
-    <Compile Include="SequenceReader.cs" />
+    <Compile Include="SequenceEngine.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

@@ -5,11 +5,11 @@ using System.IO;
 
 namespace CaperSharp
 {
-  class MappingStreamReader : StreamReader
+  class DecoupledStreamReader : StreamReader
   {
     const int NewLineLength = 1;
 
-    public MappingStreamReader( string aPath )
+    public DecoupledStreamReader( string aPath )
       : base( aPath )
     {
     }
