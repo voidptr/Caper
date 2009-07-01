@@ -9,26 +9,24 @@ namespace CaperSharp
   class FASequenceEngine : SequenceEngine
   {
     readonly int GreaterThan;
+    DecoupledStreamReader mStream;
 
     public FASequenceEngine(string aPath)
       : base(aPath)
     {
       GreaterThan = Convert.ToInt16('>');
+      mStream = new DecoupledStreamReader( Path );
     }
 
     internal override bool Initialize()
-    {
-      DecoupledStreamReader lStream = new DecoupledStreamReader(Path);
-
+    {      
       string lBuffer;
 
-      while (lStream.Peek() >= 0)
+      while (mStream.Peek() >= 0)
       {
         string lSequenceIdentifier;
-        PositionAndCount lPositionAndCount = new PositionAndCount();
-        
-
-        lBuffer = lStream.ReadLine(); // fetch the name of the sequence.
+              
+        lBuffer = mStream.ReadLine(); // fetch the name of the sequence.
 
         if (lBuffer[0] == GreaterThan)
         {
@@ -39,27 +37,23 @@ namespace CaperSharp
           throw new Exception("WHAT!!!??!?!");
         }
 
-        lPositionAndCount.Position = lStream.Position; 
+        long lPosition = mStream.Position; 
 
         int lChar;
-        while ((lChar = lStream.Read()) >= 0)
+        while ((lChar = mStream.Read()) >= 0)
         {
-          if (lChar == lGreaterThan)
+          if (lChar == GreaterThan)
           {
-            lStream.Position = lStream.Position - 1;
-            lPositionAndCount.Count = lStream.Position - lStartingPosition;
+            mStream.Position = mStream.Position - 1;
+            long lCount = mStream.Position - lPosition;
 
-            mSequencePositions.Add(lSequenceIdentifier, lPositionAndCount);
-
+            Sequences.Add(lSequenceIdentifier, new Sequence( mStream.BaseStream, lPosition, lCount ) );
             break;
           }
         }
       }
-    }
 
-    internal override Sequence GetSequence(string lIdentifier)
-    {
-      throw new NotImplementedException();
+      return true;
     }
   }
 }

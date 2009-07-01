@@ -8,76 +8,68 @@ namespace CaperSharp
   {
     const char Colon = ':';
     const int ReadLength = 36;
+    const string UsageString = "CaperSharp v0.1\nUsage: caper <referencegenome.fa> <mapviewmappings.mapview>\n";
+    const string Format = "Command Format: Contig:X:Y or Contig:X:Y:p (for pretty mode)";
+
+    private struct Parameters
+    {
+      public string ContigIdent;
+      public int Left;
+      public int Right;
+      public bool PrettyMode;
+    }
 
     static void Main( string[] args )
     {
-      string lUsageString = "CaperSharp v0.1\nUsage: caper <referencegenome.fa> <mapviewmappings.mapview>\n";
-
       if ( args.Length < 2 )
       {
-        Console.Write( lUsageString );
+        Console.Write( UsageString );
         return;
       }
 
       SequenceEngine lSequenceReader = new FASequenceEngine( args[ 0 ] );
       lSequenceReader.Initialize();
 
-      MappingEngine lMappingReader = new MapviewMappingEngine( args[ 1 ], lReferenceSequence );
+      MappingEngine lMappingReader = new MapviewMappingEngine( args[ 1 ], lSequenceReader.Sequences );
       lMappingReader.Initialize();
 
-      
+      Console.WriteLine( Format );
       Console.Write( "> " );
 
       string lInput = "";
       while ( ( lInput = Console.ReadLine() ).Length > 0 )
       {
-        if ( !IsValid( lInput ) )
+        Parameters lCommand;
+        try
         {
-          Console.WriteLine( "Invalid Input: Format must be X:Y or X:Y:p (for pretty mode)" );
+          lCommand = ParseCommand( lInput, lSequenceReader, lMappingReader );
+        }
+        catch ( Exception )
+        {
+          Console.WriteLine( string.Format( "Invalid Input. {1}", Format ) );
           Console.Write( "> " );
           continue;
         }
-
-        string[] lBits = lInput.Split( Colon );
-        int lLeft = Convert.ToInt32( lBits[ 0 ] );
-
-        int lRight;
-        if ( lBits.Length > 1 )
-          lRight = Convert.ToInt32( lBits[ 1 ] );
-        else
-          lRight = lLeft;
-
-        lLeft -= ReadLength;
-        if ( lLeft < 0 )
-          lLeft = 0;
-
-        if ( lRight > lReferenceSequence.Bases.Length )
+        
+        ICollection<Mapping> lMappings = lMappingReader.GetReads( lCommand.ContigIdent, lCommand.Left, lCommand.Right );
+        if ( lCommand.PrettyMode ) // engage pretty mode
         {
-          Console.WriteLine( "Your Right Parameter is bigger than your referenge genome." );
-          Console.Write( "> " );
-          continue;
-        }
-
-        ICollection<Mapping> lMappings = lMappingReader.GetReads( lLeft, lRight );
-        if ( lBits.Length > 2 ) // engage pretty mode
-        {
-          Console.WriteLine( lLeft );
-
-          if ( lRight + 1 < lReferenceSequence.Bases.Length )
-            Console.WriteLine( lReferenceSequence.Bases.Substring( lLeft, lRight - lLeft + 1 ) );
-          else
-            Console.WriteLine( lReferenceSequence.Bases.Substring( lLeft ) );
+          Console.WriteLine( lCommand.Left );
+          Console.WriteLine( lSequenceReader.Sequences[ lCommand.ContigIdent ]
+            .Substring( lCommand.Left, lCommand.Right - lCommand.Left + 1 ) );
 
           foreach ( Mapping lMapping in lMappings )
           {
-            Console.WriteLine( lMapping.Sequence.Bases.PadLeft( lMapping.Index - lLeft + lMapping.Sequence.Bases.Length ) );
+            string lSeqString = lMapping.Sequence.ToString();
+            Console.WriteLine( lSeqString.PadLeft(
+              lMapping.Index - lCommand.Left + lSeqString.Length ) );
           }
         }
         else
         {
           foreach ( Mapping lMapping in lMappings )
           {
-            Console.WriteLine( string.Format( "Index {0}: {1}", lMapping.Index, lMapping.Sequence.Bases ) );
+            Console.WriteLine( string.Format( "Index {0}: {1}", lMapping.Index, lMapping.Sequence.ToString() ) );
           }
         }
 
@@ -87,29 +79,36 @@ namespace CaperSharp
       return;
     }
 
-    private static bool IsValid( string lInput )
+    private static Parameters ParseCommand( string lInput, SequenceEngine lSequenceReader, MappingEngine lMappingReader )
     {
-      try
-      {
-        string[] lBits = lInput.Split( Colon );
-        int lLeft = Convert.ToInt32( lBits[ 0 ] );
+      Parameters lCommand = new Parameters();
 
-        int lRight;
-        if ( lBits.Length > 1 )
-          lRight = Convert.ToInt32( lBits[ 1 ] );
-        else
-          lRight = lLeft;
+      string[] lBits = lInput.Split( Colon );
+      lCommand.ContigIdent = lBits[ 0 ];
+
+      lCommand.Left = Convert.ToInt32( lBits[ 1 ] );
+            
+      if ( lBits.Length > 2 )
+        lCommand.Right = Convert.ToInt32( lBits[ 2 ] );
+      else
+        lCommand.Right = lCommand.Left;
+
+      if ( lBits.Length > 3 )
+        lCommand.PrettyMode = true;
+      else
+        lCommand.PrettyMode = false;
+      
+      if ( lCommand.Left > lCommand.Right || lCommand.Left < 0 || lCommand.Right < 0 )
+        throw new Exception( "Invalid values." );
+
+      lCommand.Left -= lMappingReader.ReadLength;
+      if ( lCommand.Left < 0 )
+        lCommand.Left = 0;
+      
+      if ( lCommand.Right > lSequenceReader.Sequences[ lCommand.ContigIdent ].Length )      
+        throw new Exception( "Your Right Parameter is bigger than your indexed contig." );        
         
-        if ( lLeft > lRight || lLeft < 0 || lRight < 0 )
-          return false;
-      }
-      catch ( Exception )
-      {
-        return false;
-      }
-
-      return true;
+      return lCommand;
     }
-
   }
 }

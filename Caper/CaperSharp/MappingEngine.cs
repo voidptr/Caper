@@ -7,21 +7,24 @@ namespace CaperSharp
 {
   abstract class MappingEngine
   {
+    public int ReadLength;
+
     public string Path { get; private set; }
-    public Sequence ReferenceGenome { get; private set; }
+    private Sequences ReferenceGenome { get; set; }
 
     const int IndexIncrement = 1000;
     const int StartingJumpIncrement = 10000;
     private const char Tab = '\t';
     private int mLineLengthIsh;
     private long mEndOfFilePos;
-    private int mNumberOfWindows;
 
     private MappingCache CacheA;
     private MappingCache CacheB;
 
     private DecoupledStreamReader mStream;
-    List<long> mFilePositions;
+
+    private Dictionary<string, List<long>> mFilePositions;
+    private Dictionary<string, int> mNumberOfWindows;
 
 
     private enum Direction
@@ -30,124 +33,171 @@ namespace CaperSharp
       JumpBackward
     }
 
-    public MappingEngine(string aPath, Sequence aReferenceGenome)
+    public MappingEngine( string aPath, Sequences aReferenceGenome )
     {
+      ReferenceGenome = aReferenceGenome;
       Path = aPath;
-      mNumberOfWindows = (int)Math.Ceiling((double)aReferenceGenome.Bases.Length / IndexIncrement);
 
-      mFilePositions = new List<long>(mNumberOfWindows);
+      mNumberOfWindows = new Dictionary<string, int>();
+      mFilePositions = new Dictionary<string, List<long>>();
+
       mLineLengthIsh = 0;
       mEndOfFilePos = 0;
     }
 
+    /// <summary>
+    /// This assumes that all the mappings are sorted by contig ident and by index.
+    /// </summary>
+    private void PrepareFilePositions()
+    {
+      int lEndOfPrevious = 0;
+      foreach ( string lContigIdent in ReferenceGenome.Keys )
+      {
+        mFilePositions.Add( lContigIdent,
+          new List<long>( ( int ) ReferenceGenome[ lContigIdent ].Length ) );
+
+        mFilePositions[ lContigIdent ].Add( lEndOfPrevious ); // the new one starts where the previous left off
+
+        for ( int i = 1; i < mNumberOfWindows[ lContigIdent ]; i++ )
+        {
+          // start by setting a thousand line jump forward
+          long lPos = FindNextIndexStart( 
+            mStream, 
+            lContigIdent, 
+            i * IndexIncrement, 
+            StartingJumpIncrement, 
+            lEndOfPrevious,
+            Direction.JumpForward );
+
+          if ( lPos != -1 )
+            mFilePositions[ lContigIdent ].Add( lPos );
+          else
+            break; // no more targets to be found.
+        }
+      }
+    }
+
+    private Dictionary<string, int> GenerateNumberOfWindows()
+    {
+      Dictionary<string, int> lNumberOfWindows = new Dictionary<string, int>();
+
+      foreach ( string lContigIdent in ReferenceGenome.Keys )
+      {
+        lNumberOfWindows.Add( lContigIdent,
+         ( int ) Math.Ceiling( ( double ) ReferenceGenome[ lContigIdent ].Length / IndexIncrement ) );
+      }
+      return lNumberOfWindows;
+    }
+
     internal virtual bool Initialize()
     {
-      mStream = new DecoupledStreamReader(Path);
-      InitFileInformation(mStream);
-
-      mFilePositions.Add(0); // the zeroeth one is always at the start of the file.
-
-      for (int i = 1; i < mNumberOfWindows; i++)
-      {
-        // start by setting a thousand line jump forward
-        long lPos = FindNextIndexStart(mStream, i * IndexIncrement, StartingJumpIncrement, Direction.JumpForward);
-
-        if (lPos != -1)
-          mFilePositions.Add(lPos);
-        else
-          break; // no more targets to be found.
-      }
+      mStream = new DecoupledStreamReader( Path );
+      InitFileInformation( mStream );
+      GenerateNumberOfWindows();
+      PrepareFilePositions();
 
       return true; // test whether the thing finished or not.
 
     }
 
-    private void InitFileInformation(DecoupledStreamReader lStream)
+    private void InitFileInformation( DecoupledStreamReader lStream )
     {
-      mLineLengthIsh = lStream.ReadLine().Length;
+      string lLine = lStream.ReadLine();
+      mLineLengthIsh = lLine.Length;
+      ReadLength = GetSequence( lLine ).Length;
 
-      lStream.BaseStream.Seek(0, SeekOrigin.End);
+      lStream.BaseStream.Seek( 0, SeekOrigin.End );
       mEndOfFilePos = lStream.Position;
-
       lStream.Position = 0;
     }
 
-    private long FindNextIndexStart(DecoupledStreamReader aStream, int aTarget, int aIncrement, Direction aDirection)
+    private long FindNextIndexStart( 
+      DecoupledStreamReader aStream, 
+      string aTargetContigIdent, 
+      int aTarget, 
+      int aIncrement, 
+      int aStartingPosition,
+      Direction aDirection )
     {
       long lPreJumpPos = aStream.Position;
 
       // execute the jump (as directed)      
-      if (aDirection == Direction.JumpForward)
-        SafeSeek(aStream, aStream.Position + aIncrement);
+      if ( aDirection == Direction.JumpForward )
+        SafeSeek( aStream, aStream.Position + aIncrement );
       else
-        SafeSeek(aStream, aStream.Position - aIncrement);
+        SafeSeek( aStream, aStream.Position - aIncrement );
 
       long lJumpPos = aStream.Position;
 
 
       // Where are we?
-      aStream.ReadLine(); // jump to next line to clear things up.      
+      aStream.ReadLine(); // go to the start of the next line to clear things up.      
 
       string lLine = aStream.ReadLine();
-      int lIndex = GetIndex(lLine);
+      int lIndex = GetIndex( lLine );
+      string lContigIdent = GetContigIdent( lLine );
 
       long lPostReadPos = aStream.Position;
 
-      if (lPreJumpPos == aStream.Position) // we are bouncing off a wall. This is it.
-        if (aDirection == Direction.JumpForward)
+      if ( lPreJumpPos == aStream.Position ) // we are bouncing off a wall. This is it.
+        if ( aDirection == Direction.JumpForward )
           return -1; // short circuit. we are done.
         else
           return 0; // this is the closest left line to the index we are looking for.
 
 
-      if (lIndex < aTarget && aDirection == Direction.JumpForward) // not far enough, keep going forward
+      if ( aTargetContigIdent == lContigIdent && lIndex < aTarget && aDirection == Direction.JumpForward ) // not far enough, keep going forward
       {
-        return FindNextIndexStart(aStream, aTarget, aIncrement, Direction.JumpForward);
+        return FindNextIndexStart( aStream, aTargetContigIdent, aTarget, aIncrement, Direction.JumpForward );
       }
-      else if (lIndex >= aTarget && aDirection == Direction.JumpForward) // too far forward, skip back, slowing down.
+      else if ( ( aTargetContigIdent != lContigIdent || lIndex >= aTarget ) && aDirection == Direction.JumpForward ) // too far forward, skip back, slowing down.
       {
-        return FindNextIndexStart(aStream, aTarget, aIncrement / 10, Direction.JumpBackward);
+        return FindNextIndexStart( aStream, aTargetContigIdent, aTarget, aIncrement / 10, Direction.JumpBackward );
       }
-      else if (lIndex >= aTarget && aDirection == Direction.JumpBackward) // not far enough backward, keep skipping back.
+      else if ( ( aTargetContigIdent != lContigIdent || lIndex >= aTarget ) && aDirection == Direction.JumpBackward ) // not far enough backward, keep skipping back.
       {
-        return FindNextIndexStart(aStream, aTarget, aIncrement, Direction.JumpBackward);
+        return FindNextIndexStart( aStream, aTargetContigIdent, aTarget, aIncrement, Direction.JumpBackward );
       }
-      else if (lIndex < aTarget && aDirection == Direction.JumpBackward) // too far, skip forward, slowing down.
+      else if ( ( aTargetContigIdent != lContigIdent || lIndex < aTarget ) && aDirection == Direction.JumpBackward ) // too far back, skip forward, slowing down.
       {
-        if ((aIncrement / 10) <= mLineLengthIsh) // our expected jumps are now small enough that we just need to plough forward, line by line
+        if ( ( aIncrement / 10 ) <= mLineLengthIsh ) // our expected jumps are now small enough that we just need to plough forward, line by line
         {
-          while (aStream.Position < mEndOfFilePos)
+          while ( aStream.Position < mEndOfFilePos )
           {
             long lPosLine = aStream.Position;
 
-            int lLineIndex = GetIndex(aStream.ReadLine());
+            string lLine = aStream.ReadLine();
 
-            if (lLineIndex >= aTarget)// FOUND IT
+            int lLineIndex = GetIndex( lLine );
+
+
+
+            if ( lLineIndex >= aTarget )// FOUND IT
             {
               return lPosLine;
             }
           }
-          return (-1); // the target we seek doesn't exist in the file.          
+          return ( -1 ); // the target we seek doesn't exist in the file.          
         }
         else // rather than below, where we organize an even smaller skip forward.
         {
-          return FindNextIndexStart(aStream, aTarget, aIncrement / 10, Direction.JumpForward);
+          return FindNextIndexStart( aStream, aTarget, aIncrement / 10, Direction.JumpForward );
         }
       }
-      throw new Exception("BLEHHHH! HOW CAN THIS BE??!?!");
+      throw new Exception( "BLEHHHH! HOW CAN THIS BE??!?!" );
     }
 
-    private void SafeSeek(DecoupledStreamReader aStream, long aTargetSeek)
+    private void SafeSeek( DecoupledStreamReader aStream, long aTargetSeek )
     {
-      if (aTargetSeek >= mEndOfFilePos) // at the end, back it up by a line and a half.
-        aStream.Position = mEndOfFilePos - (long)(mLineLengthIsh * 1.5);
-      else if (aTargetSeek < 0)
+      if ( aTargetSeek >= mEndOfFilePos ) // at the end, back it up by a line and a half.
+        aStream.Position = mEndOfFilePos - ( long ) ( mLineLengthIsh * 1.5 );
+      else if ( aTargetSeek < 0 )
         aStream.Position = 0;
       else
         aStream.Position = aTargetSeek; // do the seek as requested.
     }
 
-    internal virtual ICollection<Mapping> GetReads(int aLeft, int aRight)
+    internal virtual ICollection<Mapping> GetReads( string lContigIdent, int aLeft, int aRight )
     {
       List<Mapping> lResult = new List<Mapping>();
 
@@ -157,13 +207,13 @@ namespace CaperSharp
       int lLeftPosition = aLeft; // starting position
 
       int lCurrentCachePosition = lStartingCache;
-      for (int i = 0; i < lCachesRequired; i++) // loop through the total number of caches required.
+      for ( int i = 0; i < lCachesRequired; i++ ) // loop through the total number of caches required.
       {
-        int lRightPosition = aRight < (lCurrentCachePosition + 1) * IndexIncrement ?
-          aRight : ((lCurrentCachePosition + 1) * IndexIncrement) - 1;
+        int lRightPosition = aRight < ( lCurrentCachePosition + 1 ) * IndexIncrement ?
+          aRight : ( ( lCurrentCachePosition + 1 ) * IndexIncrement ) - 1;
 
-        MappingCache lAppropriateCache = GetCorrectCache(lLeftPosition, lRightPosition);
-        lResult.AddRange(lAppropriateCache.GetReads(lLeftPosition, lRightPosition));
+        MappingCache lAppropriateCache = GetCorrectCache( lContigIdent, lLeftPosition, lRightPosition );
+        lResult.AddRange( lAppropriateCache.GetReads( lLeftPosition, lRightPosition ) );
 
         // these only matter if we do end up going to the next cache.
         lCurrentCachePosition++;
@@ -173,85 +223,85 @@ namespace CaperSharp
       return lResult;
     }
 
-    internal MappingCache GetCorrectCache(int aLeft, int aRight)
+    internal MappingCache GetCorrectCache( string aContigIdent, int aLeft, int aRight )
     {
-      if (CacheA != null && CacheA.LeftIndex <= aLeft && CacheA.RightIndex >= aLeft)
+      if ( CacheA != null && CacheA.ContigIdent = aContigIdent && CacheA.LeftIndex <= aLeft && CacheA.RightIndex >= aLeft )
         return CacheA;
-      else if (CacheB != null && CacheB.LeftIndex <= aLeft && CacheB.RightIndex >= aLeft)
+      else if ( CacheB != null && CacheB.ContigIdent = aContigIdent && CacheB.LeftIndex <= aLeft && CacheB.RightIndex >= aLeft )
         return CacheB;
       else
       {
-        RebuildCaches(aLeft); // neither of them have it.
-        return GetCorrectCache(aLeft, aRight); // check again.
+        RebuildCaches( aContigIdent, aLeft ); // neither of them have it.
+        return GetCorrectCache( aContigIdent, aLeft, aRight ); // check again.
       }
     }
 
-    private void RebuildCaches(int aLeft) // these define the left edge of the problem.
+    private void RebuildCaches( string aContigIdent, int aLeft ) // these define the left edge of the problem.
     {
-      int lStartingIndex = (aLeft / IndexIncrement);
+      int lStartingIndex = ( aLeft / IndexIncrement );
 
-      CacheA = RebuildCache(lStartingIndex);
+      CacheA = RebuildCache( aContigIdent, lStartingIndex );
 
-      if (lStartingIndex + 1 < mFilePositions.Count)
-        CacheB = RebuildCache(lStartingIndex + 1);
+      if ( lStartingIndex + 1 < mFilePositions.Count )
+        CacheB = RebuildCache( aContigIdent, lStartingIndex + 1 );
       else
         CacheB = null;
 
     }
 
-    private MappingCache RebuildCache(int lStartingIndex)
+    private MappingCache RebuildCache( string aContigIdent, int lStartingIndex )
     {
-      long lStartingPos = mFilePositions[lStartingIndex];
+      long lStartingPos = mFilePositions[ aContigIdent ][ lStartingIndex ];
 
       long lCount;
-      if (lStartingIndex + 1 < mFilePositions.Count)
-        lCount = mFilePositions[lStartingIndex + 1] - lStartingPos;
+      if ( lStartingIndex + 1 < mFilePositions.Count )
+        lCount = mFilePositions[ aContigIdent ][ lStartingIndex + 1 ] - lStartingPos;
       else
         lCount = mEndOfFilePos - lStartingPos;
 
-      byte[] lBlock = new byte[lCount];
+      byte[] lBlock = new byte[ lCount ];
       mStream.Position = lStartingPos;
-      mStream.BaseStream.Read(lBlock, 0, (int)lCount);
+      mStream.BaseStream.Read( lBlock, 0, ( int ) lCount );
 
-      MappingCache lCache = BuildCache(lBlock, lStartingIndex * IndexIncrement, ((lStartingIndex + 1) * IndexIncrement) - 1);
+      MappingCache lCache = BuildCache( lBlock, lStartingIndex * IndexIncrement, ( ( lStartingIndex + 1 ) * IndexIncrement ) - 1 );
 
       return lCache;
     }
 
-    public virtual MappingCache BuildCache(byte[] lBlock, int aLeft, int aRight)
+    public virtual MappingCache BuildCache( byte[] lBlock, int aLeft, int aRight )
     {
       List<List<Mapping>> lMappings = new List<List<Mapping>>();
-      for (int i = aLeft; i <= aRight; i++)
+      for ( int i = aLeft; i <= aRight; i++ )
       {
-        lMappings.Add(null);
+        lMappings.Add( null );
       }
 
-      StreamReader lStream = new StreamReader(new MemoryStream(lBlock));
+      StreamReader lStream = new StreamReader( new MemoryStream( lBlock ) );
 
-      while (lStream.Peek() >= 0)
+      while ( lStream.Peek() >= 0 )
       {
         string lLine = lStream.ReadLine();
 
-        int lIndex = GetIndex(lLine);
+        int lIndex = GetIndex( lLine );
         int lPrivateIndex = lIndex - aLeft;
 
-        if (lMappings[lPrivateIndex] == null)
-          lMappings[lPrivateIndex] = new List<Mapping>();
+        if ( lMappings[ lPrivateIndex ] == null )
+          lMappings[ lPrivateIndex ] = new List<Mapping>();
 
-        lMappings[lPrivateIndex].Add(new Mapping(lIndex, new Sequence(GetSequence(lLine))));
+        lMappings[ lPrivateIndex ].Add( new Mapping( lIndex, new Sequence( GetSequence( lLine ) ) ) );
       }
 
-      return new MappingCache(lMappings, aLeft, aRight);
+      return new MappingCache( lMappings, aLeft, aRight );
 
     }
 
-    public abstract string GetSequence(string aLine);
+    public abstract string GetSequence( string aLine );
 
-    public abstract int GetIndex(string aLine);
+    public abstract int GetIndex( string aLine );
 
-    public static string[] GetLinePieces(string aLine)
+    public static string[] GetLinePieces( string aLine )
     {
-      return aLine.Split(Tab);
+      return aLine.Split( Tab );
     }
 
 
