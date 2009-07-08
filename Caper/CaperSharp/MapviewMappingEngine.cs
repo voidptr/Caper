@@ -10,7 +10,6 @@ namespace CaperSharp
     public MapviewMappingEngine( string aPath, Sequences aReferenceGenome )
       : base( aPath, aReferenceGenome )
     {
-
     }
 
     private int GetNormalizedIndex( string aValue )
@@ -26,6 +25,11 @@ namespace CaperSharp
     public override int GetIndex( string aLine )
     {
       return GetNormalizedIndex( GetLinePieces( aLine )[ 2 ] );
+    }
+
+    public override string GetContigIdent( string aLine )
+    {
+      return GetLinePieces( aLine )[ 1 ];
     }
   }
 }

@@ -9,19 +9,18 @@ namespace CaperSharp
   {
     private const char Tab = '\t';
 
+    public string ContigIdent { get; private set; }
     public int LeftIndex { get; private set; }
     public int RightIndex { get; private set; }
     public List<List<Mapping>> Sequences { get; private set; }
 
-    public MappingCache( List<List<Mapping>> lMappings, int aLeftIndex, int aRightIndex )
+    public MappingCache( List<List<Mapping>> lMappings, string aContigIdent, int aLeftIndex, int aRightIndex )
     {
       Sequences = lMappings;
 
-      
-
+      ContigIdent = aContigIdent;
       LeftIndex = aLeftIndex;
-      RightIndex = aRightIndex;
-      
+      RightIndex = aRightIndex;      
     }
 
     

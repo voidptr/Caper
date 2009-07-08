@@ -37,10 +37,10 @@ namespace CaperSharp
           throw new Exception("WHAT!!!??!?!");
         }
 
-        long lPosition = mStream.Position; 
+        long lPosition = mStream.Position; // the start of the next line.
 
         int lChar;
-        while ((lChar = mStream.Read()) >= 0)
+        while ((lChar = mStream.BaseStream.ReadByte()) >= 0)
         {
           if (lChar == GreaterThan)
           {
@@ -51,8 +51,10 @@ namespace CaperSharp
             break;
           }
         }
-      }
+        if ( mStream.Peek() < 0 ) // end of the line
+          Sequences.Add(lSequenceIdentifier, new Sequence(mStream.BaseStream, lPosition, mStream.Position - lPosition)); // do the last one.
 
+      }
       return true;
     }
   }

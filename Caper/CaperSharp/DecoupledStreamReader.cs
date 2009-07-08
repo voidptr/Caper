@@ -12,6 +12,7 @@ namespace CaperSharp
     public DecoupledStreamReader( string aPath )
       : base( aPath )
     {
+      Position = 0;
     }
 
     public override string ReadLine()
@@ -23,6 +24,24 @@ namespace CaperSharp
       Position = lStartingPosition + lLine.Length + NewLineLength; // +1 for the newline in UNIX
 
       return lLine;
+    }
+
+    public override int Read()
+    {
+      long lPos = Position;
+      int lReadInt = base.Read();
+
+      Position = lPos + 1;
+      return lReadInt;
+    }
+
+    public override int Peek()
+    {
+      long lPos = Position;
+      int lPeekInt = base.Peek();
+
+      Position = lPos;
+      return lPeekInt;  
     }
 
     public long Position

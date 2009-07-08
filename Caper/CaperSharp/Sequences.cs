@@ -4,7 +4,7 @@ namespace CaperSharp
 {
   public class Sequences : SortedDictionary<string, Sequence>
   {
-    public long Length
+    public long Length // Does this make any sense at all?
     {
       get
       {

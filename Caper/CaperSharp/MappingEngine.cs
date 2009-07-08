@@ -58,15 +58,14 @@ namespace CaperSharp
 
         mFilePositions[ lContigIdent ].Add( lEndOfPrevious ); // the new one starts where the previous left off
 
-        for ( int i = 1; i < mNumberOfWindows[ lContigIdent ]; i++ )
+        for ( int i = 1 ; i < mNumberOfWindows[ lContigIdent ] ; i++ )
         {
           // start by setting a thousand line jump forward
-          long lPos = FindNextIndexStart( 
-            mStream, 
-            lContigIdent, 
-            i * IndexIncrement, 
-            StartingJumpIncrement, 
-            lEndOfPrevious,
+          long lPos = FindNextIndexStart(
+            mStream,
+            lContigIdent,
+            i * IndexIncrement,
+            StartingJumpIncrement,
             Direction.JumpForward );
 
           if ( lPos != -1 )
@@ -77,16 +76,13 @@ namespace CaperSharp
       }
     }
 
-    private Dictionary<string, int> GenerateNumberOfWindows()
+    private void GenerateNumberOfWindows()
     {
-      Dictionary<string, int> lNumberOfWindows = new Dictionary<string, int>();
-
       foreach ( string lContigIdent in ReferenceGenome.Keys )
       {
-        lNumberOfWindows.Add( lContigIdent,
+        mNumberOfWindows.Add( lContigIdent,
          ( int ) Math.Ceiling( ( double ) ReferenceGenome[ lContigIdent ].Length / IndexIncrement ) );
-      }
-      return lNumberOfWindows;
+      }     
     }
 
     internal virtual bool Initialize()
@@ -111,15 +107,14 @@ namespace CaperSharp
       lStream.Position = 0;
     }
 
-    private long FindNextIndexStart( 
-      DecoupledStreamReader aStream, 
-      string aTargetContigIdent, 
-      int aTarget, 
-      int aIncrement, 
-      int aStartingPosition,
-      Direction aDirection )
+    private long FindNextIndexStart(
+      DecoupledStreamReader aStream,
+      string aTargetContigIdent,
+      int aTargetIndex,
+      int aIncrement,
+      Direction aDirection)
     {
-      long lPreJumpPos = aStream.Position;
+      long lPreJumpPosition = aStream.Position;
 
       // execute the jump (as directed)      
       if ( aDirection == Direction.JumpForward )
@@ -127,38 +122,46 @@ namespace CaperSharp
       else
         SafeSeek( aStream, aStream.Position - aIncrement );
 
-      long lJumpPos = aStream.Position;
-
-
       // Where are we?
-      aStream.ReadLine(); // go to the start of the next line to clear things up.      
+      aStream.ReadLine(); // go to the start of the next line to clear things up. (this behavior affects the whole algorithm. keep in mind)
+      long lPostJumpPos = aStream.Position; // where is this new line?
 
-      string lLine = aStream.ReadLine();
-      int lIndex = GetIndex( lLine );
-      string lContigIdent = GetContigIdent( lLine );
+      string lOrientationLine = aStream.ReadLine();
+      int lIndex = GetIndex( lOrientationLine );
+      string lContigIdent = GetContigIdent( lOrientationLine );
 
-      long lPostReadPos = aStream.Position;
+      if ( lContigIdent != aTargetContigIdent ) // back up and let's try this again, taking smaller steps.
+      {
+        if ( aIncrement / 10 <= mLineLengthIsh ) // the next jump is too tiny to be a meaningful jump (we would stay in place). Well crap. 
+          // this is the end of the line
+        {
+          return -1;
+        }
 
-      if ( lPreJumpPos == aStream.Position ) // we are bouncing off a wall. This is it.
+        // back this train up.
+        aStream.Position = lPreJumpPosition;
+        return FindNextIndexStart( aStream, aTargetContigIdent, aTargetIndex, aIncrement /10, aDirection );
+      }
+
+      if ( lPreJumpPosition == aStream.Position ) // we are bouncing off an edge wall. This is it.
         if ( aDirection == Direction.JumpForward )
-          return -1; // short circuit. we are done.
+          return -1; // short circuit. we are done. // TODO, see if this is feasible for the corner cases.
         else
           return 0; // this is the closest left line to the index we are looking for.
 
-
-      if ( aTargetContigIdent == lContigIdent && lIndex < aTarget && aDirection == Direction.JumpForward ) // not far enough, keep going forward
+      if ( lIndex < aTargetIndex && aDirection == Direction.JumpForward ) // not far enough, keep going forward
       {
-        return FindNextIndexStart( aStream, aTargetContigIdent, aTarget, aIncrement, Direction.JumpForward );
+        return FindNextIndexStart( aStream, aTargetContigIdent, aTargetIndex, aIncrement, Direction.JumpForward );
       }
-      else if ( ( aTargetContigIdent != lContigIdent || lIndex >= aTarget ) && aDirection == Direction.JumpForward ) // too far forward, skip back, slowing down.
+      else if ( lIndex >= aTargetIndex  && aDirection == Direction.JumpForward ) // too far forward, skip back, slowing down.
       {
-        return FindNextIndexStart( aStream, aTargetContigIdent, aTarget, aIncrement / 10, Direction.JumpBackward );
+        return FindNextIndexStart( aStream, aTargetContigIdent, aTargetIndex, aIncrement / 10, Direction.JumpBackward );
       }
-      else if ( ( aTargetContigIdent != lContigIdent || lIndex >= aTarget ) && aDirection == Direction.JumpBackward ) // not far enough backward, keep skipping back.
+      else if ( lIndex >= aTargetIndex  && aDirection == Direction.JumpBackward ) // not far enough backward, keep skipping back.
       {
-        return FindNextIndexStart( aStream, aTargetContigIdent, aTarget, aIncrement, Direction.JumpBackward );
+        return FindNextIndexStart( aStream, aTargetContigIdent, aTargetIndex, aIncrement, Direction.JumpBackward );
       }
-      else if ( ( aTargetContigIdent != lContigIdent || lIndex < aTarget ) && aDirection == Direction.JumpBackward ) // too far back, skip forward, slowing down.
+      else if ( lIndex < aTargetIndex && aDirection == Direction.JumpBackward ) // too far back, skip forward, slowing down.
       {
         if ( ( aIncrement / 10 ) <= mLineLengthIsh ) // our expected jumps are now small enough that we just need to plough forward, line by line
         {
@@ -172,7 +175,7 @@ namespace CaperSharp
 
 
 
-            if ( lLineIndex >= aTarget )// FOUND IT
+            if ( lLineIndex >= aTargetIndex )// FOUND IT
             {
               return lPosLine;
             }
@@ -181,11 +184,87 @@ namespace CaperSharp
         }
         else // rather than below, where we organize an even smaller skip forward.
         {
-          return FindNextIndexStart( aStream, aTarget, aIncrement / 10, Direction.JumpForward );
+          return FindNextIndexStart( aStream, aTargetContigIdent, aTargetIndex, aIncrement / 10, Direction.JumpForward );
         }
       }
-      throw new Exception( "BLEHHHH! HOW CAN THIS BE??!?!" );
+      throw new Exception( "WHATHTHT!" );
     }
+
+    //private long FindNextIndexStart_OLD(
+    //  DecoupledStreamReader aStream,
+    //  string aTargetContigIdent,
+    //  int aTarget,
+    //  int aIncrement,
+    //  int aStartingPosition,
+    //  Direction aDirection )
+    //{
+    //  long lPreJumpPos = aStream.Position;
+
+    //  // execute the jump (as directed)      
+    //  if ( aDirection == Direction.JumpForward )
+    //    SafeSeek( aStream, aStream.Position + aIncrement );
+    //  else
+    //    SafeSeek( aStream, aStream.Position - aIncrement );
+
+    //  long lJumpPos = aStream.Position;
+
+
+    //  // Where are we?
+    //  aStream.ReadLine(); // go to the start of the next line to clear things up.      
+
+    //  string lLine = aStream.ReadLine();
+    //  int lIndex = GetIndex( lLine );
+    //  string lContigIdent = GetContigIdent( lLine );
+
+    //  long lPostReadPos = aStream.Position;
+
+    //  if ( lPreJumpPos == aStream.Position ) // we are bouncing off a wall. This is it.
+    //    if ( aDirection == Direction.JumpForward )
+    //      return -1; // short circuit. we are done.
+    //    else
+    //      return 0; // this is the closest left line to the index we are looking for.
+
+
+    //  if ( aTargetContigIdent == lContigIdent && lIndex < aTarget && aDirection == Direction.JumpForward ) // not far enough, keep going forward
+    //  {
+    //    return FindNextIndexStart( aStream, aTargetContigIdent, aTarget, aIncrement, Direction.JumpForward );
+    //  }
+    //  else if ( ( aTargetContigIdent != lContigIdent || lIndex >= aTarget ) && aDirection == Direction.JumpForward ) // too far forward, skip back, slowing down.
+    //  {
+    //    return FindNextIndexStart( aStream, aTargetContigIdent, aTarget, aIncrement / 10, Direction.JumpBackward );
+    //  }
+    //  else if ( ( aTargetContigIdent != lContigIdent || lIndex >= aTarget ) && aDirection == Direction.JumpBackward ) // not far enough backward, keep skipping back.
+    //  {
+    //    return FindNextIndexStart( aStream, aTargetContigIdent, aTarget, aIncrement, Direction.JumpBackward );
+    //  }
+    //  else if ( ( aTargetContigIdent != lContigIdent || lIndex < aTarget ) && aDirection == Direction.JumpBackward ) // too far back, skip forward, slowing down.
+    //  {
+    //    if ( ( aIncrement / 10 ) <= mLineLengthIsh ) // our expected jumps are now small enough that we just need to plough forward, line by line
+    //    {
+    //      while ( aStream.Position < mEndOfFilePos )
+    //      {
+    //        long lPosLine = aStream.Position;
+
+    //        string lLine = aStream.ReadLine();
+
+    //        int lLineIndex = GetIndex( lLine );
+
+
+
+    //        if ( lLineIndex >= aTarget )// FOUND IT
+    //        {
+    //          return lPosLine;
+    //        }
+    //      }
+    //      return ( -1 ); // the target we seek doesn't exist in the file.          
+    //    }
+    //    else // rather than below, where we organize an even smaller skip forward.
+    //    {
+    //      return FindNextIndexStart( aStream, aTarget, aIncrement / 10, Direction.JumpForward );
+    //    }
+    //  }
+    //  throw new Exception( "BLEHHHH! HOW CAN THIS BE??!?!" );
+    //}
 
     private void SafeSeek( DecoupledStreamReader aStream, long aTargetSeek )
     {
@@ -207,7 +286,7 @@ namespace CaperSharp
       int lLeftPosition = aLeft; // starting position
 
       int lCurrentCachePosition = lStartingCache;
-      for ( int i = 0; i < lCachesRequired; i++ ) // loop through the total number of caches required.
+      for ( int i = 0 ; i < lCachesRequired ; i++ ) // loop through the total number of caches required.
       {
         int lRightPosition = aRight < ( lCurrentCachePosition + 1 ) * IndexIncrement ?
           aRight : ( ( lCurrentCachePosition + 1 ) * IndexIncrement ) - 1;
@@ -225,9 +304,9 @@ namespace CaperSharp
 
     internal MappingCache GetCorrectCache( string aContigIdent, int aLeft, int aRight )
     {
-      if ( CacheA != null && CacheA.ContigIdent = aContigIdent && CacheA.LeftIndex <= aLeft && CacheA.RightIndex >= aLeft )
+      if ( CacheA != null && CacheA.ContigIdent == aContigIdent && CacheA.LeftIndex <= aLeft && CacheA.RightIndex >= aLeft )
         return CacheA;
-      else if ( CacheB != null && CacheB.ContigIdent = aContigIdent && CacheB.LeftIndex <= aLeft && CacheB.RightIndex >= aLeft )
+      else if ( CacheB != null && CacheB.ContigIdent == aContigIdent && CacheB.LeftIndex <= aLeft && CacheB.RightIndex >= aLeft )
         return CacheB;
       else
       {
@@ -263,15 +342,15 @@ namespace CaperSharp
       mStream.Position = lStartingPos;
       mStream.BaseStream.Read( lBlock, 0, ( int ) lCount );
 
-      MappingCache lCache = BuildCache( lBlock, lStartingIndex * IndexIncrement, ( ( lStartingIndex + 1 ) * IndexIncrement ) - 1 );
+      MappingCache lCache = BuildCache( lBlock, aContigIdent, lStartingIndex * IndexIncrement, ( ( lStartingIndex + 1 ) * IndexIncrement ) - 1 );
 
       return lCache;
     }
 
-    public virtual MappingCache BuildCache( byte[] lBlock, int aLeft, int aRight )
+    public virtual MappingCache BuildCache( byte[] lBlock, string aContigIdent, int aLeft, int aRight )
     {
       List<List<Mapping>> lMappings = new List<List<Mapping>>();
-      for ( int i = aLeft; i <= aRight; i++ )
+      for ( int i = aLeft ; i <= aRight ; i++ )
       {
         lMappings.Add( null );
       }
@@ -291,13 +370,15 @@ namespace CaperSharp
         lMappings[ lPrivateIndex ].Add( new Mapping( lIndex, new Sequence( GetSequence( lLine ) ) ) );
       }
 
-      return new MappingCache( lMappings, aLeft, aRight );
+      return new MappingCache( lMappings, aContigIdent, aLeft, aRight );
 
     }
 
     public abstract string GetSequence( string aLine );
 
     public abstract int GetIndex( string aLine );
+
+    public abstract string GetContigIdent( string aLine );
 
     public static string[] GetLinePieces( string aLine )
     {
