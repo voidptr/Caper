@@ -46,7 +46,7 @@ namespace CaperSharp
         }
         catch ( Exception )
         {
-          Console.WriteLine( string.Format( "Invalid Input. {1}", Format ) );
+          Console.WriteLine( string.Format( "Invalid Input. {0}", Format ) );
           Console.Write( "> " );
           continue;
         }

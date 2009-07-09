@@ -21,7 +21,8 @@ namespace CaperSharp
 
       string lLine = base.ReadLine();
 
-      Position = lStartingPosition + lLine.Length + NewLineLength; // +1 for the newline in UNIX
+      if ( lLine != null )
+        Position = lStartingPosition + lLine.Length + NewLineLength; // +1 for the newline in UNIX
 
       return lLine;
     }
