@@ -30,7 +30,8 @@ namespace CaperSharp
       SequenceEngine lSequenceReader = new FASequenceEngine( args[ 0 ] );
       lSequenceReader.Initialize();
 
-      MappingEngine lMappingReader = new MapviewMappingEngine( args[ 1 ], lSequenceReader.Sequences );
+      //MappingEngine lMappingReader = new MapviewMappingEngine( args[ 1 ], lSequenceReader.Sequences );
+      MappingEngine lMappingReader = new BowtieMappingEngine( args[ 1 ], lSequenceReader.Sequences );
       lMappingReader.Initialize();
 
       Console.WriteLine( Format );

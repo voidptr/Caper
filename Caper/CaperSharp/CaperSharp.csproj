@@ -38,6 +38,7 @@
     <Compile Include="MappingEngine.cs" />
     <Compile Include="DecoupledStreamReader.cs" />
     <Compile Include="MapviewMappingEngine.cs" />
+    <Compile Include="NicerStream.cs" />
     <Compile Include="Pair.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

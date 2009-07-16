@@ -15,6 +15,19 @@ namespace CaperSharp
       Position = 0;
     }
 
+    public DecoupledStreamReader( Stream aStream )
+      : base( aStream )
+    {
+      Position = 0;
+    }
+
+    public long Seek( long aOffset, SeekOrigin aSeekOrigin )
+    {
+      long lOut = this.BaseStream.Seek( aOffset, aSeekOrigin );
+      DiscardBufferedData();
+      return lOut;
+    }
+
     public override string ReadLine()
     {
       long lStartingPosition = Position;
@@ -57,6 +70,24 @@ namespace CaperSharp
         BaseStream.Position = value;
         DiscardBufferedData();
       }
+    }
+
+    internal void Write( byte[] aArray, int aOffset, int aCount )
+    {
+      BaseStream.Write( aArray, aOffset, aCount );
+      DiscardBufferedData();
+    }
+
+    internal void Read( byte[] aBuffer, int aOffset, int aCount )
+    {
+      BaseStream.Read( aBuffer, aOffset, aCount );
+      DiscardBufferedData();
+    }
+
+    internal void Flush()
+    {
+      BaseStream.Flush();
+      DiscardBufferedData();
     }
   }
 
