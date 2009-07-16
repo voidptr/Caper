@@ -1,21 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.IO;
 
 namespace CaperSharp
 {
-  class BowtieMappingEngine : MappingEngine
+  public class BowtieMappingsPreparer : MappingsPreparer
   {
-    public BowtieMappingEngine( string aPath, Sequences aReferenceGenome )
-      : base( aPath, aReferenceGenome )
-    {
-    }
-    
-    public override string GetSequence( string aLine )
-    {
-      return GetLinePieces( aLine )[ 4 ];
-    }
+    public BowtieMappingsPreparer( string aPath ) : base( aPath ) { }
 
     public override int GetIndex( string aLine )
     {

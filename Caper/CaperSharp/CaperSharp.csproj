@@ -32,11 +32,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BowtieMappingEngine.cs" />
+    <Compile Include="BowtieMappingsPreparer.cs" />
     <Compile Include="FASequenceEngine.cs" />
     <Compile Include="Mapping.cs" />
     <Compile Include="MappingCache.cs" />
     <Compile Include="MappingEngine.cs" />
     <Compile Include="DecoupledStreamReader.cs" />
+    <Compile Include="MappingsPreparer.cs" />
     <Compile Include="MapviewMappingEngine.cs" />
     <Compile Include="Pair.cs" />
     <Compile Include="Program.cs" />

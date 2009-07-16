@@ -30,9 +30,12 @@ namespace CaperSharp
       SequenceEngine lSequenceReader = new FASequenceEngine( args[ 0 ] );
       lSequenceReader.Initialize();
 
+      MappingsPreparer lPrep = new BowtieMappingsPreparer( args[ 1 ] );
+      string lNewPath = lPrep.Initialize();
+
       //MappingEngine lMappingReader = new MapviewMappingEngine( args[ 1 ], lSequenceReader.Sequences );
-      MappingEngine lMappingReader = new BowtieMappingEngine( args[ 1 ], lSequenceReader.Sequences );
-      lMappingReader.Initialize();
+      MappingEngine lMappingEngine = new BowtieMappingEngine( lNewPath , lSequenceReader.Sequences );
+      lMappingEngine.Initialize();
 
       Console.WriteLine( Format );
       Console.Write( "> " );
@@ -43,7 +46,7 @@ namespace CaperSharp
         Parameters lCommand;
         try
         {
-          lCommand = ParseCommand( lInput, lSequenceReader, lMappingReader );
+          lCommand = ParseCommand( lInput, lSequenceReader, lMappingEngine );
         }
         catch ( Exception )
         {
@@ -52,7 +55,7 @@ namespace CaperSharp
           continue;
         }
         
-        ICollection<Mapping> lMappings = lMappingReader.GetReads( lCommand.ContigIdent, lCommand.Left, lCommand.Right );
+        ICollection<Mapping> lMappings = lMappingEngine.GetReads( lCommand.ContigIdent, lCommand.Left, lCommand.Right );
         if ( lCommand.PrettyMode ) // engage pretty mode
         {
           Console.WriteLine( lCommand.Left );

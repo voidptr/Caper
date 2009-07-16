@@ -75,7 +75,6 @@ namespace CaperSharp
         mFilePositions[ lContigIdent ].Add( mContigBorders[ lContigIdent ].FirstItem ); // the first one is always here. I suppose I could figure out how to make it populate from 0, but why?
         for ( int j = 1; j < mNumberOfWindows[ lContigIdent ]; j++ )
         {
-          //mFilePositions[ lContigIdent ].Add( FindIndex( mStream, j * IndexIncrement, lStartingIncrement, mContigBorders[ lContigIdent ].FirstItem, mContigBorders[ lContigIdent ].SecondItem ) );
           mFilePositions[ lContigIdent ].Add( FindNextIndexStart( mStream, j * IndexIncrement, lStartingIncrement, Direction.JumpForward, mContigBorders[ lContigIdent ].FirstItem, mContigBorders[ lContigIdent ].SecondItem ) );
         }
       }
