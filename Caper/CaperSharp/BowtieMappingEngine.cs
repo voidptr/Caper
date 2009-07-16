@@ -99,7 +99,7 @@ namespace CaperSharp
 
     private void Quicksort( DecoupledStreamReader lStream, long lStartPos, long lLastLinePos )
     {
-      if ( lLastLinsePos > lStartPos )
+      if ( lLastLinePos > lStartPos )
       {
         lStream.Seek( lLastLinePos, SeekOrigin.Begin );
         lStream.ReadLine();
