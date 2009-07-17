@@ -9,13 +9,13 @@ namespace CaperSharp
   class FASequenceEngine : SequenceEngine
   {
     readonly int GreaterThan;
-    DecoupledStreamReader mStream;
+    DecachedStreamReader mStream;
 
     public FASequenceEngine(string aPath)
       : base(aPath)
     {
       GreaterThan = Convert.ToInt16('>');
-      mStream = new DecoupledStreamReader( Path );
+      mStream = new DecachedStreamReader( Path );
     }
 
     internal override bool Initialize()

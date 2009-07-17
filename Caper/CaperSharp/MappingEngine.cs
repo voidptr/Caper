@@ -13,16 +13,14 @@ namespace CaperSharp
     private Sequences ReferenceGenome { get; set; }
 
     const int IndexIncrement = 1000;
-    const int StartingJumpIncrement = 100000000;
     private const char Tab = '\t';
     private const char NewLine = '\n';
-    private int mLineLengthIsh;
     private long mEndOfFilePos;
 
     private MappingCache CacheA;
     private MappingCache CacheB;
 
-    private DecoupledStreamReader mStream;
+    private DecachedStreamReader mStream;
 
     private Dictionary<string, List<long>> mFilePositions;
     private Dictionary<string, int> mNumberOfWindows;
@@ -45,7 +43,6 @@ namespace CaperSharp
       mContigBorders = new Dictionary<string, Pair<long>>();
       mSortedContigIdents = new Dictionary<string, int>();
 
-      mLineLengthIsh = 0;
       mEndOfFilePos = 0;
     }
 
@@ -58,195 +55,88 @@ namespace CaperSharp
       foreach ( string lContigIdent in ReferenceGenome.Keys )
         mSortedContigIdents.Add( lContigIdent, i++ );
 
+      mContigBorders = FindContigBorders();
 
-      long lLastPos = -1;
-      foreach ( string lContigIdent in ReferenceGenome.Keys )
-      {
-        long lBeginning = lLastPos + 1; // one over to the beginning of the next one.
-        lLastPos = FindEndOfContig( mStream, lContigIdent, StartingJumpIncrement );
-        mContigBorders.Add( lContigIdent, new Pair<long>() { FirstItem = lBeginning, SecondItem = lLastPos } );
-      }
-
-      mStream.Position = 0;
-      foreach ( string lContigIdent in ReferenceGenome.Keys )
-      {
-        int lStartingIncrement = (int)(mContigBorders[ lContigIdent ].SecondItem - mContigBorders[ lContigIdent ].FirstItem) / 10;
-        mFilePositions.Add( lContigIdent, new List<long>() );
-        mFilePositions[ lContigIdent ].Add( mContigBorders[ lContigIdent ].FirstItem ); // the first one is always here. I suppose I could figure out how to make it populate from 0, but why?
-        for ( int j = 1; j < mNumberOfWindows[ lContigIdent ]; j++ )
-        {
-          mFilePositions[ lContigIdent ].Add( FindNextIndexStart( mStream, j * IndexIncrement, lStartingIncrement, Direction.JumpForward, mContigBorders[ lContigIdent ].FirstItem, mContigBorders[ lContigIdent ].SecondItem ) );
-        }
-      }
+      mFilePositions = BuildMappingsIndex();
     }
 
-    private long FindNextIndexStart( DecoupledStreamReader aStream, int aTarget, int aIncrement, Direction aDirection, long aStart, long aEnd )
+    private Dictionary<string, List<long>> BuildMappingsIndex()
     {
-      long lPreJumpPos = aStream.Position;
+      throw new NotImplementedException();
+      //DecachedStreamReader lReader = new DecachedStreamReader( Path );
 
-      // execute the jump (as directed)      
-      if ( aDirection == Direction.JumpForward )
-        SafeSeek( aStream, aStream.Position + aIncrement, aStart, aEnd );
-      else
-        SafeSeek( aStream, aStream.Position - aIncrement, aStart, aEnd );
+      //Dictionary<string, Pair<long>> lBorders = new Dictionary<string, Pair<long>>();
+      
+      //string lContig = "";
+      //long lCurrentLinePosition = 0;
+      //long lTargetIndex;
+      //long lCurrentIndex = 0;
+      //while ( lReader.Peek() > -1 )
+      //{        
+      //  lCurrentLinePosition = lReader.Position; // pre-read, of this line.
+      //  string lCurrentContig = GetContigIdent( lReader.ReadLine() );
 
-      long lJumpPos = aStream.Position;
+      //  if ( lCurrentContig != lContig )
+      //  {
+      //    if ( lContig.Length > 0 ) // close up the previous one.
+      //    {
+      //      Pair<long> lItem = lBorders[ lContig ];
+      //      lItem.SecondItem = lPreviousLinePosition;
+      //      lBorders[ lContig ] = lItem;
+      //    }
+      //    lBorders[ lCurrentContig ] = new Pair<long>() { FirstItem = lCurrentLinePosition };
+      //    lContig = lCurrentContig;
+      //  }
+      //}
+      //// close up the last contig
 
+      //Pair<long> lLastContig = lBorders[ lContig ];
+      //lLastContig.SecondItem = lCurrentLinePosition;
+      //lBorders[ lContig ] = lLastContig;
 
-      // Where are we?
-      aStream.ReadLine(); // jump to next line to clear things up.      
+      //lReader.Close();
 
-      string lLine = aStream.ReadLine();
-      int lIndex = GetIndex( lLine );
+      //return lBorders;
+    }
 
-      long lPostReadPos = aStream.Position;
+    private Dictionary<string, Pair<long>> FindContigBorders()
+    {
+      DecachedStreamReader lReader = new DecachedStreamReader( Path );
 
-      if ( lPreJumpPos == aStream.Position ) // we are bouncing off a wall. This is it.
-        if ( aDirection == Direction.JumpForward )
-          return -1; // short circuit. we are done.
-        else
-          return 0; // this is the closest left line to the index we are looking for.
+      Dictionary<string, Pair<long>> lBorders = new Dictionary<string,Pair<long>>();
 
+      string lContig = "";
+      long lPreviousLinePosition = 0;
+      long lCurrentLinePosition = 0;
+      while ( lReader.Peek() > -1 )
+      {        
+        lPreviousLinePosition = lCurrentLinePosition;
+        lCurrentLinePosition = lReader.Position;
+        string lCurrentContig = GetContigIdent( lReader.ReadLine() );
 
-      if ( lIndex < aTarget && aDirection == Direction.JumpForward ) // not far enough, keep going forward
-      {
-        return FindNextIndexStart( aStream, aTarget, aIncrement, Direction.JumpForward, aStart, aEnd );
-      }
-      else if ( lIndex >= aTarget && aDirection == Direction.JumpForward ) // too far forward, skip back, slowing down.
-      {
-        return FindNextIndexStart( aStream, aTarget, aIncrement / 10, Direction.JumpBackward, aStart, aEnd );
-      }
-      else if ( lIndex >= aTarget && aDirection == Direction.JumpBackward ) // not far enough backward, keep skipping back.
-      {
-        return FindNextIndexStart( aStream, aTarget, aIncrement, Direction.JumpBackward, aStart, aEnd );
-      }
-      else if ( lIndex < aTarget && aDirection == Direction.JumpBackward ) // too far, skip forward, slowing down.
-      {
-        if ( ( aIncrement / 10 ) <= mLineLengthIsh ) // our expected jumps are now small enough that we just need to plough forward, line by line
+        if ( lCurrentContig != lContig )
         {
-          while ( aStream.Position < mEndOfFilePos )
+          if ( lContig.Length > 0 ) // close up the previous one.
           {
-            long lPosLine = aStream.Position;
-
-            int lLineIndex = GetIndex(  aStream.ReadLine()  );
-
-            if ( lLineIndex >= aTarget )// FOUND IT
-            {
-              return lPosLine;
-            }
+            Pair<long> lItem = lBorders[ lContig ];
+            lItem.SecondItem = lPreviousLinePosition;
+            lBorders[ lContig ] = lItem;
           }
-          return ( -1 ); // the target we seek doesn't exist in the file.          
-        }
-        else // rather than below, where we organize an even smaller skip forward.
-        {
-          return FindNextIndexStart( aStream, aTarget, aIncrement / 10, Direction.JumpForward, aStart, aEnd );
-        }
+          lBorders[ lCurrentContig ] = new Pair<long>() { FirstItem = lCurrentLinePosition };
+          lContig = lCurrentContig;
+        }        
       }
-      throw new Exception( "BLEHHHH! HOW CAN THIS BE??!?!" );
+      // close up the last contig
+
+      Pair<long> lLastContig = lBorders[ lContig ];
+      lLastContig.SecondItem = lCurrentLinePosition;
+      lBorders[ lContig ] = lLastContig;
+
+      lReader.Close();
+
+      return lBorders;
     }
-
-    private long FindIndex( DecoupledStreamReader aStream, int aTargetIndex, int aIncrement, long aStart, long aEnd )
-    {
-      long lPreJumpPosition = aStream.Position;
-
-      SafeSeek( aStream, aStream.Position + aIncrement, aStart, aEnd );
-
-      AdvanceToStartOfLine( aStream );// clean up the queue so we can get a clean read.
-
-      long lPreReadPosition = aStream.Position;
-      string lLine = aStream.ReadLine();
-
-      int lIndex = -1;
-      if ( lLine != null )
-        lIndex = GetIndex( lLine ); // read the contig ident.
-
-
-      if ( lPreJumpPosition == aStream.Position ) // we are bouncing off the wall, this is it
-        return aStream.Position - 1; // this is the edge. you're done.
-
-      if ( lPreReadPosition == aEnd || lIndex >= aTargetIndex ) // TOO FAR. undo the jump and shorten it up.
-      {
-        aStream.Position = lPreJumpPosition; // back up.
-        if ( aIncrement > mLineLengthIsh * 2 ) // do we jump again?
-          return FindIndex( aStream, aTargetIndex, aIncrement / 10, aStart, aEnd );
-        else // or plough forward?
-        {
-          AdvanceToStartOfLine( aStream );// clean the queue. 
-          while ( aStream.Position < mEndOfFilePos )
-          {
-            long lLinePosition = aStream.Position;
-
-            int lThisIndex = GetIndex( aStream.ReadLine() );
-
-            if ( lThisIndex > aTargetIndex ) // we've crossed over!
-            {
-              return lLinePosition - 1;
-            }
-          }
-          // we ploughed forward, but we never crossed over the index we were looking for.
-          return aStream.Position - 1;
-        }
-      }
-      else // otherwise, keep going!
-      {
-        return FindIndex( aStream, aTargetIndex, aIncrement, aStart, aEnd ); // NOTE, this could keep jumping forward in ever smaller increments. should put some control on this.
-      }
-      throw new Exception( "WHAT!?!?!" );
-    }
-
-    private long FindEndOfContig( DecoupledStreamReader aStream, string aTargetContigIdent, int aIncrement )
-    {
-      long lPreJumpPosition = aStream.Position;
-
-      SafeSeek( aStream, aStream.Position + aIncrement );
-
-      AdvanceToStartOfLine( aStream );// clean up the queue so we can get a clean read.
-
-      string lReadContigIdent = GetContigIdent( aStream.ReadLine() ); // read the contig ident.
-
-      if ( lPreJumpPosition == aStream.Position ) // we are bouncing off the wall, this is it
-        return aStream.Position - 1; // this is the edge. you're done.
-
-      if ( mSortedContigIdents[ lReadContigIdent ] > mSortedContigIdents[ aTargetContigIdent ] ) // TOO FAR. undo the jump and shorten it up.
-      {
-        aStream.Position = lPreJumpPosition; // back up.
-        if ( aIncrement > mLineLengthIsh * 2 ) // do we jump again?
-          return FindEndOfContig( aStream, aTargetContigIdent, aIncrement / 10 );
-        else // or plough forward?
-        {
-          AdvanceToStartOfLine( aStream );// clean the queue. 
-          while ( aStream.Position < mEndOfFilePos )
-          {
-            long lLinePosition = aStream.Position;
-
-            string lThisContigIdent = GetContigIdent( aStream.ReadLine() );
-
-            if ( lThisContigIdent != aTargetContigIdent ) // we've crossed over!
-            {
-              return lLinePosition - 1;
-            }
-          }
-        }
-      }
-      else // otherwise, keep going!
-      {
-        return FindEndOfContig( aStream, aTargetContigIdent, aIncrement ); // NOTE, this could keep jumping forward in ever smaller increments. should put some control on this.
-      }
-      throw new Exception( "WHAT!?!?!" );
-    }
-
-    private void AdvanceToStartOfLine( DecoupledStreamReader aStream )
-    {
-      if ( aStream.Position == 0 )
-        return;
-
-      aStream.BaseStream.Position -= 1; // back up.
-      if ( ( ( char ) aStream.BaseStream.ReadByte() ) == NewLine ) // read the next byte.
-        return;
-      else
-        aStream.ReadLine();
-    }
-
+    
     private void GenerateNumberOfWindows()
     {
       foreach ( string lContigIdent in ReferenceGenome.Keys )
@@ -258,7 +148,7 @@ namespace CaperSharp
 
     internal virtual bool Initialize()
     {
-      mStream = new DecoupledStreamReader( Path );
+      mStream = new DecachedStreamReader( Path );
       InitFileInformation( mStream );
       GenerateNumberOfWindows();
       PrepareFilePositions();
@@ -266,10 +156,9 @@ namespace CaperSharp
       return true; // test whether the thing finished or not.
     }
 
-    private void InitFileInformation( DecoupledStreamReader lStream )
+    private void InitFileInformation( DecachedStreamReader lStream )
     {
       string lLine = lStream.ReadLine();
-      mLineLengthIsh = lLine.Length;
       ReadLength = GetSequence( lLine ).Length;
 
       lStream.BaseStream.Seek( 0, SeekOrigin.End );
@@ -277,20 +166,20 @@ namespace CaperSharp
       lStream.Position = 0;
     }
 
-    private void SafeSeek( DecoupledStreamReader aStream, long aTargetSeek )
-    {
-      SafeSeek( aStream, aTargetSeek, 0, mEndOfFilePos );
-    }
+    //private void SafeSeek( DecoupledStreamReader aStream, long aTargetSeek )
+    //{
+    //  SafeSeek( aStream, aTargetSeek, 0, mEndOfFilePos );
+    //}
 
-    private void SafeSeek( DecoupledStreamReader aStream, long aTargetSeek, long aBeginning, long aEnd )
-    {
-      if ( aTargetSeek >= aEnd ) // at the end, back it up by a line and a half.
-        aStream.Position = aEnd - ( long ) ( mLineLengthIsh * 1.5 );
-      else if ( aTargetSeek < aBeginning )
-        aStream.Position = aBeginning;
-      else
-        aStream.Position = aTargetSeek; // do the seek as requested.
-    }
+    //private void SafeSeek( DecoupledStreamReader aStream, long aTargetSeek, long aBeginning, long aEnd )
+    //{
+    //  if ( aTargetSeek >= aEnd ) // at the end, back it up by a line and a half.
+    //    aStream.Position = aEnd - ( long ) ( mLineLengthIsh * 1.5 );
+    //  else if ( aTargetSeek < aBeginning )
+    //    aStream.Position = aBeginning;
+    //  else
+    //    aStream.Position = aTargetSeek; // do the seek as requested.
+    //}
 
     internal virtual ICollection<Mapping> GetReads( string lContigIdent, int aLeft, int aRight )
     {

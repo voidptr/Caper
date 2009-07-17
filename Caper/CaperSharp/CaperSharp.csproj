@@ -37,7 +37,7 @@
     <Compile Include="Mapping.cs" />
     <Compile Include="MappingCache.cs" />
     <Compile Include="MappingEngine.cs" />
-    <Compile Include="DecoupledStreamReader.cs" />
+    <Compile Include="DecachedStreamReader.cs" />
     <Compile Include="MappingsPreparer.cs" />
     <Compile Include="MapviewMappingEngine.cs" />
     <Compile Include="Pair.cs" />
