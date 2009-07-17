@@ -26,7 +26,32 @@ namespace CaperSharp
 
     private bool IsSorted()
     {
-      throw new NotImplementedException();
+      StreamReader lStream = new StreamReader( Path );
+
+      string lLastContig = "";
+      int lLastIndex = -1;
+
+      while ( lStream.Peek() > -1 )
+      {
+        string lLine = lStream.ReadLine();
+
+        string lContig = GetContigIdent( lLine );
+        int lIndex = GetIndex( lLine );
+
+        //if ( lLastContig.Length > 0 )
+        //{
+        if ( lContig.CompareTo( lLastContig ) < 1 || lIndex < lLastIndex )
+        {
+          lStream.Close();
+          return false;
+        }
+        //}
+
+        lLastContig = lContig;
+        lLastIndex = lIndex;
+      }
+      lStream.Close();
+      return true;
     }
 
     private void BreakUpFileIntoContigsSortAndRecombine()
@@ -90,14 +115,27 @@ namespace CaperSharp
 
     private void SortFile( string aFile )
     {      
-      StreamReader lStream = new DecoupledStreamReader( aFile );
-
+      StreamReader lStream = new StreamReader( aFile );
       List<string> lFile = ReadAllLines( lStream );
+      lStream.Close();
 
       int lStartPos = 0;
-      int lLastLinePos = lFile.Count;
+      int lLastLinePos = lFile.Count - 1;
 
       Quicksort( lFile, lStartPos, lLastLinePos );
+
+      StreamWriter lOutStream = new StreamWriter( aFile );
+      WriteAllLines( lOutStream, lFile );
+      lStream.Close();
+    }
+
+    private void WriteAllLines( StreamWriter lStream, List<string> lFile )
+    {
+      foreach ( string lLine in lFile )
+      {
+        lStream.Write( lLine );
+        lStream.Write( '\n' );
+      }
     }
 
     private List<string> ReadAllLines( StreamReader lStream )
@@ -124,6 +162,9 @@ namespace CaperSharp
     private int Partition( List<string> aLines, int aFirstIndex, int aLastIndex, int aPivotIndex )
     {      
       string lPivotLine = aLines[ aPivotIndex ]; // fetch the pivot
+      string lContig = GetContigIdent( lPivotLine );
+
+      Console.WriteLine( string.Format( "PARTITION!! {0} {1} {2} {3}", lContig, aFirstIndex, aLastIndex, aPivotIndex ) );
 
       int lStoreIndex = aFirstIndex;
       for ( int lIndex = aFirstIndex; lIndex < aLastIndex; lIndex++ ) // proceed from left to right, don't do the last one.
@@ -132,26 +173,29 @@ namespace CaperSharp
 
         if ( LessThanOrEqual( lTestLine, lPivotLine ) )
         {
-          aLines[ lIndex ] = aLines[ lStoreIndex ];
-          aLines[ lStoreIndex ] = lTestLine;
-
+          Swap( aLines, lIndex, lStoreIndex );
+          
           lStoreIndex++; // increment the store position
         }
       }
-
-      aLines[ aPivotIndex ] = aLines[ lStoreIndex ];
-      aLines[ lStoreIndex ] = lPivotLine;
-
+      Swap( aLines, lStoreIndex, aPivotIndex );
       return lStoreIndex; // return the final position of the pivot
+    }
+
+    private void Swap( List<string> aLines, int lIndex, int lStoreIndex )
+    {
+      if ( lIndex != lStoreIndex )
+      {
+        string lIndexLine = aLines[ lIndex ];
+        aLines[ lIndex ] = aLines[ lStoreIndex ];
+        aLines[ lStoreIndex ] = lIndexLine;
+      }
     }
 
 
     private bool LessThanOrEqual( string aLine1, string aLine2 )
     {
-      int lIndex1 = GetIndex( aLine1 );
-      int lIndex2 = GetIndex( aLine1 );
-
-      if ( lIndex1 <= lIndex2 )
+      if ( GetIndex( aLine1 ) <= GetIndex ( aLine2 ) )
         return true;
 
       return false;
