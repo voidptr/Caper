@@ -27,6 +27,8 @@ namespace CaperSharp
     private Dictionary<string, Pair<long>> mContigBorders;
     private Dictionary<string, int> mSortedContigIdents;
 
+    public Dictionary<string, int> NumberOfReads;
+    
     private enum Direction
     {
       JumpForward,
@@ -42,6 +44,8 @@ namespace CaperSharp
       mFilePositions = new Dictionary<string, List<long>>();
       mContigBorders = new Dictionary<string, Pair<long>>();
       mSortedContigIdents = new Dictionary<string, int>();
+
+      NumberOfReads = new Dictionary<string, int>();
 
       mEndOfFilePos = 0;
     }
@@ -62,55 +66,69 @@ namespace CaperSharp
 
     private Dictionary<string, List<long>> BuildMappingsIndex()
     {
-      throw new NotImplementedException();
-      //DecachedStreamReader lReader = new DecachedStreamReader( Path );
+      DecachedStreamReader lReader = new DecachedStreamReader( Path );
 
-      //Dictionary<string, Pair<long>> lBorders = new Dictionary<string, Pair<long>>();
-      
-      //string lContig = "";
-      //long lCurrentLinePosition = 0;
-      //long lTargetIndex;
-      //long lCurrentIndex = 0;
-      //while ( lReader.Peek() > -1 )
-      //{        
-      //  lCurrentLinePosition = lReader.Position; // pre-read, of this line.
-      //  string lCurrentContig = GetContigIdent( lReader.ReadLine() );
+      Dictionary<string, List<long>> lIndexes = new Dictionary<string, List<long>>();
 
-      //  if ( lCurrentContig != lContig )
-      //  {
-      //    if ( lContig.Length > 0 ) // close up the previous one.
-      //    {
-      //      Pair<long> lItem = lBorders[ lContig ];
-      //      lItem.SecondItem = lPreviousLinePosition;
-      //      lBorders[ lContig ] = lItem;
-      //    }
-      //    lBorders[ lCurrentContig ] = new Pair<long>() { FirstItem = lCurrentLinePosition };
-      //    lContig = lCurrentContig;
-      //  }
-      //}
-      //// close up the last contig
+      string lContig = "";
+      long lCurrentPosition = 0;
+      int lTargetIndex = 0;
+      int lReadCount = 0;
 
-      //Pair<long> lLastContig = lBorders[ lContig ];
-      //lLastContig.SecondItem = lCurrentLinePosition;
-      //lBorders[ lContig ] = lLastContig;
+      while ( lReader.Peek() > -1 )
+      {
+        lCurrentPosition = lReader.Position;
 
-      //lReader.Close();
+        string lLine = lReader.ReadLine();
+        string lCurrentContig = GetContigIdent( lLine );
+        int lCurrentIndex = GetIndex( lLine );
 
-      //return lBorders;
+        if ( lContig != lCurrentContig )
+        {
+          if ( lContig.Length > 0 )
+          {
+            NumberOfReads.Add( lContig, lReadCount );
+            lReadCount = 0;
+          }
+
+          lTargetIndex = 0;
+          lContig = lCurrentContig;
+          lIndexes.Add( lContig, new List<long>() );
+        }
+
+        if ( lCurrentIndex >= lTargetIndex )
+        {
+          if ( lCurrentIndex >= lTargetIndex + IndexIncrement ) // overshoot
+          {
+            lIndexes[ lContig ].Add( -1 ); // indicate that this section is empty.
+            lReader.Position = lCurrentPosition; // unconsume the line, since we'll need it in a minute.
+          }
+          else
+            lIndexes[ lContig ].Add( lCurrentPosition );
+
+          lTargetIndex += IndexIncrement;
+        }
+        lReadCount++;
+      }
+      NumberOfReads.Add( lContig, lReadCount ); // last one.
+
+      lReader.Close();
+
+      return lIndexes;
     }
 
     private Dictionary<string, Pair<long>> FindContigBorders()
     {
       DecachedStreamReader lReader = new DecachedStreamReader( Path );
 
-      Dictionary<string, Pair<long>> lBorders = new Dictionary<string,Pair<long>>();
+      Dictionary<string, Pair<long>> lBorders = new Dictionary<string, Pair<long>>();
 
       string lContig = "";
-      long lPreviousLinePosition = 0;
+      
       long lCurrentLinePosition = 0;
       while ( lReader.Peek() > -1 )
-      {        
-        lPreviousLinePosition = lCurrentLinePosition;
+      {
+        
         lCurrentLinePosition = lReader.Position;
         string lCurrentContig = GetContigIdent( lReader.ReadLine() );
 
@@ -119,24 +137,24 @@ namespace CaperSharp
           if ( lContig.Length > 0 ) // close up the previous one.
           {
             Pair<long> lItem = lBorders[ lContig ];
-            lItem.SecondItem = lPreviousLinePosition;
+            lItem.SecondItem = lCurrentLinePosition - 1; // index of last char of section
             lBorders[ lContig ] = lItem;
           }
           lBorders[ lCurrentContig ] = new Pair<long>() { FirstItem = lCurrentLinePosition };
           lContig = lCurrentContig;
-        }        
+        }
       }
       // close up the last contig
 
       Pair<long> lLastContig = lBorders[ lContig ];
-      lLastContig.SecondItem = lCurrentLinePosition;
+      lLastContig.SecondItem = lReader.Position - 1; // index of last char of file
       lBorders[ lContig ] = lLastContig;
 
       lReader.Close();
 
       return lBorders;
     }
-    
+
     private void GenerateNumberOfWindows()
     {
       foreach ( string lContigIdent in ReferenceGenome.Keys )
@@ -165,21 +183,6 @@ namespace CaperSharp
       mEndOfFilePos = lStream.Position;
       lStream.Position = 0;
     }
-
-    //private void SafeSeek( DecoupledStreamReader aStream, long aTargetSeek )
-    //{
-    //  SafeSeek( aStream, aTargetSeek, 0, mEndOfFilePos );
-    //}
-
-    //private void SafeSeek( DecoupledStreamReader aStream, long aTargetSeek, long aBeginning, long aEnd )
-    //{
-    //  if ( aTargetSeek >= aEnd ) // at the end, back it up by a line and a half.
-    //    aStream.Position = aEnd - ( long ) ( mLineLengthIsh * 1.5 );
-    //  else if ( aTargetSeek < aBeginning )
-    //    aStream.Position = aBeginning;
-    //  else
-    //    aStream.Position = aTargetSeek; // do the seek as requested.
-    //}
 
     internal virtual ICollection<Mapping> GetReads( string lContigIdent, int aLeft, int aRight )
     {
@@ -237,11 +240,20 @@ namespace CaperSharp
     {
       long lStartingPos = mFilePositions[ aContigIdent ][ lStartingIndex ];
 
-      long lCount;
+      if ( lStartingPos == -1 ) // there's no cache here
+        return BuildEmptyCache( aContigIdent, lStartingIndex * IndexIncrement, ( lStartingIndex * IndexIncrement ) + IndexIncrement - 1 );
+
+      long lCount = -1;
       if ( lStartingIndex + 1 < mFilePositions[ aContigIdent ].Count )
-        lCount = mFilePositions[ aContigIdent ][ lStartingIndex + 1 ] - lStartingPos;
-      else
-        lCount = mEndOfFilePos - lStartingPos;
+        for ( int i = lStartingIndex + 1; i < mFilePositions[ aContigIdent ].Count; i++ )
+          if ( mFilePositions[ aContigIdent ][ i ] > -1 )
+          {
+            lCount = mFilePositions[ aContigIdent ][ i ] - lStartingPos;
+            break;
+          }
+
+      if ( lCount == -1 ) // it's at the edge of the contig!
+        lCount = mContigBorders[ aContigIdent ].SecondItem - lStartingPos + 1;
 
       byte[] lBlock = new byte[ lCount ];
       mStream.Position = lStartingPos;
@@ -252,13 +264,21 @@ namespace CaperSharp
       return lCache;
     }
 
-    public virtual MappingCache BuildCache( byte[] lBlock, string aContigIdent, int aLeft, int aRight )
+    private MappingCache BuildEmptyCache( string aContigIdent, int aLeft, int aRight )
     {
       List<List<Mapping>> lMappings = new List<List<Mapping>>();
       for ( int i = aLeft; i <= aRight; i++ )
       {
         lMappings.Add( null );
       }
+
+      return new MappingCache( lMappings, aContigIdent, aLeft, aRight );
+    }
+
+
+    public virtual MappingCache BuildCache( byte[] lBlock, string aContigIdent, int aLeft, int aRight )
+    {
+      MappingCache lCache = BuildEmptyCache( aContigIdent, aLeft, aRight );
 
       StreamReader lStream = new StreamReader( new MemoryStream( lBlock ) );
 
@@ -269,14 +289,13 @@ namespace CaperSharp
         int lIndex = GetIndex( lLine );
         int lPrivateIndex = lIndex - aLeft;
 
-        if ( lMappings[ lPrivateIndex ] == null )
-          lMappings[ lPrivateIndex ] = new List<Mapping>();
+        if ( lCache.Sequences[ lPrivateIndex ] == null )
+          lCache.Sequences[ lPrivateIndex ] = new List<Mapping>();
 
-        lMappings[ lPrivateIndex ].Add( new Mapping( lIndex, new Sequence( GetSequence( lLine ) ) ) );
+        lCache.Sequences[ lPrivateIndex ].Add( new Mapping( lIndex, new Sequence( GetSequence( lLine ) ) ) );
       }
 
-      return new MappingCache( lMappings, aContigIdent, aLeft, aRight );
-
+      return lCache;
     }
 
     public abstract string GetSequence( string aLine );
@@ -290,6 +309,9 @@ namespace CaperSharp
       return aLine.Split( Tab );
     }
 
-
+    internal void SaveReadIndexToFile()
+    {
+      throw new NotImplementedException();
+    }
   }
 }

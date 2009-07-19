@@ -24,7 +24,7 @@ namespace CaperSharp
 
     private int GetNormalizedIndex( string aValue )
     {
-      return System.Convert.ToInt32( aValue ) - 1;
+      return System.Convert.ToInt32( aValue );
     }
 
     public override string GetContigIdent( string aLine )

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{695A4957-2784-405A-86F0-7E64DC133BD9}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -33,6 +33,7 @@
   <ItemGroup>
     <Compile Include="BowtieMappingEngine.cs" />
     <Compile Include="BowtieMappingsPreparer.cs" />
+    <Compile Include="MapviewMappingsPreparer.cs" />
     <Compile Include="FASequenceEngine.cs" />
     <Compile Include="Mapping.cs" />
     <Compile Include="MappingCache.cs" />
