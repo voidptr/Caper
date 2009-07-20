@@ -70,20 +70,20 @@ void Caper::UserInterface(int argc, char * const argv[] )
         string lHighlightedString = lMappings[i]->mSequence->Bases;
         for ( int j = 0; j < lHighlightedString.length(); j++ )
         {
-          if ( lHighlightedString[j] != lReferenceSequence->Bases[ lMappings[i]->mPosition + j ] )
+          if ( lHighlightedString[j] != lReferenceSequence->Bases[ lMappings[i]->Index + j ] )
           {
             lHighlightedString[j] = toupper( lHighlightedString[j] );
           }
         }
 
-        cout << PadLeft( lMappings[i]->mPosition - lLeft ) << lHighlightedString << "\n"; 
+        cout << PadLeft( lMappings[i]->Index - lLeft ) << lHighlightedString << "\n"; 
       }
     }
     else
     {
       for ( int i = 0 ; i < lMappings.size(); i++ ) //foreach ( Mapping lMapping in lMappings )
       {
-        cout << "Index " << lMappings[i]->mPosition << ": " << lMappings[i]->mSequence->Bases << "\n";
+        cout << "Index " << lMappings[i]->Index << ": " << lMappings[i]->mSequence->Bases << "\n";
       }
     }
 

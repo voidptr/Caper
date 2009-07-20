@@ -1,8 +1,8 @@
 #include "Mapping.h"
 
-Mapping::Mapping(int & aPosition, Sequence* aSequence)
+Mapping::Mapping(int & aIndex, Sequence* aSequence)
 {
-	mPosition = aPosition;
+	Index = aIndex;
   //delete mSequence;
 	mSequence = aSequence;
 }

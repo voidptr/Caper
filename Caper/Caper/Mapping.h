@@ -8,7 +8,7 @@ class Sequence;
 class Mapping
 {
 public:
-	int mPosition;
+	int Index;
 	Sequence* mSequence;
 public:
 	Mapping(int & aPosition, Sequence* aSequence);

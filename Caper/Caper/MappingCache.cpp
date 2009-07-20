@@ -54,7 +54,7 @@ vector<Mapping*> MappingCache::GetReads( int aLeft, int aRight )
     {
       for ( int j = 0; j < Sequences[i].size() ; j++ )
       {
-        lResult.push_back( new Mapping( Sequences[i][j]->mPosition, new Sequence( Sequences[i][j]->mSequence->Bases ) ) );
+        lResult.push_back( new Mapping( Sequences[i][j]->Index, new Sequence( Sequences[i][j]->mSequence->Bases ) ) );
       }
     }
   }
