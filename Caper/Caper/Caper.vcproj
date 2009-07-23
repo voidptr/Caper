@@ -171,6 +171,10 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\BowtieMappingEngine.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Caper.cpp"
 				>
 			</File>
@@ -187,7 +191,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MappingEngine.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MappingUtilities.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\MapviewMappingEngine.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Pair.cpp"
 				>
 			</File>
 			<File
@@ -205,6 +221,10 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath=".\BowtieMappingEngine.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Caper.h"
 				>
 			</File>
@@ -217,7 +237,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MappingEngine.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MappingUtilities.h"
+				>
+			</File>
+			<File
 				RelativePath=".\MapviewMappingEngine.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Pair.h"
 				>
 			</File>
 			<File
@@ -226,6 +258,10 @@
 			</File>
 			<File
 				RelativePath=".\SequenceReader.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Sequences.h"
 				>
 			</File>
 			<File

@@ -28,12 +28,6 @@ namespace CaperSharp
     private Dictionary<string, int> mSortedContigIdents;
 
     public Dictionary<string, int> NumberOfReads;
-    
-    private enum Direction
-    {
-      JumpForward,
-      JumpBackward
-    }
 
     public MappingEngine( string aPath, Sequences aReferenceGenome )
     {

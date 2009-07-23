@@ -2,7 +2,6 @@
 
 MappingCache::MappingCache( char * aBuffer, int aLeftIndex, int aRightIndex )
 {
-//  delete Sequences;
   Sequences = new vector<Mapping*>[ aRightIndex - aLeftIndex + 1 ];
 
   LeftIndex = aLeftIndex;
