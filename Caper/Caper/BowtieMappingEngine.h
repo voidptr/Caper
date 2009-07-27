@@ -1,11 +1,13 @@
 #pragma once
-#include "mappingengine.h"
-//#include "BowtieMappingUtilities.h"
+#include "MappingEngine.h"
+#include "BowtieMappingUtilities.h"
 
-class BowtieMappingEngine :
-	public MappingEngine//, public BowtieMappingUtilities
+class BowtieMappingEngine : public MappingEngine, public BowtieMappingUtilities
 {
 public:
-	BowtieMappingEngine(void);
-	~BowtieMappingEngine(void);
+  BowtieMappingEngine( string & aPath, Sequences & aReferenceGenome );
+
+	string GetSequence( string & aLine );
+  int GetIndex( string & aLine );    
+  string GetContigIdent( string & aLine );	
 };

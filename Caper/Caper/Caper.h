@@ -1,8 +1,11 @@
 
 #include "stdafx.h"
 
-#include "SequenceReader.h"
+#include "FASequenceEngine.h"
+#include "BowtieMappingEngine.h"
 #include "MapviewMappingEngine.h"
+#include "BowtieMappingsPreparer.h"
+#include "MapviewMappingsPreparer.h"
 
 class Caper
 {

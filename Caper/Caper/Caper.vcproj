@@ -175,7 +175,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\BowtieMappingsPreparer.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\BowtieMappingUtilities.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Caper.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\FASequenceEngine.cpp"
 				>
 			</File>
 			<File
@@ -195,6 +207,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MappingsPreparer.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\MappingUtilities.cpp"
 				>
 			</File>
@@ -203,11 +219,19 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Pair.cpp"
+				RelativePath=".\MapviewMappingsPreparer.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MapviewMappingUtilities.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\Sequence.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\SequenceEngine.cpp"
 				>
 			</File>
 			<File
@@ -225,7 +249,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\BowtieMappingsPreparer.h"
+				>
+			</File>
+			<File
+				RelativePath=".\BowtieMappingUtilities.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Caper.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FASequenceEngine.h"
 				>
 			</File>
 			<File
@@ -241,6 +277,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MappingsPreparer.h"
+				>
+			</File>
+			<File
 				RelativePath=".\MappingUtilities.h"
 				>
 			</File>
@@ -249,11 +289,19 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Pair.h"
+				RelativePath=".\MapviewMappingsPreparer.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MapviewMappingUtilities.h"
 				>
 			</File>
 			<File
 				RelativePath=".\Sequence.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SequenceEngine.h"
 				>
 			</File>
 			<File

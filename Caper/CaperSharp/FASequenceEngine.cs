@@ -57,47 +57,13 @@ namespace CaperSharp
         }
       }
 
-      // do the last one.
+      // do the last kone.
       Sequences.Add( lLocus, new Sequence( lAllReader.BaseStream, lLocusStart, lCount ) );
 
       lWriter.Flush();
 
       lStream.Close();
 
-
-
-      //while ( mStream.Peek() >= 0 ) // not empty
-      //{
-      //  string lSequenceIdentifier;
-
-      //  lBuffer = mStream.ReadLine(); // fetch the name of the sequence.
-
-      //  if ( lBuffer[ 0 ] == GreaterThan )
-      //  {
-      //    lSequenceIdentifier = lBuffer.Substring( 1 ).Split( ',', ' ' )[ 0 ];
-      //  }
-      //  else
-      //  {
-      //    throw new Exception( "WHAT!!!??!?!" );
-      //  }
-
-      //  long lPosition = mStream.Position; // the start of the next line.
-
-      //  int lChar;
-      //  while ( ( lChar = mStream.BaseStream.ReadByte() ) >= 0 )
-      //  {
-      //    if ( lChar == GreaterThan )
-      //    {
-      //      mStream.Position = mStream.Position - 1;
-      //      long lCount = mStream.Position - lPosition;
-
-      //      Sequences.Add( lSequenceIdentifier, new Sequence( mStream.BaseStream, lPosition, lCount ) );
-      //      break;
-      //    }
-      //  }
-      //  if ( mStream.Peek() < 0 ) // end of the line
-      //    Sequences.Add( lSequenceIdentifier, new Sequence( mStream.BaseStream, lPosition, mStream.Position - lPosition ) ); // do the last one.
-      //}
       return true;
     }
   }

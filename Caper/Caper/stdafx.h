@@ -7,6 +7,12 @@
 
 #include <stdio.h>
 #include <iostream>
+#include <fstream>
+#include <sstream>
+#include <map>
+#include <list>
+#include <vector>
+#include <math.h>
 #include <string>
 
 using namespace std;

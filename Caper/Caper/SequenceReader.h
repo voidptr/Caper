@@ -1,12 +1,6 @@
 #pragma once
-
 #include "stdafx.h"
 #include "Sequence.h"
-#include <fstream>
-
-using namespace std;
-
-class Sequence;
 
 class SequenceReader
 {
