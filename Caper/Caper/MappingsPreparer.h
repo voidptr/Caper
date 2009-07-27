@@ -1,6 +1,9 @@
 #pragma once
 #include "stdafx.h"
 
+#include <algorithm>
+#include <time.h>
+
 class MappingsPreparer
 {
 private:
@@ -9,19 +12,23 @@ private:
 
   string mPath;
 
+  class SortMapping
+  {
+    MappingsPreparer * mMappingsPrep;
+  public:
+    explicit SortMapping( MappingsPreparer * pf) : mMappingsPrep(pf) {}
+    bool operator() (string & aLeft, string & aRight ) 
+    {
+      return mMappingsPrep->LessThanMappingLine( aLeft, aRight );
+    }
+  };
+
 private:
   bool IsSorted();
   vector<string> * ReadAllLines();
   void WriteAllLines( vector<string>* aMappingsFile, string & aFilename );
-  string SortMappingsAndWriteToTmpFile();
-
-  void Introsort( vector<string> * aLines, int aFirstIndex, int aLastIndex, int aCurrentDepth, int aSwitchDepth );
-  int Partition( vector<string> * aLines, int aFirstIndex, int aLastIndex, int aPivotIndex );
-  void Heapsort( vector<string> * aLines, int aOffset, int aCount );
-  void Heapify( vector<string> * aLines, int aOffset, int aCount );
-  void SiftDown( vector<string> * aLines, int aStart, int aEnd, int aOffset );
-  void SwapLines( vector<string> * aLines, int aFirst, int aSecond );
-  int CompareMappingLine( string & aLeft, string & aRight );
+  string SortMappingsAndWriteToTmpFile();  
+  bool LessThanMappingLine( string & aLeft, string & aRight );
 
 protected:
   virtual int GetIndex( string & aLine ) = 0;
@@ -31,3 +38,4 @@ public:
   MappingsPreparer(string & aPath);
   string PrepareMappings();
 };
+

@@ -4,6 +4,9 @@ MappingEngine::MappingEngine(string & aPath, Sequences & aReferenceGenome)
 {
 	ReferenceGenome = &aReferenceGenome;
 	mPath = aPath;
+
+  CacheA = NULL;
+  CacheB = NULL;
 }
 
 void MappingEngine::Initialize()
@@ -22,7 +25,7 @@ void MappingEngine::PopulateSortedContigIdents()
 		mSortedContigIdents.push_back( lItem.first );
 	}
 
-	mSortedContigIdents.sort(); // don't know if this matters.
+	//mSortedContigIdents.sort(); // don't know if this matters.
 }
 
 void MappingEngine::PopulateContigBorders()
@@ -111,7 +114,7 @@ void MappingEngine::PopulateMappingIndex()
 
       lTargetIndex = 0;
       lContig = lCurrentContig;
-      mMappingIndexes.insert( pair<string, list<long>>( lContig, list<long>() ) );
+      mMappingIndexes.insert( pair<string, vector<long>>( lContig, vector<long>() ) );
     }
 
     if ( lCurrentIndex >= lTargetIndex )
@@ -133,3 +136,138 @@ void MappingEngine::PopulateMappingIndex()
   lStream.close();
 }
 
+
+
+MappingCache* MappingEngine::BuildEmptyCache( string aContigIdent, int aLeft, int aRight )
+{
+  vector<vector<Mapping>> * lMappings = new vector<vector<Mapping>>();
+
+  for ( int i = aLeft; i <= aRight; i++ )
+  {
+    lMappings->push_back( vector<Mapping>() );
+  }
+
+  return new MappingCache( lMappings, aContigIdent, aLeft, aRight );
+}
+
+vector<Mapping> * MappingEngine::GetReads(string lContigIdent, int aLeft, int aRight )
+{
+  vector<Mapping> * lResult = new vector<Mapping>();
+
+  int lStartingCache = aLeft / IndexIncrement;
+  int lEndingCache = aRight / IndexIncrement;      
+  int lCachesRequired = lEndingCache - lStartingCache + 1; // this many caches.
+  int lLeftPosition = aLeft; // starting position
+         
+  int lCurrentCachePosition = lStartingCache;
+  for ( int i = 0; i < lCachesRequired; i++ ) // loop through the total number of caches required.
+  {
+    int lRightPosition = aRight < ( lCurrentCachePosition + 1 ) * IndexIncrement ?
+      aRight : (( lCurrentCachePosition + 1 ) * IndexIncrement) - 1;
+
+    MappingCache * lAppropriateCache = GetCorrectCache( lContigIdent, lLeftPosition, lRightPosition );
+    vector<Mapping> * lTmp = lAppropriateCache->GetReads( lLeftPosition, lRightPosition );
+    if ( !lTmp->empty() )
+      for (int i = 0; i < lTmp->size(); i++)
+        lResult->push_back( (*lTmp)[i] );
+
+    // these only matter if we do end up going to the next cache.
+    lCurrentCachePosition++;
+    lLeftPosition = lCurrentCachePosition * IndexIncrement; // move the left pointer over to the beginning of the next one.
+  }
+
+  return lResult;
+}
+
+MappingCache* MappingEngine::GetCorrectCache(string aContigIdent, int aLeft, int aRight )
+{
+  if ( CacheA != NULL && CacheA->ContigIdent == aContigIdent && CacheA->LeftIndex <= aLeft && CacheA->RightIndex >= aLeft )
+    return CacheA;
+  else if ( CacheB != NULL && CacheB->ContigIdent == aContigIdent && CacheB->LeftIndex <= aLeft && CacheB->RightIndex >= aLeft )
+    return CacheB;
+  else
+  {
+    RebuildCaches( aContigIdent, aLeft ); // neither of them have it.
+    return GetCorrectCache( aContigIdent, aLeft, aRight ); // check again.
+  }
+}
+
+void MappingEngine::RebuildCaches(string aContigIdent, int aLeft ) // these define the left edge of the problem.
+{
+  int lStartingIndex = ( aLeft / IndexIncrement );
+
+  delete CacheA;
+  CacheA = RebuildCache( aContigIdent, lStartingIndex );
+
+  delete CacheB;
+  if ( lStartingIndex + 1 < mMappingIndexes[ aContigIdent ].size() )
+    CacheB = RebuildCache( aContigIdent, lStartingIndex + 1 );
+}
+
+MappingCache * MappingEngine::RebuildCache( string aContigIdent, int lStartingIndex )
+{
+	//long lStartingPos = mMappingIndexes[aContigIdent][ lStartingIndex ];
+
+ // if ( lStartingPos == -1 ) // there's no cache here
+ // {
+ //   return BuildEmptyCache( 
+ //     aContigIdent, 
+ //     lStartingIndex * IndexIncrement, 
+ //     ( lStartingIndex * IndexIncrement ) + IndexIncrement - 1 );
+ // }
+
+	//long lCount = -1;
+
+  //if ( lStartingIndex + 1 < [ aContigIdent ].size() )
+  //  for ( int i = lStartingIndex + 1; i < mMappingIndexes[ aContigIdent ].size(); i++ )
+  //  {
+  //    if ( mMappingIndexes[ aContigIdent ][ i ] > -1 )
+  //    {
+  //      lCount = mMappingIndexes[ aContigIdent ][ i ] - lStartingPos;
+  //      break;
+  //    }
+  //  }
+
+  //if ( lCount == -1 ) // it's at the edge of the contig!
+  //  lCount = mContigBorders[ aContigIdent ].second() - lStartingPos + 1;
+
+  //ifstream lStream( Path );
+  
+  //char * lBlock = new char[ lCount ];
+  ///*mStream.Position = lStartingPos;
+  //mStream.BaseStream.Read( lBlock, 0, ( int ) lCount );
+
+  
+  
+  MappingCache * lCache; // = BuildCache( lBlock, aContigIdent, lStartingIndex * IndexIncrement, ( ( lStartingIndex + 1 ) * IndexIncrement ) - 1 );
+
+  return lCache;
+
+
+
+	//if ( lStartingIndex + 1 < mMappingIndexes[ aContigIdent ].size() )
+	//	lCount = mFilePositions[ lStartingIndex + 1 ] - lStartingPos;
+	//else
+	//	lCount = mEndOfFilePos - lStartingPos;
+
+	//mStream.seekg( lStartingPos, mStream.beg );
+
+	////string lBuffer;
+	//char* lBuffer = new char[ lCount ];
+	//mStream.read( lBuffer, lCount );
+
+	//MappingCache* lCache = new MappingCache( lBuffer,
+	//	lStartingIndex * IndexIncrement,
+	//	( ( lStartingIndex + 1 ) * IndexIncrement ) - 1 );
+
+	//delete[] lBuffer;
+
+	//return lCache;
+}
+
+MappingCache * MappingEngine::BuildCache( char * aBlock, string aContigIdent, int aLeft, int aRight )
+{
+  MappingCache * lCache;
+
+  return lCache;
+}

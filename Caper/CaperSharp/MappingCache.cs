@@ -21,9 +21,7 @@ namespace CaperSharp
       ContigIdent = aContigIdent;
       LeftIndex = aLeftIndex;
       RightIndex = aRightIndex;      
-    }
-
-    
+    }    
 
     public ICollection<Mapping> GetReads( int aLeft, int aRight )
     {
