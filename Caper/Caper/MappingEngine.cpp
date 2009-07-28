@@ -1,4 +1,6 @@
 #include "MappingEngine.h"
+#include <sstream>
+#include <iostream>
 
 MappingEngine::MappingEngine(string & aPath, Sequences & aReferenceGenome)
 {
@@ -136,20 +138,6 @@ void MappingEngine::PopulateMappingIndex()
   lStream.close();
 }
 
-
-
-MappingCache* MappingEngine::BuildEmptyCache( string aContigIdent, int aLeft, int aRight )
-{
-  vector<vector<Mapping>> * lMappings = new vector<vector<Mapping>>();
-
-  for ( int i = aLeft; i <= aRight; i++ )
-  {
-    lMappings->push_back( vector<Mapping>() );
-  }
-
-  return new MappingCache( lMappings, aContigIdent, aLeft, aRight );
-}
-
 vector<Mapping> * MappingEngine::GetReads(string lContigIdent, int aLeft, int aRight )
 {
   vector<Mapping> * lResult = new vector<Mapping>();
@@ -179,11 +167,18 @@ vector<Mapping> * MappingEngine::GetReads(string lContigIdent, int aLeft, int aR
   return lResult;
 }
 
+
 MappingCache* MappingEngine::GetCorrectCache(string aContigIdent, int aLeft, int aRight )
 {
-  if ( CacheA != NULL && CacheA->ContigIdent == aContigIdent && CacheA->LeftIndex <= aLeft && CacheA->RightIndex >= aLeft )
+  if ( CacheA != NULL && 
+    CacheA->ContigIdent == aContigIdent && 
+    CacheA->LeftIndex <= aLeft && 
+    CacheA->RightIndex >= aLeft )
     return CacheA;
-  else if ( CacheB != NULL && CacheB->ContigIdent == aContigIdent && CacheB->LeftIndex <= aLeft && CacheB->RightIndex >= aLeft )
+  else if ( CacheB != NULL && 
+    CacheB->ContigIdent == aContigIdent && 
+    CacheB->LeftIndex <= aLeft && 
+    CacheB->RightIndex >= aLeft )
     return CacheB;
   else
   {
@@ -206,68 +201,79 @@ void MappingEngine::RebuildCaches(string aContigIdent, int aLeft ) // these defi
 
 MappingCache * MappingEngine::RebuildCache( string aContigIdent, int lStartingIndex )
 {
-	//long lStartingPos = mMappingIndexes[aContigIdent][ lStartingIndex ];
+	long lStartingPos = mMappingIndexes[aContigIdent][ lStartingIndex ];
 
- // if ( lStartingPos == -1 ) // there's no cache here
- // {
- //   return BuildEmptyCache( 
- //     aContigIdent, 
- //     lStartingIndex * IndexIncrement, 
- //     ( lStartingIndex * IndexIncrement ) + IndexIncrement - 1 );
- // }
+  if ( lStartingPos == -1 ) // there's no cache here
+  {
+    return BuildEmptyCache( 
+      aContigIdent, 
+      lStartingIndex * IndexIncrement, 
+      ( lStartingIndex * IndexIncrement ) + IndexIncrement - 1 );
+  }
 
-	//long lCount = -1;
+	long lCount = -1;
+  if ( lStartingIndex + 1 < mMappingIndexes[ aContigIdent ].size() )
+  {
+    for ( int i = lStartingIndex + 1; i < mMappingIndexes[ aContigIdent ].size(); i++ )
+    {
+      if ( mMappingIndexes[ aContigIdent ][ i ] > -1 )
+      {
+        lCount = mMappingIndexes[ aContigIdent ][ i ] - lStartingPos;
+        break;
+      }
+    }
+  }
 
-  //if ( lStartingIndex + 1 < [ aContigIdent ].size() )
-  //  for ( int i = lStartingIndex + 1; i < mMappingIndexes[ aContigIdent ].size(); i++ )
-  //  {
-  //    if ( mMappingIndexes[ aContigIdent ][ i ] > -1 )
-  //    {
-  //      lCount = mMappingIndexes[ aContigIdent ][ i ] - lStartingPos;
-  //      break;
-  //    }
-  //  }
+  if ( lCount == -1 ) // it's at the edge of the contig!
+    lCount = mContigBorders[ aContigIdent ].second - lStartingPos + 1;
 
-  //if ( lCount == -1 ) // it's at the edge of the contig!
-  //  lCount = mContigBorders[ aContigIdent ].second() - lStartingPos + 1;
+  ifstream lStream( mPath.c_str() );
 
-  //ifstream lStream( Path );
+  char * lBlock = new char[ lCount ];
+  lStream.seekg( lStartingPos );
+  lStream.get( lBlock, lCount );
   
-  //char * lBlock = new char[ lCount ];
-  ///*mStream.Position = lStartingPos;
-  //mStream.BaseStream.Read( lBlock, 0, ( int ) lCount );
-
-  
-  
-  MappingCache * lCache; // = BuildCache( lBlock, aContigIdent, lStartingIndex * IndexIncrement, ( ( lStartingIndex + 1 ) * IndexIncrement ) - 1 );
+  MappingCache * lCache = BuildCache( lBlock, aContigIdent, lStartingIndex * IndexIncrement, ( ( lStartingIndex + 1 ) * IndexIncrement ) - 1 );
 
   return lCache;
-
-
-
-	//if ( lStartingIndex + 1 < mMappingIndexes[ aContigIdent ].size() )
-	//	lCount = mFilePositions[ lStartingIndex + 1 ] - lStartingPos;
-	//else
-	//	lCount = mEndOfFilePos - lStartingPos;
-
-	//mStream.seekg( lStartingPos, mStream.beg );
-
-	////string lBuffer;
-	//char* lBuffer = new char[ lCount ];
-	//mStream.read( lBuffer, lCount );
-
-	//MappingCache* lCache = new MappingCache( lBuffer,
-	//	lStartingIndex * IndexIncrement,
-	//	( ( lStartingIndex + 1 ) * IndexIncrement ) - 1 );
-
-	//delete[] lBuffer;
-
-	//return lCache;
 }
+
+
+
+MappingCache* MappingEngine::BuildEmptyCache( string aContigIdent, int aLeft, int aRight )
+{
+  vector<vector<Mapping>> * lMappings = new vector<vector<Mapping>>();
+
+  for ( int i = aLeft; i <= aRight; i++ )
+  {
+    lMappings->push_back( vector<Mapping>() );
+  }
+
+  return new MappingCache( lMappings, aContigIdent, aLeft, aRight );
+}
+
 
 MappingCache * MappingEngine::BuildCache( char * aBlock, string aContigIdent, int aLeft, int aRight )
 {
-  MappingCache * lCache;
+  MappingCache * lCache = BuildEmptyCache( aContigIdent, aLeft, aRight );
+
+  stringstream lStream((string(aBlock)));
+
+  string lLine;
+
+  while ( lStream.peek() >= 0 )
+  {
+    getline( lStream, lLine );
+    if ( lLine.length() < 1 )
+      break;
+
+    int lIndex = GetIndex( lLine );
+    int lPrivateIndex = lIndex - aLeft;
+
+    /*lCache->Sequences[ lPrivateIndex ].push_back( 
+      Mapping( lIndex, new Sequence( GetSequence( lLine ) ) ) );*/
+
+  }
 
   return lCache;
 }

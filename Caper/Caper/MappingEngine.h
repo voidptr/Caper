@@ -1,5 +1,7 @@
 #pragma once
 
+#include <sstream>
+#include <iostream>
 #include "stdafx.h"
 #include "Sequence.h"
 #include "Sequences.h"
@@ -9,6 +11,8 @@ class MappingEngine
 {
 private:
   static const int IndexIncrement = 1000;
+  static const char Tab = '\t';
+  static const char NewLine = '\n';
 
 	Sequences * ReferenceGenome;
 
