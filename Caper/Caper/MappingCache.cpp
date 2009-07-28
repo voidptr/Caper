@@ -2,7 +2,7 @@
 
 MappingCache::MappingCache( vector<vector<Mapping>> * aMappings, string & aContigIdent, int & aLeftIndex, int & aRightIndex )
 {
-  Sequences = aMappings;
+  Mappings = aMappings;
 
   ContigIdent = aContigIdent;
   LeftIndex = aLeftIndex;
@@ -15,11 +15,11 @@ vector<Mapping> * MappingCache::GetReads( int aLeft, int aRight )
 
   for ( int i = PrivateIndex(aLeft); i <= PrivateIndex(aRight); i++ )
   {
-    if ( !Sequences[ i ].empty() )
+    if ( !Mappings->at(i).empty() )
     {
-      for ( int j = 0; j < Sequences[i].size() ; j++ )
-      {
-        lResult->push_back( (*Sequences)[i][j] );
+      for ( int j = 0; j < Mappings->at(i).size() ; j++ )
+      {        
+        lResult->push_back( Mappings->at(i)[j] );
       }
     }
   }
@@ -32,3 +32,7 @@ int MappingCache::PrivateIndex( int aPublicIndex )
   return aPublicIndex - LeftIndex;
 }
 
+MappingCache::~MappingCache()
+{
+  delete Mappings;
+}

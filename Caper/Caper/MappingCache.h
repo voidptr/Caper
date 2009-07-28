@@ -12,7 +12,7 @@ public:
   string ContigIdent;
   int LeftIndex;
   int RightIndex;
-  vector<vector<Mapping>> * Sequences;
+  vector<vector<Mapping>> * Mappings;
 
 public:
 	MappingCache( 
@@ -22,6 +22,8 @@ public:
     int & aRightIndex );
 
   vector<Mapping>* GetReads( int aLeft, int aRight );
+
+  ~MappingCache(void);
  
 private:
   int PrivateIndex( int aPublicIndex );

@@ -3,4 +3,6 @@
 #include "stdafx.h"
 #include "Sequence.h"
 
-typedef map<string,Sequence> Sequences;
+typedef map<string,Sequence*> Sequences;
+
+typedef pair<string, Sequence*> SequencePair;

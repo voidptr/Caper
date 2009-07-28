@@ -2,25 +2,29 @@
 
 Sequence::Sequence( string & aBases )
 {
-	mBases = &aBases;
+	mBases = aBases;
   mIsStream = false;
   Length = aBases.length();
 }
 
 Sequence::Sequence(ifstream & aHandle, long & aPosition, long & aLength )
 {
-  mBases = 0;
+  mBases = "";
   mHandle = &aHandle;
   mPosition = aPosition;
   Length = aLength;
 
   mIsStream = true;
 }
+string Sequence::Substring( long aIndex )
+{
+  return Substring( aIndex, Length - aIndex );
+}
 
-string Sequence::Substring( long & aIndex, long & aCount )
+string Sequence::Substring( long aIndex, long aCount )
 {
   if ( !mIsStream )
-    return mBases->substr((int) aIndex, (int) aCount );
+    return mBases.substr((int) aIndex, (int) aCount );
   else
   {
     if ( aCount > Length )
@@ -41,12 +45,4 @@ string Sequence::ToString()
 {
   long lCount =0;
   return Substring(lCount, Length);
-}
-
-Sequence::~Sequence(void)
-{
-  //delete mBases;
-
-  //mHandle->close();
-  //delete mHandle;
 }

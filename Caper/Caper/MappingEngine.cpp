@@ -22,7 +22,7 @@ void MappingEngine::Initialize()
 
 void MappingEngine::PopulateSortedContigIdents()
 {		
-	for each ( pair<string,Sequence> lItem in *ReferenceGenome )
+	for each ( SequencePair lItem in *ReferenceGenome )
 	{
 		mSortedContigIdents.push_back( lItem.first );
 	}
@@ -66,10 +66,10 @@ void MappingEngine::PopulateContigBorders()
 
 void MappingEngine::PopulateNumberOfWindows()
 {		
-	for each ( pair<string,Sequence> lItem in *ReferenceGenome )
+	for each ( SequencePair lItem in *ReferenceGenome )
 	{
 		mNumberOfWindows.insert( pair<string, int>( lItem.first,
-      (int) ceil( (double) lItem.second.Length / IndexIncrement ) ) );
+      (int) ceil( (double) lItem.second->Length / IndexIncrement ) ) );
 	}	
 }
 
@@ -80,7 +80,7 @@ void MappingEngine::PopulateReadInformation()
   string lLine;
   getline( lStream, lLine );
 
-  mReadLength = GetSequence( lLine ).length();
+  ReadLength = GetSequence( lLine ).length();
   
   lStream.seekg( 0, ios::end );
   mEndOfFilePosition = lStream.tellg();
@@ -269,10 +269,9 @@ MappingCache * MappingEngine::BuildCache( char * aBlock, string aContigIdent, in
 
     int lIndex = GetIndex( lLine );
     int lPrivateIndex = lIndex - aLeft;
-
-    /*lCache->Sequences[ lPrivateIndex ].push_back( 
-      Mapping( lIndex, new Sequence( GetSequence( lLine ) ) ) );*/
-
+   
+    // WHY IS THIS BLANKING OUT!?!?!
+    lCache->Mappings->at(lPrivateIndex).push_back( *(new Mapping( lIndex, new Sequence( GetSequence( lLine ) ) ) ) );
   }
 
   return lCache;

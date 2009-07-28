@@ -35,9 +35,7 @@ void FASequenceEngine::Initialize()
         {
           lOutStream << NewLine;
           Sequence * lSeq = new Sequence( lAllReader, lLocusStart, lCount );
-          mSequences.insert( 
-            pair<string, Sequence>
-            (lLocus, *lSeq ) );
+          mSequences.insert( SequencePair (lLocus, lSeq ) );
           lCount++;
         }
         
@@ -63,7 +61,7 @@ void FASequenceEngine::Initialize()
 
   Sequence * lSeq = new Sequence( lAllReader, lLocusStart, lCount );
           
-  mSequences.insert( pair<string, Sequence>( lLocus, *lSeq ) );
+  mSequences.insert( SequencePair( lLocus, lSeq ) );
 
   lStream.close();
 }

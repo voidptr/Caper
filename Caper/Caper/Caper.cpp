@@ -2,45 +2,44 @@
 
 void Caper::UserInterface(int argc, char * const argv[] )
 {
-  string lUsageString = "Caper v0.1\nUsage: caper <-b|-m> <referencegenome.fa> <mapviewmappings.mapview>\n";
+  string lUsageString = "Caper v0.1\nUsage: caper [-si] -g <referencegenome.fa> <-m|-b> <mappingsfile>";
+  string lCommandString = "You can type: \"help\", \"list\", \"quit\", \"<contig ident>:<X>:<Y>\", or \"<contig ident>:<X>:<Y>:p\" (for pretty mode)";
 
-  if ( argc < 4 )
+  Arguments lArgs;
+  if ( !lArgs.ProcessArguments( argc, argv ) )
   {
-    cout << lUsageString;
+    cout << lUsageString << endl;
     return;
   }
 
   cout << "Reading Genome... ";
 
   SequenceEngine * lSequenceEngine;
-  lSequenceEngine = new FASequenceEngine( string(argv[2]) );
+  lSequenceEngine = new FASequenceEngine( lArgs.GenomePath );
   lSequenceEngine->Initialize();
 
   cout << "Done!" << endl;
 
   cout << "Preparing Mappings... ";
+
   MappingEngine * lMappingEngine;
-  if ( string(argv[1]) == "-b" )
+  if ( lArgs.MappingStyle == lArgs.BOWTIE )
   {
-    BowtieMappingsPreparer * lPrep = new BowtieMappingsPreparer( string(argv[3]) );
+    BowtieMappingsPreparer * lPrep = new BowtieMappingsPreparer( lArgs.MappingPath );
     string lNewPath = lPrep->PrepareMappings();
     delete lPrep;
 
     lMappingEngine = new BowtieMappingEngine( lNewPath, lSequenceEngine->mSequences );
   }
-  else if ( string(argv[1]) == "-m" )
+  else if ( lArgs.MappingStyle == lArgs.MAPVIEW )
   {
-    MapviewMappingsPreparer * lPrep = new MapviewMappingsPreparer( string(argv[3]) );
+    MapviewMappingsPreparer * lPrep = new MapviewMappingsPreparer( lArgs.MappingPath );
     string lNewPath = lPrep->PrepareMappings();
     delete lPrep;
 
     lMappingEngine = new MapviewMappingEngine( lNewPath, lSequenceEngine->mSequences );
   }
-  else
-  {
-    cout << lUsageString;
-    return;
-  }
+
   cout << "Done!" << endl;
 
   cout << "Initializing Mapping Engine... ";
@@ -49,77 +48,69 @@ void Caper::UserInterface(int argc, char * const argv[] )
 
   cout << "> ";
 
-  //string lInput = "";
-  //while ( cin >> lInput )
-  //{
-  //  if ( !IsValid( lInput ) )
-  //  {
-  //    cout << "Invalid Input: Format must be X:Y or X:Y:p (for pretty mode)";
-  //    cout << "> ";
-  //    continue;
-  //  }
+  string lInput = "";
+  Commands lCommands;
+  while ( cin >> lInput )
+  {
+    if ( !lCommands.ProcessArguments( lInput ) )
+    {
+      cout << "Invalid Input: " << lCommandString << endl ;
+      cout << "> ";
+      continue;
+    }
 
-  //  string lBits[3];
-  //  GetParameters( lInput, lBits );
+    if ( lCommands.Action == lCommands.GETREADS )
+    {
 
-  //  int lLeft = atoi( lBits[ 0 ].c_str() );
+      
 
-  //  int lRight;
-  //  if ( lBits[1].length() > 0 )
-  //    lRight = atoi( lBits[ 1 ].c_str() );
-  //  else
-  //    lRight = lLeft;
 
-  //  lLeft -= ReadLength;
-  //  if ( lLeft < 0 )
-  //    lLeft = 0;
+      if ( lCommands.Right > lSequenceEngine->mSequences[ lCommands.ContigIdent ]->Length )
+      {
+        cout << "Your Right Parameter is bigger than your reference genome.\n";
+        cout << "> ";
+        continue;
+      }
 
-  //  if ( lRight > lReferenceSequence->Bases.length() )
-  //  {
-  //    cout << "Your Right Parameter is bigger than your reference genome.\n";
-  //    cout << "> ";
-  //    continue;
-  //  }
+      vector<Mapping> * lMappings = lMappingEngine->GetReads(lCommands.ContigIdent, lCommands.Left, lCommands.Right );
+      if ( lCommands.PrettyMode ) // engage pretty mode
+      {    
+        cout << lCommands.Left << "\n";        
 
-  //  vector<Mapping*> lMappings = lMapviewMappingEngine.GetReads( lLeft, lRight );
-  //  if ( lBits[2].length() > 0 ) // engage pretty mode
-  //  {    
-  //    cout << lLeft << "\n";
+        if ( lCommands.Right + 1 < lSequenceEngine->mSequences[ lCommands.ContigIdent ]->Length )
+          cout << lSequenceEngine->mSequences[ lCommands.ContigIdent ]->Substring( lCommands.Left, lCommands.Right - lCommands.Left + 1 ) << endl;
+        else
+          cout << lSequenceEngine->mSequences[ lCommands.ContigIdent ]->Substring( lCommands.Left ) << "\n";
 
-  //    
+        for ( int i = 0 ; i < lMappings->size(); i++ ) 
+        {
+          string lHighlightedString = lMappings->at(i).mSequence->ToString();
+          for ( int j = 0; j < lHighlightedString.length(); j++ )
+          {
+            if ( lHighlightedString[j] != 
+              lSequenceEngine->mSequences[ lCommands.ContigIdent ]->Substring( 
+                lMappings->at(i).Index + j, 1 )[0] )
+            {
+              lHighlightedString[j] = toupper( lHighlightedString[j] );
+            }
+          }
 
-  //    if ( lRight + 1 < lReferenceSequence->Bases.length() )
-  //      cout << lReferenceSequence->Bases.substr( lLeft, lRight - lLeft + 1 ) << "\n";
-  //    else
-  //      cout << lReferenceSequence->Bases.substr( lLeft ) << "\n";
+          cout << PadLeft( lMappings->at(i).Index - lCommands.Left ) << lHighlightedString << "\n"; 
+        }
+      }
+      else
+      {
+        for ( int i = 0 ; i < lMappings->size(); i++ )
+        {
+          cout << "Index " << lMappings->at(i).Index << ": " << lMappings->at(i).mSequence->ToString() << "\n";
+        }
+      }
 
-  //    for ( int i = 0 ; i < lMappings.size(); i++ ) // ( Mapping lMapping in lMappings )
-  //    {
+      delete lMappings;
+    }
 
-  //      string lHighlightedString = lMappings[i]->mSequence->Bases;
-  //      for ( int j = 0; j < lHighlightedString.length(); j++ )
-  //      {
-  //        if ( lHighlightedString[j] != lReferenceSequence->Bases[ lMappings[i]->Index + j ] )
-  //        {
-  //          lHighlightedString[j] = toupper( lHighlightedString[j] );
-  //        }
-  //      }
-
-  //      cout << PadLeft( lMappings[i]->Index - lLeft ) << lHighlightedString << "\n"; 
-  //    }
-  //  }
-  //  else
-  //  {
-  //    for ( int i = 0 ; i < lMappings.size(); i++ ) //foreach ( Mapping lMapping in lMappings )
-  //    {
-  //      cout << "Index " << lMappings[i]->Index << ": " << lMappings[i]->mSequence->Bases << "\n";
-  //    }
-  //  }
-
-  //  MapviewMappingEngine::DestroyMappings( lMappings );
-
-  //  cout << "> ";
-  //}
+    cout << "> ";
+  }
 }
 
 
@@ -134,39 +125,4 @@ string Caper::PadLeft( int aCount )
 }
 
 
-bool Caper::IsValid( string lInput )
-{
-  try
-  {
-    string lBits[3];
-    GetParameters( lInput, lBits );
-
-    int lLeft = atoi( lBits[ 0 ].c_str() );
-
-    int lRight;
-    if ( lBits[1].length() > 0 )
-      lRight = atoi( lBits[ 1 ].c_str() );
-    else
-      lRight = lLeft;
-
-    if ( lLeft > lRight || lLeft < 0 || lRight < 0 )
-      return false;
-  }
-  catch ( int )
-  {
-    return false;
-  }
-
-  return true;
-}
-
-void Caper::GetParameters( string aLine, string * aBits )
-{
-  istringstream lStringStream( aLine );
-
-  for (int i = 0; i < 3; i++ )
-  {
-    getline( lStringStream, aBits[i], Colon );
-  }
-}
 

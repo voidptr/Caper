@@ -8,7 +8,7 @@ namespace CaperSharp
   {
     const char Colon = ':';
     const int ReadLength = 36;
-    const string UsageString = "CaperSharp v0.1\nUsage: caper [-m|-b] <referencegenome.fa> <mappingsfile>\n";
+    const string UsageString = "CaperSharp v0.1\nUsage: caper [-si] -g <referencegenome.fa> <-m|-b> <mappingsfile>\n";
     const string Format = "You can type: \"help\", \"list\", \"info <contig ident>\", \"quit\", \"<contig ident>:<X>:<Y>\", or \"<contig ident>:<X>:<Y>:p\" (for pretty mode)";
 
     private enum Command

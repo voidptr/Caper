@@ -3,8 +3,6 @@
 #include "stdafx.h"
 #include "Sequence.h"
 
-class Sequence;
-
 class Mapping
 {
 public:

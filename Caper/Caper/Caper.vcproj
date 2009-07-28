@@ -166,6 +166,14 @@
 	</References>
 	<Files>
 		<File
+			RelativePath=".\Arguments.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\Arguments.h"
+			>
+		</File>
+		<File
 			RelativePath=".\BowtieMappingEngine.cpp"
 			>
 		</File>
@@ -195,6 +203,14 @@
 		</File>
 		<File
 			RelativePath=".\Caper.h"
+			>
+		</File>
+		<File
+			RelativePath=".\Commands.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\Commands.h"
 			>
 		</File>
 		<File
@@ -307,6 +323,14 @@
 		</File>
 		<File
 			RelativePath=".\stdafx.h"
+			>
+		</File>
+		<File
+			RelativePath=".\XGetopt.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\XGetopt.h"
 			>
 		</File>
 	</Files>

@@ -104,7 +104,7 @@ void MappingsPreparer::WriteAllLines( vector<string> *aMappingsFile, string & aF
 
   for each ( string lLine in *aMappingsFile )
   {
-    lStream << lLine << NewLine;
+    lStream << lLine << '\n';
   }
 
   lStream.close();

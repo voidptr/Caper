@@ -9,17 +9,16 @@
 
 class MappingEngine
 {
-private:
   static const int IndexIncrement = 1000;
   static const char Tab = '\t';
   static const char NewLine = '\n';
 
+private:
 	Sequences * ReferenceGenome;
 
   MappingCache* CacheA;
   MappingCache* CacheB;
-
-	int mReadLength;
+	
 	long mEndOfFilePosition;
 	string mPath;
 
@@ -28,12 +27,13 @@ private:
 	map<string, pair<long,long>> mContigBorders;
 	vector<string> mSortedContigIdents;	
 
+private:
 	void PopulateMappingIndex();	
 	void PopulateContigBorders();
 	void PopulateNumberOfWindows();
 	void PopulateSortedContigIdents();
 	void PopulateReadInformation();
-  vector<Mapping> * GetReads(string lContigIdent, int aLeft, int aRight );
+  
 	MappingCache * GetCorrectCache( string lContigIdent, int aLeft, int aRight );
 	void RebuildCaches( string lContigIdent, int aLeft );
 	MappingCache * RebuildCache( string aContigIdent, int aLeft );
@@ -46,8 +46,11 @@ private:
 
 public:
 	map<string, int> NumberOfReads;
+  int ReadLength;
 	
+public:
 	MappingEngine( string & aPath, Sequences & aReferenceGenome );
+  vector<Mapping> * GetReads(string lContigIdent, int aLeft, int aRight );
 
   void Initialize();
 };
