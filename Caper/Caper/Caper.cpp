@@ -72,7 +72,7 @@ void Caper::UserInterface(int argc, char * const argv[] )
         continue;
       }
 
-      vector<Mapping> * lMappings = lMappingEngine->GetReads(lCommands.ContigIdent, lCommands.Left, lCommands.Right );
+      Mappings * lMappings = lMappingEngine->GetReads(lCommands.ContigIdent, lCommands.Left, lCommands.Right );
       if ( lCommands.PrettyMode ) // engage pretty mode
       {    
         cout << lCommands.Left << "\n";        
@@ -84,25 +84,25 @@ void Caper::UserInterface(int argc, char * const argv[] )
 
         for ( int i = 0 ; i < lMappings->size(); i++ ) 
         {
-          string lHighlightedString = lMappings->at(i).mSequence->ToString();
+          string lHighlightedString = lMappings->at(i)->mSequence->ToString();
           for ( int j = 0; j < lHighlightedString.length(); j++ )
           {
             if ( lHighlightedString[j] != 
               lSequenceEngine->mSequences[ lCommands.ContigIdent ]->Substring( 
-                lMappings->at(i).Index + j, 1 )[0] )
+                lMappings->at(i)->Index + j, 1 )[0] )
             {
               lHighlightedString[j] = toupper( lHighlightedString[j] );
             }
           }
 
-          cout << PadLeft( lMappings->at(i).Index - lCommands.Left ) << lHighlightedString << "\n"; 
+          cout << PadLeft( lMappings->at(i)->Index - lCommands.Left ) << lHighlightedString << "\n"; 
         }
       }
       else
       {
         for ( int i = 0 ; i < lMappings->size(); i++ )
         {
-          cout << "Index " << lMappings->at(i).Index << ": " << lMappings->at(i).mSequence->ToString() << "\n";
+          cout << "Index " << lMappings->at(i)->Index << ": " << lMappings->at(i)->mSequence->ToString() << "\n";
         }
       }
 

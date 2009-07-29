@@ -5,7 +5,7 @@
 #include <iostream>
 #include <sstream>
 #include <map>
-#include "Sequences.h"
+#include "Typedefs.h"
 // END TMP
 
 FASequenceEngine::FASequenceEngine(string & aPath) : SequenceEngine(aPath) {}

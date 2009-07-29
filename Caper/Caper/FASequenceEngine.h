@@ -1,6 +1,6 @@
 #pragma once
 #include "sequenceengine.h"
-#include "Sequences.h"
+#include "Typedefs.h"
 
 class FASequenceEngine :
   public SequenceEngine

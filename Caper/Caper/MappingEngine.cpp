@@ -138,9 +138,9 @@ void MappingEngine::PopulateMappingIndex()
   lStream.close();
 }
 
-vector<Mapping> * MappingEngine::GetReads(string lContigIdent, int aLeft, int aRight )
+Mappings * MappingEngine::GetReads(string lContigIdent, int aLeft, int aRight )
 {
-  vector<Mapping> * lResult = new vector<Mapping>();
+  Mappings * lResult = new Mappings();
 
   int lStartingCache = aLeft / IndexIncrement;
   int lEndingCache = aRight / IndexIncrement;      
@@ -153,11 +153,16 @@ vector<Mapping> * MappingEngine::GetReads(string lContigIdent, int aLeft, int aR
     int lRightPosition = aRight < ( lCurrentCachePosition + 1 ) * IndexIncrement ?
       aRight : (( lCurrentCachePosition + 1 ) * IndexIncrement) - 1;
 
-    MappingCache * lAppropriateCache = GetCorrectCache( lContigIdent, lLeftPosition, lRightPosition );
-    vector<Mapping> * lTmp = lAppropriateCache->GetReads( lLeftPosition, lRightPosition );
+    MappingCache * lAppropriateCache = 
+      GetCorrectCache( lContigIdent, lLeftPosition, lRightPosition );
+
+    Mappings * lTmp = lAppropriateCache->GetReads( lLeftPosition, lRightPosition );
+
     if ( !lTmp->empty() )
       for (int i = 0; i < lTmp->size(); i++)
-        lResult->push_back( (*lTmp)[i] );
+        lResult->push_back( new Mapping(*(lTmp->at(i))) ); // make a copy of the mapping.
+
+    delete lTmp;
 
     // these only matter if we do end up going to the next cache.
     lCurrentCachePosition++;
@@ -242,17 +247,18 @@ MappingCache * MappingEngine::RebuildCache( string aContigIdent, int lStartingIn
 
 MappingCache* MappingEngine::BuildEmptyCache( string aContigIdent, int aLeft, int aRight )
 {
-  vector<vector<Mapping>> * lMappings = new vector<vector<Mapping>>();
+  IndexedMappings * lMappings = new IndexedMappings();
 
   for ( int i = aLeft; i <= aRight; i++ )
   {
-    lMappings->push_back( vector<Mapping>() );
+    lMappings->push_back( Mappings() );
   }
 
   return new MappingCache( lMappings, aContigIdent, aLeft, aRight );
 }
 
 
+// This (and related) method should really be in a separate MappingCache Builder.
 MappingCache * MappingEngine::BuildCache( char * aBlock, string aContigIdent, int aLeft, int aRight )
 {
   MappingCache * lCache = BuildEmptyCache( aContigIdent, aLeft, aRight );
@@ -271,7 +277,7 @@ MappingCache * MappingEngine::BuildCache( char * aBlock, string aContigIdent, in
     int lPrivateIndex = lIndex - aLeft;
    
     // WHY IS THIS BLANKING OUT!?!?!
-    lCache->Mappings->at(lPrivateIndex).push_back( *(new Mapping( lIndex, new Sequence( GetSequence( lLine ) ) ) ) );
+    lCache->IndexedReads->at(lPrivateIndex).push_back( new Mapping( lIndex, new Sequence( GetSequence( lLine ) ) ) );
   }
 
   return lCache;

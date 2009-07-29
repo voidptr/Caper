@@ -4,7 +4,7 @@
 #include <iostream>
 #include "stdafx.h"
 #include "Sequence.h"
-#include "Sequences.h"
+#include "Typedefs.h"
 #include "MappingCache.h"
 
 class MappingEngine
@@ -50,7 +50,7 @@ public:
 	
 public:
 	MappingEngine( string & aPath, Sequences & aReferenceGenome );
-  vector<Mapping> * GetReads(string lContigIdent, int aLeft, int aRight );
+  Mappings * GetReads(string lContigIdent, int aLeft, int aRight );
 
   void Initialize();
 };

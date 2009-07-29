@@ -318,11 +318,11 @@
 			>
 		</File>
 		<File
-			RelativePath=".\Sequences.h"
+			RelativePath=".\stdafx.h"
 			>
 		</File>
 		<File
-			RelativePath=".\stdafx.h"
+			RelativePath=".\Typedefs.h"
 			>
 		</File>
 		<File

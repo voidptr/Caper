@@ -1,25 +1,25 @@
 #include "MappingCache.h"
 
-MappingCache::MappingCache( vector<vector<Mapping>> * aMappings, string & aContigIdent, int & aLeftIndex, int & aRightIndex )
+MappingCache::MappingCache( IndexedMappings * aIndexedReads, string & aContigIdent, int & aLeftIndex, int & aRightIndex )
 {
-  Mappings = aMappings;
+  IndexedReads = aIndexedReads;
 
   ContigIdent = aContigIdent;
   LeftIndex = aLeftIndex;
   RightIndex = aRightIndex;
 }
 
-vector<Mapping> * MappingCache::GetReads( int aLeft, int aRight )
+Mappings * MappingCache::GetReads( int aLeft, int aRight )
 {
-  vector<Mapping> * lResult = new vector<Mapping>();
+  Mappings * lResult = new Mappings();
 
   for ( int i = PrivateIndex(aLeft); i <= PrivateIndex(aRight); i++ )
   {
-    if ( !Mappings->at(i).empty() )
+    if ( !IndexedReads->at(i).empty() )
     {
-      for ( int j = 0; j < Mappings->at(i).size() ; j++ )
+      for ( int j = 0; j < IndexedReads->at(i).size() ; j++ )
       {        
-        lResult->push_back( Mappings->at(i)[j] );
+        lResult->push_back( IndexedReads->at(i)[j] );
       }
     }
   }
@@ -32,7 +32,21 @@ int MappingCache::PrivateIndex( int aPublicIndex )
   return aPublicIndex - LeftIndex;
 }
 
+void MappingCache::DestroyMappings()
+{
+  for (int i = 0; i < IndexedReads->size(); i++ )
+  {
+    for (int j = 0; j < IndexedReads->at(i).size(); j++ )
+    {
+      delete IndexedReads->at(i)[j];
+    }    
+  }
+}
+
 MappingCache::~MappingCache()
 {
-  delete Mappings;
+  DestroyMappings();
+  delete IndexedReads; // there's a memory leak here, because the pointers are getting deallocated...?
 }
+
+

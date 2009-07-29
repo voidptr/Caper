@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Sequences.h"
+#include "Typedefs.h"
 
 class SequenceEngine
 {
