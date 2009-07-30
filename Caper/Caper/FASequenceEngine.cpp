@@ -12,7 +12,7 @@ FASequenceEngine::FASequenceEngine(string & aPath) : SequenceEngine(aPath) {}
 
 void FASequenceEngine::Initialize()
 {
-  ifstream lStream( mPath.c_str() );
+  ifstream lStream( mPath.c_str(), ios_base::binary );
   
   string lLocus = "";
   long lLocusStart = 0;
@@ -22,7 +22,6 @@ void FASequenceEngine::Initialize()
 
   string lTmpFilePath = mPath + ".tmp";
   ofstream lOutStream(lTmpFilePath.c_str());
-  ifstream lAllReader(lTmpFilePath.c_str());
 
   while ( lStream.peek() > -1 )
   {

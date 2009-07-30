@@ -32,7 +32,7 @@ void MappingEngine::PopulateSortedContigIdents()
 
 void MappingEngine::PopulateContigBorders()
 {		
-	ifstream lStream( mPath.c_str() );
+  ifstream lStream( mPath.c_str(), ios_base::binary );
 
   string lContig = "";
   long lContigStartingPos = 0;
@@ -75,10 +75,13 @@ void MappingEngine::PopulateNumberOfWindows()
 
 void MappingEngine::PopulateReadInformation()
 {	
-  ifstream lStream( mPath.c_str() );
+  ifstream lStream( mPath.c_str(), ios_base::binary );
 
   string lLine;
   getline( lStream, lLine );
+
+  if ( lLine[ lLine.length() - 1 ] == '\r' ) // we have an \r\n delimiter.
+    mDOSDelimiter = true;
 
   ReadLength = GetSequence( lLine ).length();
   
@@ -92,6 +95,21 @@ void MappingEngine::PopulateMappingIndex()
 {		
   ifstream lStream( mPath.c_str(), ios::binary );
 
+
+  string lTest1 = "";
+  getline( lStream, lTest1 );
+  int lReadC = lStream.gcount();
+  int lTestLength = lStream.tellg();
+
+  lStream.seekg(0);
+
+  char lBuffer[1024];
+  lStream.getline( lBuffer, 1024 );
+  int lBuffReadC = lStream.gcount();
+  int lBuffRead = lStream.tellg();
+
+  lStream.seekg(0);
+
   string lContig = "";
   long lCurrentPosition = 0;
   int lTargetIndex = 0;
@@ -100,8 +118,8 @@ void MappingEngine::PopulateMappingIndex()
   while ( lStream.peek() > -1 )
   {
     string lLine = "";
-    lCurrentPosition = lStream.tellg(); // TRY OPENING WITH BINARY
-    getline( lStream, lLine );
+    lCurrentPosition = lStream.tellg(); 
+    getline( lStream, lLine );    
     string lCurrentContig = GetContigIdent( lLine );
     int lCurrentIndex = GetIndex( lLine );
 
@@ -201,6 +219,8 @@ void MappingEngine::RebuildCaches(string aContigIdent, int aLeft ) // these defi
   delete CacheB;
   if ( lStartingIndex + 1 < mMappingIndexes[ aContigIdent ].size() )
     CacheB = RebuildCache( aContigIdent, lStartingIndex + 1 );
+  else
+    CacheB = NULL;
 }
 
 MappingCache * MappingEngine::RebuildCache( string aContigIdent, int lStartingIndex )
@@ -231,13 +251,17 @@ MappingCache * MappingEngine::RebuildCache( string aContigIdent, int lStartingIn
   if ( lCount == -1 ) // it's at the edge of the contig!
     lCount = mContigBorders[ aContigIdent ].second - lStartingPos + 1;
 
-  ifstream lStream( mPath.c_str() );
+  ifstream lStream( mPath.c_str(), ios_base::binary );
 
-  char * lBlock = new char[ lCount ];
+  char * lBlock = new char[ lCount + 1 ];  
   lStream.seekg( lStartingPos );
-  lStream.get( lBlock, lCount );
+  lStream.read( lBlock, lCount );
+  lBlock[ lCount ] = 0; // impose our own null termination
   
   MappingCache * lCache = BuildCache( lBlock, aContigIdent, lStartingIndex * IndexIncrement, ( ( lStartingIndex + 1 ) * IndexIncrement ) - 1 );
+
+  delete [] lBlock;
+  lStream.close();
 
   return lCache;
 }
@@ -262,12 +286,15 @@ MappingCache * MappingEngine::BuildCache( char * aBlock, string aContigIdent, in
 {
   MappingCache * lCache = BuildEmptyCache( aContigIdent, aLeft, aRight );
 
-  stringstream lStream((string(aBlock)));
+  string lBlock(aBlock);
+
+  istringstream lStream(lBlock, ios_base::binary);
 
   string lLine;
 
   while ( lStream.peek() >= 0 )
   {
+    int lChar = lStream.peek();
     getline( lStream, lLine );
     if ( lLine.length() < 1 )
       break;

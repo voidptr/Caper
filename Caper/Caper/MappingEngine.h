@@ -21,6 +21,7 @@ private:
 	
 	long mEndOfFilePosition;
 	string mPath;
+  bool mDOSDelimiter;
 
 	map<string, vector<long>> mMappingIndexes;
 	map<string, int> mNumberOfWindows;

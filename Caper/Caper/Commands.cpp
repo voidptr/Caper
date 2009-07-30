@@ -52,8 +52,9 @@ bool Commands::ParseReadCommand(string & aLine)
   else
     Right = Left;
 
-  if ( Left > Right )
+  if ( Left > Right || Left < 0 || Right < 0 )
     return false;
+
 
   return true;
 }
