@@ -90,18 +90,17 @@ void MappingEngine::PopulateReadInformation()
 
 void MappingEngine::PopulateMappingIndex()
 {		
-  ifstream lStream( mPath.c_str() );
+  ifstream lStream( mPath.c_str(), ios::binary );
 
   string lContig = "";
   long lCurrentPosition = 0;
   int lTargetIndex = 0;
   int lReadCount = 0;
   
-  string lLine;
-
   while ( lStream.peek() > -1 )
   {
-    lCurrentPosition = lStream.tellg();
+    string lLine = "";
+    lCurrentPosition = lStream.tellg(); // TRY OPENING WITH BINARY
     getline( lStream, lLine );
     string lCurrentContig = GetContigIdent( lLine );
     int lCurrentIndex = GetIndex( lLine );

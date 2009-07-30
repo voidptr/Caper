@@ -8,7 +8,9 @@ private: // private member variables
   static const char NewLine = '\n';
 
   string mBases;
-  ifstream * mHandle;
+  ifstream mHandle;
+  string mPath;
+
   bool mIsStream;
   long mPosition;
 private: // private methods
@@ -17,8 +19,10 @@ public: // public member variables (replace with accessors later)
   long Length;
 public: // public methods
 	Sequence( string & aBases );
-  Sequence( ifstream & aHandle, long & aPosition, long & aLength );
+  Sequence( Sequence & aSequence );
+  Sequence( string & aPath, long & aPosition, long & aLength );
   string Substring( long aIndex, long aCount );
   string Substring( long aIndex );
   string ToString();
+  ~Sequence(void);
 };

@@ -34,7 +34,7 @@ void FASequenceEngine::Initialize()
         if ( lLocus.length() > 0 ) // there was a previous one, so close it up.
         {
           lOutStream << NewLine;
-          Sequence * lSeq = new Sequence( lAllReader, lLocusStart, lCount );
+          Sequence * lSeq = new Sequence( lTmpFilePath, lLocusStart, lCount );
           mSequences.insert( SequencePair (lLocus, lSeq ) );
           lCount++;
         }
@@ -59,7 +59,7 @@ void FASequenceEngine::Initialize()
     }
   }
 
-  Sequence * lSeq = new Sequence( lAllReader, lLocusStart, lCount );
+  Sequence * lSeq = new Sequence( lTmpFilePath, lLocusStart, lCount );
           
   mSequences.insert( SequencePair( lLocus, lSeq ) );
 
