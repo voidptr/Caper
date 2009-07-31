@@ -18,7 +18,7 @@ private: // private methods
 public: // public member variables (replace with accessors later)
   long Length;
 public: // public methods
-	Sequence( string & aBases );
+	Sequence( string aBases );
   Sequence( Sequence & aSequence );
   Sequence( string & aPath, long & aPosition, long & aLength );
   string Substring( long aIndex, long aCount );

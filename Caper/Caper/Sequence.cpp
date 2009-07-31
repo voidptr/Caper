@@ -1,6 +1,6 @@
 #include "Sequence.h"
 
-Sequence::Sequence( string & aBases )
+Sequence::Sequence( string aBases )
 {
 	mBases = aBases;
   mPath = "";
