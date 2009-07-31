@@ -1,21 +1,23 @@
 #pragma once
 #include "stdafx.h"
+#include "Typedefs.h"
+#include "MappingEngine.h"
 
 class Commands
 {
   static const char Colon = ':';
 
 private:
-  bool ParseReadCommand( string & aLine );
+  bool ParseReadCommand(string & aLine, Sequences & aReferenceGenome, MappingEngine * aMappingEngine );
 
 public:
   enum Actions
   {
-    HELP,
+    //HELP,
     GETREADS,
-    LISTCONTIGS,
+   /* LISTCONTIGS,
     CONTIGINFO,
-    QUIT,
+    QUIT,*/
   } Action;
 
   string ContigIdent;
@@ -23,5 +25,5 @@ public:
   long Right;
   bool PrettyMode;
 public:
-  bool ProcessArguments( string & aLine );
+  bool ProcessArguments(string & aLine, Sequences & aReferenceGenome, MappingEngine * aMappingEngine );
 };

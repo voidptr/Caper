@@ -3,7 +3,8 @@
 void Caper::UserInterface(int argc, char * const argv[] )
 {
   string lUsageString = "Caper v0.1\nUsage: caper [-si] -g <referencegenome.fa> <-m|-b> <mappingsfile>";
-  string lCommandString = "You can type: \"help\", \"list\", \"quit\", \"<contig ident>:<X>:<Y>\", or \"<contig ident>:<X>:<Y>:p\" (for pretty mode)";
+  //string lCommandString = "You can type: \"help\", \"list\", \"quit\", \"<contig ident>:<X>:<Y>\", or \"<contig ident>:<X>:<Y>:p\" (for pretty mode)";
+  string lCommandString = "You can type: \"<contig ident>:<X>:<Y>\", or \"<contig ident>:<X>:<Y>:p\" (for pretty mode)";
 
   try
   {
@@ -56,7 +57,7 @@ void Caper::UserInterface(int argc, char * const argv[] )
     Commands lCommands;
     while ( cin >> lInput )
     {
-      if ( !lCommands.ProcessArguments( lInput ) )
+      if ( !lCommands.ProcessArguments( lInput, lSequenceEngine->mSequences, lMappingEngine ) )
       {
         cout << "Invalid Input: " << lCommandString << endl ;
         cout << "> ";
@@ -65,33 +66,37 @@ void Caper::UserInterface(int argc, char * const argv[] )
 
       if ( lCommands.Action == lCommands.GETREADS )
       {
-        if ( lCommands.Right > lSequenceEngine->mSequences[ lCommands.ContigIdent ]->Length )
-        {
-          cout << "Your Right Parameter is bigger than your reference genome.\n";
-          cout << "> ";
-          continue;
-        }
+        
 
         Mappings * lMappings = lMappingEngine->GetReads(lCommands.ContigIdent, lCommands.Left, lCommands.Right );
         if ( lCommands.PrettyMode ) // engage pretty mode
         {    
-          cout << lCommands.Left << "\n";        
+          cout << lCommands.Left << endl;        
+          cout << "." << endl;
 
-          if ( lCommands.Right + 1 < lSequenceEngine->mSequences[ lCommands.ContigIdent ]->Length )
-            cout << lSequenceEngine->mSequences[ lCommands.ContigIdent ]->Substring( lCommands.Left, lCommands.Right - lCommands.Left + 1 ) << endl;
+          string lGenome = "";
+          int lTargetGenomeWidth = lCommands.Right - lCommands.Left + 1 + lMappingEngine->ReadLength;
+          if ( lTargetGenomeWidth < lSequenceEngine->mSequences[ lCommands.ContigIdent ]->Length )
+            lGenome = lSequenceEngine->mSequences[ lCommands.ContigIdent ]->Substring( lCommands.Left, lTargetGenomeWidth );
           else
-            cout << lSequenceEngine->mSequences[ lCommands.ContigIdent ]->Substring( lCommands.Left ) << "\n";
+            lGenome = lSequenceEngine->mSequences[ lCommands.ContigIdent ]->Substring( lCommands.Left );
 
+          cout << lGenome << endl; 
+
+          int lGenomeLength = lGenome.length();
           for ( int i = 0 ; i < lMappings->size(); i++ ) 
           {
             string lHighlightedString = lMappings->at(i)->mSequence->ToString();
             for ( int j = 0; j < lHighlightedString.length(); j++ )
             {
-              if ( lHighlightedString[j] != 
-                lSequenceEngine->mSequences[ lCommands.ContigIdent ]->Substring( 
-                  lMappings->at(i)->Index + j, 1 )[0] )
+              int lTargetLocalIndexOnGenome = lMappings->at(i)->Index - lCommands.Left + j;
+              if ( lTargetLocalIndexOnGenome < lGenome.length() && 
+                lHighlightedString[j] != lGenome[ lTargetLocalIndexOnGenome ] )
               {
-                lHighlightedString[j] = toupper( lHighlightedString[j] );
+                if ( islower(lHighlightedString[j]) )
+                  lHighlightedString[j] = toupper( lHighlightedString[j] );
+                else
+                  lHighlightedString[j] = tolower( lHighlightedString[j] );
               }
             }
 

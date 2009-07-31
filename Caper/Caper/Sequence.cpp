@@ -47,10 +47,13 @@ string Sequence::Substring( long aIndex, long aCount )
       throw string( "could not seek as far as requested" );
 
     mHandle.seekg( mPosition + aIndex );
-    char * lBuffer = new char[aCount];
+    char * lBuffer = new char[aCount + 1];
     mHandle.get( lBuffer, aCount );
+    lBuffer[aCount] = 0; // add the null char to terminate the string
 
-    if ( mHandle.gcount() < aCount )
+    int lCount = mHandle.gcount();
+
+    if ( !mHandle.good() )
       throw string("could not read whole sequence from handle.");
   
     return string(lBuffer);

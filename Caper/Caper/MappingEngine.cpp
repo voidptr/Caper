@@ -108,7 +108,6 @@ void MappingEngine::PopulateMappingIndex()
   if ( !lStream.is_open() )
     throw string("Could not open mappings file.");
 
-
   string lContig = "";
   long lCurrentPosition = 0;
   int lTargetIndex = 0;
