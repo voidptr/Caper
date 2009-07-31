@@ -2,6 +2,9 @@
 
 bool Arguments::ProcessArguments( int argc, char * const argv[] ) 
 {
+  if ( argc < 5 )
+    return false;
+
   int c;
 
   while ((c = getopt(argc, argv, "sig:m:b:")) != EOF)
