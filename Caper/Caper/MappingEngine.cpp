@@ -53,7 +53,7 @@ void MappingEngine::PopulateContigBorders()
     {
       if ( lContig.length() > 0 ) // there was a previous one, so close it up
       {
-        mContigBorders.insert( pair<string, pair<long,long>>( 
+        mContigBorders.insert( pair<string, pair<long,long> >( 
           lContig, 
           pair<long,long>(lContigStartingPos, lCurrentPosition - 1)));
       }
@@ -62,7 +62,7 @@ void MappingEngine::PopulateContigBorders()
     }
   }
   // close up the last contig
-  mContigBorders.insert( pair<string, pair<long,long>>( 
+  mContigBorders.insert( pair<string, pair<long,long> >( 
     lContig, 
     pair<long,long>(lContigStartingPos, (long) lStream.tellg() - 1)));
 
@@ -140,7 +140,7 @@ void MappingEngine::PopulateMappingIndex()
 
       lTargetIndex = 0;
       lContig = lCurrentContig;
-      mMappingIndexes.insert( pair<string, vector<long>>( lContig, vector<long>() ) );
+      mMappingIndexes.insert( pair<string, vector<long> >( lContig, vector<long>() ) );
     }
 
     if ( lCurrentIndex >= lTargetIndex )
