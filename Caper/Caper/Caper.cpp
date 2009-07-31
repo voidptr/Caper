@@ -66,13 +66,11 @@ void Caper::UserInterface(int argc, char * const argv[] )
 
       if ( lCommands.Action == lCommands.GETREADS )
       {
-        
-
         Mappings * lMappings = lMappingEngine->GetReads(lCommands.ContigIdent, lCommands.Left, lCommands.Right );
         if ( lCommands.PrettyMode ) // engage pretty mode
         {    
-          cout << lCommands.Left << endl;        
-          cout << "." << endl;
+          cout << PadLeft( lMappingEngine->ReadLength ) << lCommands.Left + lMappingEngine->ReadLength << endl;        
+          cout << PadLeft( lMappingEngine->ReadLength ) << "*" << endl;
 
           string lGenome = "";
           int lTargetGenomeWidth = lCommands.Right - lCommands.Left + 1 + lMappingEngine->ReadLength;
