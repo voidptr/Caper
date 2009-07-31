@@ -1,4 +1,5 @@
 #include "MappingEngine.h"
+#include "Typedefs.h" // DEV Intellisense
 #include <sstream>
 #include <iostream>
 
@@ -22,9 +23,13 @@ void MappingEngine::Initialize()
 
 void MappingEngine::PopulateSortedContigIdents()
 {		
-	for each ( SequencePair lItem in *ReferenceGenome )
+  Sequences::iterator lIterator;
+  for(lIterator = ReferenceGenome->begin() ; lIterator != ReferenceGenome->end(); lIterator++ )
+	//for each ( SequencePair lItem in *ReferenceGenome )
 	{
-		mSortedContigIdents.push_back( lItem.first );
+    //SequencePair lItem = (*ReferenceGenome)[i];
+		mSortedContigIdents.push_back( lIterator->first );
+    //mSortedContigIdents.push_back( lItem.first );
 	}
 
 	//mSortedContigIdents.sort(); // don't know if this matters.
@@ -66,10 +71,12 @@ void MappingEngine::PopulateContigBorders()
 
 void MappingEngine::PopulateNumberOfWindows()
 {		
-	for each ( SequencePair lItem in *ReferenceGenome )
+  Sequences::iterator lIterator;
+  for(lIterator = ReferenceGenome->begin() ; lIterator != ReferenceGenome->end(); lIterator++ )
+	//for each ( SequencePair lItem in *ReferenceGenome )
 	{
-		mNumberOfWindows.insert( pair<string, int>( lItem.first,
-      (int) ceil( (double) lItem.second->Length / IndexIncrement ) ) );
+		mNumberOfWindows.insert( pair<string, int>( lIterator->first,
+      (int) ceil( (double) lIterator->second->Length / IndexIncrement ) ) );
 	}	
 }
 
