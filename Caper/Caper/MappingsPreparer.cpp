@@ -16,6 +16,8 @@ string MappingsPreparer::PrepareMappings()
 
 bool MappingsPreparer::IsSorted()
 {
+  cout << " Are mappings already sorted? ";
+
   ifstream lStream( mPath.c_str() );
 
   string lLastContig = "";
@@ -33,12 +35,16 @@ bool MappingsPreparer::IsSorted()
       ( lContig == lLastContig && lIndex < lLastIndex ) )
     {
       lStream.close();
+      cout << "No." << endl;
       return false;
     }
     lLastContig = lContig;
     lLastIndex = lIndex;
   }
   lStream.close();
+
+  cout << "Yes!" << endl;
+
   return true;
 }
 
@@ -63,6 +69,9 @@ string MappingsPreparer::SortMappingsAndWriteToTmpFile()
 {
   vector<string> * lMappings = ReadAllLines();
 
+  cout << " Sorting " << lMappings->size() << " mappings... " ;
+  cout.flush();
+
   sort( lMappings->begin(), lMappings->end(), SortMapping(this) );
 
   string lFilename = mPath + ".stl.tmp";
@@ -70,7 +79,9 @@ string MappingsPreparer::SortMappingsAndWriteToTmpFile()
 
   delete lMappings;
 
-  return lFilename;
+  cout << "Done!" << endl;
+
+  return lFilename;  
 }
 
 bool MappingsPreparer::LessThanMappingLine( string & aLeft, string & aRight )

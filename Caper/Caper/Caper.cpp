@@ -12,7 +12,7 @@ void Caper::UserInterface(int argc, char * const argv[] )
     return;
   }
 
-  cout << "Reading Genome... ";
+  cout << "Reading Genome \"" << lArgs.GenomePath << "\"... ";
   cout.flush();
 
   SequenceEngine * lSequenceEngine;
@@ -21,7 +21,7 @@ void Caper::UserInterface(int argc, char * const argv[] )
 
   cout << "Done!" << endl;
 
-  cout << "Preparing Mappings... ";
+  cout << "Preparing Mappings \"" << lArgs.MappingPath << "\"... " << endl;
   cout.flush();
 
   MappingEngine * lMappingEngine;
@@ -44,7 +44,7 @@ void Caper::UserInterface(int argc, char * const argv[] )
 
   cout << "Done!" << endl;
 
-  cout << "Initializing Mapping Engine... ";
+  cout << "Initializing Mapping Engine... " << endl;
   lMappingEngine->Initialize();
   cout << "Done!" << endl;
 

@@ -14,11 +14,15 @@ MappingEngine::MappingEngine(string & aPath, Sequences & aReferenceGenome)
 
 void MappingEngine::Initialize()
 {		
+
   PopulateReadInformation();
   PopulateSortedContigIdents();
   PopulateNumberOfWindows();
   PopulateContigBorders();
+  cout << " Indexing Mappings... ";
+  cout.flush();
   PopulateMappingIndex();
+  cout << "Done!" << endl;
 }
 
 void MappingEngine::PopulateSortedContigIdents()
