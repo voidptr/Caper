@@ -63,7 +63,7 @@ string MappingsPreparer::SortMappingsAndWriteToTmpFile()
 {
   vector<string> * lMappings = ReadAllLines();
 
-  std::sort( lMappings->begin(), lMappings->end(), SortMapping(this) );
+  sort( lMappings->begin(), lMappings->end(), SortMapping(this) );
 
   string lFilename = mPath + ".stl.tmp";
   WriteAllLines( lMappings, lFilename );
@@ -102,9 +102,10 @@ void MappingsPreparer::WriteAllLines( vector<string> *aMappingsFile, string & aF
 {
   ofstream lStream( aFilename.c_str() );
 
-  for each ( string lLine in *aMappingsFile )
+//  for each ( string lLine in *aMappingsFile )
+  for (int i = 0; i < aMappingsFile->size(); i++)
   {
-    lStream << lLine << '\n';
+    lStream << aMappingsFile->at(i) << '\n';
   }
 
   lStream.close();

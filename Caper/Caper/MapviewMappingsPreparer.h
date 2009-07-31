@@ -1,5 +1,5 @@
 #pragma once
-#include "mappingspreparer.h"
+#include "MappingsPreparer.h"
 #include "MapviewMappingUtilities.h"
 
 class MapviewMappingsPreparer :

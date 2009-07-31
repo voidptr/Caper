@@ -1,5 +1,5 @@
 #pragma once
-#include "sequenceengine.h"
+#include "SequenceEngine.h"
 #include "Typedefs.h"
 
 class FASequenceEngine :

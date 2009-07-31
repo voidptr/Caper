@@ -23,9 +23,9 @@ private:
 	string mPath;
   bool mDOSDelimiter;
 
-	map<string, vector<long>> mMappingIndexes;
+	map<string, vector<long> > mMappingIndexes;
 	map<string, int> mNumberOfWindows;
-	map<string, pair<long,long>> mContigBorders;
+	map<string, pair<long,long> > mContigBorders;
 	vector<string> mSortedContigIdents;	
 
 private:

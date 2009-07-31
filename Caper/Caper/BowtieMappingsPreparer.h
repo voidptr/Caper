@@ -1,5 +1,5 @@
 #pragma once
-#include "mappingspreparer.h"
+#include "MappingsPreparer.h"
 #include "BowtieMappingUtilities.h"
 
 class BowtieMappingsPreparer :
