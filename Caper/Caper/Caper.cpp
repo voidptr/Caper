@@ -13,6 +13,7 @@ void Caper::UserInterface(int argc, char * const argv[] )
   }
 
   cout << "Reading Genome... ";
+  cout.flush();
 
   SequenceEngine * lSequenceEngine;
   lSequenceEngine = new FASequenceEngine( lArgs.GenomePath );
@@ -21,6 +22,7 @@ void Caper::UserInterface(int argc, char * const argv[] )
   cout << "Done!" << endl;
 
   cout << "Preparing Mappings... ";
+  cout.flush();
 
   MappingEngine * lMappingEngine;
   if ( lArgs.MappingStyle == lArgs.BOWTIE )
