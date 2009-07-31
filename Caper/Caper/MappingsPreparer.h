@@ -12,12 +12,12 @@ private:
 
   string mPath;
 
-  struct SortMapping
+  class SortMapping
   {
     MappingsPreparer * mMappingsPrep;
   public:
     explicit SortMapping( MappingsPreparer * pf) : mMappingsPrep(pf) {}
-    bool operator() (string & aLeft, string & aRight ) 
+    bool operator() (string aLeft, string aRight ) 
     {
       return mMappingsPrep->LessThanMappingLine( aLeft, aRight );
     }
