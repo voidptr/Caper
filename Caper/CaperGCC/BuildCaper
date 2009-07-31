@@ -1,2 +1,2 @@
-g++ ../Caper/Main.cpp ../Caper/Caper.cpp ../Caper/FASequenceEngine.cpp  ../Caper/SequenceEngine.cpp ../Caper/Arguments.cpp ../Caper/BowtieMappingsPreparer.cpp ../Caper/MappingsPreparer.cpp -o Caper
+g++ ../Caper/Main.cpp ../Caper/Caper.cpp ../Caper/FASequenceEngine.cpp  ../Caper/SequenceEngine.cpp ../Caper/Arguments.cpp ../Caper/BowtieMappingsPreparer.cpp ../Caper/MappingEngine.cpp ../Caper/BowtieMappingEngine.cpp ../Caper/BowtieMappingsPreparer.cpp -o Caper
 
