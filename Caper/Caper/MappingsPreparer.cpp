@@ -20,6 +20,9 @@ bool MappingsPreparer::IsSorted()
 
   ifstream lStream( mPath.c_str() );
 
+  if ( !lStream.is_open() )
+    throw string("Could not open mappings file.");
+
   string lLastContig = "";
   int lLastIndex = -1;
 
@@ -113,7 +116,9 @@ void MappingsPreparer::WriteAllLines( vector<string> *aMappingsFile, string & aF
 {
   ofstream lStream( aFilename.c_str() );
 
-//  for each ( string lLine in *aMappingsFile )
+  if ( !lStream.is_open() )
+    throw string("Could not write to mappings tmp file.");
+
   for (int i = 0; i < aMappingsFile->size(); i++)
   {
     lStream << aMappingsFile->at(i) << '\n';

@@ -13,6 +13,9 @@ FASequenceEngine::FASequenceEngine(string & aPath) : SequenceEngine(aPath) {}
 void FASequenceEngine::Initialize()
 {
   ifstream lStream( mPath.c_str(), ios_base::binary );
+
+  if ( !lStream.is_open() )
+    throw string("Could not open reference genome file.");
   
   string lLocus = "";
   long lLocusStart = 0;
@@ -22,6 +25,9 @@ void FASequenceEngine::Initialize()
 
   string lTmpFilePath = mPath + ".tmp";
   ofstream lOutStream(lTmpFilePath.c_str());
+
+  if ( !lOutStream.is_open() )
+    throw string("Could not write to reference genome tmp output file.");
 
   while ( lStream.peek() > -1 )
   {

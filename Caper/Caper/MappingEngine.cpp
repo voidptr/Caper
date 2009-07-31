@@ -29,11 +29,8 @@ void MappingEngine::PopulateSortedContigIdents()
 {		
   Sequences::iterator lIterator;
   for(lIterator = ReferenceGenome->begin() ; lIterator != ReferenceGenome->end(); lIterator++ )
-	//for each ( SequencePair lItem in *ReferenceGenome )
 	{
-    //SequencePair lItem = (*ReferenceGenome)[i];
 		mSortedContigIdents.push_back( lIterator->first );
-    //mSortedContigIdents.push_back( lItem.first );
 	}
 
 	//mSortedContigIdents.sort(); // don't know if this matters.
@@ -42,6 +39,8 @@ void MappingEngine::PopulateSortedContigIdents()
 void MappingEngine::PopulateContigBorders()
 {		
   ifstream lStream( mPath.c_str(), ios_base::binary );
+  if ( !lStream.is_open() )
+    throw string("Could not open mappings file.");
 
   string lContig = "";
   long lContigStartingPos = 0;
@@ -77,7 +76,6 @@ void MappingEngine::PopulateNumberOfWindows()
 {		
   Sequences::iterator lIterator;
   for(lIterator = ReferenceGenome->begin() ; lIterator != ReferenceGenome->end(); lIterator++ )
-	//for each ( SequencePair lItem in *ReferenceGenome )
 	{
 		mNumberOfWindows.insert( pair<string, int>( lIterator->first,
       (int) ceil( (double) lIterator->second->Length / IndexIncrement ) ) );
@@ -87,6 +85,8 @@ void MappingEngine::PopulateNumberOfWindows()
 void MappingEngine::PopulateReadInformation()
 {	
   ifstream lStream( mPath.c_str(), ios_base::binary );
+  if ( !lStream.is_open() )
+    throw string("Could not open mappings file.");
 
   string lLine;
   getline( lStream, lLine );
@@ -105,21 +105,9 @@ void MappingEngine::PopulateReadInformation()
 void MappingEngine::PopulateMappingIndex()
 {		
   ifstream lStream( mPath.c_str(), ios::binary );
+  if ( !lStream.is_open() )
+    throw string("Could not open mappings file.");
 
-
-  string lTest1 = "";
-  getline( lStream, lTest1 );
-  int lReadC = lStream.gcount();
-  int lTestLength = lStream.tellg();
-
-  lStream.seekg(0);
-
-  char lBuffer[1024];
-  lStream.getline( lBuffer, 1024 );
-  int lBuffReadC = lStream.gcount();
-  int lBuffRead = lStream.tellg();
-
-  lStream.seekg(0);
 
   string lContig = "";
   long lCurrentPosition = 0;
