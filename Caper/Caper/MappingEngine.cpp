@@ -310,7 +310,8 @@ MappingCache * MappingEngine::BuildCache( char * aBlock, string aContigIdent, in
     int lPrivateIndex = lIndex - aLeft;
    
     // WHY IS THIS BLANKING OUT!?!?!
-    lCache->IndexedReads->at(lPrivateIndex).push_back( new Mapping( lIndex, new Sequence( GetSequence( lLine ) ) ) );
+    string lSeq = GetSequence( lLine );
+    lCache->IndexedReads->at(lPrivateIndex).push_back( new Mapping( lIndex, new Sequence( lSeq ) ) );
   }
 
   return lCache;
