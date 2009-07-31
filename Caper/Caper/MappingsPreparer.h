@@ -12,7 +12,7 @@ private:
 
   string mPath;
 
-  class SortMapping
+  struct SortMapping
   {
     MappingsPreparer * mMappingsPrep;
   public:
