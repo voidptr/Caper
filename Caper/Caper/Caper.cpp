@@ -2,7 +2,7 @@
 
 void Caper::UserInterface(int argc, char * const argv[] )
 {
-  string lUsageString = "Caper v0.1\nUsage: caper [-si] -g <referencegenome.fa> <-m|-b> <mappingsfile>";
+  string lUsageString = "Caper v0.2\nUsage: caper [-s savepath] [-i savedindexfile] -g <referencegenome.fa> <-m|-b> <mappingsfile>";
   //string lCommandString = "You can type: \"help\", \"list\", \"quit\", \"<contig ident>:<X>:<Y>\", or \"<contig ident>:<X>:<Y>:p\" (for pretty mode)";
   string lCommandString = "You can type: \"<contig ident>:<X>:<Y>\", or \"<contig ident>:<X>:<Y>:p\" (for pretty mode)";
 
@@ -48,7 +48,20 @@ void Caper::UserInterface(int argc, char * const argv[] )
     cout << "Done!" << endl;
 
     cout << "Initializing Mapping Engine... " << endl;
-    lMappingEngine->Initialize();
+
+    if ( lArgs.LoadIndex )
+    {
+      lMappingEngine->Initialize( lArgs.IndexPath );
+    }
+    else
+    {
+      lMappingEngine->Initialize();
+    }
+
+    if ( lArgs.SaveSortedMapping )
+    {
+      lMappingEngine->SaveMappingIndex( lArgs.SavePath );
+    }
     cout << "Done!" << endl;
 
     cout << "> ";

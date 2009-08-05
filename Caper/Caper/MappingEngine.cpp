@@ -14,15 +14,95 @@ MappingEngine::MappingEngine(string & aPath, Sequences & aReferenceGenome)
 
 void MappingEngine::Initialize()
 {		
-
   PopulateReadInformation();
   PopulateSortedContigIdents();
   PopulateNumberOfWindows();
-  PopulateContigBorders();
+  PopulateContigBorders();  
   cout << " Indexing Mappings... ";
   cout.flush();
-  PopulateMappingIndex();
+  PopulateMappingIndex();  
   cout << "Done!" << endl;
+}
+
+void MappingEngine::Initialize( string & aIndexPath )
+{	
+  PopulateReadInformation();
+  PopulateSortedContigIdents();
+  PopulateNumberOfWindows();
+
+  //PopulateContigBorders();
+  ifstream lStream( aIndexPath.c_str(), ios::binary );
+  int lCount = 0;
+  lStream >> lCount; // get the count of contigs as the first line.
+  for (int i = 0; i < lCount; i++ );
+  {
+    string lContigIdent = "";
+    long lStart = 0;
+    long lEnd = 0;
+
+    lStream >> lContigIdent;
+    lStream >> lStart;
+    lStream >> lEnd;
+
+    mContigBorders.insert( pair<string, pair<long,long> >( 
+      lContigIdent, 
+      pair<long,long>(lStart, lEnd)));
+  }
+  
+  //PopulateMappingIndex()
+  for ( int i = 0; i < lCount; i++ )
+  {
+    string lContigIdent = "";
+    int lReadCount = 0;
+    int lWindowsCount = 0;
+
+    lStream >> lContigIdent;
+    lStream >> lReadCount;
+    lStream >> lWindowsCount;
+
+    NumberOfReads.insert( pair<string, int>( lContigIdent, lReadCount ) );   
+    mMappingIndexes.insert( pair<string, vector<long> >( lContigIdent, vector<long>() ) );
+
+    for (int j = 0; j < lWindowsCount; j++ )
+    {
+      long lIndex = 0;
+      lStream >> lIndex;
+      mMappingIndexes[ lContigIdent ].push_back( lIndex );
+    }
+  }
+  lStream.close();
+
+  cout << "Done!" << endl;
+}
+
+void MappingEngine::SaveMappingIndex( string & aSavePath )
+{
+  string lOutputFilename = aSavePath + "saved.index";
+
+  ofstream lStream( lOutputFilename.c_str(), ios::binary );
+
+  // saving the contig borders
+  lStream << mContigBorders.size() << endl;
+  map<string, pair<long,long> >::iterator lContigBordersIterator;
+  for ( lContigBordersIterator = mContigBorders.begin(); 
+    lContigBordersIterator != mContigBorders.end(); lContigBordersIterator++ )
+  {
+    lStream << lContigBordersIterator->first << Tab << lContigBordersIterator->second.first << Tab << lContigBordersIterator->second.second << endl;
+  }
+
+  //saving the mapping index
+  map<string, vector<long> >::iterator lMappingIndexIterator;
+  for ( lMappingIndexIterator = mMappingIndexes.begin(); lMappingIndexIterator != mMappingIndexes.end(); lMappingIndexIterator++ )
+  {
+    lStream << lMappingIndexIterator->first << Tab << NumberOfReads[ lMappingIndexIterator->first ] << Tab << lMappingIndexIterator->second.size() << endl;
+    vector<long>::iterator lIndexIterator;
+    for ( lIndexIterator = mMappingIndexes[ lMappingIndexIterator->first ].begin(); lIndexIterator != mMappingIndexes[ lMappingIndexIterator->first ].end(); lIndexIterator++ )
+    {
+      lStream << *lIndexIterator << endl;
+    }
+  }
+
+  lStream.close();
 }
 
 void MappingEngine::PopulateSortedContigIdents()

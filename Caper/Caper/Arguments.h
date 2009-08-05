@@ -15,13 +15,16 @@ public:
     BOWTIE
   } MappingStyle;
 
+  string IndexPath;
   string GenomePath;
   string MappingPath;
+  string SavePath;
 
   bool SaveSortedMapping;
-  bool SaveIndex;
+  bool LoadIndex;
 
   bool ValidArguments;
 public: 
   bool ProcessArguments( int argc, char * const argv[] );
+  Arguments(void);
 };

@@ -54,4 +54,6 @@ public:
   Mappings * GetReads(string lContigIdent, int aLeft, int aRight );
 
   void Initialize();
+  void Initialize( string & aIndexPath );
+  void SaveMappingIndex( string & aSavePath );
 };
