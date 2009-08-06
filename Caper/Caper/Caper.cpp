@@ -2,7 +2,7 @@
 
 void Caper::UserInterface(int argc, char * const argv[] )
 {
-  string lUsageString = "Caper v0.2\nUsage: caper -r [-s savepath] [-i savedindexfile] -g <referencegenome.fa> <-m|-b> <mappingsfile>";
+  string lUsageString = "Caper v0.3\nUsage: caper -r [-s savepath] [-i savedindexfile] [-f savedreferencegenomeindex] -g <referencegenome.fa> <-m|-b> <mappingsfile>";
   //string lCommandString = "You can type: \"help\", \"list\", \"quit\", \"<contig ident>:<X>:<Y>\", or \"<contig ident>:<X>:<Y>:p\" (for pretty mode)";
   string lCommandString = "You can type: \"<contig ident>:<X>:<Y>\", or \"<contig ident>:<X>:<Y>:p\" (for pretty mode)";
 
