@@ -12,11 +12,12 @@ private: // private member variables
   string mPath;
 
   bool mIsStream;
-  long mPosition;
+  
 private: // private methods
 
 public: // public member variables (replace with accessors later)
   long Length;
+  long mPosition;
 public: // public methods
 	Sequence( string aBases );
   Sequence( Sequence & aSequence );

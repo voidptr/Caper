@@ -34,7 +34,7 @@ void MappingEngine::Initialize( string & aIndexPath )
   ifstream lStream( aIndexPath.c_str(), ios::binary );
   int lCount = 0;
   lStream >> lCount; // get the count of contigs as the first line.
-  for (int i = 0; i < lCount; i++ );
+  for (int i = 0; i < lCount; i++ )
   {
     string lContigIdent = "";
     long lStart = 0;

@@ -2,8 +2,10 @@
 
 Arguments::Arguments()
 {
-  SaveSortedMapping = false;
+  SaveIndexes = false;
   LoadIndex = false;
+  AlreadySorted = false;
+  LoadReferenceGenomeIndex = false;
 }
 
 bool Arguments::ProcessArguments( int argc, char * const argv[] ) 
@@ -13,18 +15,27 @@ bool Arguments::ProcessArguments( int argc, char * const argv[] )
 
   int c;
 
-  while ((c = getopt(argc, argv, "s:i:g:m:b:")) != EOF)
+  while ((c = getopt(argc, argv, "rs:f:i:g:m:b:")) != EOF)
   {
     switch (c)
     {
+    case 'r':
+      AlreadySorted = true;
+      break;
+
     case 's':
-      SaveSortedMapping = true;      
+      SaveIndexes = true;      
       SavePath = string(optarg);
       break;
 
     case 'i':
       LoadIndex = true;
       IndexPath = string(optarg);
+      break;
+
+    case 'f':
+      LoadReferenceGenomeIndex = true;
+      ReferenceGenomeIndexPath = string(optarg);
       break;
 
     case 'g':

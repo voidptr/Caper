@@ -11,4 +11,6 @@ private:
 public:
   FASequenceEngine(string & aPath);
   void Initialize();
+  void Initialize( string & aIndexPath );
+  void SaveIndex( string & aSavePath );
 };

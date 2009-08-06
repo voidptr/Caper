@@ -10,6 +10,30 @@
 
 FASequenceEngine::FASequenceEngine(string & aPath) : SequenceEngine(aPath) {}
 
+void FASequenceEngine::Initialize( string & aIndexPath )
+{
+  ifstream lIndexStream( aIndexPath.c_str(), ios::binary );
+
+  int lLocusCount = 0;
+  lIndexStream >> lLocusCount;
+
+  for (int i = 0; i < lLocusCount; i++ )
+  {
+    string lLocus = "";
+    long lLocusStart = 0;
+    long lCount =0;
+
+    lIndexStream >> lLocus;
+    lIndexStream >> lLocusStart;
+    lIndexStream >> lCount;
+
+    Sequence * lSeq = new Sequence( mPath, lLocusStart, lCount );
+    mSequences.insert( SequencePair( lLocus, lSeq ) );
+  }
+
+  lIndexStream.close();
+}
+
 void FASequenceEngine::Initialize()
 {
   ifstream lStream( mPath.c_str(), ios_base::binary );
@@ -69,4 +93,22 @@ void FASequenceEngine::Initialize()
   mSequences.insert( SequencePair( lLocus, lSeq ) );
 
   lStream.close();
+}
+
+
+void FASequenceEngine::SaveIndex( string & aSavePath )
+{
+  string lSavedIndexFile = aSavePath + "saved.refgenomeindex";
+
+  ofstream lIndexStream( lSavedIndexFile.c_str(), ios::binary );
+
+  lIndexStream << mSequences.size() << endl;
+
+  Sequences::iterator lSeqIterator;
+  for (lSeqIterator = mSequences.begin(); lSeqIterator != mSequences.end(); lSeqIterator++ )
+  {
+    lIndexStream << lSeqIterator->first << Tab << lSeqIterator->second->mPosition << Tab << lSeqIterator->second->Length << endl;
+  }
+
+  lIndexStream.close();
 }

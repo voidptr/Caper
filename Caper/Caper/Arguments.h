@@ -19,9 +19,12 @@ public:
   string GenomePath;
   string MappingPath;
   string SavePath;
+  string ReferenceGenomeIndexPath;
 
-  bool SaveSortedMapping;
+  bool SaveIndexes;
   bool LoadIndex;
+  bool AlreadySorted;
+  bool LoadReferenceGenomeIndex;
 
   bool ValidArguments;
 public: 

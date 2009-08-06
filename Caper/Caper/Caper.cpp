@@ -2,7 +2,7 @@
 
 void Caper::UserInterface(int argc, char * const argv[] )
 {
-  string lUsageString = "Caper v0.2\nUsage: caper [-s savepath] [-i savedindexfile] -g <referencegenome.fa> <-m|-b> <mappingsfile>";
+  string lUsageString = "Caper v0.2\nUsage: caper -r [-s savepath] [-i savedindexfile] -g <referencegenome.fa> <-m|-b> <mappingsfile>";
   //string lCommandString = "You can type: \"help\", \"list\", \"quit\", \"<contig ident>:<X>:<Y>\", or \"<contig ident>:<X>:<Y>:p\" (for pretty mode)";
   string lCommandString = "You can type: \"<contig ident>:<X>:<Y>\", or \"<contig ident>:<X>:<Y>:p\" (for pretty mode)";
 
@@ -20,7 +20,19 @@ void Caper::UserInterface(int argc, char * const argv[] )
 
     SequenceEngine * lSequenceEngine;
     lSequenceEngine = new FASequenceEngine( lArgs.GenomePath );
-    lSequenceEngine->Initialize();
+    if ( lArgs.LoadReferenceGenomeIndex )
+    {
+      lSequenceEngine->Initialize( lArgs.ReferenceGenomeIndexPath );
+    } 
+    else
+    {
+      lSequenceEngine->Initialize();
+    }
+
+    if ( lArgs.SaveIndexes )
+    {
+      lSequenceEngine->SaveIndex( lArgs.SavePath );
+    }
 
     cout << "Done!" << endl;
 
@@ -30,19 +42,29 @@ void Caper::UserInterface(int argc, char * const argv[] )
     MappingEngine * lMappingEngine;
     if ( lArgs.MappingStyle == lArgs.BOWTIE )
     {
-      BowtieMappingsPreparer * lPrep = new BowtieMappingsPreparer( lArgs.MappingPath );
-      string lNewPath = lPrep->PrepareMappings();
-      delete lPrep;
+      if ( !lArgs.AlreadySorted )
+      {
+        BowtieMappingsPreparer * lPrep = new BowtieMappingsPreparer( lArgs.MappingPath );
+        string lNewPath = lPrep->PrepareMappings();
+        delete lPrep;
 
-      lMappingEngine = new BowtieMappingEngine( lNewPath, lSequenceEngine->mSequences );
+        lMappingEngine = new BowtieMappingEngine( lNewPath, lSequenceEngine->mSequences );
+      }
+      else
+        lMappingEngine = new BowtieMappingEngine( lArgs.MappingPath, lSequenceEngine->mSequences );
     }
     else if ( lArgs.MappingStyle == lArgs.MAPVIEW )
     {
-      MapviewMappingsPreparer * lPrep = new MapviewMappingsPreparer( lArgs.MappingPath );
-      string lNewPath = lPrep->PrepareMappings();
-      delete lPrep;
+      if ( !lArgs.AlreadySorted )
+      {
+        MapviewMappingsPreparer * lPrep = new MapviewMappingsPreparer( lArgs.MappingPath );
+        string lNewPath = lPrep->PrepareMappings();
+        delete lPrep;
 
-      lMappingEngine = new MapviewMappingEngine( lNewPath, lSequenceEngine->mSequences );
+        lMappingEngine = new MapviewMappingEngine( lNewPath, lSequenceEngine->mSequences );
+      }
+      else
+        lMappingEngine = new MapviewMappingEngine( lArgs.MappingPath, lSequenceEngine->mSequences );
     }
 
     cout << "Done!" << endl;
@@ -58,7 +80,7 @@ void Caper::UserInterface(int argc, char * const argv[] )
       lMappingEngine->Initialize();
     }
 
-    if ( lArgs.SaveSortedMapping )
+    if ( lArgs.SaveIndexes )
     {
       lMappingEngine->SaveMappingIndex( lArgs.SavePath );
     }

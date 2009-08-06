@@ -1,33 +1,20 @@
-========================================================================
-    CONSOLE APPLICATION : Caper Project Overview
-========================================================================
+Caper v0.3
+Usage: caper -r [-s savepath] [-i savedindexfile] [-f savedreferencegenomeindex] -g <referencegenome.fa> <-m|-b> <mappingsfile>
 
-AppWizard has created this Caper application for you.
+-r : The mappings file is already sorted, so don't bother.
 
-This file contains a summary of what you will find in each of the files that
-make up your Caper application.
+-s : Save your indexes (both reference genome and mapping indexes) out to this directory
+
+-i : load this mapping file index. 
+
+-f : load this reference genome index. If you use this option, it assumes your reference genome file has already been massaged by Caper in past.
+	 
+-g : load this reference genome file. (does double duty in concert with -f to load a massaged .fa file)
+
+-m : load this mapview mapping file.
+
+-b : load this bowtie mapping file. Don't use this at the same time as -m. Who knows what'll happen.
 
 
-Caper.vcproj
-    This is the main project file for VC++ projects generated using an Application Wizard.
-    It contains information about the version of Visual C++ that generated the file, and
-    information about the platforms, configurations, and project features selected with the
-    Application Wizard.
 
-Caper.cpp
-    This is the main application source file.
 
-/////////////////////////////////////////////////////////////////////////////
-Other standard files:
-
-StdAfx.h, StdAfx.cpp
-    These files are used to build a precompiled header (PCH) file
-    named Caper.pch and a precompiled types file named StdAfx.obj.
-
-/////////////////////////////////////////////////////////////////////////////
-Other notes:
-
-AppWizard uses "TODO:" comments to indicate parts of the source code you
-should add to or customize.
-
-/////////////////////////////////////////////////////////////////////////////
