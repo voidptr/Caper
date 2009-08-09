@@ -8,6 +8,20 @@
 
 /* Begin PBXBuildFile section */
 		8DD76F6A0486A84900D96B5E /* Caper.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = C6859E8B029090EE04C91782 /* Caper.1 */; };
+		D862FF36102DE6A9007D4F8F /* Arguments.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D862FF17102DE6A9007D4F8F /* Arguments.cpp */; };
+		D862FF37102DE6A9007D4F8F /* BowtieMappingEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D862FF19102DE6A9007D4F8F /* BowtieMappingEngine.cpp */; };
+		D862FF38102DE6A9007D4F8F /* BowtieMappingsPreparer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D862FF1B102DE6A9007D4F8F /* BowtieMappingsPreparer.cpp */; };
+		D862FF39102DE6A9007D4F8F /* BowtieMappingUtilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D862FF1D102DE6A9007D4F8F /* BowtieMappingUtilities.cpp */; };
+		D862FF3A102DE6A9007D4F8F /* Commands.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D862FF20102DE6A9007D4F8F /* Commands.cpp */; };
+		D862FF3B102DE6A9007D4F8F /* FASequenceEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D862FF22102DE6A9007D4F8F /* FASequenceEngine.cpp */; };
+		D862FF3C102DE6A9007D4F8F /* MappingEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D862FF24102DE6A9007D4F8F /* MappingEngine.cpp */; };
+		D862FF3D102DE6A9007D4F8F /* MappingsPreparer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D862FF26102DE6A9007D4F8F /* MappingsPreparer.cpp */; };
+		D862FF3E102DE6A9007D4F8F /* MappingUtilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D862FF28102DE6A9007D4F8F /* MappingUtilities.cpp */; };
+		D862FF3F102DE6A9007D4F8F /* MapviewMappingsPreparer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D862FF2A102DE6A9007D4F8F /* MapviewMappingsPreparer.cpp */; };
+		D862FF40102DE6A9007D4F8F /* MapviewMappingUtilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D862FF2C102DE6A9007D4F8F /* MapviewMappingUtilities.cpp */; };
+		D862FF41102DE6A9007D4F8F /* Pair.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D862FF2E102DE6A9007D4F8F /* Pair.cpp */; };
+		D862FF42102DE6A9007D4F8F /* SequenceEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D862FF31102DE6A9007D4F8F /* SequenceEngine.cpp */; };
+		D862FF43102DE6A9007D4F8F /* XGetopt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D862FF34102DE6A9007D4F8F /* XGetopt.cpp */; };
 		D8E20DDC0FF7285500EAB729 /* Caper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D8E20DCE0FF7285500EAB729 /* Caper.cpp */; };
 		D8E20DDD0FF7285500EAB729 /* Main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D8E20DD00FF7285500EAB729 /* Main.cpp */; };
 		D8E20DDE0FF7285500EAB729 /* Mapping.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D8E20DD10FF7285500EAB729 /* Mapping.cpp */; };
@@ -33,6 +47,36 @@
 /* Begin PBXFileReference section */
 		8DD76F6C0486A84900D96B5E /* CaperXCode */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CaperXCode; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6859E8B029090EE04C91782 /* Caper.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = Caper.1; sourceTree = "<group>"; };
+		D862FF17102DE6A9007D4F8F /* Arguments.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Arguments.cpp; path = ../Caper/Arguments.cpp; sourceTree = SOURCE_ROOT; };
+		D862FF18102DE6A9007D4F8F /* Arguments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Arguments.h; path = ../Caper/Arguments.h; sourceTree = SOURCE_ROOT; };
+		D862FF19102DE6A9007D4F8F /* BowtieMappingEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BowtieMappingEngine.cpp; path = ../Caper/BowtieMappingEngine.cpp; sourceTree = SOURCE_ROOT; };
+		D862FF1A102DE6A9007D4F8F /* BowtieMappingEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BowtieMappingEngine.h; path = ../Caper/BowtieMappingEngine.h; sourceTree = SOURCE_ROOT; };
+		D862FF1B102DE6A9007D4F8F /* BowtieMappingsPreparer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BowtieMappingsPreparer.cpp; path = ../Caper/BowtieMappingsPreparer.cpp; sourceTree = SOURCE_ROOT; };
+		D862FF1C102DE6A9007D4F8F /* BowtieMappingsPreparer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BowtieMappingsPreparer.h; path = ../Caper/BowtieMappingsPreparer.h; sourceTree = SOURCE_ROOT; };
+		D862FF1D102DE6A9007D4F8F /* BowtieMappingUtilities.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BowtieMappingUtilities.cpp; path = ../Caper/BowtieMappingUtilities.cpp; sourceTree = SOURCE_ROOT; };
+		D862FF1E102DE6A9007D4F8F /* BowtieMappingUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BowtieMappingUtilities.h; path = ../Caper/BowtieMappingUtilities.h; sourceTree = SOURCE_ROOT; };
+		D862FF20102DE6A9007D4F8F /* Commands.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Commands.cpp; path = ../Caper/Commands.cpp; sourceTree = SOURCE_ROOT; };
+		D862FF21102DE6A9007D4F8F /* Commands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Commands.h; path = ../Caper/Commands.h; sourceTree = SOURCE_ROOT; };
+		D862FF22102DE6A9007D4F8F /* FASequenceEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FASequenceEngine.cpp; path = ../Caper/FASequenceEngine.cpp; sourceTree = SOURCE_ROOT; };
+		D862FF23102DE6A9007D4F8F /* FASequenceEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FASequenceEngine.h; path = ../Caper/FASequenceEngine.h; sourceTree = SOURCE_ROOT; };
+		D862FF24102DE6A9007D4F8F /* MappingEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MappingEngine.cpp; path = ../Caper/MappingEngine.cpp; sourceTree = SOURCE_ROOT; };
+		D862FF25102DE6A9007D4F8F /* MappingEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MappingEngine.h; path = ../Caper/MappingEngine.h; sourceTree = SOURCE_ROOT; };
+		D862FF26102DE6A9007D4F8F /* MappingsPreparer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MappingsPreparer.cpp; path = ../Caper/MappingsPreparer.cpp; sourceTree = SOURCE_ROOT; };
+		D862FF27102DE6A9007D4F8F /* MappingsPreparer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MappingsPreparer.h; path = ../Caper/MappingsPreparer.h; sourceTree = SOURCE_ROOT; };
+		D862FF28102DE6A9007D4F8F /* MappingUtilities.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MappingUtilities.cpp; path = ../Caper/MappingUtilities.cpp; sourceTree = SOURCE_ROOT; };
+		D862FF29102DE6A9007D4F8F /* MappingUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MappingUtilities.h; path = ../Caper/MappingUtilities.h; sourceTree = SOURCE_ROOT; };
+		D862FF2A102DE6A9007D4F8F /* MapviewMappingsPreparer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MapviewMappingsPreparer.cpp; path = ../Caper/MapviewMappingsPreparer.cpp; sourceTree = SOURCE_ROOT; };
+		D862FF2B102DE6A9007D4F8F /* MapviewMappingsPreparer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapviewMappingsPreparer.h; path = ../Caper/MapviewMappingsPreparer.h; sourceTree = SOURCE_ROOT; };
+		D862FF2C102DE6A9007D4F8F /* MapviewMappingUtilities.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MapviewMappingUtilities.cpp; path = ../Caper/MapviewMappingUtilities.cpp; sourceTree = SOURCE_ROOT; };
+		D862FF2D102DE6A9007D4F8F /* MapviewMappingUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapviewMappingUtilities.h; path = ../Caper/MapviewMappingUtilities.h; sourceTree = SOURCE_ROOT; };
+		D862FF2E102DE6A9007D4F8F /* Pair.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Pair.cpp; path = ../Caper/Pair.cpp; sourceTree = SOURCE_ROOT; };
+		D862FF2F102DE6A9007D4F8F /* Pair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Pair.h; path = ../Caper/Pair.h; sourceTree = SOURCE_ROOT; };
+		D862FF30102DE6A9007D4F8F /* ReadMe.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ReadMe.txt; path = ../Caper/ReadMe.txt; sourceTree = SOURCE_ROOT; };
+		D862FF31102DE6A9007D4F8F /* SequenceEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SequenceEngine.cpp; path = ../Caper/SequenceEngine.cpp; sourceTree = SOURCE_ROOT; };
+		D862FF32102DE6A9007D4F8F /* SequenceEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SequenceEngine.h; path = ../Caper/SequenceEngine.h; sourceTree = SOURCE_ROOT; };
+		D862FF33102DE6A9007D4F8F /* Typedefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Typedefs.h; path = ../Caper/Typedefs.h; sourceTree = SOURCE_ROOT; };
+		D862FF34102DE6A9007D4F8F /* XGetopt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = XGetopt.cpp; path = ../Caper/XGetopt.cpp; sourceTree = SOURCE_ROOT; };
+		D862FF35102DE6A9007D4F8F /* XGetopt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XGetopt.h; path = ../Caper/XGetopt.h; sourceTree = SOURCE_ROOT; };
 		D8E20DCE0FF7285500EAB729 /* Caper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Caper.cpp; path = ../Caper/Caper.cpp; sourceTree = SOURCE_ROOT; };
 		D8E20DCF0FF7285500EAB729 /* Caper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Caper.h; path = ../Caper/Caper.h; sourceTree = SOURCE_ROOT; };
 		D8E20DD00FF7285500EAB729 /* Main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Main.cpp; path = ../Caper/Main.cpp; sourceTree = SOURCE_ROOT; };
@@ -73,6 +117,36 @@
 		08FB7795FE84155DC02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				D862FF17102DE6A9007D4F8F /* Arguments.cpp */,
+				D862FF18102DE6A9007D4F8F /* Arguments.h */,
+				D862FF19102DE6A9007D4F8F /* BowtieMappingEngine.cpp */,
+				D862FF1A102DE6A9007D4F8F /* BowtieMappingEngine.h */,
+				D862FF1B102DE6A9007D4F8F /* BowtieMappingsPreparer.cpp */,
+				D862FF1C102DE6A9007D4F8F /* BowtieMappingsPreparer.h */,
+				D862FF1D102DE6A9007D4F8F /* BowtieMappingUtilities.cpp */,
+				D862FF1E102DE6A9007D4F8F /* BowtieMappingUtilities.h */,
+				D862FF20102DE6A9007D4F8F /* Commands.cpp */,
+				D862FF21102DE6A9007D4F8F /* Commands.h */,
+				D862FF22102DE6A9007D4F8F /* FASequenceEngine.cpp */,
+				D862FF23102DE6A9007D4F8F /* FASequenceEngine.h */,
+				D862FF24102DE6A9007D4F8F /* MappingEngine.cpp */,
+				D862FF25102DE6A9007D4F8F /* MappingEngine.h */,
+				D862FF26102DE6A9007D4F8F /* MappingsPreparer.cpp */,
+				D862FF27102DE6A9007D4F8F /* MappingsPreparer.h */,
+				D862FF28102DE6A9007D4F8F /* MappingUtilities.cpp */,
+				D862FF29102DE6A9007D4F8F /* MappingUtilities.h */,
+				D862FF2A102DE6A9007D4F8F /* MapviewMappingsPreparer.cpp */,
+				D862FF2B102DE6A9007D4F8F /* MapviewMappingsPreparer.h */,
+				D862FF2C102DE6A9007D4F8F /* MapviewMappingUtilities.cpp */,
+				D862FF2D102DE6A9007D4F8F /* MapviewMappingUtilities.h */,
+				D862FF2E102DE6A9007D4F8F /* Pair.cpp */,
+				D862FF2F102DE6A9007D4F8F /* Pair.h */,
+				D862FF30102DE6A9007D4F8F /* ReadMe.txt */,
+				D862FF31102DE6A9007D4F8F /* SequenceEngine.cpp */,
+				D862FF32102DE6A9007D4F8F /* SequenceEngine.h */,
+				D862FF33102DE6A9007D4F8F /* Typedefs.h */,
+				D862FF34102DE6A9007D4F8F /* XGetopt.cpp */,
+				D862FF35102DE6A9007D4F8F /* XGetopt.h */,
 				D8E20DCE0FF7285500EAB729 /* Caper.cpp */,
 				D8E20DCF0FF7285500EAB729 /* Caper.h */,
 				D8E20DD00FF7285500EAB729 /* Main.cpp */,
@@ -157,6 +231,20 @@
 				D8E20DE00FF7285500EAB729 /* MapviewMappingEngine.cpp in Sources */,
 				D8E20DE10FF7285500EAB729 /* Sequence.cpp in Sources */,
 				D8E20DE20FF7285500EAB729 /* SequenceReader.cpp in Sources */,
+				D862FF36102DE6A9007D4F8F /* Arguments.cpp in Sources */,
+				D862FF37102DE6A9007D4F8F /* BowtieMappingEngine.cpp in Sources */,
+				D862FF38102DE6A9007D4F8F /* BowtieMappingsPreparer.cpp in Sources */,
+				D862FF39102DE6A9007D4F8F /* BowtieMappingUtilities.cpp in Sources */,
+				D862FF3A102DE6A9007D4F8F /* Commands.cpp in Sources */,
+				D862FF3B102DE6A9007D4F8F /* FASequenceEngine.cpp in Sources */,
+				D862FF3C102DE6A9007D4F8F /* MappingEngine.cpp in Sources */,
+				D862FF3D102DE6A9007D4F8F /* MappingsPreparer.cpp in Sources */,
+				D862FF3E102DE6A9007D4F8F /* MappingUtilities.cpp in Sources */,
+				D862FF3F102DE6A9007D4F8F /* MapviewMappingsPreparer.cpp in Sources */,
+				D862FF40102DE6A9007D4F8F /* MapviewMappingUtilities.cpp in Sources */,
+				D862FF41102DE6A9007D4F8F /* Pair.cpp in Sources */,
+				D862FF42102DE6A9007D4F8F /* SequenceEngine.cpp in Sources */,
+				D862FF43102DE6A9007D4F8F /* XGetopt.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

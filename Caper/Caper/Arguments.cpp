@@ -10,12 +10,15 @@ Arguments::Arguments()
 
 bool Arguments::ProcessArguments( int argc, char * const argv[] ) 
 {
+  
+  XGetOpt lGetOpt;
+  
   if ( argc < 5 )
     return false;
 
   int c;
 
-  while ((c = getopt(argc, argv, "rs:f:i:g:m:b:")) != EOF)
+  while ((c = lGetOpt.GetOpt(argc, argv, "rs:f:i:g:m:b:")) != EOF)
   {
     switch (c)
     {
@@ -25,31 +28,31 @@ bool Arguments::ProcessArguments( int argc, char * const argv[] )
 
     case 's':
       SaveIndexes = true;      
-      SavePath = string(optarg);
+      SavePath = string(lGetOpt.optarg);
       break;
 
     case 'i':
       LoadIndex = true;
-      IndexPath = string(optarg);
+      IndexPath = string(lGetOpt.optarg);
       break;
 
     case 'f':
       LoadReferenceGenomeIndex = true;
-      ReferenceGenomeIndexPath = string(optarg);
+      ReferenceGenomeIndexPath = string(lGetOpt.optarg);
       break;
 
     case 'g':
-      GenomePath = string(optarg);
+      GenomePath = string(lGetOpt.optarg);
       break;
 
     case 'm':
       MappingStyle = MAPVIEW;
-      MappingPath = string(optarg);
+      MappingPath = string(lGetOpt.optarg);
       break;
 
     case 'b':
       MappingStyle = BOWTIE;
-      MappingPath = string(optarg);                      
+      MappingPath = string(lGetOpt.optarg);                      
       break;
 
     case '?':                             

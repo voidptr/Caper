@@ -152,11 +152,16 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-char	*optarg;		// global argument pointer
-int		optind = 0; 	// global argv index
-
-int getopt(int argc, char * const argv[], char *optstring)
+XGetOpt::XGetOpt()
 {
+  
+  optind = 0;
+}
+
+
+int XGetOpt::GetOpt(int argc, char * const argv[], char *optstring)
+{
+  
 	static char *next = NULL;
 	if (optind == 0)
 		next = NULL;
