@@ -2,8 +2,8 @@
 
 void Caper::UserInterface(int argc, char * const argv[] )
 {
-  string lUsageString = "Caper v0.3\nUsage: caper -r [-s savepath] [-i savedindexfile] [-f savedreferencegenomeindex] -g <referencegenome.fa> <-m|-b> <mappingsfile>";
-  //string lCommandString = "You can type: \"help\", \"list\", \"quit\", \"<contig ident>:<X>:<Y>\", or \"<contig ident>:<X>:<Y>:p\" (for pretty mode)";
+  string lUsageString = "Caper v0.3\nUsage: caper [-s SaveIndexesToPath] [-i SavedMappingIndexFile] [-f SavedReferenceGenomeIndexFile] <-g|-G> <referencegenome.fa> <-m|-M|-b|-B> <mappingsfile>";
+
   string lCommandString = "You can type: \"<contig ident>:<X>:<Y>\", or \"<contig ident>:<X>:<Y>:p\" (for pretty mode)";
 
   try
@@ -18,22 +18,15 @@ void Caper::UserInterface(int argc, char * const argv[] )
     cout << "Reading Genome \"" << lArgs.GenomePath << "\"... ";
     cout.flush();
 
-    SequenceEngine * lSequenceEngine;
-    lSequenceEngine = new FASequenceEngine( lArgs.GenomePath );
+    SequenceEngine * lSequenceEngine = new FASequenceEngine( lArgs.GenomePath );
     if ( lArgs.LoadReferenceGenomeIndex )
-    {
-      lSequenceEngine->Initialize( lArgs.ReferenceGenomeIndexPath );
-    } 
+      lSequenceEngine->Initialize( lArgs.ReferenceGenomeIndexPath );    
     else
-    {
       lSequenceEngine->Initialize();
-    }
-
+    
     if ( lArgs.SaveIndexes )
-    {
       lSequenceEngine->SaveIndex( lArgs.SavePath );
-    }
-
+    
     cout << "Done!" << endl;
 
     cout << "Preparing Mappings \"" << lArgs.MappingPath << "\"... " << endl;
@@ -42,7 +35,7 @@ void Caper::UserInterface(int argc, char * const argv[] )
     MappingEngine * lMappingEngine;
     if ( lArgs.MappingStyle == lArgs.BOWTIE )
     {
-      if ( !lArgs.AlreadySorted )
+      if ( !lArgs.MappingsSorted )
       {
         BowtieMappingsPreparer * lPrep = new BowtieMappingsPreparer( lArgs.MappingPath );
         string lNewPath = lPrep->PrepareMappings();
@@ -55,7 +48,7 @@ void Caper::UserInterface(int argc, char * const argv[] )
     }
     else if ( lArgs.MappingStyle == lArgs.MAPVIEW )
     {
-      if ( !lArgs.AlreadySorted )
+      if ( !lArgs.MappingsSorted )
       {
         MapviewMappingsPreparer * lPrep = new MapviewMappingsPreparer( lArgs.MappingPath );
         string lNewPath = lPrep->PrepareMappings();
@@ -71,19 +64,14 @@ void Caper::UserInterface(int argc, char * const argv[] )
 
     cout << "Initializing Mapping Engine... " << endl;
 
-    if ( lArgs.LoadIndex )
-    {
+    if ( lArgs.LoadMappingIndex )
       lMappingEngine->Initialize( lArgs.IndexPath );
-    }
     else
-    {
       lMappingEngine->Initialize();
-    }
-
+    
     if ( lArgs.SaveIndexes )
-    {
       lMappingEngine->SaveMappingIndex( lArgs.SavePath );
-    }
+    
     cout << "Done!" << endl;
 
     cout << "> ";
@@ -94,8 +82,7 @@ void Caper::UserInterface(int argc, char * const argv[] )
     {
       if ( !lCommands.ProcessArguments( lInput, lSequenceEngine->mSequences, lMappingEngine ) )
       {
-        cout << "Invalid Input: " << lCommandString << endl ;
-        cout << "> ";
+        cout << "Invalid Input: " << lCommandString << endl << "> " ;
         continue;
       }
 
@@ -105,7 +92,7 @@ void Caper::UserInterface(int argc, char * const argv[] )
         if ( lCommands.PrettyMode ) // engage pretty mode
         {    
           cout << PadLeft( lMappingEngine->ReadLength ) << lCommands.Left + lMappingEngine->ReadLength << endl;        
-          cout << PadLeft( lMappingEngine->ReadLength ) << "*" << endl;
+          cout << PadLeft( lMappingEngine->ReadLength ) << PadLeft( lCommands.Right - lCommands.Left, "*") << endl;
 
           string lGenome = "";
           int lTargetGenomeWidth = lCommands.Right - lCommands.Left + 1 + lMappingEngine->ReadLength;
@@ -160,13 +147,17 @@ void Caper::UserInterface(int argc, char * const argv[] )
 
 string Caper::PadLeft( int aCount )
 {
+  return PadLeft( aCount, " " );
+}
+
+string Caper::PadLeft( int aCount, string aPad )
+{
   string lThing = "";
 
   for (int i = 0; i < aCount; i++ )
-    lThing.append(" ");
+    lThing.append(aPad);
 
   return lThing;
 }
-
 
 

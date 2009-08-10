@@ -14,4 +14,5 @@ class Caper
 public:
   static void UserInterface(int argc, char * const argv[] );
   static string PadLeft( int aCount );
+  static string PadLeft( int aCount, string aPadChar );
 };

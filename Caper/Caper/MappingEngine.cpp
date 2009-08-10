@@ -15,7 +15,6 @@ MappingEngine::MappingEngine(string & aPath, Sequences & aReferenceGenome)
 void MappingEngine::Initialize()
 {		
   PopulateReadInformation();
-  PopulateSortedContigIdents();
   PopulateNumberOfWindows();
   PopulateContigBorders();  
   cout << " Indexing Mappings... ";
@@ -27,7 +26,6 @@ void MappingEngine::Initialize()
 void MappingEngine::Initialize( string & aIndexPath )
 {	
   PopulateReadInformation();
-  PopulateSortedContigIdents();
   PopulateNumberOfWindows();
 
   //PopulateContigBorders();
@@ -105,17 +103,6 @@ void MappingEngine::SaveMappingIndex( string & aSavePath )
   lStream.close();
 }
 
-void MappingEngine::PopulateSortedContigIdents()
-{		
-  Sequences::iterator lIterator;
-  for(lIterator = ReferenceGenome->begin() ; lIterator != ReferenceGenome->end(); lIterator++ )
-	{
-		mSortedContigIdents.push_back( lIterator->first );
-	}
-
-	//mSortedContigIdents.sort(); // don't know if this matters.
-}
-
 void MappingEngine::PopulateContigBorders()
 {		
   ifstream lStream( mPath.c_str(), ios_base::binary );
@@ -170,9 +157,6 @@ void MappingEngine::PopulateReadInformation()
 
   string lLine;
   getline( lStream, lLine );
-
-  if ( lLine[ lLine.length() - 1 ] == '\r' ) // we have an \r\n delimiter.
-    mDOSDelimiter = true;
 
   ReadLength = GetSequence( lLine ).length();
   
@@ -344,8 +328,6 @@ MappingCache * MappingEngine::RebuildCache( string aContigIdent, int lStartingIn
   return lCache;
 }
 
-
-
 MappingCache* MappingEngine::BuildEmptyCache( string aContigIdent, int aLeft, int aRight )
 {
   IndexedMappings * lMappings = new IndexedMappings();
@@ -357,7 +339,6 @@ MappingCache* MappingEngine::BuildEmptyCache( string aContigIdent, int aLeft, in
 
   return new MappingCache( lMappings, aContigIdent, aLeft, aRight );
 }
-
 
 // This (and related) method should really be in a separate MappingCache Builder.
 MappingCache * MappingEngine::BuildCache( char * aBlock, string aContigIdent, int aLeft, int aRight )
@@ -380,7 +361,6 @@ MappingCache * MappingEngine::BuildCache( char * aBlock, string aContigIdent, in
     int lIndex = GetIndex( lLine );
     int lPrivateIndex = lIndex - aLeft;
    
-    // WHY IS THIS BLANKING OUT!?!?!
     string lSeq = GetSequence( lLine );
     lCache->IndexedReads->at(lPrivateIndex).push_back( new Mapping( lIndex, new Sequence( lSeq ) ) );
   }

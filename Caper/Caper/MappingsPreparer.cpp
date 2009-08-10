@@ -77,7 +77,9 @@ string MappingsPreparer::SortMappingsAndWriteToTmpFile()
 
   sort( lMappings->begin(), lMappings->end(), SortMapping(this) );
 
-  string lFilename = mPath + ".stl.tmp";
+  int lSlashPos = mPath.find_last_of('/'); // todo, finish separating the path here, and make it into the filename that gets saved.
+
+  string lFilename = mPath + ".sorted";
   WriteAllLines( lMappings, lFilename );
 
   delete lMappings;

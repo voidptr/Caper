@@ -1,13 +1,5 @@
 #include "FASequenceEngine.h"
 
-// TMP for development
-#include <fstream>
-#include <iostream>
-#include <sstream>
-#include <map>
-#include "Typedefs.h"
-// END TMP
-
 FASequenceEngine::FASequenceEngine(string & aPath) : SequenceEngine(aPath) {}
 
 void FASequenceEngine::Initialize( string & aIndexPath )
@@ -47,7 +39,7 @@ void FASequenceEngine::Initialize()
 
   string lLine = "";
 
-  string lTmpFilePath = mPath + ".tmp";
+  string lTmpFilePath = mPath + ".prepared";
   ofstream lOutStream(lTmpFilePath.c_str());
 
   if ( !lOutStream.is_open() )

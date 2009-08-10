@@ -1,10 +1,5 @@
 #pragma once
 
-#include <sstream>
-#include <iostream>
-#include "stdafx.h"
-#include "Sequence.h"
-#include "Typedefs.h"
 #include "MappingCache.h"
 
 class MappingEngine
@@ -21,18 +16,15 @@ private:
 	
 	long mEndOfFilePosition;
 	string mPath;
-  bool mDOSDelimiter;
 
 	map<string, vector<long> > mMappingIndexes;
 	map<string, int> mNumberOfWindows;
 	map<string, pair<long,long> > mContigBorders;
-	vector<string> mSortedContigIdents;	
 
 private:
 	void PopulateMappingIndex();	
 	void PopulateContigBorders();
 	void PopulateNumberOfWindows();
-	void PopulateSortedContigIdents();
 	void PopulateReadInformation();
   
 	MappingCache * GetCorrectCache( string lContigIdent, int aLeft, int aRight );
