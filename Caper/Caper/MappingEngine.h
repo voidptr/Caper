@@ -35,6 +35,7 @@ private:
 
 	virtual string GetSequence( string & aLine ) = 0;
 	virtual int GetIndex( string & aLine ) = 0;
+  virtual string GetName( string & aLine ) = 0;
 	virtual string GetContigIdent( string & aLine ) = 0;
 
 public:

@@ -15,6 +15,11 @@ int MapviewMappingEngine::GetIndex( string & aLine )
   return MapviewMappingUtilities::GetIndex(aLine);
 }
 
+string MapviewMappingEngine::GetName( string & aLine )
+{
+  return MapviewMappingUtilities::GetName(aLine);
+}
+
 string MapviewMappingEngine::GetSequence( string & aLine )
 {
   return MapviewMappingUtilities::GetSequence(aLine);

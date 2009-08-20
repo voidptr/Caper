@@ -362,7 +362,9 @@ MappingCache * MappingEngine::BuildCache( char * aBlock, string aContigIdent, in
     int lPrivateIndex = lIndex - aLeft;
    
     string lSeq = GetSequence( lLine );
-    lCache->IndexedReads->at(lPrivateIndex).push_back( new Mapping( lIndex, new Sequence( lSeq ) ) );
+    string lName = GetName( lLine );
+
+    lCache->IndexedReads->at(lPrivateIndex).push_back( new Mapping(lName, lIndex, new Sequence( lSeq ) ) );
   }
 
   return lCache;

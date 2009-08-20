@@ -2,7 +2,7 @@
 
 void Caper::UserInterface(int argc, char * const argv[] )
 {
-  string lUsageString = "Caper v0.3\nUsage: caper [-s SaveIndexesToPath] [-i SavedMappingIndexFile] [-f SavedReferenceGenomeIndexFile] <-g|-G> <referencegenome.fa> <-m|-M|-b|-B> <mappingsfile>";
+  string lUsageString = "Caper v0.3.1\nUsage: caper [-s SaveIndexesToPath] [-i SavedMappingIndexFile] [-f SavedReferenceGenomeIndexFile] <-g|-G> <referencegenome.fa> <-m|-M|-b|-B> <mappingsfile>";
 
   string lCommandString = "You can type: \"<contig ident>:<X>:<Y>\", or \"<contig ident>:<X>:<Y>:p\" (for pretty mode)";
 
@@ -127,7 +127,7 @@ void Caper::UserInterface(int argc, char * const argv[] )
         {
           for ( int i = 0 ; i < lMappings->size(); i++ )
           {
-            cout << "Index " << lMappings->at(i)->Index << ": " << lMappings->at(i)->mSequence->ToString() << "\n";
+            cout << "Index " << lMappings->at(i)->Index << ": " << lMappings->at(i)->Name << " - " << lMappings->at(i)->mSequence->ToString() << "\n";
           }
         }
 

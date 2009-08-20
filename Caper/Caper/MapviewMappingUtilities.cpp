@@ -14,3 +14,8 @@ string MapviewMappingUtilities::GetSequence( string & aLine )
 {
 	return GetLinePieces( aLine )[14];
 }
+
+string MapviewMappingUtilities::GetName( string & aLine )
+{
+	return GetLinePieces( aLine )[0];
+}

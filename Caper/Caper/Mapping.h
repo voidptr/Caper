@@ -6,10 +6,11 @@
 class Mapping
 {
 public:
+  string Name;
 	int Index;
 	Sequence* mSequence;
 public:
-	Mapping(int & aPosition, Sequence* aSequence);
+	Mapping(string & aName, int & aPosition, Sequence* aSequence);
   Mapping( Mapping & aMapping );
 	~Mapping(void);
 };
