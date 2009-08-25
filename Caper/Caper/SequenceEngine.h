@@ -12,7 +12,7 @@ protected:
 public:
   Sequences mSequences;
 public:
-  SequenceEngine(string & aPath);
+  SequenceEngine(string aPath);
   virtual void Initialize() = 0;
   virtual void Initialize( string & aIndexPath ) = 0;
   virtual void SaveIndex( string & aSavePath ) = 0;

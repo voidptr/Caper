@@ -10,7 +10,9 @@ private:
   static const char NewLine = '\n';
 public:
   FASequenceEngine(string & aPath);
+  FASequenceEngine(char * aPath);
   void Initialize();
   void Initialize( string & aIndexPath );
+  void Initialize( char * aIndexPath ) { string i(aIndexPath); Initialize(i); }
   void SaveIndex( string & aSavePath );
 };

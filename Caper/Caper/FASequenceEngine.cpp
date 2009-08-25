@@ -2,6 +2,8 @@
 
 FASequenceEngine::FASequenceEngine(string & aPath) : SequenceEngine(aPath) {}
 
+FASequenceEngine::FASequenceEngine(char * aPath) : SequenceEngine(string(aPath)) { }
+
 void FASequenceEngine::Initialize( string & aIndexPath )
 {
   ifstream lIndexStream( aIndexPath.c_str(), ios::binary );
