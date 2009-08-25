@@ -8,7 +8,11 @@ class MapviewMappingsPreparer :
 protected:
   int GetIndex( string & aLine );
   string GetContigIdent( string & aLine );
+  string holder;
 
 public:
-  MapviewMappingsPreparer(string & aPath);
+  MapviewMappingsPreparer(string aPath);
+  const char * PrepareMappingsPy() {
+    holder = PrepareMappings(); return holder.c_str();
+  }
 };
