@@ -4,7 +4,7 @@ FASequenceEngine::FASequenceEngine(string & aPath) : SequenceEngine(aPath) {}
 
 FASequenceEngine::FASequenceEngine(char * aPath) : SequenceEngine(string(aPath)) { }
 
-void FASequenceEngine::Initialize( string & aIndexPath )
+void FASequenceEngine::Initialize( string aIndexPath )
 {
   ifstream lIndexStream( aIndexPath.c_str(), ios::binary );
 
@@ -90,7 +90,7 @@ void FASequenceEngine::Initialize()
 }
 
 
-void FASequenceEngine::SaveIndex( string & aSavePath )
+void FASequenceEngine::SaveIndex( string aSavePath )
 {
   string lSavedIndexFile = aSavePath + "saved.refgenomeindex";
 

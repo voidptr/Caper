@@ -19,7 +19,7 @@ cdef extern from "Caper.h":
     void del_mappings "delete" (c_mappings * mappings)
 
     # SequenceEngine type -> c_sequence_engine
-    ctypedef void (*Initialize)()
+    ctypedef void (*Initialize)(char *)
     ctypedef struct c_sequence_engine "SequenceEngine":
         Initialize Initialize
 
@@ -85,17 +85,20 @@ cdef class mapping_container:
     cdef c_sequence_engine *thisseq
     cdef c_mapping_engine *thismap
 
-    def __cinit__(self, map_path, sequence_path):
+    def __cinit__(self, map_path, map_index, sequence_path, sequence_index):
+        self.thisseq = NULL
+        self.thismap = NULL
+
         self.thisseq = new_sequence_engine(sequence_path)
-        self.thisseq.Initialize()
+        self.thisseq.Initialize(sequence_index)
 
-        cdef c_mappings_preparer * map_prepper
-        map_prepper = new_mappings_preparer(map_path)
-        prep_path = map_prepper.PrepareMappingsPy()
-        del_mappings_preparer(map_prepper)
+#        cdef c_mappings_preparer * map_prepper
+#        map_prepper = new_mappings_preparer(map_path)
+#        prep_path = map_prepper.PrepareMappingsPy()
+#        del_mappings_preparer(map_prepper)
 
-        self.thismap = new_mapping_engine(prep_path, self.thisseq)
-        self.thismap.Initialize()
+        self.thismap = new_mapping_engine(map_path, self.thisseq)
+        self.thismap.Initialize(map_index)
 
     def get_reads_at(self, seqname, start, stop):
         cdef mapping x
