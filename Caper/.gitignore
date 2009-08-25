@@ -1,0 +1,16 @@
+*.o
+CaperGCC/Caper
+CaperGCC/short
+*~
+*.so
+CaperGCC/caper.c
+CaperGCC/caper.o
+CaperGCC/caper.cpp
+*.pyc
+CaperGCC/data/REL606.gmc.fa.prepared
+CaperGCC/data/cache
+*.pureseq
+*.seqlen
+*_screed
+*_screed_hash
+*_screed_idx

@@ -3,9 +3,18 @@
 #include <sstream>
 #include <iostream>
 
-MappingEngine::MappingEngine(string & aPath, Sequences & aReferenceGenome)
+MappingEngine::MappingEngine(string aPath, Sequences & aReferenceGenome)
 {
 	ReferenceGenome = &aReferenceGenome;
+	mPath = aPath;
+
+  CacheA = NULL;
+  CacheB = NULL;
+}
+
+MappingEngine::MappingEngine(string aPath, Sequences * aReferenceGenome)
+{
+	ReferenceGenome = aReferenceGenome;
 	mPath = aPath;
 
   CacheA = NULL;
@@ -23,7 +32,7 @@ void MappingEngine::Initialize()
   cout << "Done!" << endl;
 }
 
-void MappingEngine::Initialize( string & aIndexPath )
+void MappingEngine::Initialize( string aIndexPath )
 {	
   PopulateReadInformation();
   PopulateNumberOfWindows();
@@ -73,7 +82,7 @@ void MappingEngine::Initialize( string & aIndexPath )
   cout << "Done!" << endl;
 }
 
-void MappingEngine::SaveMappingIndex( string & aSavePath )
+void MappingEngine::SaveMappingIndex( string aSavePath )
 {
   string lOutputFilename = aSavePath + "saved.index";
 
@@ -287,7 +296,14 @@ void MappingEngine::RebuildCaches(string aContigIdent, int aLeft ) // these defi
 
 MappingCache * MappingEngine::RebuildCache( string aContigIdent, int lStartingIndex )
 {
-	long lStartingPos = mMappingIndexes[aContigIdent][ lStartingIndex ];
+  // @CTB fix for problem where .size() was < lStartingIndex.
+  long lStartingPos;
+  if (mMappingIndexes[aContigIdent].size() <= lStartingIndex) {
+    lStartingPos = -1;
+  }
+  else {
+    lStartingPos = mMappingIndexes[aContigIdent][ lStartingIndex ];
+  }
 
   if ( lStartingPos == -1 ) // there's no cache here
   {
@@ -319,7 +335,7 @@ MappingCache * MappingEngine::RebuildCache( string aContigIdent, int lStartingIn
   lStream.seekg( lStartingPos );
   lStream.read( lBlock, lCount );
   lBlock[ lCount ] = 0; // impose our own null termination
-  
+
   MappingCache * lCache = BuildCache( lBlock, aContigIdent, lStartingIndex * IndexIncrement, ( ( lStartingIndex + 1 ) * IndexIncrement ) - 1 );
 
   delete [] lBlock;
@@ -353,18 +369,23 @@ MappingCache * MappingEngine::BuildCache( char * aBlock, string aContigIdent, in
 
   while ( lStream.peek() >= 0 )
   {
-    int lChar = lStream.peek();
+    int lChar = lStream.peek();	// @CTB what does this do?
     getline( lStream, lLine );
     if ( lLine.length() < 1 )
       break;
 
     int lIndex = GetIndex( lLine );
+    if ( lIndex < aLeft ) {	// @CTB may only need to check for first pass?
+      break;
+    }
+
     int lPrivateIndex = lIndex - aLeft;
    
     string lSeq = GetSequence( lLine );
     string lName = GetName( lLine );
 
-    lCache->IndexedReads->at(lPrivateIndex).push_back( new Mapping(lName, lIndex, new Sequence( lSeq ) ) );
+    Mapping * m = new Mapping( lName, lIndex, new Sequence( lSeq ) );
+    lCache->IndexedReads->at(lPrivateIndex).push_back( m );
   }
 
   return lCache;
