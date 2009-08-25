@@ -1,7 +1,7 @@
 #include "MappingsPreparer.h"
 #include "BowtieMappingUtilities.h"
 
-MappingsPreparer::MappingsPreparer(string aPath)
+MappingsPreparer::MappingsPreparer(string & aPath)
 {
   mPath = aPath;
 }

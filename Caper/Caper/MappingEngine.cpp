@@ -3,18 +3,9 @@
 #include <sstream>
 #include <iostream>
 
-MappingEngine::MappingEngine(string aPath, Sequences & aReferenceGenome)
+MappingEngine::MappingEngine(string & aPath, Sequences & aReferenceGenome)
 {
 	ReferenceGenome = &aReferenceGenome;
-	mPath = aPath;
-
-  CacheA = NULL;
-  CacheB = NULL;
-}
-
-MappingEngine::MappingEngine(string aPath, Sequences * aReferenceGenome)
-{
-	ReferenceGenome = aReferenceGenome;
 	mPath = aPath;
 
   CacheA = NULL;
@@ -32,7 +23,7 @@ void MappingEngine::Initialize()
   cout << "Done!" << endl;
 }
 
-void MappingEngine::Initialize( string aIndexPath )
+void MappingEngine::Initialize( string & aIndexPath )
 {	
   PopulateReadInformation();
   PopulateNumberOfWindows();
@@ -82,7 +73,7 @@ void MappingEngine::Initialize( string aIndexPath )
   cout << "Done!" << endl;
 }
 
-void MappingEngine::SaveMappingIndex( string aSavePath )
+void MappingEngine::SaveMappingIndex( string & aSavePath )
 {
   string lOutputFilename = aSavePath + "saved.index";
 
