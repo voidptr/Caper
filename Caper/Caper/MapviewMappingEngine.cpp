@@ -5,13 +5,6 @@ MapviewMappingEngine::MapviewMappingEngine(string & aPath, Sequences & aGenome)
 {
 }
 
-MapviewMappingEngine::MapviewMappingEngine( char * aPath, SequenceEngine * lMappingEngine ) :
-  MappingEngine(string(aPath), &(lMappingEngine->mSequences)),
-  MapviewMappingUtilities()
-{
-}
-
-
 string MapviewMappingEngine::GetContigIdent( string & aLine )
 {
   return MapviewMappingUtilities::GetContigIdent(aLine);
