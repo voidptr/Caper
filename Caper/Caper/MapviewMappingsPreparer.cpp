@@ -1,6 +1,6 @@
 #include "MapviewMappingsPreparer.h"
 
-MapviewMappingsPreparer::MapviewMappingsPreparer(string & aPath) 
+MapviewMappingsPreparer::MapviewMappingsPreparer(string aPath) 
 : MappingsPreparer( aPath )
 {
 }

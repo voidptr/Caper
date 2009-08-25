@@ -25,5 +25,6 @@ public: // public methods
   string Substring( long aIndex, long aCount );
   string Substring( long aIndex );
   string ToString();
+  const char * ToStringP() { return ToString().c_str(); }
   ~Sequence(void);
 };

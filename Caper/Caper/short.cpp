@@ -5,7 +5,7 @@ class Caper;
 int main()
 {
   string genome = "REL606.gmc.fa";
-  string mapping = "s_1_1.mapview";
+  string mapping = "head.txt";
   SequenceEngine * lSequenceEngine;
   lSequenceEngine = new FASequenceEngine( genome );
   lSequenceEngine->Initialize();
@@ -13,6 +13,8 @@ int main()
   MapviewMappingsPreparer * lPrep = new MapviewMappingsPreparer( mapping );
   string lNewPath = lPrep->PrepareMappings();
   delete lPrep;
+
+  cout << "new path:" << lNewPath << "\n";
 
   MappingEngine * lMappingEngine;
   lMappingEngine = new MapviewMappingEngine( lNewPath, lSequenceEngine->mSequences );

@@ -43,7 +43,8 @@ public:
   int ReadLength;
 	
 public:
-	MappingEngine( string aPath, Sequences aReferenceGenome );
+	MappingEngine( string aPath, Sequences & aReferenceGenome );
+	MappingEngine( string aPath, Sequences * aReferenceGenome );
   Mappings * GetReads(string lContigIdent, int aLeft, int aRight );
 
   void Initialize();

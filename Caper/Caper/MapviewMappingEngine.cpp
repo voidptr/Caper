@@ -6,7 +6,7 @@ MapviewMappingEngine::MapviewMappingEngine(string & aPath, Sequences & aGenome)
 }
 
 MapviewMappingEngine::MapviewMappingEngine( char * aPath, SequenceEngine * lMappingEngine ) :
-  MappingEngine(string(aPath), lMappingEngine->mSequences),
+  MappingEngine(string(aPath), &(lMappingEngine->mSequences)),
   MapviewMappingUtilities()
 {
 }

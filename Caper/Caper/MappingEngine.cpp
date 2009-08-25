@@ -3,9 +3,18 @@
 #include <sstream>
 #include <iostream>
 
-MappingEngine::MappingEngine(string aPath, Sequences aReferenceGenome)
+MappingEngine::MappingEngine(string aPath, Sequences & aReferenceGenome)
 {
 	ReferenceGenome = &aReferenceGenome;
+	mPath = aPath;
+
+  CacheA = NULL;
+  CacheB = NULL;
+}
+
+MappingEngine::MappingEngine(string aPath, Sequences * aReferenceGenome)
+{
+	ReferenceGenome = aReferenceGenome;
 	mPath = aPath;
 
   CacheA = NULL;

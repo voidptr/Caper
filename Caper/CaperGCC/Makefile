@@ -1,5 +1,5 @@
 SRCDIR=../Caper
-CXXFLAGS=-fPIC
+CXXFLAGS=-fPIC -g
 
 OBJS=$(SRCDIR)/Arguments.o \
        $(SRCDIR)/MapviewMappingsPreparer.o $(SRCDIR)/BowtieMappingEngine.o \
@@ -11,10 +11,16 @@ OBJS=$(SRCDIR)/Arguments.o \
        $(SRCDIR)/SequenceReader.o $(SRCDIR)/FASequenceEngine.o \
        $(SRCDIR)/MapviewMappingEngine.o $(SRCDIR)/XGetopt.o
 
-all: Caper short
+all: Caper short caper.so
+
+clean:
+	rm -f $(SRCDIR)/*.o caper.c caper.so
 
 Caper: $(SRCDIR)/Main.o $(OBJS)
 	g++ -o Caper $(SRCDIR)/Main.o $(OBJS)
 
 short:  $(SRCDIR)/short.o $(OBJS)
 	g++ -o short $(SRCDIR)/short.o $(OBJS)
+
+caper.so: short caper.pyx
+	python setup.py build_ext -i
