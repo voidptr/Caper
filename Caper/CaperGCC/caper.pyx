@@ -16,6 +16,8 @@ cdef extern from "Caper.h":
         size size
         at at
 
+    void del_mappings "delete" (c_mappings * mappings)
+
     # SequenceEngine type -> c_sequence_engine
     ctypedef void (*Initialize)()
     ctypedef struct c_sequence_engine "SequenceEngine":
@@ -54,7 +56,7 @@ cdef class mapping:
     __len__ returns number of mappings.
     __getitem__ returns (start, sequence) of overlapping mapping.
     """
-    cdef c_mappings * mappings
+    cdef c_mappings * mappings          # @CTB is this deallocated?
     cdef public char * seqname
     cdef public int start, stop
 
@@ -62,6 +64,9 @@ cdef class mapping:
         self.seqname = seqname
         self.start = start
         self.stop = stop
+
+    def __dealloc__(self):
+        del_mappings(self.mappings)
 
     def __len__(self):
         """Return number of overlapping mappings at this point."""
@@ -96,5 +101,6 @@ cdef class mapping_container:
         cdef mapping x
 
         x = mapping(seqname, start, stop)
+        # @CTB need to figure out how to pass this via mapping __cinit__
         x.mappings = self.thismap.GetReads(seqname, start, stop)
         return x
