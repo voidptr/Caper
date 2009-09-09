@@ -1,11 +1,8 @@
 #include "MappingEngine.h"
-#include "Typedefs.h" // DEV Intellisense
-#include <sstream>
-#include <iostream>
 
-MappingEngine::MappingEngine(string & aPath, Sequences & aReferenceGenome)
+MappingEngine::MappingEngine(string aPath, Sequences * aReferenceGenome)
 {
-	ReferenceGenome = &aReferenceGenome;
+	ReferenceGenome = aReferenceGenome;
 	mPath = aPath;
 
   CacheA = NULL;
@@ -23,7 +20,7 @@ void MappingEngine::Initialize()
   cout << "Done!" << endl;
 }
 
-void MappingEngine::Initialize( string & aIndexPath )
+void MappingEngine::Initialize( string aIndexPath )
 {	
   PopulateReadInformation();
   PopulateNumberOfWindows();
@@ -61,6 +58,8 @@ void MappingEngine::Initialize( string & aIndexPath )
     NumberOfReads.insert( pair<string, int>( lContigIdent, lReadCount ) );   
     mMappingIndexes.insert( pair<string, vector<long> >( lContigIdent, vector<long>() ) );
 
+    mMappingIndexes[ lContigIdent ].reserve( lWindowsCount ); // preallocate the vector.
+
     for (int j = 0; j < lWindowsCount; j++ )
     {
       long lIndex = 0;
@@ -73,7 +72,7 @@ void MappingEngine::Initialize( string & aIndexPath )
   cout << "Done!" << endl;
 }
 
-void MappingEngine::SaveMappingIndex( string & aSavePath )
+void MappingEngine::SaveMappingIndex( string aSavePath )
 {
   string lOutputFilename = aSavePath + "saved.index";
 
@@ -196,6 +195,7 @@ void MappingEngine::PopulateMappingIndex()
       lTargetIndex = 0;
       lContig = lCurrentContig;
       mMappingIndexes.insert( pair<string, vector<long> >( lContig, vector<long>() ) );
+      mMappingIndexes[ lContig ].reserve( mNumberOfWindows[ lContig ] );
     }
 
     if ( lCurrentIndex >= lTargetIndex )
@@ -215,6 +215,12 @@ void MappingEngine::PopulateMappingIndex()
   NumberOfReads.insert( pair<string, int>( lContig, lReadCount ) ); // close up the last contig read count
 
   lStream.close();
+
+  // fill in -1s for the empty sections that may be at the end.
+  for (int i = mMappingIndexes[ lContig ].size(); i < mNumberOfWindows[ lContig ]; ++i )
+  {
+    mMappingIndexes[ lContig ].push_back( -1 ); // empty sections at the tail end.
+  }
 }
 
 Mappings * MappingEngine::GetReads(string lContigIdent, int aLeft, int aRight )
@@ -285,22 +291,22 @@ void MappingEngine::RebuildCaches(string aContigIdent, int aLeft ) // these defi
     CacheB = NULL;
 }
 
-MappingCache * MappingEngine::RebuildCache( string aContigIdent, int lStartingIndex )
-{
-	long lStartingPos = mMappingIndexes[aContigIdent][ lStartingIndex ];
+MappingCache * MappingEngine::RebuildCache( string aContigIdent, int lStartingWindowIndex )
+{  
+  long lStartingPos = mMappingIndexes[aContigIdent][ lStartingWindowIndex ];  
 
   if ( lStartingPos == -1 ) // there's no cache here
   {
     return BuildEmptyCache( 
       aContigIdent, 
-      lStartingIndex * IndexIncrement, 
-      ( lStartingIndex * IndexIncrement ) + IndexIncrement - 1 );
+      lStartingWindowIndex * IndexIncrement, 
+      ( lStartingWindowIndex * IndexIncrement ) + IndexIncrement - 1 );
   }
 
 	long lCount = -1;
-  if ( lStartingIndex + 1 < mMappingIndexes[ aContigIdent ].size() )
+  if ( lStartingWindowIndex + 1 < mMappingIndexes[ aContigIdent ].size() )
   {
-    for ( int i = lStartingIndex + 1; i < mMappingIndexes[ aContigIdent ].size(); i++ )
+    for ( int i = lStartingWindowIndex + 1; i < mMappingIndexes[ aContigIdent ].size(); i++ )
     {
       if ( mMappingIndexes[ aContigIdent ][ i ] > -1 )
       {
@@ -319,8 +325,8 @@ MappingCache * MappingEngine::RebuildCache( string aContigIdent, int lStartingIn
   lStream.seekg( lStartingPos );
   lStream.read( lBlock, lCount );
   lBlock[ lCount ] = 0; // impose our own null termination
-  
-  MappingCache * lCache = BuildCache( lBlock, aContigIdent, lStartingIndex * IndexIncrement, ( ( lStartingIndex + 1 ) * IndexIncrement ) - 1 );
+
+  MappingCache * lCache = BuildCache( lBlock, aContigIdent, lStartingWindowIndex * IndexIncrement, ( ( lStartingWindowIndex + 1 ) * IndexIncrement ) - 1 );
 
   delete [] lBlock;
   lStream.close();
@@ -332,7 +338,8 @@ MappingCache* MappingEngine::BuildEmptyCache( string aContigIdent, int aLeft, in
 {
   IndexedMappings * lMappings = new IndexedMappings();
 
-  for ( int i = aLeft; i <= aRight; i++ )
+  lMappings->reserve( aRight - aLeft ); // avoid dynamic reallocation.
+  for ( int i = aLeft; i <= aRight; i++ ) // do I need to do this, or just say resize()? What is the default value?
   {
     lMappings->push_back( Mappings() );
   }
@@ -353,18 +360,22 @@ MappingCache * MappingEngine::BuildCache( char * aBlock, string aContigIdent, in
 
   while ( lStream.peek() >= 0 )
   {
-    int lChar = lStream.peek();
     getline( lStream, lLine );
     if ( lLine.length() < 1 )
       break;
 
     int lIndex = GetIndex( lLine );
+    if ( lIndex < aLeft ) {	// @CTB may only need to check for first pass?
+      break; // @RCK this should never happen. Investigate further.
+    }
+
     int lPrivateIndex = lIndex - aLeft;
    
     string lSeq = GetSequence( lLine );
     string lName = GetName( lLine );
 
-    lCache->IndexedReads->at(lPrivateIndex).push_back( new Mapping(lName, lIndex, new Sequence( lSeq ) ) );
+    lCache->IndexedReads->at(lPrivateIndex).push_back( 
+      new Mapping( lName, lIndex, new Sequence( lSeq ) ) );
   }
 
   return lCache;

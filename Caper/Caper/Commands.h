@@ -8,7 +8,7 @@ class Commands
   static const char Colon = ':';
 
 private:
-  bool ParseReadCommand(string & aLine, Sequences & aReferenceGenome, MappingEngine * aMappingEngine );
+  bool ParseReadCommand(string & aLine, Sequences * aReferenceGenome, MappingEngine * aMappingEngine );
 
 public:
   enum Actions
@@ -25,5 +25,5 @@ public:
   long Right;
   bool PrettyMode;
 public:
-  bool ProcessArguments(string & aLine, Sequences & aReferenceGenome, MappingEngine * aMappingEngine );
+  bool ProcessArguments(string & aLine, Sequences * aReferenceGenome, MappingEngine * aMappingEngine );
 };

@@ -5,7 +5,7 @@
 class BowtieMappingEngine : public MappingEngine, public BowtieMappingUtilities
 {
 public:
-  BowtieMappingEngine( string & aPath, Sequences & aReferenceGenome );
+  BowtieMappingEngine( string aPath, Sequences * aReferenceGenome );
 
 	string GetSequence( string & aLine );
   int GetIndex( string & aLine );   

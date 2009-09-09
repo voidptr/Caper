@@ -35,7 +35,7 @@ protected:
   virtual string GetContigIdent( string & aLine ) = 0;
 
 public:
-  MappingsPreparer(string & aPath);
+  MappingsPreparer(string aPath);
   string PrepareMappings();
 };
 
