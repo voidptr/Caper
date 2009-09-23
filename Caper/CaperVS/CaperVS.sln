@@ -5,8 +5,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Caper", "..\Caper\Caper.vcp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaperSharp", "..\CaperSharp\CaperSharp.csproj", "{695A4957-2784-405A-86F0-7E64DC133BD9}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tests", "Tests\Tests.vcproj", "{37E396BE-9763-45FB-BF4A-63B86A6DED04}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,16 +35,6 @@ Global
 		{695A4957-2784-405A-86F0-7E64DC133BD9}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{695A4957-2784-405A-86F0-7E64DC133BD9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{695A4957-2784-405A-86F0-7E64DC133BD9}.Release|Win32.ActiveCfg = Release|Any CPU
-		{37E396BE-9763-45FB-BF4A-63B86A6DED04}.Debug|Any CPU.ActiveCfg = Debug|Win32
-		{37E396BE-9763-45FB-BF4A-63B86A6DED04}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
-		{37E396BE-9763-45FB-BF4A-63B86A6DED04}.Debug|Mixed Platforms.Build.0 = Debug|Win32
-		{37E396BE-9763-45FB-BF4A-63B86A6DED04}.Debug|Win32.ActiveCfg = Debug|Win32
-		{37E396BE-9763-45FB-BF4A-63B86A6DED04}.Debug|Win32.Build.0 = Debug|Win32
-		{37E396BE-9763-45FB-BF4A-63B86A6DED04}.Release|Any CPU.ActiveCfg = Release|Win32
-		{37E396BE-9763-45FB-BF4A-63B86A6DED04}.Release|Mixed Platforms.ActiveCfg = Release|Win32
-		{37E396BE-9763-45FB-BF4A-63B86A6DED04}.Release|Mixed Platforms.Build.0 = Release|Win32
-		{37E396BE-9763-45FB-BF4A-63B86A6DED04}.Release|Win32.ActiveCfg = Release|Win32
-		{37E396BE-9763-45FB-BF4A-63B86A6DED04}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

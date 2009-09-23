@@ -10,4 +10,6 @@ public:
   int virtual GetIndex( string & aLine );    
   string virtual GetName( string & aLine );
   string virtual GetContigIdent( string & aLine );	
+  string virtual GetStrand( string & aLine );	
+
 };

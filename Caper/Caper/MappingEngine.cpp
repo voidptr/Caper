@@ -27,6 +27,9 @@ void MappingEngine::Initialize( string aIndexPath )
 
   //PopulateContigBorders();
   ifstream lStream( aIndexPath.c_str(), ios::binary );
+  if ( !lStream.is_open() )
+    throw string("Could not open saved index file.");
+
   int lCount = 0;
   lStream >> lCount; // get the count of contigs as the first line.
   for (int i = 0; i < lCount; i++ )
@@ -77,6 +80,8 @@ void MappingEngine::SaveMappingIndex( string aSavePath )
   string lOutputFilename = aSavePath + "saved.index";
 
   ofstream lStream( lOutputFilename.c_str(), ios::binary );
+  if ( !lStream.is_open() )
+    throw string("Could not write to saved index file.");
 
   // saving the contig borders
   lStream << mContigBorders.size() << endl;
@@ -374,8 +379,20 @@ MappingCache * MappingEngine::BuildCache( char * aBlock, string aContigIdent, in
     string lSeq = GetSequence( lLine );
     string lName = GetName( lLine );
 
+    // This is probably not the right place for this, since, concievably, not all mapping
+    // types use +/- to denote strand. But where else to put, w/o making
+    // a global Orientation enum? This probably needs a neat namespace somewhere.
+    string lStrand = GetStrand( lLine );
+    Mapping::Orientation lOrientation;
+    if ( lStrand[0] == '+' )
+      lOrientation = Mapping::Orientation::PLUS;
+    else if ( lStrand[0] == '-' )
+      lOrientation = Mapping::Orientation::MINUS;
+    else 
+      throw string("Unsupported Orientation Type (not + or -)");
+
     lCache->IndexedReads->at(lPrivateIndex).push_back( 
-      new Mapping( lName, lIndex, new Sequence( lSeq ) ) );
+      new Mapping( lName, lIndex, new Sequence( lSeq ), lOrientation ) );
   }
 
   return lCache;

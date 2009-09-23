@@ -9,8 +9,13 @@ public:
   string Name;
 	int Index;
 	Sequence* mSequence;
+  enum Orientation
+  {
+    PLUS,
+    MINUS
+  } Strand;
 public:
-	Mapping(string & aName, int & aPosition, Sequence* aSequence);
+	Mapping(string & aName, int & aPosition, Sequence* aSequence, Orientation aStrand);
   Mapping( Mapping & aMapping );
 	~Mapping(void);
 
