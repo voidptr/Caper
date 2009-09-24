@@ -1,6 +1,7 @@
 #pragma once
 
 #include "MappingCache.h"
+#include "Mapping.h"
 
 class MappingEngine
 {

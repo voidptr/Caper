@@ -385,9 +385,9 @@ MappingCache * MappingEngine::BuildCache( char * aBlock, string aContigIdent, in
     string lStrand = GetStrand( lLine );
     Mapping::Orientation lOrientation;
     if ( lStrand[0] == '+' )
-      lOrientation = Mapping::Orientation::PLUS;
+      lOrientation = Mapping::PLUS;
     else if ( lStrand[0] == '-' )
-      lOrientation = Mapping::Orientation::MINUS;
+      lOrientation = Mapping::MINUS;
     else 
       throw string("Unsupported Orientation Type (not + or -)");
 
