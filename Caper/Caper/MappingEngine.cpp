@@ -1,16 +1,4 @@
 #include "MappingEngine.h"
-#include "Typedefs.h" // DEV Intellisense
-#include <sstream>
-#include <iostream>
-
-MappingEngine::MappingEngine(string aPath, Sequences & aReferenceGenome)
-{
-	ReferenceGenome = &aReferenceGenome;
-	mPath = aPath;
-
-  CacheA = NULL;
-  CacheB = NULL;
-}
 
 MappingEngine::MappingEngine(string aPath, Sequences * aReferenceGenome)
 {
@@ -69,6 +57,8 @@ void MappingEngine::Initialize( string aIndexPath )
 
     NumberOfReads.insert( pair<string, int>( lContigIdent, lReadCount ) );   
     mMappingIndexes.insert( pair<string, vector<long> >( lContigIdent, vector<long>() ) );
+
+    mMappingIndexes[ lContigIdent ].reserve( lWindowsCount ); // preallocate the vector.
 
     for (int j = 0; j < lWindowsCount; j++ )
     {
@@ -205,6 +195,7 @@ void MappingEngine::PopulateMappingIndex()
       lTargetIndex = 0;
       lContig = lCurrentContig;
       mMappingIndexes.insert( pair<string, vector<long> >( lContig, vector<long>() ) );
+      mMappingIndexes[ lContig ].reserve( mNumberOfWindows[ lContig ] );
     }
 
     if ( lCurrentIndex >= lTargetIndex )
@@ -224,6 +215,12 @@ void MappingEngine::PopulateMappingIndex()
   NumberOfReads.insert( pair<string, int>( lContig, lReadCount ) ); // close up the last contig read count
 
   lStream.close();
+
+  // fill in -1s for the empty sections that may be at the end.
+  for (int i = mMappingIndexes[ lContig ].size(); i < mNumberOfWindows[ lContig ]; ++i )
+  {
+    mMappingIndexes[ lContig ].push_back( -1 ); // empty sections at the tail end.
+  }
 }
 
 Mappings * MappingEngine::GetReads(string lContigIdent, int aLeft, int aRight )
@@ -294,29 +291,22 @@ void MappingEngine::RebuildCaches(string aContigIdent, int aLeft ) // these defi
     CacheB = NULL;
 }
 
-MappingCache * MappingEngine::RebuildCache( string aContigIdent, int lStartingIndex )
-{
-  // @CTB fix for problem where .size() was < lStartingIndex.
-  long lStartingPos;
-  if (mMappingIndexes[aContigIdent].size() <= lStartingIndex) {
-    lStartingPos = -1;
-  }
-  else {
-    lStartingPos = mMappingIndexes[aContigIdent][ lStartingIndex ];
-  }
+MappingCache * MappingEngine::RebuildCache( string aContigIdent, int lStartingWindowIndex )
+{  
+  long lStartingPos = mMappingIndexes[aContigIdent][ lStartingWindowIndex ];  
 
   if ( lStartingPos == -1 ) // there's no cache here
   {
     return BuildEmptyCache( 
       aContigIdent, 
-      lStartingIndex * IndexIncrement, 
-      ( lStartingIndex * IndexIncrement ) + IndexIncrement - 1 );
+      lStartingWindowIndex * IndexIncrement, 
+      ( lStartingWindowIndex * IndexIncrement ) + IndexIncrement - 1 );
   }
 
 	long lCount = -1;
-  if ( lStartingIndex + 1 < mMappingIndexes[ aContigIdent ].size() )
+  if ( lStartingWindowIndex + 1 < mMappingIndexes[ aContigIdent ].size() )
   {
-    for ( int i = lStartingIndex + 1; i < mMappingIndexes[ aContigIdent ].size(); i++ )
+    for ( int i = lStartingWindowIndex + 1; i < mMappingIndexes[ aContigIdent ].size(); i++ )
     {
       if ( mMappingIndexes[ aContigIdent ][ i ] > -1 )
       {
@@ -336,7 +326,7 @@ MappingCache * MappingEngine::RebuildCache( string aContigIdent, int lStartingIn
   lStream.read( lBlock, lCount );
   lBlock[ lCount ] = 0; // impose our own null termination
 
-  MappingCache * lCache = BuildCache( lBlock, aContigIdent, lStartingIndex * IndexIncrement, ( ( lStartingIndex + 1 ) * IndexIncrement ) - 1 );
+  MappingCache * lCache = BuildCache( lBlock, aContigIdent, lStartingWindowIndex * IndexIncrement, ( ( lStartingWindowIndex + 1 ) * IndexIncrement ) - 1 );
 
   delete [] lBlock;
   lStream.close();
@@ -348,7 +338,8 @@ MappingCache* MappingEngine::BuildEmptyCache( string aContigIdent, int aLeft, in
 {
   IndexedMappings * lMappings = new IndexedMappings();
 
-  for ( int i = aLeft; i <= aRight; i++ )
+  lMappings->reserve( aRight - aLeft ); // avoid dynamic reallocation.
+  for ( int i = aLeft; i <= aRight; i++ ) // do I need to do this, or just say resize()? What is the default value?
   {
     lMappings->push_back( Mappings() );
   }
@@ -369,14 +360,13 @@ MappingCache * MappingEngine::BuildCache( char * aBlock, string aContigIdent, in
 
   while ( lStream.peek() >= 0 )
   {
-    int lChar = lStream.peek();	// @CTB what does this do?
     getline( lStream, lLine );
     if ( lLine.length() < 1 )
       break;
 
     int lIndex = GetIndex( lLine );
     if ( lIndex < aLeft ) {	// @CTB may only need to check for first pass?
-      break;
+      break; // @RCK this should never happen. Investigate further.
     }
 
     int lPrivateIndex = lIndex - aLeft;
@@ -384,8 +374,8 @@ MappingCache * MappingEngine::BuildCache( char * aBlock, string aContigIdent, in
     string lSeq = GetSequence( lLine );
     string lName = GetName( lLine );
 
-    Mapping * m = new Mapping( lName, lIndex, new Sequence( lSeq ) );
-    lCache->IndexedReads->at(lPrivateIndex).push_back( m );
+    lCache->IndexedReads->at(lPrivateIndex).push_back( 
+      new Mapping( lName, lIndex, new Sequence( lSeq ) ) );
   }
 
   return lCache;

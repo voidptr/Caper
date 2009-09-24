@@ -1,12 +1,12 @@
 #include "MapviewMappingEngine.h"
 
-MapviewMappingEngine::MapviewMappingEngine(string & aPath, Sequences & aGenome) 
+MapviewMappingEngine::MapviewMappingEngine(string aPath, Sequences * aGenome) 
 : MappingEngine(aPath, aGenome), MapviewMappingUtilities()
 {
 }
 
 MapviewMappingEngine::MapviewMappingEngine( char * aPath, SequenceEngine * lMappingEngine ) :
-  MappingEngine(string(aPath), &(lMappingEngine->mSequences)),
+  MappingEngine(string(aPath), lMappingEngine->mSequences),
   MapviewMappingUtilities()
 {
 }

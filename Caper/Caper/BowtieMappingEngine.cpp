@@ -1,6 +1,6 @@
 #include "BowtieMappingEngine.h"
 
-BowtieMappingEngine::BowtieMappingEngine(string & aPath, Sequences & aGenome) 
+BowtieMappingEngine::BowtieMappingEngine(string aPath, Sequences * aGenome) 
 : MappingEngine(aPath, aGenome), BowtieMappingUtilities()
 {
 }

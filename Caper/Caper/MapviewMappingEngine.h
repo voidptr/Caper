@@ -6,7 +6,7 @@
 class MapviewMappingEngine : public MappingEngine, public MapviewMappingUtilities
 {
 public:
-  MapviewMappingEngine( string & aPath, Sequences & aReferenceGenome );
+  MapviewMappingEngine( string aPath, Sequences * aReferenceGenome );
   MapviewMappingEngine( char * aPath, SequenceEngine * lMappingEngine );
 
   string GetSequence( string & aLine );

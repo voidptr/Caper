@@ -1,6 +1,6 @@
 #include "Commands.h"
 
-bool Commands::ProcessArguments(string & aLine, Sequences & aReferenceGenome, MappingEngine * aMappingEngine )
+bool Commands::ProcessArguments(string & aLine, Sequences * aReferenceGenome, MappingEngine * aMappingEngine )
 {
   /*if ( aLine == "help" )  
     Action = HELP;  
@@ -20,7 +20,7 @@ bool Commands::ProcessArguments(string & aLine, Sequences & aReferenceGenome, Ma
   return true;
 }
 
-bool Commands::ParseReadCommand(string & aLine, Sequences & aReferenceGenome, MappingEngine * aMappingEngine )
+bool Commands::ParseReadCommand(string & aLine, Sequences * aReferenceGenome, MappingEngine * aMappingEngine )
 {
   PrettyMode = false;
   Left = -1;
@@ -67,13 +67,13 @@ bool Commands::ParseReadCommand(string & aLine, Sequences & aReferenceGenome, Ma
     return false;
   }
 
-  if ( aReferenceGenome.find( ContigIdent ) == aReferenceGenome.end() )
+  if ( aReferenceGenome->find( ContigIdent ) == aReferenceGenome->end() )
   {
     cerr << "ContigID defined not found in reference genome." << endl;
     return false;
   }
 
-  if ( Right > aReferenceGenome[ ContigIdent ]->Length )
+  if ( Right > (*aReferenceGenome)[ ContigIdent ]->Length )
   {
     cerr << "Right parameter is greater than contig length." << endl;
     return false;

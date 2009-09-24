@@ -95,11 +95,14 @@ void Caper::UserInterface(int argc, char * const argv[] )
           cout << PadLeft( lMappingEngine->ReadLength ) << PadLeft( lCommands.Right - lCommands.Left, "*") << endl;
 
           string lGenome = "";
+
+          Sequence * lContig = (*lSequenceEngine->mSequences)[ lCommands.ContigIdent ];
+
           int lTargetGenomeWidth = lCommands.Right - lCommands.Left + 1 + lMappingEngine->ReadLength;
-          if ( lTargetGenomeWidth < lSequenceEngine->mSequences[ lCommands.ContigIdent ]->Length )
-            lGenome = lSequenceEngine->mSequences[ lCommands.ContigIdent ]->Substring( lCommands.Left, lTargetGenomeWidth );
+          if ( lTargetGenomeWidth < lContig->Length )
+            lGenome = lContig->Substring( lCommands.Left, lTargetGenomeWidth );
           else
-            lGenome = lSequenceEngine->mSequences[ lCommands.ContigIdent ]->Substring( lCommands.Left );
+            lGenome = lContig->Substring( lCommands.Left );
 
           cout << lGenome << endl; 
 

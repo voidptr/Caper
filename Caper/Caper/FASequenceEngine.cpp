@@ -1,6 +1,6 @@
 #include "FASequenceEngine.h"
 
-FASequenceEngine::FASequenceEngine(string & aPath) : SequenceEngine(aPath) {}
+FASequenceEngine::FASequenceEngine(string & aPath) : SequenceEngine(aPath) { }
 
 FASequenceEngine::FASequenceEngine(char * aPath) : SequenceEngine(string(aPath)) { }
 
@@ -22,7 +22,7 @@ void FASequenceEngine::Initialize( string aIndexPath )
     lIndexStream >> lCount;
 
     Sequence * lSeq = new Sequence( mPath, lLocusStart, lCount );
-    mSequences.insert( SequencePair( lLocus, lSeq ) );
+    mSequences->insert( SequencePair( lLocus, lSeq ) );
   }
 
   lIndexStream.close();
@@ -58,7 +58,7 @@ void FASequenceEngine::Initialize()
         {
           lOutStream << NewLine;
           Sequence * lSeq = new Sequence( lTmpFilePath, lLocusStart, lCount );
-          mSequences.insert( SequencePair (lLocus, lSeq ) );
+          mSequences->insert( SequencePair (lLocus, lSeq ) );
           lCount++;
         }
         
@@ -84,7 +84,7 @@ void FASequenceEngine::Initialize()
 
   Sequence * lSeq = new Sequence( lTmpFilePath, lLocusStart, lCount );
           
-  mSequences.insert( SequencePair( lLocus, lSeq ) );
+  mSequences->insert( SequencePair( lLocus, lSeq ) );
 
   lStream.close();
 }
@@ -96,10 +96,10 @@ void FASequenceEngine::SaveIndex( string aSavePath )
 
   ofstream lIndexStream( lSavedIndexFile.c_str(), ios::binary );
 
-  lIndexStream << mSequences.size() << endl;
+  lIndexStream << mSequences->size() << endl;
 
   Sequences::iterator lSeqIterator;
-  for (lSeqIterator = mSequences.begin(); lSeqIterator != mSequences.end(); lSeqIterator++ )
+  for (lSeqIterator = mSequences->begin(); lSeqIterator != mSequences->end(); lSeqIterator++ )
   {
     lIndexStream << lSeqIterator->first << Tab << lSeqIterator->second->mPosition << Tab << lSeqIterator->second->Length << endl;
   }
