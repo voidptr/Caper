@@ -1,9 +1,4 @@
 *.pyc
-Caper
-short
-build
-caper.cpp
-caper.so
 *_screed
 *.pureseq
 *.prepared
