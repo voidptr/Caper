@@ -1,6 +1,7 @@
 #pragma once
 
 #include "MappingCache.h"
+#include "Mapping.h"
 
 class MappingEngine
 {
@@ -37,6 +38,7 @@ private:
 	virtual int GetIndex( string & aLine ) = 0;
   virtual string GetName( string & aLine ) = 0;
 	virtual string GetContigIdent( string & aLine ) = 0;
+  virtual string GetStrand( string & aLine ) = 0;
 
 public:
 	map<string, int> NumberOfReads;

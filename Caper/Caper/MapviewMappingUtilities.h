@@ -6,8 +6,9 @@
 class MapviewMappingUtilities : public MappingUtilities
 {
 public:	
-	string GetSequence( string & aLine );
-  int GetIndex( string & aLine );    
+	string virtual GetSequence( string & aLine );
+  int virtual GetIndex( string & aLine );    
   string virtual GetName( string & aLine );
-  string GetContigIdent( string & aLine );	
+  string virtual GetContigIdent( string & aLine );	
+  string virtual GetStrand( string & aLine );	
 };

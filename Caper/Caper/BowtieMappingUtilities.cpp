@@ -19,3 +19,8 @@ string BowtieMappingUtilities::GetName( string & aLine )
 {
 	return GetLinePieces( aLine )[0];
 }
+
+string BowtieMappingUtilities::GetStrand( string & aLine )
+{
+  return GetLinePieces( aLine )[1];
+}

@@ -24,3 +24,8 @@ string BowtieMappingEngine::GetSequence( string & aLine )
 {
   return BowtieMappingUtilities::GetSequence(aLine);
 }
+
+string BowtieMappingEngine::GetStrand( string & aLine )
+{
+  return BowtieMappingUtilities::GetStrand(aLine);
+}

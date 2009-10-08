@@ -31,3 +31,8 @@ string MapviewMappingEngine::GetSequence( string & aLine )
 {
   return MapviewMappingUtilities::GetSequence(aLine);
 }
+
+string MapviewMappingEngine::GetStrand( string & aLine )
+{
+  return MapviewMappingUtilities::GetStrand(aLine);
+}
