@@ -3,7 +3,7 @@
 
 MappingsPreparer::MappingsPreparer(string aPath)
 {
-  mPath = aPath;
+  mPath = aPath;  
 }
 
 string MappingsPreparer::PrepareMappings()
@@ -53,24 +53,56 @@ bool MappingsPreparer::IsSorted()
 
 vector<string>* MappingsPreparer::ReadAllLines()
 {
+  //char stime[9];
+
   ifstream lStream( mPath.c_str() );
 
-  vector<string> * lList = new vector<string>();
 
-  while (lStream.peek() > -1 )
+  if ( lStream.is_open() && lStream.peek() > -1 )
   {
-    string lLine;
-    getline( lStream, lLine );
+    //// DEBUG
+    //_strtime( stime );
+    //cout << stime << endl;
+    //// END DEBUG
 
-    lList->push_back( lLine );
+    string lFirstLine;
+    getline( lStream, lFirstLine );
+    lStream.seekg(0, ios_base::end);
+    int lApproximateLines = lStream.tellg() / lFirstLine.length();
+    vector<string> * lList = new vector<string>();
+    lList->reserve( lApproximateLines );
+    lStream.seekg(0, ios_base::beg );
+
+    string lLine;
+    while (lStream.peek() > -1 )
+    {      
+      getline( lStream, lLine );
+
+      lList->push_back( lLine );
+    }
+
+    lStream.close();
+
+    //// DEBUG
+    //_strtime( stime );
+    //cout << stime << endl;
+    //// END DEBUG
+
+    return lList;
+  }
+  else
+  {
+    throw string("Could not open mapping file.");
   }
 
-  lStream.close();
-  return lList;
+  
+
 }
 string MappingsPreparer::SortMappingsAndWriteToTmpFile()
 {
   vector<string> * lMappings = ReadAllLines();
+
+  //SeparateByContigs( lMappings );
 
   cout << " Sorting " << lMappings->size() << " mappings... " ;
   cout.flush();
@@ -87,6 +119,29 @@ string MappingsPreparer::SortMappingsAndWriteToTmpFile()
   cout << "Done!" << endl;
 
   return lFilename;  
+}
+
+bool MappingsPreparer::SeparateByContigs( vector<string> * aMappings )
+{
+  map<string, vector<string>*> lContigMappings;
+  map<string, vector<string>*>::iterator lIterator;
+  
+
+  for (vector<string>::iterator i = aMappings->begin(); i != aMappings->end(); ++i )
+  {    
+    string lContigIdent = GetContigIdent( *i );
+
+    lIterator = lContigMappings.find( lContigIdent );
+
+    if ( lIterator == lContigMappings.end() )
+    {
+      lContigMappings.insert( pair<string, vector<string>*>(lContigIdent, new vector<string>()) );
+      lIterator = lContigMappings.find( lContigIdent );      
+    }
+    lIterator->second->push_back( *i );
+  }
+
+  return true;
 }
 
 bool MappingsPreparer::LessThanMappingLine( string & aLeft, string & aRight )

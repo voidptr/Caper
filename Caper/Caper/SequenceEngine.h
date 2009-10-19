@@ -11,6 +11,7 @@ protected:
 
 public:
   Sequences * mSequences;
+  vector<string> * mContigs;
 public:
   SequenceEngine(string aPath);
   ~SequenceEngine(void);

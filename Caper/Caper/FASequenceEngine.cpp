@@ -23,7 +23,10 @@ void FASequenceEngine::Initialize( string aIndexPath )
 
     Sequence * lSeq = new Sequence( mPath, lLocusStart, lCount );
     mSequences->insert( SequencePair( lLocus, lSeq ) );
+    mContigs->push_back( lLocus );
   }
+
+  sort( mContigs->begin(), mContigs->end() );
 
   lIndexStream.close();
 }
@@ -59,6 +62,7 @@ void FASequenceEngine::Initialize()
           lOutStream << NewLine;
           Sequence * lSeq = new Sequence( lTmpFilePath, lLocusStart, lCount );
           mSequences->insert( SequencePair (lLocus, lSeq ) );
+          mContigs->push_back( lLocus );
           lCount++;
         }
         
@@ -85,6 +89,9 @@ void FASequenceEngine::Initialize()
   Sequence * lSeq = new Sequence( lTmpFilePath, lLocusStart, lCount );
           
   mSequences->insert( SequencePair( lLocus, lSeq ) );
+  mContigs->push_back( lLocus );
+
+  sort( mContigs->begin(), mContigs->end() );
 
   lStream.close();
 }

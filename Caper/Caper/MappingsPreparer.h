@@ -10,7 +10,7 @@ private:
   static const char Tab = '\t';
   static const char NewLine = '\n';
 
-  string mPath;
+  string mPath;  
 
   class SortMapping
   {
@@ -28,6 +28,7 @@ private:
   vector<string> * ReadAllLines();
   void WriteAllLines( vector<string>* aMappingsFile, string & aFilename );
   string SortMappingsAndWriteToTmpFile();  
+  bool SeparateByContigs( vector<string> * aMappings );
   bool LessThanMappingLine( string & aLeft, string & aRight );
 
 protected:

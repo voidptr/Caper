@@ -2,6 +2,8 @@
 #include "SequenceEngine.h"
 #include "Typedefs.h"
 
+#include <algorithm>
+
 class FASequenceEngine :
   public SequenceEngine
 {
