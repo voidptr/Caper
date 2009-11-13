@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="Caper"
-	ProjectGUID="{F75A21A2-E0A5-4DDE-86D0-8E6D646D844F}"
-	RootNamespace="Caper"
+	Name="CaperBenchmarks"
+	ProjectGUID="{8DD9E2CD-8BFB-4E4D-A236-84FDBF26ED99}"
+	RootNamespace="CaperBenchmarks"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -20,7 +20,7 @@
 			Name="Debug|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="4"
+			ConfigurationType="1"
 			CharacterSet="1"
 			>
 			<Tool
@@ -41,6 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
+				AdditionalIncludeDirectories="&quot;D:\Personal - Local\Personal Code Projects - Local\capergithub\Caper\Caper\Caper&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -59,10 +60,17 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLibrarianTool"
+				Name="VCLinkerTool"
+				LinkIncremental="2"
+				GenerateDebugInformation="true"
+				SubSystem="1"
+				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -72,6 +80,9 @@
 			/>
 			<Tool
 				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -153,130 +164,42 @@
 		</Configuration>
 	</Configurations>
 	<References>
+		<ProjectReference
+			ReferencedProjectIdentifier="{F75A21A2-E0A5-4DDE-86D0-8E6D646D844F}"
+			RelativePathToProject="..\Caper\Caper.vcproj"
+		/>
 	</References>
 	<Files>
 		<File
-			RelativePath=".\BowtieMappingEngine.cpp"
+			RelativePath=".\Arguments.cpp"
 			>
 		</File>
 		<File
-			RelativePath=".\BowtieMappingEngine.h"
+			RelativePath=".\Arguments.h"
 			>
 		</File>
 		<File
-			RelativePath=".\BowtieMappingsPreparer.cpp"
+			RelativePath=".\CaperBenchmarks.cpp"
 			>
 		</File>
 		<File
-			RelativePath=".\BowtieMappingsPreparer.h"
+			RelativePath=".\CaperBenchmarks.h"
 			>
 		</File>
 		<File
-			RelativePath=".\BowtieMappingUtilities.cpp"
+			RelativePath=".\Commands.cpp"
 			>
 		</File>
 		<File
-			RelativePath=".\BowtieMappingUtilities.h"
+			RelativePath=".\Commands.h"
 			>
 		</File>
 		<File
-			RelativePath=".\FASequenceEngine.cpp"
+			RelativePath=".\Main.cpp"
 			>
 		</File>
 		<File
-			RelativePath=".\FASequenceEngine.h"
-			>
-		</File>
-		<File
-			RelativePath=".\Mapping.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\Mapping.h"
-			>
-		</File>
-		<File
-			RelativePath=".\MappingCache.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\MappingCache.h"
-			>
-		</File>
-		<File
-			RelativePath=".\MappingEngine.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\MappingEngine.h"
-			>
-		</File>
-		<File
-			RelativePath=".\MappingsPreparer.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\MappingsPreparer.h"
-			>
-		</File>
-		<File
-			RelativePath=".\MappingUtilities.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\MappingUtilities.h"
-			>
-		</File>
-		<File
-			RelativePath=".\MapviewMappingEngine.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\MapviewMappingEngine.h"
-			>
-		</File>
-		<File
-			RelativePath=".\MapviewMappingsPreparer.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\MapviewMappingsPreparer.h"
-			>
-		</File>
-		<File
-			RelativePath=".\MapviewMappingUtilities.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\MapviewMappingUtilities.h"
-			>
-		</File>
-		<File
-			RelativePath=".\README.txt"
-			>
-		</File>
-		<File
-			RelativePath=".\Sequence.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\Sequence.h"
-			>
-		</File>
-		<File
-			RelativePath=".\SequenceEngine.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\SequenceEngine.h"
-			>
-		</File>
-		<File
-			RelativePath=".\SequenceReader.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\SequenceReader.h"
+			RelativePath=".\ReadMe.txt"
 			>
 		</File>
 		<File
@@ -284,7 +207,11 @@
 			>
 		</File>
 		<File
-			RelativePath=".\Typedefs.h"
+			RelativePath=".\XGetopt.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\XGetopt.h"
 			>
 		</File>
 	</Files>

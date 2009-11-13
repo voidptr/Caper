@@ -1,6 +1,4 @@
-// Caper.cpp : Defines the entry point for the console application.
-//
-
+// CaperUI.cpp : main project file.
 #include "Caper.h"
 
 class Caper;

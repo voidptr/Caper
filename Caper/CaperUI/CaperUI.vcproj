@@ -2,10 +2,10 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="Caper"
-	ProjectGUID="{F75A21A2-E0A5-4DDE-86D0-8E6D646D844F}"
-	RootNamespace="Caper"
-	Keyword="Win32Proj"
+	Name="CaperUI"
+	ProjectGUID="{20C91EEC-6DC8-4B20-98C6-6A94FB2BF101}"
+	RootNamespace="CaperUI"
+	Keyword="ManagedCProj"
 	TargetFrameworkVersion="196613"
 	>
 	<Platforms>
@@ -20,8 +20,9 @@
 			Name="Debug|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="4"
+			ConfigurationType="1"
 			CharacterSet="1"
+			ManagedExtensions="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -41,13 +42,13 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
-				MinimalRebuild="true"
-				BasicRuntimeChecks="3"
+				AdditionalIncludeDirectories="&quot;C:\Documents and Settings\James T. Kirk\My Documents\capergithub\Caper\Caper\Caper&quot;"
+				AdditionalUsingDirectories=""
+				PreprocessorDefinitions="WIN32;_DEBUG"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				DebugInformationFormat="4"
+				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -59,10 +60,18 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLibrarianTool"
+				Name="VCLinkerTool"
+				AdditionalDependencies="$(NoInherit)"
+				LinkIncremental="2"
+				GenerateDebugInformation="true"
+				AssemblyDebug="1"
+				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -74,6 +83,9 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
@@ -83,6 +95,7 @@
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="1"
+			ManagedExtensions="1"
 			WholeProgramOptimization="1"
 			>
 			<Tool
@@ -102,12 +115,9 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="2"
-				EnableIntrinsicFunctions="true"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
+				PreprocessorDefinitions="WIN32;NDEBUG"
 				RuntimeLibrary="2"
-				EnableFunctionLevelLinking="true"
-				UsePrecompiledHeader="0"
+				UsePrecompiledHeader="2"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 			/>
@@ -122,11 +132,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="$(NoInherit)"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
-				SubSystem="1"
-				OptimizeReferences="2"
-				EnableCOMDATFolding="2"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -153,102 +161,53 @@
 		</Configuration>
 	</Configurations>
 	<References>
+		<AssemblyReference
+			RelativePath="System.dll"
+			AssemblyName="System, Version=2.0.0.0, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL"
+			MinFrameworkVersion="131072"
+		/>
+		<AssemblyReference
+			RelativePath="System.Data.dll"
+			AssemblyName="System.Data, Version=2.0.0.0, PublicKeyToken=b77a5c561934e089, processorArchitecture=x86"
+			MinFrameworkVersion="131072"
+		/>
+		<AssemblyReference
+			RelativePath="System.XML.dll"
+			AssemblyName="System.Xml, Version=2.0.0.0, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL"
+			MinFrameworkVersion="131072"
+		/>
+		<ProjectReference
+			ReferencedProjectIdentifier="{F75A21A2-E0A5-4DDE-86D0-8E6D646D844F}"
+			RelativePathToProject="..\Caper\Caper.vcproj"
+		/>
 	</References>
 	<Files>
 		<File
-			RelativePath=".\BowtieMappingEngine.cpp"
+			RelativePath=".\Arguments.cpp"
 			>
 		</File>
 		<File
-			RelativePath=".\BowtieMappingEngine.h"
+			RelativePath=".\Arguments.h"
 			>
 		</File>
 		<File
-			RelativePath=".\BowtieMappingsPreparer.cpp"
+			RelativePath=".\Caper.cpp"
 			>
 		</File>
 		<File
-			RelativePath=".\BowtieMappingsPreparer.h"
+			RelativePath=".\Caper.h"
 			>
 		</File>
 		<File
-			RelativePath=".\BowtieMappingUtilities.cpp"
+			RelativePath=".\CaperUI.cpp"
 			>
 		</File>
 		<File
-			RelativePath=".\BowtieMappingUtilities.h"
+			RelativePath=".\Commands.cpp"
 			>
 		</File>
 		<File
-			RelativePath=".\FASequenceEngine.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\FASequenceEngine.h"
-			>
-		</File>
-		<File
-			RelativePath=".\Mapping.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\Mapping.h"
-			>
-		</File>
-		<File
-			RelativePath=".\MappingCache.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\MappingCache.h"
-			>
-		</File>
-		<File
-			RelativePath=".\MappingEngine.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\MappingEngine.h"
-			>
-		</File>
-		<File
-			RelativePath=".\MappingsPreparer.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\MappingsPreparer.h"
-			>
-		</File>
-		<File
-			RelativePath=".\MappingUtilities.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\MappingUtilities.h"
-			>
-		</File>
-		<File
-			RelativePath=".\MapviewMappingEngine.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\MapviewMappingEngine.h"
-			>
-		</File>
-		<File
-			RelativePath=".\MapviewMappingsPreparer.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\MapviewMappingsPreparer.h"
-			>
-		</File>
-		<File
-			RelativePath=".\MapviewMappingUtilities.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\MapviewMappingUtilities.h"
+			RelativePath=".\Commands.h"
 			>
 		</File>
 		<File
@@ -256,35 +215,15 @@
 			>
 		</File>
 		<File
-			RelativePath=".\Sequence.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\Sequence.h"
-			>
-		</File>
-		<File
-			RelativePath=".\SequenceEngine.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\SequenceEngine.h"
-			>
-		</File>
-		<File
-			RelativePath=".\SequenceReader.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\SequenceReader.h"
-			>
-		</File>
-		<File
 			RelativePath=".\stdafx.h"
 			>
 		</File>
 		<File
-			RelativePath=".\Typedefs.h"
+			RelativePath=".\XGetopt.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\XGetopt.h"
 			>
 		</File>
 	</Files>
