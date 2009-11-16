@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;D:\Personal - Local\Personal Code Projects - Local\capergithub\Caper\Caper\Caper&quot;"
+				AdditionalIncludeDirectories="&quot;C:\Documents and Settings\James T. Kirk\My Documents\capergithub\Caper\Caper\Caper&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -65,6 +65,7 @@
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="1"
+				Profile="true"
 			/>
 			<Tool
 				Name="VCALinkTool"

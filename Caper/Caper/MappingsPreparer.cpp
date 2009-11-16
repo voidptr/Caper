@@ -50,6 +50,23 @@ bool MappingsPreparer::IsSorted()
 
   return true;
 }
+vector<MappingIndex>* MappingsPreparer::InterpretMappingLines( vector<string>* aMappings )
+{
+	vector<MappingIndex> * lIndexes = new vector<MappingIndex>();
+	lIndexes->reserve( aMappings->size() );
+
+	int j = 0;
+	for (vector<string>::iterator i = aMappings->begin(); i != aMappings->end(); ++i, ++j )
+	{   
+		string lContig = GetContigIdent( *i );
+		int lIndex = GetIndex( *i );
+
+		lIndexes->push_back( MappingIndex( MappingKey( lContig, lIndex ), j ) );
+	}
+
+	return lIndexes;
+}
+
 
 vector<string>* MappingsPreparer::ReadAllLines()
 {
@@ -100,21 +117,42 @@ vector<string>* MappingsPreparer::ReadAllLines()
 }
 string MappingsPreparer::SortMappingsAndWriteToTmpFile()
 {
-  vector<string> * lMappings = ReadAllLines();
+	cout << " Reading mappings... " << endl ;
+  cout.flush();
 
-  //SeparateByContigs( lMappings );
+  vector<string> * lMappings = ReadAllLines();
 
   cout << " Sorting " << lMappings->size() << " mappings... " ;
   cout.flush();
 
-  sort( lMappings->begin(), lMappings->end(), SortMapping(this) );
+  vector<MappingIndex> * lMappingKeys = InterpretMappingLines( lMappings );
+
+  sort ( lMappingKeys->begin(), lMappingKeys->end(), SortMappingIndexes(this) );
+
+  vector<string> * lSortedMappingLines = new vector<string>();
+  lSortedMappingLines->reserve( lMappings->size() );
+
+  for ( vector<MappingIndex>::iterator i = lMappingKeys->begin(); i < lMappingKeys->end(); i++)
+  {
+	  lSortedMappingLines->push_back( lMappings->at( (*i).second ) );
+  }
+  
+
+
+  //SeparateByContigs( lMappings );
+
+
+
+  //sort( lMappings->begin(), lMappings->end(), SortMapping(this) );
 
   int lSlashPos = mPath.find_last_of('/'); // todo, finish separating the path here, and make it into the filename that gets saved.
 
   string lFilename = mPath + ".sorted";
-  WriteAllLines( lMappings, lFilename );
+  WriteAllLines( lSortedMappingLines, lFilename );
 
   delete lMappings;
+  delete lSortedMappingLines;
+  delete lMappingKeys;
 
   cout << "Done!" << endl;
 
@@ -158,6 +196,30 @@ bool MappingsPreparer::LessThanMappingLine( string & aLeft, string & aRight )
   {
     int lLeftIndex = GetIndex( aLeft );
     int lRightIndex = GetIndex( aRight );
+
+    if ( lLeftIndex < lRightIndex )
+      return true;    
+    else
+      return false;
+  }
+  else
+    return false;
+}
+
+bool MappingsPreparer::LessThanMappingIndex( MappingIndex & aLeft, MappingIndex & aRight )
+{
+	if ( aLeft.first.first == aRight.first.first && aLeft.first.second == aRight.first.second ) // if they are identical, woohoo!
+		return false;
+
+  string lLeftContig = aLeft.first.first;
+  string lRightContig = aRight.first.first;
+
+  if ( lLeftContig.compare( lRightContig ) < 0 )
+    return true;
+  else if ( lLeftContig == lRightContig )
+  {
+    int lLeftIndex = aLeft.first.second;
+    int lRightIndex = aRight.first.second;
 
     if ( lLeftIndex < lRightIndex )
       return true;    

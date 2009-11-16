@@ -2,25 +2,25 @@
 
 string MapviewMappingUtilities::GetContigIdent( string & aLine )
 {
-	return GetLinePieces( aLine )[1];	
+	return GetLineItem( 1, aLine );	
 }
 
 int MapviewMappingUtilities::GetIndex( string & aLine )
 {
-	return atoi( GetLinePieces( aLine )[2].c_str() ) - 1;
+	return atoi( GetLineItem( 2, aLine ).c_str() ) - 1;
 }
 
 string MapviewMappingUtilities::GetSequence( string & aLine )
 {
-	return GetLinePieces( aLine )[14];
+	return GetLineItem( 14, aLine );
 }
 
 string MapviewMappingUtilities::GetName( string & aLine )
 {
-	return GetLinePieces( aLine )[0];
+	return GetLineItem( 0, aLine );
 }
 
 string MapviewMappingUtilities::GetStrand( string & aLine )
 {
-  return GetLinePieces( aLine )[3];
+  return GetLineItem( 3, aLine );
 }

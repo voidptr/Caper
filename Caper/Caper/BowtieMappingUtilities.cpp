@@ -2,25 +2,25 @@
 
 string BowtieMappingUtilities::GetContigIdent( string & aLine )
 {
-	return GetLinePieces( aLine )[2];	
+	return GetLineItem( 2, aLine );	
 }
 
 int BowtieMappingUtilities::GetIndex( string & aLine )
 {
-	return atoi( GetLinePieces( aLine )[3].c_str() );
+	return atoi( GetLineItem( 3, aLine ).c_str() );
 }
 
 string BowtieMappingUtilities::GetSequence( string & aLine )
 {
-	return GetLinePieces( aLine )[4];
+	return GetLineItem( 4, aLine );
 }
 
 string BowtieMappingUtilities::GetName( string & aLine )
 {
-	return GetLinePieces( aLine )[0];
+	return GetLineItem( 0, aLine );
 }
 
 string BowtieMappingUtilities::GetStrand( string & aLine )
 {
-  return GetLinePieces( aLine )[1];
+  return GetLineItem( 1, aLine );
 }

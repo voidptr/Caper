@@ -1,5 +1,6 @@
 #pragma once
 #include "stdafx.h"
+#include "Typedefs.h"
 
 #include <algorithm>
 #include <time.h>
@@ -23,13 +24,26 @@ private:
     }
   };
 
+  class SortMappingIndexes
+  {
+    MappingsPreparer * mMappingsPrep;
+  public:
+    explicit SortMappingIndexes( MappingsPreparer * pf ) : mMappingsPrep(pf) {}
+    bool operator() (MappingIndex aLeft, MappingIndex aRight ) 
+    {
+      return mMappingsPrep->LessThanMappingIndex( aLeft, aRight );
+    }
+  };
+
 private:
   bool IsSorted();
+  vector<MappingIndex> * InterpretMappingLines( vector<string> * aMappings );
   vector<string> * ReadAllLines();
   void WriteAllLines( vector<string>* aMappingsFile, string & aFilename );
   string SortMappingsAndWriteToTmpFile();  
   bool SeparateByContigs( vector<string> * aMappings );
   bool LessThanMappingLine( string & aLeft, string & aRight );
+  bool LessThanMappingIndex( MappingIndex & aLeft, MappingIndex & aRight );
 
 protected:
   virtual int GetIndex( string & aLine ) = 0;
