@@ -117,12 +117,22 @@ vector<string>* MappingsPreparer::ReadAllLines()
 }
 string MappingsPreparer::SortMappingsAndWriteToTmpFile()
 {
+	char stime[9];
 	cout << " Reading mappings... " << endl ;
+  // DEBUG
+    _strtime( stime );
+    cout << stime << endl;
+    // END DEBUG
   cout.flush();
 
   vector<string> * lMappings = ReadAllLines();
 
   cout << " Sorting " << lMappings->size() << " mappings... " ;
+  
+  // DEBUG
+    _strtime( stime );
+    cout << stime << endl;
+    // END DEBUG
   cout.flush();
 
   vector<MappingIndex> * lMappingKeys = InterpretMappingLines( lMappings );
@@ -137,7 +147,10 @@ string MappingsPreparer::SortMappingsAndWriteToTmpFile()
 	  lSortedMappingLines->push_back( lMappings->at( (*i).second ) );
   }
   
-
+// DEBUG
+    _strtime( stime );
+    cout << stime << endl;
+    // END DEBUG
 
   //SeparateByContigs( lMappings );
 
@@ -155,6 +168,11 @@ string MappingsPreparer::SortMappingsAndWriteToTmpFile()
   delete lMappingKeys;
 
   cout << "Done!" << endl;
+
+  // DEBUG
+    _strtime( stime );
+    cout << stime << endl;
+    // END DEBUG
 
   return lFilename;  
 }
