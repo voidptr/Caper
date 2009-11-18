@@ -53,7 +53,7 @@ bool MappingsPreparer::IsSorted()
 
 vector<MappingIndex> * MappingsPreparer::ReadAndInterpretMappingLines()
 {
-  char stime[9];
+  time_t lSeconds;
   
   ifstream lStream( mPath.c_str(), ios::binary );
 
@@ -73,8 +73,8 @@ vector<MappingIndex> * MappingsPreparer::ReadAndInterpretMappingLines()
   multimap<string,MappingIndex> lContigs;
 
   // DEBUG
-  _strtime( stime );
-  cout << "Start Overall Operation" << stime << endl;
+  lSeconds = time( NULL );
+  cout << "Start Overall Operation: " << lSeconds << endl;
   // END DEBUG
 
   string lLine;
@@ -93,8 +93,8 @@ vector<MappingIndex> * MappingsPreparer::ReadAndInterpretMappingLines()
   }
 
   // DEBUG
-  _strtime( stime );
-  cout << "Start Multimap Subsorting" << stime << endl;
+  lSeconds = time( NULL );
+  cout << "Start Multimap Subsorting" << lSeconds << endl;
   // END DEBUG
 
   int lStart = 0;
@@ -108,8 +108,8 @@ vector<MappingIndex> * MappingsPreparer::ReadAndInterpretMappingLines()
     ii = lContigs.equal_range( i->first );
 
         // DEBUG
-    _strtime( stime );
-    cout << "Sorting contig " << i->first << " " << stime << endl;
+    lSeconds = time( NULL );
+    cout << "Sorting contig " << i->first << " " << lSeconds << endl;
     // END DEBUG
 
     int k = 0;
@@ -125,8 +125,8 @@ vector<MappingIndex> * MappingsPreparer::ReadAndInterpretMappingLines()
   }
 
   // DEBUG
-  _strtime( stime );
-  cout << "Finished overall sorting operation" << stime << endl;
+  lSeconds = time( NULL );
+  cout << "Finished overall sorting operation" << lSeconds << endl;
   // END DEBUG
 
   lStream.close();
@@ -135,10 +135,10 @@ vector<MappingIndex> * MappingsPreparer::ReadAndInterpretMappingLines()
 }
 string MappingsPreparer::SortMappingsAndWriteToTmpFile()
 {
-  char stime[9];
+  time_t lSeconds;
   // DEBUG
-  _strtime( stime );
-  cout << stime << endl;
+  lSeconds = time( NULL );
+  cout << lSeconds << endl;
   // END DEBUG
 
   cout << " Sorting mappings... " ;
@@ -147,13 +147,11 @@ string MappingsPreparer::SortMappingsAndWriteToTmpFile()
   vector<MappingIndex> * lMappingKeys = ReadAndInterpretMappingLines();
 
 
-
-  // DEBUG
-  _strtime( stime );
-  cout << stime << endl;
+   // DEBUG
+  lSeconds = time( NULL );
+  cout << lSeconds << endl;
   // END DEBUG
-
-  
+ 
  
   int lSlashPos = mPath.find_last_of('/'); // todo, finish separating the path here, and make it into the filename that gets saved.
 
@@ -165,10 +163,9 @@ string MappingsPreparer::SortMappingsAndWriteToTmpFile()
   cout << "Done!" << endl;
 
   // DEBUG
-  _strtime( stime );
-  cout << stime << endl;
+  lSeconds = time( NULL );
+  cout << lSeconds << endl;
   // END DEBUG
-
 
   return lFilename;  
 }

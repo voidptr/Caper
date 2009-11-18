@@ -24,3 +24,4 @@ string MapviewMappingUtilities::GetStrand( string & aLine )
 {
   return GetLineItem( 3, aLine );
 }
+

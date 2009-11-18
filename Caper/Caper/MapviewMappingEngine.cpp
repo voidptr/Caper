@@ -36,3 +36,4 @@ string MapviewMappingEngine::GetStrand( string & aLine )
 {
   return MapviewMappingUtilities::GetStrand(aLine);
 }
+
