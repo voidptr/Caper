@@ -4,6 +4,6 @@
 class MappingUtilities
 {	
 public:
-	vector<string> GetLinePieces( string & aLine );
-	string GetLineItem( int aIndex, string & aLine );
+	vector<string> GetLinePieces( string & aLine );		
+   string GetLineItem( int aIndex, string & aLine );
 };

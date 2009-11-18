@@ -13,17 +13,6 @@ private:
 
   string mPath;  
 
-  class SortMapping
-  {
-    MappingsPreparer * mMappingsPrep;
-  public:
-    explicit SortMapping( MappingsPreparer * pf) : mMappingsPrep(pf) {}
-    bool operator() (string aLeft, string aRight ) 
-    {
-      return mMappingsPrep->LessThanMappingLine( aLeft, aRight );
-    }
-  };
-
   class SortMappingIndexes
   {
     MappingsPreparer * mMappingsPrep;
@@ -36,13 +25,10 @@ private:
   };
 
 private:
-  bool IsSorted();
-  vector<MappingIndex> * InterpretMappingLines( vector<string> * aMappings );
-  vector<string> * ReadAllLines();
-  void WriteAllLines( vector<string>* aMappingsFile, string & aFilename );
-  string SortMappingsAndWriteToTmpFile();  
-  bool SeparateByContigs( vector<string> * aMappings );
-  bool LessThanMappingLine( string & aLeft, string & aRight );
+  bool IsSorted();  
+  vector<MappingIndex> * ReadAndInterpretMappingLines();  
+  void WriteAllLines( vector<MappingIndex> * aMappingKeys, string & aFilename );
+  string SortMappingsAndWriteToTmpFile();    
   bool LessThanMappingIndex( MappingIndex & aLeft, MappingIndex & aRight );
 
 protected:

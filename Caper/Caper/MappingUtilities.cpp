@@ -23,14 +23,14 @@ vector<string> MappingUtilities::GetLinePieces( string & aLine )
 
 string MappingUtilities::GetLineItem( int aIndex, string & aLine )
 {
-	string lBit;
-	istringstream lStream( aLine );
-	for (int i = 0; i <= aIndex; i++)
-	{
-		lBit = "";
-		lStream >> lBit;
-
-		assert( lBit.length() > 0 ); // line doesn't have enough elements
-	} 
-	return lBit;
+  string lBit;
+  istringstream lStream( aLine );
+  for (int i = 0; i <= aIndex; i++)
+  {
+    lBit = "";
+    lStream >> lBit;
+     
+    assert( lBit.length() > 0 ); // line doesn't have enough elements
+  }
+  return lBit;
 }

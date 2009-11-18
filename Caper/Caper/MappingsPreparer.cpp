@@ -18,7 +18,7 @@ bool MappingsPreparer::IsSorted()
 {
   cout << " Are mappings already sorted? ";
 
-  ifstream lStream( mPath.c_str() );
+  ifstream lStream( mPath.c_str(), ios::binary );
 
   if ( !lStream.is_open() )
     throw string("Could not open mappings file.");
@@ -50,178 +50,127 @@ bool MappingsPreparer::IsSorted()
 
   return true;
 }
-vector<MappingIndex>* MappingsPreparer::InterpretMappingLines( vector<string>* aMappings )
+
+vector<MappingIndex> * MappingsPreparer::ReadAndInterpretMappingLines()
 {
+  char stime[9];
+  
+  ifstream lStream( mPath.c_str(), ios::binary );
+
+  if ( !lStream.is_open() || lStream.peek() < 0 )
+    throw string("Could not open mapping file.");
+
+  // estimate the number of lines
+  string lFirstLine;
+  getline( lStream, lFirstLine );
+  lStream.seekg( 0, ios_base::end );
+  int lApproximateLines = lStream.tellg() / lFirstLine.length();
+  lStream.seekg( 0, ios_base::beg );
+
 	vector<MappingIndex> * lIndexes = new vector<MappingIndex>();
-	lIndexes->reserve( aMappings->size() );
+	lIndexes->reserve( lApproximateLines );
 
-	int j = 0;
-	for (vector<string>::iterator i = aMappings->begin(); i != aMappings->end(); ++i, ++j )
-	{   
-		string lContig = GetContigIdent( *i );
-		int lIndex = GetIndex( *i );
+  multimap<string,MappingIndex> lContigs;
 
-		lIndexes->push_back( MappingIndex( MappingKey( lContig, lIndex ), j ) );
-	}
+  // DEBUG
+  _strtime( stime );
+  cout << "Start Overall Operation" << stime << endl;
+  // END DEBUG
+
+  string lLine;
+  long lPos = -1;
+  while (lStream.peek() > -1 )
+  {      
+    lPos = lStream.tellg();
+    getline( lStream, lLine );
+
+    string lContig = GetContigIdent( lLine );
+    int lIndex = GetIndex( lLine );
+
+		//lIndexes->push_back( MappingIndex( MappingKey( lContig, lIndex ), lPos ) );  
+
+    lContigs.insert( pair<string,MappingIndex>( lContig, MappingIndex( MappingKey( lContig, lIndex ), lPos ) ) );
+  }
+
+  // DEBUG
+  _strtime( stime );
+  cout << "Start Multimap Subsorting" << stime << endl;
+  // END DEBUG
+
+  int lStart = 0;
+  multimap<string,MappingIndex>::iterator lEnd = lContigs.end();
+
+  for ( multimap<string,MappingIndex>::iterator i = lContigs.begin(); i != lContigs.end(); )
+  {
+
+    pair<multimap<string,MappingIndex>::iterator, multimap<string,MappingIndex>::iterator> ii;
+
+    ii = lContigs.equal_range( i->first );
+
+        // DEBUG
+    _strtime( stime );
+    cout << "Sorting contig " << i->first << " " << stime << endl;
+    // END DEBUG
+
+    int k = 0;
+    for ( multimap<string,MappingIndex>::iterator j = ii.first; j != ii.second; ++j, ++k )
+    {
+      lIndexes->push_back( j->second );
+    }    vector<MappingIndex>::iterator lBegin = (lIndexes->begin()) + lStart;
+
+    sort( lBegin, lIndexes->end(), SortMappingIndexes(this) );
+    
+    i = ii.second;
+    lStart += k;
+  }
+
+  // DEBUG
+  _strtime( stime );
+  cout << "Finished overall sorting operation" << stime << endl;
+  // END DEBUG
+
+  lStream.close();
 
 	return lIndexes;
 }
-
-
-vector<string>* MappingsPreparer::ReadAllLines()
-{
-  //char stime[9];
-
-  ifstream lStream( mPath.c_str() );
-
-
-  if ( lStream.is_open() && lStream.peek() > -1 )
-  {
-    //// DEBUG
-    //_strtime( stime );
-    //cout << stime << endl;
-    //// END DEBUG
-
-    string lFirstLine;
-    getline( lStream, lFirstLine );
-    lStream.seekg(0, ios_base::end);
-    int lApproximateLines = lStream.tellg() / lFirstLine.length();
-    vector<string> * lList = new vector<string>();
-    lList->reserve( lApproximateLines );
-    lStream.seekg(0, ios_base::beg );
-
-    string lLine;
-    while (lStream.peek() > -1 )
-    {      
-      getline( lStream, lLine );
-
-      lList->push_back( lLine );
-    }
-
-    lStream.close();
-
-    //// DEBUG
-    //_strtime( stime );
-    //cout << stime << endl;
-    //// END DEBUG
-
-    return lList;
-  }
-  else
-  {
-    throw string("Could not open mapping file.");
-  }
-
-  
-
-}
 string MappingsPreparer::SortMappingsAndWriteToTmpFile()
 {
-	char stime[9];
-	cout << " Reading mappings... " << endl ;
+  char stime[9];
   // DEBUG
-    _strtime( stime );
-    cout << stime << endl;
-    // END DEBUG
+  _strtime( stime );
+  cout << stime << endl;
+  // END DEBUG
+
+  cout << " Sorting mappings... " ;
   cout.flush();
 
-  vector<string> * lMappings = ReadAllLines();
+  vector<MappingIndex> * lMappingKeys = ReadAndInterpretMappingLines();
 
-  cout << " Sorting " << lMappings->size() << " mappings... " ;
-  
+
+
   // DEBUG
-    _strtime( stime );
-    cout << stime << endl;
-    // END DEBUG
-  cout.flush();
+  _strtime( stime );
+  cout << stime << endl;
+  // END DEBUG
 
-  vector<MappingIndex> * lMappingKeys = InterpretMappingLines( lMappings );
-
-  sort ( lMappingKeys->begin(), lMappingKeys->end(), SortMappingIndexes(this) );
-
-  vector<string> * lSortedMappingLines = new vector<string>();
-  lSortedMappingLines->reserve( lMappings->size() );
-
-  for ( vector<MappingIndex>::iterator i = lMappingKeys->begin(); i < lMappingKeys->end(); i++)
-  {
-	  lSortedMappingLines->push_back( lMappings->at( (*i).second ) );
-  }
   
-// DEBUG
-    _strtime( stime );
-    cout << stime << endl;
-    // END DEBUG
-
-  //SeparateByContigs( lMappings );
-
-
-
-  //sort( lMappings->begin(), lMappings->end(), SortMapping(this) );
-
+ 
   int lSlashPos = mPath.find_last_of('/'); // todo, finish separating the path here, and make it into the filename that gets saved.
 
   string lFilename = mPath + ".sorted";
-  WriteAllLines( lSortedMappingLines, lFilename );
+  WriteAllLines( lMappingKeys, lFilename );
 
-  delete lMappings;
-  delete lSortedMappingLines;
   delete lMappingKeys;
 
   cout << "Done!" << endl;
 
   // DEBUG
-    _strtime( stime );
-    cout << stime << endl;
-    // END DEBUG
+  _strtime( stime );
+  cout << stime << endl;
+  // END DEBUG
+
 
   return lFilename;  
-}
-
-bool MappingsPreparer::SeparateByContigs( vector<string> * aMappings )
-{
-  map<string, vector<string>*> lContigMappings;
-  map<string, vector<string>*>::iterator lIterator;
-  
-
-  for (vector<string>::iterator i = aMappings->begin(); i != aMappings->end(); ++i )
-  {    
-    string lContigIdent = GetContigIdent( *i );
-
-    lIterator = lContigMappings.find( lContigIdent );
-
-    if ( lIterator == lContigMappings.end() )
-    {
-      lContigMappings.insert( pair<string, vector<string>*>(lContigIdent, new vector<string>()) );
-      lIterator = lContigMappings.find( lContigIdent );      
-    }
-    lIterator->second->push_back( *i );
-  }
-
-  return true;
-}
-
-bool MappingsPreparer::LessThanMappingLine( string & aLeft, string & aRight )
-{
-  if ( aLeft == aRight ) // if they are identical, woohoo!
-    return false;
-
-  string lLeftContig = GetContigIdent( aLeft );
-  string lRightContig = GetContigIdent( aRight );
-
-  if ( lLeftContig.compare( lRightContig ) < 0 )
-    return true;
-  else if ( lLeftContig == lRightContig )
-  {
-    int lLeftIndex = GetIndex( aLeft );
-    int lRightIndex = GetIndex( aRight );
-
-    if ( lLeftIndex < lRightIndex )
-      return true;    
-    else
-      return false;
-  }
-  else
-    return false;
 }
 
 bool MappingsPreparer::LessThanMappingIndex( MappingIndex & aLeft, MappingIndex & aRight )
@@ -249,17 +198,25 @@ bool MappingsPreparer::LessThanMappingIndex( MappingIndex & aLeft, MappingIndex 
 }
 
 
-void MappingsPreparer::WriteAllLines( vector<string> *aMappingsFile, string & aFilename )
+void MappingsPreparer::WriteAllLines( vector<MappingIndex> * aMappingKeys, string & aFilename )
 {
-  ofstream lStream( aFilename.c_str() );
+  ifstream lInStream( mPath.c_str(), ios::binary );
+  if ( !lInStream.is_open() || lInStream.peek() < 0 )
+    throw string("Could not open mapping file.");
 
-  if ( !lStream.is_open() )
+  ofstream lOutStream( aFilename.c_str(), ios::binary );
+  if ( !lOutStream.is_open() )
     throw string("Could not write to mappings tmp file.");
 
-  for (int i = 0; i < aMappingsFile->size(); i++)
+  string lLine = "";
+  for (vector<MappingIndex>::iterator i = aMappingKeys->begin(); i < aMappingKeys->end(); i++)
   {
-    lStream << aMappingsFile->at(i) << '\n';
+    lInStream.seekg( i->second );
+    getline( lInStream, lLine );
+
+    lOutStream << lLine << '\n';
   }
 
-  lStream.close();
+  lInStream.close();
+  lOutStream.close();
 }
