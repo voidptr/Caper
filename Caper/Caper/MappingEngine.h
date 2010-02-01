@@ -2,6 +2,9 @@
 
 #include "MappingCache.h"
 #include "Mapping.h"
+#include "MappingUtilities.h"
+#include "MappingUtilitiesFactory.h"
+#include "Typedefs.h"
 
 class MappingEngine
 {
@@ -17,10 +20,13 @@ private:
 	
 	long mEndOfFilePosition;
 	string mPath;
+  string mIndexPath;
 
 	map<string, vector<long> > mMappingIndexes;
 	map<string, int> mNumberOfWindows;
 	map<string, pair<long,long> > mContigBorders;
+
+  MappingUtilities * MappingUtilities;
 
 private:
 	void PopulateMappingIndex();	
@@ -34,22 +40,16 @@ private:
 	MappingCache * BuildEmptyCache( string aContigIdent, int aLeft, int aRight );
 	MappingCache * BuildCache( char * aBlock, string aContigIdent, int aLeft, int aRight );
 
-	virtual string GetSequence( string & aLine ) = 0;
-	virtual int GetIndex( string & aLine ) = 0;
-  virtual string GetName( string & aLine ) = 0;
-	virtual string GetContigIdent( string & aLine ) = 0;
-  virtual string GetStrand( string & aLine ) = 0;
-
 public:
 	map<string, int> NumberOfReads;
   int ReadLength;
 	
 public:
 	//MappingEngine( string aPath, Sequences & aReferenceGenome );
-	MappingEngine( string aPath, Sequences * aReferenceGenome );
+	MappingEngine( string aPath, string aIndexPath, Sequences * aReferenceGenome );
   Mappings * GetReads(string lContigIdent, int aLeft, int aRight );
 
   void Initialize();
-  void Initialize( string aIndexPath );
-  void SaveMappingIndex( string aSavePath );
+  //void Initialize( string aIndexPath );
+  //void SaveMappingIndex( string aSavePath );
 };

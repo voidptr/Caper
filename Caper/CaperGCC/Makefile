@@ -1,6 +1,7 @@
 SRCDIR=../Caper
 UISRCDIR=../CaperUI
-CXXFLAGS=-fPIC -g -I$(SRCDIR)
+BMSRCDIR=../CaperBenchmarks
+CXXFLAGS=-fPIC -I$(SRCDIR)
 
 OBJS=$(SRCDIR)/BowtieMappingEngine.o \
 	$(SRCDIR)/BowtieMappingsPreparer.o \
@@ -16,26 +17,29 @@ OBJS=$(SRCDIR)/BowtieMappingEngine.o \
 	$(SRCDIR)/MapviewMappingUtilities.o \
 	$(SRCDIR)/Sequence.o \
 	$(SRCDIR)/SequenceEngine.o \
-	$(SRCDIR)/SequenceReader.o \
-	$(UISRCDIR)/Arguments.o \
+	$(SRCDIR)/SequenceReader.o
+
+UIOBJ=$(UISRCDIR)/Arguments.o \
+	$(UISRCDIR)/InteractiveArguments.o \
+	$(UISRCDIR)/IndexGenomeArguments.o \
+	$(UISRCDIR)/IndexMappingsArguments.o \
 	$(UISRCDIR)/Caper.o \
 	$(UISRCDIR)/Commands.o \
-	$(UISRCDIR)/XGetopt.o 
+	$(UISRCDIR)/XGetopt.o
 
-all: CaperUI #short caper.so
+BMOBJ=$(BMSRCDIR)/Arguments.o \
+	$(BMSRCDIR)/CaperBenchmarks.o \
+	$(BMSRCDIR)/Commands.o \
+	$(BMSRCDIR)/XGetopt.o
+
+all: CaperUI CaperBenchmarks #short caper.so
 
 clean:
-	rm -f $(SRCDIR)/*.o $(UISRCDIR)/*.o #caper.c caper.so data/cache/*
+	rm -f $(SRCDIR)/*.o $(UISRCDIR)/*.o $(BMSRCDIR)/*.o
 
-#tests: all
-#	bash data/build-indexes.sh
-#	nosetests
+CaperUI: $(UISRCDIR)/CaperUI.o $(OBJS) $(UIOBJ)
+	g++ -O3 -o Caper $(UISRCDIR)/CaperUI.o $(OBJS) $(UIOBJ)
 
-CaperUI: $(UISRCDIR)/CaperUI.o $(OBJS)
-	g++ -o Caper $(UISRCDIR)/CaperUI.o $(OBJS)
+CaperBenchmarks: $(BMSRCDIR)/Main.o $(OBJS) $(BMOBJ)
+	g++ -O3 -o CaperBenchmarks $(BMSRCDIR)/Main.o $(OBJS) $(BMOBJ)
 
-#short:  $(SRCDIR)/short.o $(OBJS)
-#	g++ -o short $(SRCDIR)/short.o $(OBJS)
-
-#caper.so: short caper.pyx
-#	python setup.py build_ext -i

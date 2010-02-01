@@ -41,7 +41,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;D:\Personal - Local\Personal Code Projects - Local\capergithub\Caper\Caper\Caper&quot;"
+				AdditionalIncludeDirectories="&quot;..\Caper&quot;;&quot;C:\Program Files\boost\boost_1_40\&quot;;&quot;C:\Program Files\boost\boost_1_40\lib\&quot;"
+				AdditionalUsingDirectories="&quot;C:\Program Files\boost\boost_1_40\&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -62,6 +63,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkIncremental="2"
+				AdditionalLibraryDirectories="&quot;C:\Program Files\boost\boost_1_40\&quot;;&quot;C:\Program Files\boost\boost_1_40\lib\&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="1"

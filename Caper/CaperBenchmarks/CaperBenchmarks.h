@@ -8,6 +8,7 @@
 #include "MapviewMappingsPreparer.h"
 #include "Arguments.h"
 #include "Commands.h"
+#include <time.h>
 
 class CaperBenchmarks
 {

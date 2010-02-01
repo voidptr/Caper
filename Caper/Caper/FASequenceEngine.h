@@ -11,9 +11,7 @@ private:
   static const char GreaterThan = '>';
   static const char NewLine = '\n';
 public:
-  FASequenceEngine(string & aPath);
-  FASequenceEngine(char * aPath);
+  FASequenceEngine(string & aPath, string & aIndexPath);
+  FASequenceEngine(char * aPath, char * aIndexPath);
   void Initialize();
-  void Initialize( string aIndexPath );  
-  void SaveIndex( string aSavePath );
 };

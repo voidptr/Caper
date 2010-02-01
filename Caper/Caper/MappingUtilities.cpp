@@ -17,7 +17,7 @@ vector<string> MappingUtilities::GetLinePieces( string & aLine )
 			break;
 
 	} while (true);
-		
+
 	return lPieces;
 }
 
@@ -29,7 +29,7 @@ string MappingUtilities::GetLineItem( int aIndex, string & aLine )
   {
     lBit = "";
     lStream >> lBit;
-     
+
     assert( lBit.length() > 0 ); // line doesn't have enough elements
   }
   return lBit;

@@ -1,8 +1,10 @@
 #include "SequenceEngine.h"
 
-SequenceEngine::SequenceEngine(string aPath)
+SequenceEngine::SequenceEngine(string aPath, string aIndexPath)
 {
   mPath = aPath;
+  mIndexPath = aIndexPath;
+
   mSequences = new Sequences();
   mContigs = new vector<string>();
 }

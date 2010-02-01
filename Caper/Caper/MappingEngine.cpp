@@ -1,35 +1,31 @@
 #include "MappingEngine.h"
 
-MappingEngine::MappingEngine(string aPath, Sequences * aReferenceGenome)
+MappingEngine::MappingEngine(string aPath, string aIndexPath, Sequences * aReferenceGenome)
 {
 	ReferenceGenome = aReferenceGenome;
 	mPath = aPath;
+  mIndexPath = aIndexPath;
 
   CacheA = NULL;
   CacheB = NULL;
 }
 
 void MappingEngine::Initialize()
-{		
-  PopulateReadInformation();
-  PopulateNumberOfWindows();
-  PopulateContigBorders();  
-  cout << " Indexing Mappings... ";
-  cout.flush();
-  PopulateMappingIndex();  
-  cout << "Done!" << endl;
-}
-
-void MappingEngine::Initialize( string aIndexPath )
 {	
+
+  ifstream lStream( mIndexPath.c_str(), ios::binary );
+  if ( !lStream.is_open() )
+    throw string("Could not open saved index file.");
+
+  string lDatatype;
+  lStream >>lDatatype;
+
+  MappingUtilities = MappingUtilitiesFactory::BuildMappingUtilities( lDatatype ); // I don't like having this here. This needs to be done before EVERYTHING else... 
+
   PopulateReadInformation();
   PopulateNumberOfWindows();
 
   //PopulateContigBorders();
-  ifstream lStream( aIndexPath.c_str(), ios::binary );
-  if ( !lStream.is_open() )
-    throw string("Could not open saved index file.");
-
   int lCount = 0;
   lStream >> lCount; // get the count of contigs as the first line.
   for (int i = 0; i < lCount; i++ )
@@ -75,73 +71,7 @@ void MappingEngine::Initialize( string aIndexPath )
   cout << "Done!" << endl;
 }
 
-void MappingEngine::SaveMappingIndex( string aSavePath )
-{
-  string lOutputFilename = aSavePath + "saved.index";
 
-  ofstream lStream( lOutputFilename.c_str(), ios::binary );
-  if ( !lStream.is_open() )
-    throw string("Could not write to saved index file.");
-
-  // saving the contig borders
-  lStream << mContigBorders.size() << endl;
-  map<string, pair<long,long> >::iterator lContigBordersIterator;
-  for ( lContigBordersIterator = mContigBorders.begin(); 
-    lContigBordersIterator != mContigBorders.end(); lContigBordersIterator++ )
-  {
-    lStream << lContigBordersIterator->first << Tab << lContigBordersIterator->second.first << Tab << lContigBordersIterator->second.second << endl;
-  }
-
-  //saving the mapping index
-  map<string, vector<long> >::iterator lMappingIndexIterator;
-  for ( lMappingIndexIterator = mMappingIndexes.begin(); lMappingIndexIterator != mMappingIndexes.end(); lMappingIndexIterator++ )
-  {
-    lStream << lMappingIndexIterator->first << Tab << NumberOfReads[ lMappingIndexIterator->first ] << Tab << lMappingIndexIterator->second.size() << endl;
-    vector<long>::iterator lIndexIterator;
-    for ( lIndexIterator = mMappingIndexes[ lMappingIndexIterator->first ].begin(); lIndexIterator != mMappingIndexes[ lMappingIndexIterator->first ].end(); lIndexIterator++ )
-    {
-      lStream << *lIndexIterator << endl;
-    }
-  }
-
-  lStream.close();
-}
-
-void MappingEngine::PopulateContigBorders()
-{		
-  ifstream lStream( mPath.c_str(), ios_base::binary );
-  if ( !lStream.is_open() )
-    throw string("Could not open mappings file.");
-
-  string lContig = "";
-  long lContigStartingPos = 0;
-  string lLine;
-  long lCurrentPosition = 0;
-
-  while ( lStream.peek() > -1 )
-  {
-    lCurrentPosition = lStream.tellg();
-    getline( lStream, lLine );
-    string lCurrentContig = GetContigIdent( lLine );
-    if ( lCurrentContig != lContig )
-    {
-      if ( lContig.length() > 0 ) // there was a previous one, so close it up
-      {
-        mContigBorders.insert( pair<string, pair<long,long> >( 
-          lContig, 
-          pair<long,long>(lContigStartingPos, lCurrentPosition - 1)));
-      }
-      lContigStartingPos = lCurrentPosition;
-      lContig = lCurrentContig;
-    }
-  }
-  // close up the last contig
-  mContigBorders.insert( pair<string, pair<long,long> >( 
-    lContig, 
-    pair<long,long>(lContigStartingPos, (long) lStream.tellg() - 1)));
-
-  lStream.close();
-}
 
 void MappingEngine::PopulateNumberOfWindows()
 {		
@@ -162,7 +92,7 @@ void MappingEngine::PopulateReadInformation()
   string lLine;
   getline( lStream, lLine );
 
-  ReadLength = GetSequence( lLine ).length();
+  ReadLength = MappingUtilities->GetSequence( lLine ).length();
   
   lStream.seekg( 0, ios::end );
   mEndOfFilePosition = lStream.tellg();
@@ -170,63 +100,6 @@ void MappingEngine::PopulateReadInformation()
   lStream.close();
 }
 
-void MappingEngine::PopulateMappingIndex()
-{		
-  ifstream lStream( mPath.c_str(), ios::binary );
-  if ( !lStream.is_open() )
-    throw string("Could not open mappings file.");
-
-  string lContig = "";
-  long lCurrentPosition = 0;
-  int lTargetIndex = 0;
-  int lReadCount = 0;
-  
-  while ( lStream.peek() > -1 )
-  {
-    string lLine = "";
-    lCurrentPosition = lStream.tellg(); 
-    getline( lStream, lLine );    
-    string lCurrentContig = GetContigIdent( lLine );
-    int lCurrentIndex = GetIndex( lLine );
-
-    if ( lCurrentContig != lContig )
-    {
-      if ( lContig.length() > 0 ) // there was a previous one, so close it up
-      {
-        NumberOfReads.insert( pair<string, int>( lContig, lReadCount ) );        
-        lReadCount = 0;
-      }
-
-      lTargetIndex = 0;
-      lContig = lCurrentContig;
-      mMappingIndexes.insert( pair<string, vector<long> >( lContig, vector<long>() ) );
-      mMappingIndexes[ lContig ].reserve( mNumberOfWindows[ lContig ] );
-    }
-
-    if ( lCurrentIndex >= lTargetIndex )
-    {
-      if ( lCurrentIndex >= lTargetIndex + IndexIncrement ) // overshot
-      {
-        mMappingIndexes[ lContig ].push_back( -1 ); // indicating that this section is empty.
-        lStream.seekg( lCurrentPosition ); // unconsume the line, since we'll need it soon.
-      }
-      else
-        mMappingIndexes[ lContig ].push_back( lCurrentPosition );
-
-      lTargetIndex += IndexIncrement;
-    }
-    lReadCount++;
-  }
-  NumberOfReads.insert( pair<string, int>( lContig, lReadCount ) ); // close up the last contig read count
-
-  lStream.close();
-
-  // fill in -1s for the empty sections that may be at the end.
-  for (int i = mMappingIndexes[ lContig ].size(); i < mNumberOfWindows[ lContig ]; ++i )
-  {
-    mMappingIndexes[ lContig ].push_back( -1 ); // empty sections at the tail end.
-  }
-}
 
 Mappings * MappingEngine::GetReads(string lContigIdent, int aLeft, int aRight )
 {
@@ -369,20 +242,20 @@ MappingCache * MappingEngine::BuildCache( char * aBlock, string aContigIdent, in
     if ( lLine.length() < 1 )
       break;
 
-    int lIndex = GetIndex( lLine );
+    int lIndex = MappingUtilities->GetIndex( lLine );
     if ( lIndex < aLeft ) {	// @CTB may only need to check for first pass?
       break; // @RCK this should never happen. Investigate further.
     }
 
     int lPrivateIndex = lIndex - aLeft;
    
-    string lSeq = GetSequence( lLine );
-    string lName = GetName( lLine );
+    string lSeq = MappingUtilities->GetSequence( lLine );
+    string lName = MappingUtilities->GetName( lLine );
 
     // This is probably not the right place for this, since, concievably, not all mapping
     // types use +/- to denote strand. But where else to put, w/o making
     // a global Orientation enum? This probably needs a neat namespace somewhere.
-    string lStrand = GetStrand( lLine );
+    string lStrand = MappingUtilities->GetStrand( lLine );
     Mapping::Orientation lOrientation;
     if ( lStrand[0] == '+' )
       lOrientation = Mapping::PLUS;
@@ -397,3 +270,28 @@ MappingCache * MappingEngine::BuildCache( char * aBlock, string aContigIdent, in
 
   return lCache;
 }
+
+//string MappingEngine::GetContigIdent( string & aLine )
+//{
+//  return MappingUtilities->GetContigIdent(aLine);
+//}
+//
+//int MappingEngine::GetIndex( string & aLine )
+//{
+//  return MappingUtilities->GetIndex(aLine);
+//}
+//
+//string MappingEngine::GetName( string & aLine )
+//{
+//  return MappingUtilities->GetName(aLine);
+//}
+//
+//string MappingEngine::GetSequence( string & aLine )
+//{
+//  return MappingUtilities->GetSequence(aLine);
+//}
+//
+//string MappingEngine::GetStrand( string & aLine )
+//{
+//  return MappingUtilities->GetStrand(aLine);
+//}

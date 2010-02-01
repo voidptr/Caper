@@ -1,37 +1,31 @@
-// Arguments.h
+// InteractiveArguments.h
 #pragma once
 
 #include "stdafx.h"
 #include "XGetopt.h"
 #include "ModeArguments.h"
-#include "IndexGenomeArguments.h"
-#include "IndexMappingsArguments.h"
-#include "InteractiveArguments.h"
+#include "Typedefs.h"
 
 // Parses command line arguments and sets member variables
-class Arguments
+class InteractiveArguments :
+	public ModeArguments
 {
 private:
   // Passed in argument count
   int mArgC;
   // Passed in arguments
   char * mArgV;
-
-
 public:
-  enum Modes
-  {
-    INTERACTIVE,
-    INDEXGENOME,
-    INDEXMAPPINGS,
-  } Mode; // Mapview Mappings or BowtieMappings
+	string ReferenceGenomeIndexPath; // Loaded Reference Genome Index Path
+  string GenomePath; // Reference Genome Path
 
-  ModeArguments * ModeArgs;
+  string MappingIndexPath; // Loaded Mapping Index Path
+  string MappingPath; // Mapping File Path
 
 public:
   // Process your arguments
   bool ProcessArguments( int argc, char * const argv[] );
 
   // Constructor
-  Arguments(void);
+  InteractiveArguments(void);
 };

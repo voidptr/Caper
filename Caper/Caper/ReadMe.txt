@@ -1,4 +1,4 @@
-Caper v0.3.1
+Caper v0.4
 Usage: caper [-s SaveIndexesToPath] [-i SavedMappingIndexFile] [-f SavedReferenceGenomeIndexFile] <-g|-G> <referencegenome.fa> <-m|-M|-b|-B> <mappingsfile>
 
 -s : Save your indexes (both reference genome and mapping indexes) out to this directory
@@ -21,4 +21,6 @@ Usage: caper [-s SaveIndexesToPath] [-i SavedMappingIndexFile] [-f SavedReferenc
 
 
 
-foo
+TODO
+- Add filetype to mapping index header.
+- Fix all the path crap.

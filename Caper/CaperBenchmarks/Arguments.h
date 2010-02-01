@@ -30,6 +30,8 @@ public:
   bool MappingsSorted; // Files are already sorted and formatted
   bool GenomePrepared; // Genome is already processed.
   bool LoadReferenceGenomeIndex; // Load your ref genome index
+  bool LoadMappings; // doing any mapping loading
+  bool InteractiveMode;
 
   bool ValidArguments; // All arguments are valid
 public: 

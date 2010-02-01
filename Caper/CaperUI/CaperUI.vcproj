@@ -42,8 +42,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;C:\Documents and Settings\James T. Kirk\My Documents\capergithub\Caper\Caper\Caper&quot;"
-				AdditionalUsingDirectories=""
+				AdditionalIncludeDirectories="&quot;..\Caper&quot;;&quot;C:\Program Files\boost\boost_1_40\&quot;;&quot;C:\Program Files\boost\boost_1_40\lib\&quot;"
+				AdditionalUsingDirectories="&quot;C:\Program Files\boost\boost_1_40\&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
@@ -63,6 +63,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="$(NoInherit)"
 				LinkIncremental="2"
+				AdditionalLibraryDirectories="&quot;C:\Program Files\boost\boost_1_40\&quot;;&quot;C:\Program Files\boost\boost_1_40\lib&quot;"
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
 				TargetMachine="1"
@@ -208,6 +209,34 @@
 		</File>
 		<File
 			RelativePath=".\Commands.h"
+			>
+		</File>
+		<File
+			RelativePath=".\IndexGenomeArguments.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\IndexGenomeArguments.h"
+			>
+		</File>
+		<File
+			RelativePath=".\IndexMappingsArguments.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\IndexMappingsArguments.h"
+			>
+		</File>
+		<File
+			RelativePath=".\InteractiveArguments.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\InteractiveArguments.h"
+			>
+		</File>
+		<File
+			RelativePath=".\ModeArguments.h"
 			>
 		</File>
 		<File

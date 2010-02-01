@@ -1,13 +1,17 @@
 #include "MappingsPreparer.h"
-#include "BowtieMappingUtilities.h"
 
-MappingsPreparer::MappingsPreparer(string aPath)
+
+MappingsPreparer::MappingsPreparer(string aPath, string aSavePath, MappingFileFormat aFormat)
 {
-  mPath = aPath;  
+  mPath = aPath; 
+  mSavePath = aSavePath;
+  mFormat = aFormat;
 }
 
 string MappingsPreparer::PrepareMappings()
-{
+{  
+  MappingUtilities = MappingUtilitiesFactory::BuildMappingUtilities( mFormat );
+
   if (!IsSorted())
     return SortMappingsAndWriteToTmpFile();
 
@@ -31,8 +35,8 @@ bool MappingsPreparer::IsSorted()
   {
     getline( lStream, lLine );
 
-    string lContig = GetContigIdent( lLine );
-    int lIndex = GetIndex( lLine );
+    string lContig = MappingUtilities->GetContigIdent( lLine );
+    int lIndex = MappingUtilities->GetIndex( lLine );
 
     if ( lContig.compare( lLastContig ) < 0 || 
       ( lContig == lLastContig && lIndex < lLastIndex ) )
@@ -53,8 +57,6 @@ bool MappingsPreparer::IsSorted()
 
 vector<MappingIndex> * MappingsPreparer::ReadAndInterpretMappingLines()
 {
-  time_t lSeconds;
-  
   ifstream lStream( mPath.c_str(), ios::binary );
 
   if ( !lStream.is_open() || lStream.peek() < 0 )
@@ -72,11 +74,6 @@ vector<MappingIndex> * MappingsPreparer::ReadAndInterpretMappingLines()
 
   multimap<string,MappingIndex> lContigs;
 
-  // DEBUG
-  lSeconds = time( NULL );
-  cout << "Start Overall Operation: " << lSeconds << endl;
-  // END DEBUG
-
   string lLine;
   long lPos = -1;
   while (lStream.peek() > -1 )
@@ -84,18 +81,11 @@ vector<MappingIndex> * MappingsPreparer::ReadAndInterpretMappingLines()
     lPos = lStream.tellg();
     getline( lStream, lLine );
 
-    string lContig = GetContigIdent( lLine );
-    int lIndex = GetIndex( lLine );
-
-		//lIndexes->push_back( MappingIndex( MappingKey( lContig, lIndex ), lPos ) );  
+    string lContig = MappingUtilities->GetContigIdent( lLine );
+    int lIndex = MappingUtilities->GetIndex( lLine );
 
     lContigs.insert( pair<string,MappingIndex>( lContig, MappingIndex( MappingKey( lContig, lIndex ), lPos ) ) );
   }
-
-  // DEBUG
-  lSeconds = time( NULL );
-  cout << "Start Multimap Subsorting" << lSeconds << endl;
-  // END DEBUG
 
   int lStart = 0;
   multimap<string,MappingIndex>::iterator lEnd = lContigs.end();
@@ -106,11 +96,6 @@ vector<MappingIndex> * MappingsPreparer::ReadAndInterpretMappingLines()
     pair<multimap<string,MappingIndex>::iterator, multimap<string,MappingIndex>::iterator> ii;
 
     ii = lContigs.equal_range( i->first );
-
-        // DEBUG
-    lSeconds = time( NULL );
-    cout << "Sorting contig " << i->first << " " << lSeconds << endl;
-    // END DEBUG
 
     int k = 0;
     for ( multimap<string,MappingIndex>::iterator j = ii.first; j != ii.second; ++j, ++k )
@@ -124,50 +109,43 @@ vector<MappingIndex> * MappingsPreparer::ReadAndInterpretMappingLines()
     lStart += k;
   }
 
-  // DEBUG
-  lSeconds = time( NULL );
-  cout << "Finished overall sorting operation" << lSeconds << endl;
-  // END DEBUG
-
   lStream.close();
 
-	return lIndexes;
+  return lIndexes;
 }
 string MappingsPreparer::SortMappingsAndWriteToTmpFile()
 {
-  time_t lSeconds;
-  // DEBUG
-  lSeconds = time( NULL );
-  cout << lSeconds << endl;
-  // END DEBUG
-
-  cout << " Sorting mappings... " ;
+  cout << " Sorting mappings... ";
   cout.flush();
 
   vector<MappingIndex> * lMappingKeys = ReadAndInterpretMappingLines();
 
-
-   // DEBUG
-  lSeconds = time( NULL );
-  cout << lSeconds << endl;
-  // END DEBUG
- 
- 
   int lSlashPos = mPath.find_last_of('/'); // todo, finish separating the path here, and make it into the filename that gets saved.
 
-  string lFilename = mPath + ".sorted";
-  WriteAllLines( lMappingKeys, lFilename );
+
+  boost::filesystem::path lPath(mPath);
+  boost::filesystem::path lSavePath(mSavePath);
+  string lOutputPath; 
+  if (!(boost::filesystem::is_directory( lSavePath )) ) //not a directory
+  {
+    lOutputPath = lSavePath.file_string() + lPath.filename() + ".sorted"; // TODO, make this be user definable.
+  }
+  else
+  {
+    boost::filesystem::path lIndexPath( lSavePath );
+    lIndexPath /= lPath.filename();
+
+    lOutputPath = lIndexPath.file_string() + ".sorted";
+  }
+
+  //string lFilename = mPath + ".sorted";
+  WriteAllLines( lMappingKeys, lOutputPath );
 
   delete lMappingKeys;
 
-  cout << "Done!" << endl;
+  cout << " Done!" << endl;
 
-  // DEBUG
-  lSeconds = time( NULL );
-  cout << lSeconds << endl;
-  // END DEBUG
-
-  return lFilename;  
+  return lOutputPath;  
 }
 
 bool MappingsPreparer::LessThanMappingIndex( MappingIndex & aLeft, MappingIndex & aRight )
@@ -217,3 +195,13 @@ void MappingsPreparer::WriteAllLines( vector<MappingIndex> * aMappingKeys, strin
   lInStream.close();
   lOutStream.close();
 }
+
+//string MappingsPreparer::GetContigIdent(string &aLine)
+//{
+//  return MappingUtilities->GetContigIdent( aLine );
+//}
+//
+//int MappingsPreparer::GetIndex(string &aLine)
+//{
+//  return MappingUtilities->GetIndex( aLine );
+//}

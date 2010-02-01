@@ -1,11 +1,10 @@
 #pragma once
+#include "mappingutilities.h"
 
-#include "stdafx.h"
-#include "MappingUtilities.h"
-
-class MapviewMappingUtilities : public MappingUtilities
+class SAMMappingUtilities :
+  public MappingUtilities
 {
-public:	
+public:
 	string GetSequence( string & aLine );
   int GetIndex( string & aLine );    
   string GetName( string & aLine );

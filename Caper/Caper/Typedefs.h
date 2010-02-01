@@ -15,6 +15,14 @@ typedef vector<Mappings> IndexedMappings;
 typedef pair<string, int> MappingKey;
 typedef pair<MappingKey, long> MappingIndex;
 
+enum MappingFileFormat
+{
+  DEFAULT,
+  MAPVIEW,
+  BOWTIE,
+  SAM
+}; // Mapview Mappings or BowtieMappings
+
 
 
 

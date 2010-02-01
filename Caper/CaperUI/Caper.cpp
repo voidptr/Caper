@@ -2,9 +2,7 @@
 
 void Caper::UserInterface(int argc, char * const argv[] )
 {
-  string lUsageString = "Caper v0.3.1\nUsage: caper [-s SaveIndexesToPath] [-i SavedMappingIndexFile] [-f SavedReferenceGenomeIndexFile] <-g|-G> <referencegenome.fa> <-m|-M|-b|-B> <mappingsfile>";
-
-  string lCommandString = "You can type: \"<contig ident>:<X>:<Y>\", or \"<contig ident>:<X>:<Y>:p\" (for pretty mode)";
+  string lUsageString = "Caper v0.4.0\nUsage:\n caper indexgenome <-g referencegenome.fa> <-o savepath>\n caper indexmappings <-g indexedreferencegenome.fa> <-f referencegenomeindexfile> <-v|-b mapvieworbowtiemappingfile> <-o savepath>\n caper interactive <-b|-v> <-g indexedreferencegenome.fa> <-f referencegenomeindexfile> <-m indexedmappingfile> <-i mappingfileindex>\n";
 
   try
   {
@@ -15,135 +13,125 @@ void Caper::UserInterface(int argc, char * const argv[] )
       return;
     }
 
-    cout << "Reading Genome \"" << lArgs.GenomePath << "\"... ";
-    cout.flush();
+    if ( lArgs.Mode == lArgs.INDEXGENOME )
+      IndexGenome( lArgs );
+		else if ( lArgs.Mode == lArgs.INDEXMAPPINGS )
+      IndexMappings( lArgs );
+		else if ( lArgs.Mode == lArgs.INTERACTIVE )
+      Interactive( lArgs );
 
-    SequenceEngine * lSequenceEngine = new FASequenceEngine( lArgs.GenomePath );
-    if ( lArgs.LoadReferenceGenomeIndex )
-      lSequenceEngine->Initialize( lArgs.ReferenceGenomeIndexPath );    
-    else
-      lSequenceEngine->Initialize();
-    
-    if ( lArgs.SaveIndexes )
-      lSequenceEngine->SaveIndex( lArgs.SavePath );
-    
-    cout << "Done!" << endl;
-
-    cout << "Preparing Mappings \"" << lArgs.MappingPath << "\"... " << endl;
-    cout.flush();
-
-    MappingEngine * lMappingEngine;
-    if ( lArgs.MappingStyle == lArgs.BOWTIE )
-    {
-      if ( !lArgs.MappingsSorted )
-      {
-        BowtieMappingsPreparer * lPrep = new BowtieMappingsPreparer( lArgs.MappingPath );
-        string lNewPath = lPrep->PrepareMappings();
-        delete lPrep;
-
-        lMappingEngine = new BowtieMappingEngine( lNewPath, lSequenceEngine->mSequences );
-      }
-      else
-        lMappingEngine = new BowtieMappingEngine( lArgs.MappingPath, lSequenceEngine->mSequences );
-    }
-    else if ( lArgs.MappingStyle == lArgs.MAPVIEW )
-    {
-      if ( !lArgs.MappingsSorted )
-      {
-        MapviewMappingsPreparer * lPrep = new MapviewMappingsPreparer( lArgs.MappingPath );
-        string lNewPath = lPrep->PrepareMappings();
-        delete lPrep;
-
-        lMappingEngine = new MapviewMappingEngine( lNewPath, lSequenceEngine->mSequences );
-      }
-      else
-        lMappingEngine = new MapviewMappingEngine( lArgs.MappingPath, lSequenceEngine->mSequences );
-    }
-
-    cout << "Done!" << endl;
-
-    cout << "Initializing Mapping Engine... " << endl;
-
-    if ( lArgs.LoadMappingIndex )
-      lMappingEngine->Initialize( lArgs.IndexPath );
-    else
-      lMappingEngine->Initialize();
-    
-    if ( lArgs.SaveIndexes )
-      lMappingEngine->SaveMappingIndex( lArgs.SavePath );
-    
-    cout << "Done!" << endl;
-
-    cout << "> ";
-
-    string lInput = "";
-    Commands lCommands;
-    while ( cin >> lInput )
-    {
-      if ( !lCommands.ProcessArguments( lInput, lSequenceEngine->mSequences, lMappingEngine ) )
-      {
-        cout << "Invalid Input: " << lCommandString << endl << "> " ;
-        continue;
-      }
-
-      if ( lCommands.Action == lCommands.GETREADS )
-      {
-        Mappings * lMappings = lMappingEngine->GetReads(lCommands.ContigIdent, lCommands.Left, lCommands.Right );
-        if ( lCommands.PrettyMode ) // engage pretty mode
-        {    
-          cout << PadLeft( lMappingEngine->ReadLength ) << lCommands.Left + lMappingEngine->ReadLength << endl;        
-          cout << PadLeft( lMappingEngine->ReadLength ) << PadLeft( lCommands.Right - lCommands.Left, "*") << endl;
-
-          string lGenome = "";
-
-          Sequence * lContig = (*lSequenceEngine->mSequences)[ lCommands.ContigIdent ];
-
-          int lTargetGenomeWidth = lCommands.Right - lCommands.Left + 1 + lMappingEngine->ReadLength;
-          if ( lTargetGenomeWidth < lContig->Length )
-            lGenome = lContig->Substring( lCommands.Left, lTargetGenomeWidth );
-          else
-            lGenome = lContig->Substring( lCommands.Left );
-
-          cout << lGenome << endl; 
-
-          int lGenomeLength = lGenome.length();
-          for ( int i = 0 ; i < lMappings->size(); i++ ) 
-          {
-            string lHighlightedString = lMappings->at(i)->mSequence->ToString();
-            for ( int j = 0; j < lHighlightedString.length(); j++ )
-            {
-              int lTargetLocalIndexOnGenome = lMappings->at(i)->Index - lCommands.Left + j;
-              if ( lTargetLocalIndexOnGenome < lGenome.length() && 
-                lHighlightedString[j] != lGenome[ lTargetLocalIndexOnGenome ] )
-              {
-                if ( islower(lHighlightedString[j]) )
-                  lHighlightedString[j] = toupper( lHighlightedString[j] );
-                else
-                  lHighlightedString[j] = tolower( lHighlightedString[j] );
-              }
-            }
-
-            cout << PadLeft( lMappings->at(i)->Index - lCommands.Left ) << lHighlightedString << "\n"; 
-          }
-        }
-        else
-        {
-          for ( int i = 0 ; i < lMappings->size(); i++ )
-          {
-            cout << "Index " << lMappings->at(i)->Index << ": " << lMappings->at(i)->Name << " - " << lMappings->at(i)->mSequence->ToString() << "\n";
-          }
-        }
-
-        delete lMappings;
-      }
-
-      cout << "> ";
-    }
+    cout << "DONE!" << endl;
   }
   catch( string lException )
   {
     cerr << "ERROR: " << lException << endl;
     return;
+  }
+}
+
+void Caper::IndexGenome( Arguments lArgs )
+{
+  IndexGenomeArguments * lModeArgs = (IndexGenomeArguments*) lArgs.ModeArgs;
+
+  cout << "Reading Genome \"" << lModeArgs->GenomePath << "\"... ";
+  cout.flush();
+
+  SequenceIndexer * lSequenceIndexer = new FASequenceIndexer( lModeArgs->GenomePath, lModeArgs->SavePath );
+  lSequenceIndexer->Index();
+}
+
+void Caper::IndexMappings( Arguments lArgs )
+{
+  IndexMappingsArguments * lModeArgs = (IndexMappingsArguments *) lArgs.ModeArgs;
+
+  SequenceEngine * lSequenceEngine = new FASequenceEngine( lModeArgs->GenomePath, lModeArgs->ReferenceGenomeIndexPath );
+  lSequenceEngine->Initialize();
+
+  cout << "Preparing Mappings \"" << lModeArgs->MappingPath << "\"... " << endl;
+  cout.flush();
+
+  MappingsIndexer lIndexer( lModeArgs->MappingPath, lModeArgs->MappingStyle, lModeArgs->SavePath, lSequenceEngine->mSequences );
+  lIndexer.IndexMappingsAndSave();
+ 
+}
+
+void Caper::Interactive( Arguments lArgs )
+{
+  string lCommandString = "You can type: \"<contig ident>:<X>:<Y>\", or \"<contig ident>:<X>:<Y>:p\" (for pretty mode)";
+
+  InteractiveArguments * lModeArgs = (InteractiveArguments*) lArgs.ModeArgs;
+
+  SequenceEngine * lSequenceEngine = new FASequenceEngine( lModeArgs->GenomePath, lModeArgs->ReferenceGenomeIndexPath );
+  lSequenceEngine->Initialize();
+
+  MappingEngine * lMappingEngine = new MappingEngine( lModeArgs->MappingPath, lModeArgs->MappingIndexPath, lSequenceEngine->mSequences );
+  lMappingEngine->Initialize();
+
+  cout << "> ";
+
+  string lInput = "";
+  Commands lCommands;
+
+  while ( cin >> lInput )
+  {
+    if ( !lCommands.ProcessArguments( lInput, lSequenceEngine->mSequences, lMappingEngine ) )
+    {
+      cout << "Invalid Input: " << lCommandString << endl << "> " ;
+      continue;
+    }
+
+    if ( lCommands.Action == lCommands.GETREADS )
+    {
+      Mappings * lMappings = lMappingEngine->GetReads(lCommands.ContigIdent, lCommands.Left, lCommands.Right );
+      if ( lCommands.PrettyMode ) // engage pretty mode
+      {
+        cout << PadLeft( lMappingEngine->ReadLength ) << lCommands.Left + lMappingEngine->ReadLength << endl;
+        cout << PadLeft( lMappingEngine->ReadLength ) << PadLeft( lCommands.Right - lCommands.Left, "*") << endl;
+
+        string lGenome = "";
+
+        Sequence * lContig = (*lSequenceEngine->mSequences)[ lCommands.ContigIdent ];
+
+        int lTargetGenomeWidth = lCommands.Right - lCommands.Left + 1 + lMappingEngine->ReadLength;
+        if ( lTargetGenomeWidth < lContig->Length )
+          lGenome = lContig->Substring( lCommands.Left, lTargetGenomeWidth );
+        else
+          lGenome = lContig->Substring( lCommands.Left );
+
+        cout << lGenome << endl;
+
+        int lGenomeLength = lGenome.length();
+        for ( int i = 0 ; i < lMappings->size(); i++ )
+        {
+          string lHighlightedString = lMappings->at(i)->mSequence->ToString();
+          for ( int j = 0; j < lHighlightedString.length(); j++ )
+          {
+            int lTargetLocalIndexOnGenome = lMappings->at(i)->Index - lCommands.Left + j;
+            if ( lTargetLocalIndexOnGenome < lGenome.length() &&
+              lHighlightedString[j] != lGenome[ lTargetLocalIndexOnGenome ] )
+            {
+              if ( islower(lHighlightedString[j]) )
+                lHighlightedString[j] = toupper( lHighlightedString[j] );
+              else
+                lHighlightedString[j] = tolower( lHighlightedString[j] );
+            }
+          }
+
+          cout << PadLeft( lMappings->at(i)->Index - lCommands.Left ) << lHighlightedString << "\n";
+        }
+      }
+      else
+      {
+        for ( int i = 0 ; i < lMappings->size(); i++ )
+        {
+          cout << "Index " << lMappings->at(i)->Index << ": " << lMappings->at(i)->Name << " - " << lMappings->at(i)->mSequence->ToString() << "\n";
+        }
+      }
+
+      delete lMappings;
+    }
+
+    cout << "> ";
   }
 }
 

@@ -5,6 +5,11 @@
 #include <algorithm>
 #include <time.h>
 
+#include <boost/filesystem.hpp>
+
+#include "MappingUtilities.h"
+#include "MappingUtilitiesFactory.h"
+
 class MappingsPreparer
 {
 private:
@@ -12,6 +17,10 @@ private:
   static const char NewLine = '\n';
 
   string mPath;  
+  string mSavePath;
+  MappingFileFormat mFormat;
+
+  MappingUtilities * MappingUtilities;
 
   class SortMappingIndexes
   {
@@ -32,11 +41,13 @@ private:
   bool LessThanMappingIndex( MappingIndex & aLeft, MappingIndex & aRight );
 
 protected:
-  virtual int GetIndex( string & aLine ) = 0;
-  virtual string GetContigIdent( string & aLine ) = 0;
+  //virtual int GetIndex( string & aLine ) = 0;
+  //virtual string GetContigIdent( string & aLine ) = 0;
+  //int GetIndex( string & aLine );
+  //string GetContigIdent( string & aLine );
 
 public:
-  MappingsPreparer(string aPath);
+  MappingsPreparer(string aPath, string aSavePath, MappingFileFormat aFormat);
   string PrepareMappings();
 };
 

@@ -2,7 +2,7 @@
 
 void CaperBenchmarks::Start(int argc, char * const argv[] )
 {
-  string lUsageString = "CaperBenchmarks v0.3.1\nUsage: caper [-s SaveIndexesToPath] [-i SavedMappingIndexFile] [-f SavedReferenceGenomeIndexFile] <-g|-G> <referencegenome.fa> <-m|-M|-b|-B> <mappingsfile>";
+  string lUsageString = "CaperBenchmarks v0.1\nUsage: CaperBenchmarks [-s SaveIndexesToPath] [-i SavedMappingIndexFile] [-f SavedReferenceGenomeIndexFile] <-g|-G> <referencegenome.fa> <-m|-M|-b|-B> <mappingsfile>";
 
   string lCommandString = "You can type: \"<contig ident>:<X>:<Y>\", or \"<contig ident>:<X>:<Y>:p\" (for pretty mode)";
 
@@ -18,6 +18,9 @@ void CaperBenchmarks::Start(int argc, char * const argv[] )
     cout << "Reading Genome \"" << lArgs.GenomePath << "\"... ";
     cout.flush();
 
+    time_t lStartSeconds = time(NULL);
+    time_t lInitStartSeconds = time(NULL);
+
     SequenceEngine * lSequenceEngine = new FASequenceEngine( lArgs.GenomePath );
     if ( lArgs.LoadReferenceGenomeIndex )
       lSequenceEngine->Initialize( lArgs.ReferenceGenomeIndexPath );    
@@ -27,11 +30,18 @@ void CaperBenchmarks::Start(int argc, char * const argv[] )
     if ( lArgs.SaveIndexes )
       lSequenceEngine->SaveIndex( lArgs.SavePath );
     
-    cout << "Done!" << endl;
+    time_t lEndSeconds = time(NULL);
+    cout << "Done! - " << lEndSeconds - lStartSeconds << "s" << endl;
+
+    if ( !lArgs.LoadMappings )
+    {
+      return;
+    }
 
     cout << "Preparing Mappings \"" << lArgs.MappingPath << "\"... " << endl;
     cout.flush();
 
+    lStartSeconds = time(NULL);
     MappingEngine * lMappingEngine;
     if ( lArgs.MappingStyle == lArgs.BOWTIE )
     {
@@ -59,11 +69,13 @@ void CaperBenchmarks::Start(int argc, char * const argv[] )
       else
         lMappingEngine = new MapviewMappingEngine( lArgs.MappingPath, lSequenceEngine->mSequences );
     }
+    lEndSeconds = time(NULL);
 
-    cout << "Done!" << endl;
+    cout << "Done! - " << lEndSeconds - lStartSeconds << "s" << endl;
 
     cout << "Initializing Mapping Engine... " << endl;
 
+    lStartSeconds = time(NULL);
     if ( lArgs.LoadMappingIndex )
       lMappingEngine->Initialize( lArgs.IndexPath );
     else
@@ -71,8 +83,18 @@ void CaperBenchmarks::Start(int argc, char * const argv[] )
     
     if ( lArgs.SaveIndexes )
       lMappingEngine->SaveMappingIndex( lArgs.SavePath );
-    
-    cout << "Done!" << endl;
+
+    lEndSeconds = time(NULL);    
+    time_t lInitEndSeconds = time(NULL);
+	
+
+    cout << "Done! - " << lEndSeconds - lStartSeconds << "s" << endl;
+    cout << "Total Init Time: " << lInitEndSeconds - lInitStartSeconds << "s" << endl;
+
+	// done init.
+
+    if ( !lArgs.InteractiveMode )
+      return;
 
     cout << "> ";
 
@@ -128,10 +150,15 @@ void CaperBenchmarks::Start(int argc, char * const argv[] )
         }
         else
         {
+	clock_t lStart, lEnd;
+	lStart = clock();
           for ( int i = 0 ; i < lMappings->size(); i++ )
           {
-            cout << "Index " << lMappings->at(i)->Index << ": " << lMappings->at(i)->Name << " - " << lMappings->at(i)->mSequence->ToString() << "\n";
+            cout << "~Index " << lMappings->at(i)->Index << ": " << lMappings->at(i)->Name << " - " << lMappings->at(i)->mSequence->ToString() << "\n";
           }
+        lEnd = clock();
+        cout << "Elapsed: " <<  ( lEnd - lStart ) / ( CLOCKS_PER_SEC / 1000 ) << "ms" << endl;
+
         }
 
         delete lMappings;

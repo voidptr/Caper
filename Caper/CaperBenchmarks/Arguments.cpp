@@ -10,6 +10,8 @@ Arguments::Arguments()
   MappingsSorted = false;
   LoadReferenceGenomeIndex = false;
   GenomePrepared = false;
+  LoadMappings = false;
+  InteractiveMode = false;
 }
 
 // Processes arguments.
@@ -17,12 +19,13 @@ bool Arguments::ProcessArguments( int argc, char * const argv[] )
 {
   XGetOpt lGetOpt;
   
-  if ( argc < 5 ) // sanity check, missing arguments.
-    return false;
+// commented out so that we can engage items in succession.
+//  if ( argc < 5 ) // sanity check, missing arguments.
+//    return false;
 
   int c;
 
-  while ((c = lGetOpt.GetOpt(argc, argv, "s:f:i:g:G:m:M:b:B:")) != EOF)
+  while ((c = lGetOpt.GetOpt(argc, argv, "s:f:i:g:G:m:M:b:B:x")) != EOF)
   {
     switch (c)
     {
@@ -51,6 +54,7 @@ bool Arguments::ProcessArguments( int argc, char * const argv[] )
       MappingsSorted = true;
     case 'm':
       MappingStyle = MAPVIEW;
+      LoadMappings = true;
       MappingPath = string(lGetOpt.optarg);
       break;
 
@@ -58,7 +62,12 @@ bool Arguments::ProcessArguments( int argc, char * const argv[] )
       MappingsSorted = true;
     case 'b':
       MappingStyle = BOWTIE;
+      LoadMappings = true;
       MappingPath = string(lGetOpt.optarg);                      
+      break;
+
+    case 'x':
+      InteractiveMode = true;
       break;
 
     case '?':                             
@@ -73,7 +82,11 @@ bool Arguments::ProcessArguments( int argc, char * const argv[] )
 
   if ( GenomePrepared ^ LoadReferenceGenomeIndex )
     return false;
-  else if (!(GenomePath.length() > 0 && MappingPath.length() > 0))
+  
+  if (!(GenomePath.length() > 0) )
+    return false; 
+
+  if ( LoadMappings && !(MappingPath.length() > 0))
     return false;
 
   return true;
