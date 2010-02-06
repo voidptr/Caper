@@ -246,6 +246,14 @@
 			>
 		</File>
 		<File
+			RelativePath=".\Path.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\Path.h"
+			>
+		</File>
+		<File
 			RelativePath=".\README.txt"
 			>
 		</File>
