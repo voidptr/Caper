@@ -10,7 +10,7 @@ MappingsPreparer::MappingsPreparer(string aPath, string aSavePath, MappingFileFo
 
 string MappingsPreparer::PrepareMappings()
 {  
-  MappingUtilities = MappingUtilitiesFactory::BuildMappingUtilities( mFormat );
+  mMappingUtilities = MappingUtilitiesFactory::BuildMappingUtilities( mFormat );
 
   if (!IsSorted())
     return SortMappingsAndWriteToTmpFile();
@@ -35,8 +35,8 @@ bool MappingsPreparer::IsSorted()
   {
     getline( lStream, lLine );
 
-    string lContig = MappingUtilities->GetContigIdent( lLine );
-    int lIndex = MappingUtilities->GetIndex( lLine );
+    string lContig = mMappingUtilities->GetContigIdent( lLine );
+    int lIndex = mMappingUtilities->GetIndex( lLine );
 
     if ( lContig.compare( lLastContig ) < 0 || 
       ( lContig == lLastContig && lIndex < lLastIndex ) )
@@ -116,8 +116,8 @@ vector<MappingIndex> * MappingsPreparer::ReadAndInterpretMappingLines()
     lPos = lStream.tellg();
     getline( lStream, lLine );
 
-    string lContig = MappingUtilities->GetContigIdent( lLine );
-    int lIndex = MappingUtilities->GetIndex( lLine );
+    string lContig = mMappingUtilities->GetContigIdent( lLine );
+    int lIndex = mMappingUtilities->GetIndex( lLine );
 
     lContigs.insert( pair<string,MappingIndex>( lContig, MappingIndex( MappingKey( lContig, lIndex ), lPos ) ) );
   }

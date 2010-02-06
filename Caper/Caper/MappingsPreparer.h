@@ -20,7 +20,7 @@ private:
   string mSavePath;
   MappingFileFormat mFormat;
 
-  MappingUtilities * MappingUtilities;
+  MappingUtilities * mMappingUtilities;
 
   class SortMappingIndexes
   {

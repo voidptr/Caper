@@ -20,7 +20,7 @@ void MappingEngine::Initialize()
   string lDatatype;
   lStream >>lDatatype;
 
-  MappingUtilities = MappingUtilitiesFactory::BuildMappingUtilities( lDatatype ); // I don't like having this here. This needs to be done before EVERYTHING else... 
+  mMappingUtilities = MappingUtilitiesFactory::BuildMappingUtilities( lDatatype ); // I don't like having this here. This needs to be done before EVERYTHING else... 
 
   PopulateReadInformation();
 
@@ -79,7 +79,7 @@ void MappingEngine::PopulateReadInformation()
   string lLine;
   getline( lStream, lLine );
 
-  ReadLength = MappingUtilities->GetSequence( lLine ).length();
+  ReadLength = mMappingUtilities->GetSequence( lLine ).length();
   
   lStream.seekg( 0, ios::end );
   mEndOfFilePosition = lStream.tellg();
@@ -229,20 +229,20 @@ MappingCache * MappingEngine::BuildCache( char * aBlock, string aContigIdent, in
     if ( lLine.length() < 1 )
       break;
 
-    int lIndex = MappingUtilities->GetIndex( lLine );
+    int lIndex = mMappingUtilities->GetIndex( lLine );
     if ( lIndex < aLeft ) {	// @CTB may only need to check for first pass?
       break; // @RCK this should never happen. Investigate further.
     }
 
     int lPrivateIndex = lIndex - aLeft;
    
-    string lSeq = MappingUtilities->GetSequence( lLine );
-    string lName = MappingUtilities->GetName( lLine );
+    string lSeq = mMappingUtilities->GetSequence( lLine );
+    string lName = mMappingUtilities->GetName( lLine );
 
     // This is probably not the right place for this, since, concievably, not all mapping
     // types use +/- to denote strand. But where else to put, w/o making
     // a global Orientation enum? This probably needs a neat namespace somewhere.
-    string lStrand = MappingUtilities->GetStrand( lLine );
+    string lStrand = mMappingUtilities->GetStrand( lLine );
     Mapping::Orientation lOrientation;
     if ( lStrand[0] == '+' )
       lOrientation = Mapping::PLUS;

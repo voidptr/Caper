@@ -19,7 +19,7 @@ private:
   string mSavePath;
   MappingFileFormat mFormat;
 
-  MappingUtilities * MappingUtilities;
+  MappingUtilities * mMappingUtilities;
 
 	map<string, vector<long> > mMappingIndexes;
 	//map<string, int> mNumberOfWindows;

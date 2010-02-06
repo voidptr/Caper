@@ -26,7 +26,7 @@ private:
 	//map<string, int> mNumberOfWindows;
 	map<string, pair<long,long> > mContigBorders;
 
-  MappingUtilities * MappingUtilities;
+  MappingUtilities * mMappingUtilities;
 
 private:
 	void PopulateMappingIndex();	

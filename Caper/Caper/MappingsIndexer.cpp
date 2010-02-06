@@ -10,7 +10,7 @@ MappingsIndexer::MappingsIndexer(string aMappingsFilePath, MappingFileFormat aFo
 
 void MappingsIndexer::IndexMappingsAndSave()
 {		
-  MappingUtilities = MappingUtilitiesFactory::BuildMappingUtilities( mFormat );
+  mMappingUtilities = MappingUtilitiesFactory::BuildMappingUtilities( mFormat );
 
   MappingsPreparer * lPreparer = new MappingsPreparer( mMappingsPath, mSavePath, mFormat );
   mMappingsPath = lPreparer->PrepareMappings(); // the new path (or old path, if no prep was required).
@@ -89,7 +89,7 @@ void MappingsIndexer::PopulateContigBorders()
   {
     lCurrentPosition = lStream.tellg();
     getline( lStream, lLine );
-    string lCurrentContig = MappingUtilities->GetContigIdent( lLine );
+    string lCurrentContig = mMappingUtilities->GetContigIdent( lLine );
     if ( lCurrentContig != lContig )
     {
       if ( lContig.length() > 0 ) // there was a previous one, so close it up
@@ -119,7 +119,7 @@ void MappingsIndexer::PopulateReadInformation()
   string lLine;
   getline( lStream, lLine );
 
-  ReadLength = MappingUtilities->GetSequence( lLine ).length();
+  ReadLength = mMappingUtilities->GetSequence( lLine ).length();
   
   lStream.seekg( 0, ios::end );
   mEndOfFilePosition = lStream.tellg();
@@ -129,7 +129,7 @@ void MappingsIndexer::PopulateReadInformation()
 
 void MappingsIndexer::PopulateMappingIndex()
 {		
-  MappingUtilities = MappingUtilitiesFactory::BuildMappingUtilities( mFormat );
+  mMappingUtilities = MappingUtilitiesFactory::BuildMappingUtilities( mFormat );
 
   ifstream lStream( mMappingsPath.c_str(), ios::binary );
   if ( !lStream.is_open() )
@@ -145,8 +145,8 @@ void MappingsIndexer::PopulateMappingIndex()
     string lLine = "";
     lCurrentPosition = lStream.tellg(); 
     getline( lStream, lLine );    
-    string lCurrentContig = MappingUtilities->GetContigIdent( lLine );
-    int lCurrentIndex = MappingUtilities->GetIndex( lLine );
+    string lCurrentContig = mMappingUtilities->GetContigIdent( lLine );
+    int lCurrentIndex = mMappingUtilities->GetIndex( lLine );
 
     if ( lCurrentContig != lContig )
     {
