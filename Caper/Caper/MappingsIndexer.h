@@ -1,6 +1,6 @@
 #pragma once
 
-#include <boost/filesystem.hpp>
+#include "../BoostLibraries/boost/filesystem.hpp"
 
 #include "MappingsPreparer.h"
 #include "MappingUtilities.h"
@@ -13,9 +13,7 @@ class MappingsIndexer
   static const char Tab = '\t';
   static const char NewLine = '\n';
 
-private:
-	Sequences * ReferenceGenome;
-  
+private:  
 	long mEndOfFilePosition;
 	string mMappingsPath;
   string mSavePath;
@@ -24,13 +22,13 @@ private:
   MappingUtilities * MappingUtilities;
 
 	map<string, vector<long> > mMappingIndexes;
-	map<string, int> mNumberOfWindows;
+	//map<string, int> mNumberOfWindows;
 	map<string, pair<long,long> > mContigBorders;
 
 private:
 	void PopulateMappingIndex();	
 	void PopulateContigBorders();
-	void PopulateNumberOfWindows();
+	//void PopulateNumberOfWindows();
 	void PopulateReadInformation();
   void SaveMappingIndex();
 
@@ -43,7 +41,7 @@ public:
 	
 public:
 	//MappingEngine( string aPath, Sequences & aReferenceGenome );
-	MappingsIndexer( string aMappingFilePath, MappingFileFormat aFormat, string aSavePath, Sequences * aReferenceGenome );
+	MappingsIndexer( string aMappingFilePath, MappingFileFormat aFormat, string aSavePath );
   
   void IndexMappingsAndSave();
 };

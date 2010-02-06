@@ -22,8 +22,8 @@ public:
   string MappingPath; // Mapping File Path
   string SavePath; // When saving, save to this path
 
-  string ReferenceGenomeIndexPath; // Loaded Reference Genome Index Path
-  string GenomePath; // Reference Genome Path
+  //string ReferenceGenomeIndexPath; // Loaded Reference Genome Index Path
+  //string GenomePath; // Reference Genome Path
 
 public:
   // Process your arguments

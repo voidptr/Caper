@@ -5,7 +5,7 @@
 
 #include <algorithm>
 
-#include <boost/filesystem.hpp>
+#include "../BoostLibraries/boost/filesystem.hpp"
 
 class FASequenceIndexer :
   public SequenceIndexer

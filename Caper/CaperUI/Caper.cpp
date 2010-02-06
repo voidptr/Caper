@@ -2,7 +2,7 @@
 
 void Caper::UserInterface(int argc, char * const argv[] )
 {
-  string lUsageString = "Caper v0.4.0\nUsage:\n caper indexgenome <-g referencegenome.fa> <-o savepath>\n caper indexmappings <-g indexedreferencegenome.fa> <-f referencegenomeindexfile> <-v|-b mapvieworbowtiemappingfile> <-o savepath>\n caper interactive <-b|-v> <-g indexedreferencegenome.fa> <-f referencegenomeindexfile> <-m indexedmappingfile> <-i mappingfileindex>\n";
+  string lUsageString = "Caper v0.4.1\nUsage:\n caper indexgenome <-g referencegenome.fa> <-o savepath>\n caper indexmappings <-m mappingfile> <-t bowtie|mapview|sam> <-o savepath>\n caper interactive <-b|-v> <-g indexedreferencegenome.fa> <-f referencegenomeindexfile> <-m indexedmappingfile> <-i mappingfileindex>\n";
 
   try
   {
@@ -44,13 +44,13 @@ void Caper::IndexMappings( Arguments lArgs )
 {
   IndexMappingsArguments * lModeArgs = (IndexMappingsArguments *) lArgs.ModeArgs;
 
-  SequenceEngine * lSequenceEngine = new FASequenceEngine( lModeArgs->GenomePath, lModeArgs->ReferenceGenomeIndexPath );
-  lSequenceEngine->Initialize();
+  //SequenceEngine * lSequenceEngine = new FASequenceEngine( lModeArgs->GenomePath, lModeArgs->ReferenceGenomeIndexPath );
+  //lSequenceEngine->Initialize();
 
   cout << "Preparing Mappings \"" << lModeArgs->MappingPath << "\"... " << endl;
   cout.flush();
 
-  MappingsIndexer lIndexer( lModeArgs->MappingPath, lModeArgs->MappingStyle, lModeArgs->SavePath, lSequenceEngine->mSequences );
+  MappingsIndexer lIndexer( lModeArgs->MappingPath, lModeArgs->MappingStyle, lModeArgs->SavePath );
   lIndexer.IndexMappingsAndSave();
  
 }
@@ -64,7 +64,7 @@ void Caper::Interactive( Arguments lArgs )
   SequenceEngine * lSequenceEngine = new FASequenceEngine( lModeArgs->GenomePath, lModeArgs->ReferenceGenomeIndexPath );
   lSequenceEngine->Initialize();
 
-  MappingEngine * lMappingEngine = new MappingEngine( lModeArgs->MappingPath, lModeArgs->MappingIndexPath, lSequenceEngine->mSequences );
+  MappingEngine * lMappingEngine = new MappingEngine( lModeArgs->MappingPath, lModeArgs->MappingIndexPath );
   lMappingEngine->Initialize();
 
   cout << "> ";

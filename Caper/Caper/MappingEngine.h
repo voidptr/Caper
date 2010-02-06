@@ -23,7 +23,7 @@ private:
   string mIndexPath;
 
 	map<string, vector<long> > mMappingIndexes;
-	map<string, int> mNumberOfWindows;
+	//map<string, int> mNumberOfWindows;
 	map<string, pair<long,long> > mContigBorders;
 
   MappingUtilities * MappingUtilities;
@@ -46,7 +46,7 @@ public:
 	
 public:
 	//MappingEngine( string aPath, Sequences & aReferenceGenome );
-	MappingEngine( string aPath, string aIndexPath, Sequences * aReferenceGenome );
+	MappingEngine( string aPath, string aIndexPath );
   Mappings * GetReads(string lContigIdent, int aLeft, int aRight );
 
   void Initialize();

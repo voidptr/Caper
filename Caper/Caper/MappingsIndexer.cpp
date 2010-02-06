@@ -1,8 +1,7 @@
 #include "MappingsIndexer.h"
 
-MappingsIndexer::MappingsIndexer(string aMappingsFilePath, MappingFileFormat aFormat, string aSavePath, Sequences * aReferenceGenome)
+MappingsIndexer::MappingsIndexer(string aMappingsFilePath, MappingFileFormat aFormat, string aSavePath)
 {
-	ReferenceGenome = aReferenceGenome;
 	mMappingsPath = aMappingsFilePath;
   mSavePath = aSavePath;
   mFormat = aFormat;
@@ -17,7 +16,7 @@ void MappingsIndexer::IndexMappingsAndSave()
   mMappingsPath = lPreparer->PrepareMappings(); // the new path (or old path, if no prep was required).
 
   PopulateReadInformation();
-  PopulateNumberOfWindows();
+  //PopulateNumberOfWindows();
   PopulateContigBorders();  
   cout << " Indexing Mappings... ";
   cout.flush();
@@ -111,16 +110,6 @@ void MappingsIndexer::PopulateContigBorders()
   lStream.close();
 }
 
-void MappingsIndexer::PopulateNumberOfWindows()
-{		
-  Sequences::iterator lIterator;
-  for(lIterator = ReferenceGenome->begin() ; lIterator != ReferenceGenome->end(); lIterator++ )
-	{
-		mNumberOfWindows.insert( pair<string, int>( lIterator->first,
-      (int) ceil( (double) lIterator->second->Length / IndexIncrement ) ) );
-	}	
-}
-
 void MappingsIndexer::PopulateReadInformation()
 {	
   ifstream lStream( mMappingsPath.c_str(), ios_base::binary );
@@ -170,7 +159,6 @@ void MappingsIndexer::PopulateMappingIndex()
       lTargetIndex = 0;
       lContig = lCurrentContig;
       mMappingIndexes.insert( pair<string, vector<long> >( lContig, vector<long>() ) );
-      mMappingIndexes[ lContig ].reserve( mNumberOfWindows[ lContig ] );
     }
 
     if ( lCurrentIndex >= lTargetIndex )
@@ -191,9 +179,5 @@ void MappingsIndexer::PopulateMappingIndex()
 
   lStream.close();
 
-  // fill in -1s for the empty sections that may be at the end.
-  for (int i = mMappingIndexes[ lContig ].size(); i < mNumberOfWindows[ lContig ]; ++i )
-  {
-    mMappingIndexes[ lContig ].push_back( -1 ); // empty sections at the tail end.
-  }
+  // we have no knowledge of what comes after the last one. Doesn't matter.
 }

@@ -1,8 +1,8 @@
 #include "MappingEngine.h"
 
-MappingEngine::MappingEngine(string aPath, string aIndexPath, Sequences * aReferenceGenome)
+MappingEngine::MappingEngine(string aPath, string aIndexPath)
 {
-	ReferenceGenome = aReferenceGenome;
+//	ReferenceGenome = aReferenceGenome;
 	mPath = aPath;
   mIndexPath = aIndexPath;
 
@@ -23,7 +23,6 @@ void MappingEngine::Initialize()
   MappingUtilities = MappingUtilitiesFactory::BuildMappingUtilities( lDatatype ); // I don't like having this here. This needs to be done before EVERYTHING else... 
 
   PopulateReadInformation();
-  PopulateNumberOfWindows();
 
   //PopulateContigBorders();
   int lCount = 0;
@@ -69,18 +68,6 @@ void MappingEngine::Initialize()
   lStream.close();
 
   cout << "Done!" << endl;
-}
-
-
-
-void MappingEngine::PopulateNumberOfWindows()
-{		
-  Sequences::iterator lIterator;
-  for(lIterator = ReferenceGenome->begin() ; lIterator != ReferenceGenome->end(); lIterator++ )
-	{
-		mNumberOfWindows.insert( pair<string, int>( lIterator->first,
-      (int) ceil( (double) lIterator->second->Length / IndexIncrement ) ) );
-	}	
 }
 
 void MappingEngine::PopulateReadInformation()
@@ -271,27 +258,3 @@ MappingCache * MappingEngine::BuildCache( char * aBlock, string aContigIdent, in
   return lCache;
 }
 
-//string MappingEngine::GetContigIdent( string & aLine )
-//{
-//  return MappingUtilities->GetContigIdent(aLine);
-//}
-//
-//int MappingEngine::GetIndex( string & aLine )
-//{
-//  return MappingUtilities->GetIndex(aLine);
-//}
-//
-//string MappingEngine::GetName( string & aLine )
-//{
-//  return MappingUtilities->GetName(aLine);
-//}
-//
-//string MappingEngine::GetSequence( string & aLine )
-//{
-//  return MappingUtilities->GetSequence(aLine);
-//}
-//
-//string MappingEngine::GetStrand( string & aLine )
-//{
-//  return MappingUtilities->GetStrand(aLine);
-//}

@@ -55,6 +55,41 @@ bool MappingsPreparer::IsSorted()
   return true;
 }
 
+string MappingsPreparer::SortMappingsAndWriteToTmpFile()
+{
+  cout << " Sorting mappings... ";
+  cout.flush();
+
+  vector<MappingIndex> * lMappingKeys = ReadAndInterpretMappingLines();
+
+  int lSlashPos = mPath.find_last_of('/'); // todo, finish separating the path here, and make it into the filename that gets saved.
+
+
+  boost::filesystem::path lPath(mPath);
+  boost::filesystem::path lSavePath(mSavePath);
+  string lOutputPath; 
+  if (!(boost::filesystem::is_directory( lSavePath )) ) //not a directory
+  {
+    lOutputPath = lSavePath.file_string() + lPath.filename() + ".sorted"; // TODO, make this be user definable.
+  }
+  else
+  {
+    boost::filesystem::path lIndexPath( lSavePath );
+    lIndexPath /= lPath.filename();
+
+    lOutputPath = lIndexPath.file_string() + ".sorted";
+  }
+
+  //string lFilename = mPath + ".sorted";
+  WriteAllLines( lMappingKeys, lOutputPath );
+
+  delete lMappingKeys;
+
+  cout << " Done!" << endl;
+
+  return lOutputPath;  
+}
+
 vector<MappingIndex> * MappingsPreparer::ReadAndInterpretMappingLines()
 {
   ifstream lStream( mPath.c_str(), ios::binary );
@@ -113,40 +148,6 @@ vector<MappingIndex> * MappingsPreparer::ReadAndInterpretMappingLines()
 
   return lIndexes;
 }
-string MappingsPreparer::SortMappingsAndWriteToTmpFile()
-{
-  cout << " Sorting mappings... ";
-  cout.flush();
-
-  vector<MappingIndex> * lMappingKeys = ReadAndInterpretMappingLines();
-
-  int lSlashPos = mPath.find_last_of('/'); // todo, finish separating the path here, and make it into the filename that gets saved.
-
-
-  boost::filesystem::path lPath(mPath);
-  boost::filesystem::path lSavePath(mSavePath);
-  string lOutputPath; 
-  if (!(boost::filesystem::is_directory( lSavePath )) ) //not a directory
-  {
-    lOutputPath = lSavePath.file_string() + lPath.filename() + ".sorted"; // TODO, make this be user definable.
-  }
-  else
-  {
-    boost::filesystem::path lIndexPath( lSavePath );
-    lIndexPath /= lPath.filename();
-
-    lOutputPath = lIndexPath.file_string() + ".sorted";
-  }
-
-  //string lFilename = mPath + ".sorted";
-  WriteAllLines( lMappingKeys, lOutputPath );
-
-  delete lMappingKeys;
-
-  cout << " Done!" << endl;
-
-  return lOutputPath;  
-}
 
 bool MappingsPreparer::LessThanMappingIndex( MappingIndex & aLeft, MappingIndex & aRight )
 {
@@ -196,12 +197,3 @@ void MappingsPreparer::WriteAllLines( vector<MappingIndex> * aMappingKeys, strin
   lOutStream.close();
 }
 
-//string MappingsPreparer::GetContigIdent(string &aLine)
-//{
-//  return MappingUtilities->GetContigIdent( aLine );
-//}
-//
-//int MappingsPreparer::GetIndex(string &aLine)
-//{
-//  return MappingUtilities->GetIndex( aLine );
-//}

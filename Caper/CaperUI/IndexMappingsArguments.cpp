@@ -12,22 +12,22 @@ bool IndexMappingsArguments::ProcessArguments( int argc, char * const argv[] )
 {
   XGetOpt lGetOpt;
 
-  if ( argc < 11 ) // sanity check, missing arguments.
+  if ( argc < 7 ) // sanity check, missing arguments.
     return false;
 
   int c;
 
-  while ((c = lGetOpt.GetOpt(argc, argv, "f:g:o:m:t:")) != EOF)
+  while ((c = lGetOpt.GetOpt(argc, argv, "o:m:t:")) != EOF)
   {
     switch (c)
     {
-    case 'f':
-      ReferenceGenomeIndexPath = string(lGetOpt.optarg);
-      break;
+    //case 'f':
+    //  ReferenceGenomeIndexPath = string(lGetOpt.optarg);
+    //  break;
 
-    case 'g':
-      GenomePath = string(lGetOpt.optarg);
-      break;
+    //case 'g':
+    //  GenomePath = string(lGetOpt.optarg);
+    //  break;
 
     case 'o':
       SavePath = string(lGetOpt.optarg);

@@ -41,8 +41,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;../&quot;;&quot;C:\Program Files\boost\boost_1_40\&quot;;&quot;C:\Program Files\boost\boost_1_40\lib\&quot;"
-				AdditionalUsingDirectories="&quot;../&quot;;&quot;C:\Program Files\boost\boost_1_40\&quot;"
+				AdditionalIncludeDirectories="&quot;../BoostLibraries/&quot;"
+				AdditionalUsingDirectories="&quot;../BoostLibraries/&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
