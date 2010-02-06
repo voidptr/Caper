@@ -1,5 +1,5 @@
 #pragma once
-#include "mappingutilities.h"
+#include "MappingUtilities.h"
 
 class SAMMappingUtilities :
   public MappingUtilities
