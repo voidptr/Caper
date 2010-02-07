@@ -1,23 +1,25 @@
 SRCDIR=../Caper
 UISRCDIR=../CaperUI
-BMSRCDIR=../CaperBenchmarks
 CXXFLAGS=-fPIC -I$(SRCDIR)
 
-OBJS=$(SRCDIR)/BowtieMappingEngine.o \
-	$(SRCDIR)/BowtieMappingsPreparer.o \
+OBJS=\
+	$(SRCDIR)/MappingsIndexer.o \
+	$(SRCDIR)/FASequenceIndexer.o \
 	$(SRCDIR)/BowtieMappingUtilities.o \
 	$(SRCDIR)/FASequenceEngine.o \
 	$(SRCDIR)/Mapping.o \
 	$(SRCDIR)/MappingCache.o \
 	$(SRCDIR)/MappingEngine.o \
 	$(SRCDIR)/MappingsPreparer.o \
+	$(SRCDIR)/SAMMappingUtilities.o \
 	$(SRCDIR)/MappingUtilities.o \
-	$(SRCDIR)/MapviewMappingEngine.o \
-	$(SRCDIR)/MapviewMappingsPreparer.o \
+	$(SRCDIR)/MappingUtilitiesFactory.o \
 	$(SRCDIR)/MapviewMappingUtilities.o \
+	$(SRCDIR)/Path.o \
 	$(SRCDIR)/Sequence.o \
 	$(SRCDIR)/SequenceEngine.o \
-	$(SRCDIR)/SequenceReader.o
+	$(SRCDIR)/SequenceIndexer.o \
+	$(SRCDIR)/Utilities.o
 
 UIOBJ=$(UISRCDIR)/Arguments.o \
 	$(UISRCDIR)/InteractiveArguments.o \
@@ -27,19 +29,10 @@ UIOBJ=$(UISRCDIR)/Arguments.o \
 	$(UISRCDIR)/Commands.o \
 	$(UISRCDIR)/XGetopt.o
 
-BMOBJ=$(BMSRCDIR)/Arguments.o \
-	$(BMSRCDIR)/CaperBenchmarks.o \
-	$(BMSRCDIR)/Commands.o \
-	$(BMSRCDIR)/XGetopt.o
-
-all: CaperUI CaperBenchmarks #short caper.so
+all: CaperUI
 
 clean:
-	rm -f $(SRCDIR)/*.o $(UISRCDIR)/*.o $(BMSRCDIR)/*.o
+	rm -f $(SRCDIR)/*.o $(UISRCDIR)/*.o
 
 CaperUI: $(UISRCDIR)/CaperUI.o $(OBJS) $(UIOBJ)
 	g++ -O3 -o Caper $(UISRCDIR)/CaperUI.o $(OBJS) $(UIOBJ)
-
-CaperBenchmarks: $(BMSRCDIR)/Main.o $(OBJS) $(BMOBJ)
-	g++ -O3 -o CaperBenchmarks $(BMSRCDIR)/Main.o $(OBJS) $(BMOBJ)
-
