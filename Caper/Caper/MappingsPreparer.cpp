@@ -65,19 +65,19 @@ string MappingsPreparer::SortMappingsAndWriteToTmpFile()
   int lSlashPos = mPath.find_last_of('/'); // todo, finish separating the path here, and make it into the filename that gets saved.
 
 
-  boost::filesystem::path lPath(mPath);
-  boost::filesystem::path lSavePath(mSavePath);
+  Path lPath(mPath);
+  Path lSavePath(mSavePath);
   string lOutputPath; 
-  if (!(boost::filesystem::is_directory( lSavePath )) ) //not a directory
+  if (!lSavePath.IsDirectory() ) //not a directory
   {
-    lOutputPath = lSavePath.file_string() + lPath.filename() + ".sorted"; // TODO, make this be user definable.
+    lOutputPath = lSavePath.mPathString + lPath.Filename() + ".sorted"; // TODO, make this be user definable.
   }
   else
   {
-    boost::filesystem::path lIndexPath( lSavePath );
-    lIndexPath /= lPath.filename();
+    Path lIndexPath( lSavePath );
+        lIndexPath = lIndexPath / lPath.Filename();
 
-    lOutputPath = lIndexPath.file_string() + ".sorted";
+    lOutputPath = lIndexPath.mPathString + ".sorted";
   }
 
   //string lFilename = mPath + ".sorted";

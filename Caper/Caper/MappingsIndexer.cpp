@@ -16,32 +16,36 @@ void MappingsIndexer::IndexMappingsAndSave()
   mMappingsPath = lPreparer->PrepareMappings(); // the new path (or old path, if no prep was required).
 
   PopulateReadInformation();
-  //PopulateNumberOfWindows();
   PopulateContigBorders();  
   cout << " Indexing Mappings... ";
   cout.flush();
   PopulateMappingIndex();  
   cout << "Done!" << endl;
 
+  CompressFileAndIndex();
   SaveMappingIndex();
 }
-
-void MappingsIndexer::SaveMappingIndex()
+void MappingsIndexer::CompressFileAndIndex() // do the compression separately, in the tmp file, and then write it out.
 {
-  boost::filesystem::path lPath(mMappingsPath);
-  boost::filesystem::path lSavePath(mSavePath);
+}
+
+
+void MappingsIndexer::SaveMappingIndex() // do bundling here.
+{
+  Path lPath(mMappingsPath);
+  Path lSavePath(mSavePath);
 
   string lOutputFilename; 
-  if (!(boost::filesystem::is_directory( lSavePath )) ) //not a directory
+  if (!lSavePath.IsDirectory() ) //not a directory
   {
-    lOutputFilename = lSavePath.file_string() + lPath.filename() + ".mappingindex"; // TODO, make this be user definable.
+    lOutputFilename = lSavePath.mPathString + lPath.Filename() + ".mappingindex"; // TODO, make this be user definable.
   }
   else
   {
-    boost::filesystem::path lIndexPath( lSavePath );
-    lIndexPath /= lPath.filename();
+    Path lIndexPath( lSavePath );
+        lIndexPath = lIndexPath / lPath.Filename();
 
-    lOutputFilename = lIndexPath.file_string() + ".mappingindex";
+    lOutputFilename = lIndexPath.mPathString + ".mappingindex";
   }
 
   ofstream lStream( lOutputFilename.c_str(), ios::binary );

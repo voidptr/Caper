@@ -19,20 +19,20 @@ void FASequenceIndexer::Index()
 
   string lLine = "";
 
-  boost::filesystem::path lPath(mPath);
-  boost::filesystem::path lSavePath(mSavePath);
+  Path lPath(mPath);
+  Path lSavePath(mSavePath);
 
   string lOutputPath; 
-  if (!(boost::filesystem::is_directory( lSavePath )) ) //not a directory
+  if (!lSavePath.IsDirectory() ) //not a directory
   {
-    lOutputPath = lSavePath.file_string() + lPath.filename() + ".indexed"; // TODO, make this be user definable.
+    lOutputPath = lSavePath.mPathString + lPath.Filename() + ".indexed"; // TODO, make this be user definable.
   }
   else
   {
-    boost::filesystem::path lIndexPath( lSavePath );
-    lIndexPath /= lPath.filename();
+    Path lIndexPath( lSavePath );
+    lIndexPath = lIndexPath / lPath.Filename();
 
-    lOutputPath = lIndexPath.file_string() + ".indexed";
+    lOutputPath = lIndexPath.mPathString + ".indexed";
   }
 
   ofstream lOutStream(lOutputPath.c_str());
@@ -91,20 +91,20 @@ void FASequenceIndexer::Index()
 
 void FASequenceIndexer::SaveIndex()
 {  
-  boost::filesystem::path lPath(mPath);
-  boost::filesystem::path lSavePath(mSavePath);
+  Path lPath(mPath);
+  Path lSavePath(mSavePath);
 
   string lSavedIndexFile; 
-  if (!(boost::filesystem::is_directory( lSavePath )) ) //not a directory
+  if (!lSavePath.IsDirectory() ) //not a directory
   {
-    lSavedIndexFile = lSavePath.file_string() + lPath.filename() + ".genomeindex"; // TODO, make this be user definable.
+    lSavedIndexFile = lSavePath.mPathString + lPath.Filename() + ".genomeindex"; // TODO, make this be user definable.
   }
   else
   {
-    boost::filesystem::path lIndexPath( lSavePath );
-    lIndexPath /= lPath.filename();
+    Path lIndexPath( lSavePath );
+    lIndexPath = lIndexPath / lPath.Filename();
 
-    lSavedIndexFile = lIndexPath.file_string() + ".genomeindex";
+    lSavedIndexFile = lIndexPath.mPathString + ".genomeindex";
   }
   ofstream lIndexStream( lSavedIndexFile.c_str(), ios::binary );
 

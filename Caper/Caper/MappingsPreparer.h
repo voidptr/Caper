@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <time.h>
 
-#include "../BoostLibraries/boost/filesystem.hpp"
+#include "Path.h"
 
 #include "MappingUtilities.h"
 #include "MappingUtilitiesFactory.h"

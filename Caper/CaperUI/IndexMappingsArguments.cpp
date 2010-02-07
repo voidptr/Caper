@@ -17,17 +17,18 @@ bool IndexMappingsArguments::ProcessArguments( int argc, char * const argv[] )
 
   int c;
 
-  while ((c = lGetOpt.GetOpt(argc, argv, "o:m:t:")) != EOF)
+  while ((c = lGetOpt.GetOpt(argc, argv, "o:m:t:bc")) != EOF)
   {
     switch (c)
     {
-    //case 'f':
-    //  ReferenceGenomeIndexPath = string(lGetOpt.optarg);
-    //  break;
+    case 'b':
+      Bundle = true;
+      break;
 
-    //case 'g':
-    //  GenomePath = string(lGetOpt.optarg);
-    //  break;
+    case 'c':
+      Compress = true;
+      Bundle = true;
+      break;
 
     case 'o':
       SavePath = string(lGetOpt.optarg);

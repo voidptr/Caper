@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../BoostLibraries/boost/filesystem.hpp"
+#include "Path.h"
 
 #include "MappingsPreparer.h"
 #include "MappingUtilities.h"
@@ -28,7 +28,7 @@ private:
 private:
 	void PopulateMappingIndex();	
 	void PopulateContigBorders();
-	//void PopulateNumberOfWindows();
+	void CompressFileAndIndex();
 	void PopulateReadInformation();
   void SaveMappingIndex();
 

@@ -19,11 +19,11 @@ private:
 public:
   MappingFileFormat MappingStyle; // Mapview Mappings or BowtieMappings
 
+  bool Bundle;
+  bool Compress; // if we're compressing, we should also bundle.
+
   string MappingPath; // Mapping File Path
   string SavePath; // When saving, save to this path
-
-  //string ReferenceGenomeIndexPath; // Loaded Reference Genome Index Path
-  //string GenomePath; // Reference Genome Path
 
 public:
   // Process your arguments
