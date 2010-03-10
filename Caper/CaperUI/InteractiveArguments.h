@@ -21,6 +21,7 @@ public:
 
   string MappingIndexPath; // Loaded Mapping Index Path
   string MappingPath; // Mapping File Path
+  string BundlePath; // Bundle Path
 
 public:
   // Process your arguments

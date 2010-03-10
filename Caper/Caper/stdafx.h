@@ -17,6 +17,8 @@
 #include <assert.h>
 #include <algorithm>
 
+#include "Triad.h"
+
 using namespace std;
 
 

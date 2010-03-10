@@ -12,12 +12,12 @@ bool InteractiveArguments::ProcessArguments( int argc, char * const argv[] )
 {
   XGetOpt lGetOpt;
 
-  if ( argc < 9 ) // sanity check, missing arguments.
+  if ( argc < 7 ) // sanity check, missing arguments.
     return false;
 
   int c;
 
-  while ((c = lGetOpt.GetOpt(argc, argv, "f:i:g:m:")) != EOF)
+  while ((c = lGetOpt.GetOpt(argc, argv, "f:i:g:m:b:")) != EOF)
   {
     switch (c)
     {
@@ -37,6 +37,10 @@ bool InteractiveArguments::ProcessArguments( int argc, char * const argv[] )
       MappingPath = string(lGetOpt.optarg);
       break;
 
+    case 'b':
+      BundlePath = string(lGetOpt.optarg);
+      break;
+
     case '?':
       return false;
       break;
@@ -47,10 +51,19 @@ bool InteractiveArguments::ProcessArguments( int argc, char * const argv[] )
     }
   }
 
+  // genome path is required.
   if (GenomePath.length() < 1 ||
-  	MappingPath.length() < 1 ||
-  	MappingIndexPath.length() < 1 ||
   	ReferenceGenomeIndexPath.length() < 1)
+    return false;
+
+  // have to have at least one fully set
+  if ( (MappingPath.length() < 1 ||
+  	    MappingIndexPath.length() < 1 ) &&
+        BundlePath.length() < 1 )
+    return false;
+
+  // can't have both at the same time.
+  if ( BundlePath.length() > 0 && ( MappingPath.length() > 0 || MappingIndexPath.length() > 0 ) )
     return false;
 
   return true;

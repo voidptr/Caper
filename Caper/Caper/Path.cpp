@@ -9,7 +9,7 @@ Path::Path( string aPath )
 
 void Path::SetPathType()
 {
-  if ( mPathString.length() > 0 && access( mPathString.c_str(), 0 ) == 0 )
+  if ( mPathString.length() > 0 && _access( mPathString.c_str(), 0 ) == 0 )
   {
     struct stat status;
     stat( mPathString.c_str(), &status );

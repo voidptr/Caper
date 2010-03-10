@@ -19,8 +19,7 @@ private:
 public:
   MappingFileFormat MappingStyle; // Mapview Mappings or BowtieMappings
 
-  bool Bundle;
-  bool Compress; // if we're compressing, we should also bundle.
+  bool Bundle; // bundling implies compressing
 
   string MappingPath; // Mapping File Path
   string SavePath; // When saving, save to this path

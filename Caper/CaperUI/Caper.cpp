@@ -50,7 +50,7 @@ void Caper::IndexMappings( Arguments lArgs )
   cout << "Preparing Mappings \"" << lModeArgs->MappingPath << "\"... " << endl;
   cout.flush();
 
-  MappingsIndexer lIndexer( lModeArgs->MappingPath, lModeArgs->MappingStyle, lModeArgs->SavePath );
+  MappingsIndexer lIndexer( lModeArgs->MappingPath, lModeArgs->MappingStyle, lModeArgs->SavePath, lModeArgs->Bundle );
   lIndexer.IndexMappingsAndSave();
  
 }
@@ -64,7 +64,11 @@ void Caper::Interactive( Arguments lArgs )
   SequenceEngine * lSequenceEngine = new FASequenceEngine( lModeArgs->GenomePath, lModeArgs->ReferenceGenomeIndexPath );
   lSequenceEngine->Initialize();
 
-  MappingEngine * lMappingEngine = new MappingEngine( lModeArgs->MappingPath, lModeArgs->MappingIndexPath );
+  MappingEngine * lMappingEngine;
+  if ( lModeArgs->BundlePath.length() > 0 )
+    lMappingEngine = new MappingEngine( lModeArgs->BundlePath );
+  else
+    lMappingEngine = new MappingEngine( lModeArgs->MappingPath, lModeArgs->MappingIndexPath );
   lMappingEngine->Initialize();
 
   cout << "> ";
@@ -85,14 +89,14 @@ void Caper::Interactive( Arguments lArgs )
       Mappings * lMappings = lMappingEngine->GetReads(lCommands.ContigIdent, lCommands.Left, lCommands.Right );
       if ( lCommands.PrettyMode ) // engage pretty mode
       {
-        cout << PadLeft( lMappingEngine->ReadLength ) << lCommands.Left + lMappingEngine->ReadLength << endl;
-        cout << PadLeft( lMappingEngine->ReadLength ) << PadLeft( lCommands.Right - lCommands.Left, "*") << endl;
+        cout << PadLeft( lMappingEngine->GetReadLength() ) << lCommands.Left + lMappingEngine->GetReadLength() << endl;
+        cout << PadLeft( lMappingEngine->GetReadLength() ) << PadLeft( lCommands.Right - lCommands.Left, "*") << endl;
 
         string lGenome = "";
 
         Sequence * lContig = (*lSequenceEngine->mSequences)[ lCommands.ContigIdent ];
 
-        int lTargetGenomeWidth = lCommands.Right - lCommands.Left + 1 + lMappingEngine->ReadLength;
+        int lTargetGenomeWidth = lCommands.Right - lCommands.Left + 1 + lMappingEngine->GetReadLength(); // FIX THIS LATER
         if ( lTargetGenomeWidth < lContig->Length )
           lGenome = lContig->Substring( lCommands.Left, lTargetGenomeWidth );
         else

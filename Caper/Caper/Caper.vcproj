@@ -41,8 +41,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;../BoostLibraries/&quot;"
-				AdditionalUsingDirectories="&quot;../BoostLibraries/&quot;"
+				AdditionalIncludeDirectories="&quot;../zlib123/&quot;"
+				AdditionalUsingDirectories="&quot;../zlib123/&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -155,6 +155,10 @@
 		</Configuration>
 	</Configurations>
 	<References>
+		<ProjectReference
+			ReferencedProjectIdentifier="{8FD826F8-3739-44E6-8CC8-997122E53B8D}"
+			RelativePathToProject="..\zlib123\contrib\vstudio\vc8\zlibvc.vcproj"
+		/>
 	</References>
 	<Files>
 		<File
@@ -291,6 +295,14 @@
 		</File>
 		<File
 			RelativePath=".\stdafx.h"
+			>
+		</File>
+		<File
+			RelativePath=".\Triad.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\Triad.h"
 			>
 		</File>
 		<File

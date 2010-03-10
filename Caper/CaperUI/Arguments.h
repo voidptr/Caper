@@ -23,8 +23,8 @@ public:
   {
     INTERACTIVE,
     INDEXGENOME,
-    INDEXMAPPINGS,
-  } Mode; // Mapview Mappings or BowtieMappings
+    INDEXMAPPINGS
+  } Mode;
 
   ModeArguments * ModeArgs;
 

@@ -80,7 +80,6 @@ string MappingsPreparer::SortMappingsAndWriteToTmpFile()
     lOutputPath = lIndexPath.mPathString + ".sorted";
   }
 
-  //string lFilename = mPath + ".sorted";
   WriteAllLines( lMappingKeys, lOutputPath );
 
   delete lMappingKeys;

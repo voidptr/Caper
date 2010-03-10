@@ -5,6 +5,7 @@
 // Initializes member variables.
 IndexMappingsArguments::IndexMappingsArguments() : ModeArguments()
 {
+  Bundle = false;
 }
 
 // Processes arguments.
@@ -17,16 +18,11 @@ bool IndexMappingsArguments::ProcessArguments( int argc, char * const argv[] )
 
   int c;
 
-  while ((c = lGetOpt.GetOpt(argc, argv, "o:m:t:bc")) != EOF)
+  while ((c = lGetOpt.GetOpt(argc, argv, "o:m:t:b")) != EOF)
   {
     switch (c)
     {
     case 'b':
-      Bundle = true;
-      break;
-
-    case 'c':
-      Compress = true;
       Bundle = true;
       break;
 

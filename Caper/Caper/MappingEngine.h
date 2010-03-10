@@ -6,6 +6,8 @@
 #include "MappingUtilitiesFactory.h"
 #include "Typedefs.h"
 
+#include "zlib.h"
+
 class MappingEngine
 {
   static const int IndexIncrement = 1000;
@@ -20,11 +22,14 @@ private:
 	
 	long mEndOfFilePosition;
 	string mPath;
+  long mPathStartOffset;
   string mIndexPath;
+  bool mBundle;
+  int ReadLength;
+	
 
-	map<string, vector<long> > mMappingIndexes;
-	//map<string, int> mNumberOfWindows;
-	map<string, pair<long,long> > mContigBorders;
+	map<string, vector<StoredMappingBlock> > mMappingIndexes;
+	map<string, pair<long,long> > mContigBorders; // do we even need this?
 
   MappingUtilities * mMappingUtilities;
 
@@ -33,6 +38,7 @@ private:
 	void PopulateContigBorders();
 	void PopulateNumberOfWindows();
 	void PopulateReadInformation();
+  int DetermineCompressedMappingStartOffset();
   
 	MappingCache * GetCorrectCache( string lContigIdent, int aLeft, int aRight );
 	void RebuildCaches( string lContigIdent, int aLeft );
@@ -40,14 +46,20 @@ private:
 	MappingCache * BuildEmptyCache( string aContigIdent, int aLeft, int aRight );
 	MappingCache * BuildCache( char * aBlock, string aContigIdent, int aLeft, int aRight );
 
+  void OffsetSeek( ifstream & aStream, long aPosition );
+
+  void DecompressBlock( char *&lBlock, int aStoredSize, int aBlockSize );
+  char * FetchBlock( string aContigIdent, int aStartingWindowIndex );
+
 public:
 	map<string, int> NumberOfReads;
-  int ReadLength;
-	
+  
 public:
 	//MappingEngine( string aPath, Sequences & aReferenceGenome );
 	MappingEngine( string aPath, string aIndexPath );
+  MappingEngine( string aBundlePath );
   Mappings * GetReads(string lContigIdent, int aLeft, int aRight );
+  int GetReadLength();
 
   void Initialize();
   //void Initialize( string aIndexPath );

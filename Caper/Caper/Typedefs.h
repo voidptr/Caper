@@ -15,6 +15,9 @@ typedef vector<Mappings> IndexedMappings;
 typedef pair<string, int> MappingKey;
 typedef pair<MappingKey, long> MappingIndex;
 
+// for storing the mapping indexes
+typedef triad<long, int, int> StoredMappingBlock;
+
 enum MappingFileFormat
 {
   DEFAULT,

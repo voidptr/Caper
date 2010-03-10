@@ -1,10 +1,24 @@
 #include "MappingEngine.h"
 
-MappingEngine::MappingEngine(string aPath, string aIndexPath)
+MappingEngine::MappingEngine( string aPath, string aIndexPath )
 {
-//	ReferenceGenome = aReferenceGenome;
 	mPath = aPath;
   mIndexPath = aIndexPath;
+  mPathStartOffset = 0;
+  mBundle = false;
+  ReadLength = -1;
+
+  CacheA = NULL;
+  CacheB = NULL;
+}
+
+MappingEngine::MappingEngine( string aBundlePath )
+{
+	mPath = aBundlePath;
+  mIndexPath = aBundlePath;
+  mPathStartOffset = -1;
+  mBundle = true;
+  ReadLength = -1;
 
   CacheA = NULL;
   CacheB = NULL;
@@ -12,7 +26,6 @@ MappingEngine::MappingEngine(string aPath, string aIndexPath)
 
 void MappingEngine::Initialize()
 {	
-
   ifstream lStream( mIndexPath.c_str(), ios::binary );
   if ( !lStream.is_open() )
     throw string("Could not open saved index file.");
@@ -21,8 +34,6 @@ void MappingEngine::Initialize()
   lStream >>lDatatype;
 
   mMappingUtilities = MappingUtilitiesFactory::BuildMappingUtilities( lDatatype ); // I don't like having this here. This needs to be done before EVERYTHING else... 
-
-  PopulateReadInformation();
 
   //PopulateContigBorders();
   int lCount = 0;
@@ -54,32 +65,62 @@ void MappingEngine::Initialize()
     lStream >> lWindowsCount;
 
     NumberOfReads.insert( pair<string, int>( lContigIdent, lReadCount ) );   
-    mMappingIndexes.insert( pair<string, vector<long> >( lContigIdent, vector<long>() ) );
+    mMappingIndexes.insert( pair<string, vector<StoredMappingBlock> >( lContigIdent, vector<StoredMappingBlock>() ) );
 
     mMappingIndexes[ lContigIdent ].reserve( lWindowsCount ); // preallocate the vector.
 
-    for (int j = 0; j < lWindowsCount; j++ )
+    for (int j = 0; j < lWindowsCount; j++ ) // could this break something? see where we are getting this window count.
     {
       long lIndex = 0;
-      lStream >> lIndex;
-      mMappingIndexes[ lContigIdent ].push_back( lIndex );
+      int lBlockSize = 0;
+      int lStoredSize = 0;
+      lStream >> lIndex; // TODO have the reading of these reside in the StoredMappingBlock class (which does not yet exist), same with the out. Need to decouple this crap.
+      lStream >> lBlockSize; // ditto
+      lStream >> lStoredSize; // ditto
+      mMappingIndexes[ lContigIdent ].push_back( StoredMappingBlock( lIndex, lBlockSize, lStoredSize ) );
     }
   }
+
+  if ( mBundle ) // remember the offset.
+    mPathStartOffset = lStream.tellg() + 1l; // the start of the rest of the bundle.
+
   lStream.close();
+
+
+  PopulateReadInformation(); // this depends on having the index fully populated.
 
   cout << "Done!" << endl;
 }
+
+int MappingEngine::GetReadLength()
+{
+  if (ReadLength > -1 ) // we've already got one!
+    return ReadLength;
+
+  string lTargetContig = mMappingIndexes.begin()->first;
+
+  int lTargetWindow = 0;
+  while ( mMappingIndexes[ lTargetContig ][ lTargetWindow ].first == -1 ) // loop through the listed windows until we find a populated one.
+    lTargetWindow++; // if we overrun here, that's fine. We have an empty contig, which should never ever happen, so it's fine to die messily, since we did something really wrong upstream.
+
+  char * lBlock = FetchBlock( lTargetContig, lTargetWindow ); // fetch the first block in the database. Hopefully it's not empty.
+  
+  //string lStringBlock(lBlock); // long string. ;)
+  istringstream lStream( string(lBlock), ios_base::binary);
+
+  string lLine;
+  getline( lStream, lLine );
+  ReadLength = mMappingUtilities->GetSequence( lLine ).length();
+
+  return ReadLength;
+}
+
 
 void MappingEngine::PopulateReadInformation()
 {	
   ifstream lStream( mPath.c_str(), ios_base::binary );
   if ( !lStream.is_open() )
     throw string("Could not open mappings file.");
-
-  string lLine;
-  getline( lStream, lLine );
-
-  ReadLength = mMappingUtilities->GetSequence( lLine ).length();
   
   lStream.seekg( 0, ios::end );
   mEndOfFilePosition = lStream.tellg();
@@ -156,11 +197,60 @@ void MappingEngine::RebuildCaches(string aContigIdent, int aLeft ) // these defi
     CacheB = NULL;
 }
 
+char * MappingEngine::FetchBlock( string aContigIdent, int aStartingWindowIndex )
+{
+  long lStartingPos = mMappingIndexes[aContigIdent][ aStartingWindowIndex ].first;
+  int lBlockSize = mMappingIndexes[aContigIdent][ aStartingWindowIndex ].second;
+  int lStoredSize = mMappingIndexes[aContigIdent][ aStartingWindowIndex ].third;
+
+  if ( lStartingPos == -1 )
+    return NULL; // a valid return value, where there is no block to fetch.
+
+  // now, fetch the block
+  ifstream lStream( mPath.c_str(), ios_base::binary );
+  if ( !lStream.is_open() )
+    throw string("Could not open mapping file.");
+
+  char * lBlock = new char[ lStoredSize + 1 ]; 
+  OffsetSeek( lStream, lStartingPos );
+  lStream.read( lBlock, lStoredSize );
+
+  lStream.close();
+
+  // is it compressed?
+  if ( lStoredSize != lBlockSize )
+    DecompressBlock( lBlock, lStoredSize, lBlockSize );
+  else
+    lBlock[ lStoredSize ] = 0; // impose our own null termination BLEH TODO
+
+  return lBlock;
+}
+
+void MappingEngine::DecompressBlock( char *&lBlock, int aStoredSize, int aBlockSize )
+{
+  Bytef *lUncompressed;
+  unsigned long lUncompressedLength = aBlockSize; // do these go negative?
+  lUncompressed = new Bytef[ aBlockSize + 1 ]; // allocate the memory on the fly.
+  assert( lUncompressed != NULL ); // temporary. TODO handle this better, clean up after myself.
+
+  int lErrorCode = uncompress(lUncompressed, &lUncompressedLength, (Bytef *) lBlock, aStoredSize);
+  assert( lErrorCode == 0 ); // temporary. TODO handle this better, clean up after myself.
+
+  delete [] lBlock;
+
+  lBlock = ( char * ) lUncompressed;
+
+  lBlock[ aBlockSize ] = 0; // impose our own null termination BLEH TODO
+}
+
+
 MappingCache * MappingEngine::RebuildCache( string aContigIdent, int lStartingWindowIndex )
 {  
-  long lStartingPos = mMappingIndexes[aContigIdent][ lStartingWindowIndex ];  
+  long lStartingPos = mMappingIndexes[aContigIdent][ lStartingWindowIndex ].first;
 
-  if ( lStartingPos == -1 ) // there's no cache here
+  char * lBlock = FetchBlock( aContigIdent, lStartingWindowIndex );
+
+  if ( lBlock == NULL ) // no catch exists.
   {
     return BuildEmptyCache( 
       aContigIdent, 
@@ -168,35 +258,19 @@ MappingCache * MappingEngine::RebuildCache( string aContigIdent, int lStartingWi
       ( lStartingWindowIndex * IndexIncrement ) + IndexIncrement - 1 );
   }
 
-	long lCount = -1;
-  if ( lStartingWindowIndex + 1 < mMappingIndexes[ aContigIdent ].size() )
-  {
-    for ( int i = lStartingWindowIndex + 1; i < mMappingIndexes[ aContigIdent ].size(); i++ )
-    {
-      if ( mMappingIndexes[ aContigIdent ][ i ] > -1 )
-      {
-        lCount = mMappingIndexes[ aContigIdent ][ i ] - lStartingPos;
-        break;
-      }
-    }
-  }
-
-  if ( lCount == -1 ) // it's at the edge of the contig!
-    lCount = mContigBorders[ aContigIdent ].second - lStartingPos + 1;
-
-  ifstream lStream( mPath.c_str(), ios_base::binary );
-
-  char * lBlock = new char[ lCount + 1 ];  
-  lStream.seekg( lStartingPos );
-  lStream.read( lBlock, lCount );
-  lBlock[ lCount ] = 0; // impose our own null termination
-
   MappingCache * lCache = BuildCache( lBlock, aContigIdent, lStartingWindowIndex * IndexIncrement, ( ( lStartingWindowIndex + 1 ) * IndexIncrement ) - 1 );
-
+  
   delete [] lBlock;
-  lStream.close();
 
   return lCache;
+}
+
+void MappingEngine::OffsetSeek( ifstream & aStream, long aPosition )
+{
+  if ( mBundle )
+    aStream.seekg( mPathStartOffset + aPosition );
+  else
+    aStream.seekg( aPosition );
 }
 
 MappingCache* MappingEngine::BuildEmptyCache( string aContigIdent, int aLeft, int aRight )
