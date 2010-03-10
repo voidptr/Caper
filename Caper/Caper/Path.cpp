@@ -9,11 +9,12 @@ Path::Path( string aPath )
 
 void Path::SetPathType()
 {
-  if ( mPathString.length() > 0 && _access( mPathString.c_str(), 0 ) == 0 )
-  {
-    struct stat status;
-    stat( mPathString.c_str(), &status );
+ // if ( mPathString.length() > 0 && access( mPathString.c_str(), 0 ) == 0 )
 
+  struct stat status;
+
+  if ( mPathString.length() > 0 && stat( mPathString.c_str(), &status ) )
+  {
     if ( status.st_mode & S_IFDIR )
     {
         mPathType = DIRECTORY; // it's a directory!

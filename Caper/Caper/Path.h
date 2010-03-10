@@ -2,7 +2,8 @@
 
 #include "stdafx.h"
 
-#include <stdio.h>   // For access().
+//#include <stdio.h>   // For access().
+//#include <io.h>
 #include <sys/types.h>  // For stat().
 #include <sys/stat.h>   // For stat().
 
