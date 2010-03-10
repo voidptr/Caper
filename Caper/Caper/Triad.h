@@ -91,7 +91,7 @@ template<class _Ty1,
 	{	// test if _Left < _Right for pairs
 
 
-    if ( _Less.first < _Right.first )
+    if ( _Left.first < _Right.first )
       return true;
     else
     {
@@ -106,7 +106,7 @@ template<class _Ty1,
             if ( _Left.third < _Right.third )
               return true;
             else
-              return !(_Right.third < _Left.third )
+              return !(_Right.third < _Left.third );
           }
           else
             return false;
