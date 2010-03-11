@@ -12,10 +12,10 @@ bool Arguments::ProcessArguments( int argc, char * const argv[] )
 {
   XGetOpt lGetOpt;
 
-  string lMode = argv[1];
-
   if ( argc < 2 ) // sanity check, missing arguments.
     return false;
+
+  string lMode = argv[1];
 
   if ( lMode == "interactive" )
   {

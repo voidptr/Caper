@@ -2,7 +2,8 @@
 
 void Caper::UserInterface(int argc, char * const argv[] )
 {
-  string lUsageString = "Caper v0.4.1\nUsage:\n caper indexgenome <-g referencegenome.fa> <-o savepath>\n caper indexmappings <-m mappingfile> <-t bowtie|mapview|sam> <-o savepath>\n caper interactive <-b|-v> <-g indexedreferencegenome.fa> <-f referencegenomeindexfile> <-m indexedmappingfile> <-i mappingfileindex>\n";
+  string lUsageString = 
+    "Caper v0.4.1\nUsage:\n caper indexgenome <-g referencegenome.fa> <-o savepath>\n caper indexmappings [-b] <-m mappingfile> <-t bowtie|mapview|sam> <-o savepath>\n caper interactive <-g indexedreferencegenome.fa> <-f referencegenomeindexfile> <-m indexedmappingfile -i mappingfileindex|-b compressedmappingbundle>\n";
 
   try
   {
