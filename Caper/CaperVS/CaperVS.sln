@@ -9,19 +9,12 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CaperUI", "..\CaperUI\CaperUI.vcproj", "{20C91EEC-6DC8-4B20-98C6-6A94FB2BF101}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8810A69C-004C-44F5-B950-781517BCD085}"
-	ProjectSection(SolutionItems) = preProject
-		CaperVS.vsmdi = CaperVS.vsmdi
-		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zlibvc", "..\zlib123\contrib\vstudio\vc8\zlibvc.vcproj", "{8FD826F8-3739-44E6-8CC8-997122E53B8D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tests", "..\Tests\Tests.vcproj", "{98FCDBB5-CABC-43EE-A837-9586ACAB0BD5}"
 EndProject
 Global
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = CaperVS.vsmdi
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
