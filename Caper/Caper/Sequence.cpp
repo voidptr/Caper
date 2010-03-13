@@ -8,7 +8,7 @@ Sequence::Sequence( string aBases )
   Length = aBases.length();
 }
 
-Sequence::Sequence( string & aPath, long & aPosition, long & aLength )
+Sequence::Sequence( string & aPath, long long & aPosition, long long & aLength )
 {
   mBases = "";
   mHandle.open( aPath.c_str() );
@@ -32,15 +32,15 @@ Sequence::Sequence( Sequence & aSequence )
     mHandle.open( aSequence.mPath.c_str() );
 }
 
-string Sequence::Substring( long aIndex )
+string Sequence::Substring( long long aIndex )
 {
   return Substring( aIndex, Length - aIndex );
 }
 
-string Sequence::Substring( long aIndex, long aCount )
+string Sequence::Substring( long long aIndex, long long aCount )
 {
   if ( !mIsStream )
-    return mBases.substr((int) aIndex, (int) aCount );
+    return mBases.substr((int) aIndex, (int) aCount ); // TODO, could create a nasty overflow
   else
   {
     if ( aCount > Length )
@@ -62,7 +62,7 @@ string Sequence::Substring( long aIndex, long aCount )
 
 string Sequence::ToString()
 {
-  long lCount =0;
+  long long lCount =0;
   return Substring(lCount, Length);
 }
 

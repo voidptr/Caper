@@ -2,8 +2,8 @@
 
 void Utilities::Split(const string & aString, vector<string> & aTokens, const string & aDelimiters)
 {
-    long lPreviousPosition = aString.find_first_not_of( aDelimiters, 0 );
-    long lDelimiterPosition = aString.find_first_of( aDelimiters, lPreviousPosition );
+    long long lPreviousPosition = aString.find_first_not_of( aDelimiters, 0 );
+    long long lDelimiterPosition = aString.find_first_of( aDelimiters, lPreviousPosition );
 
     while ( string::npos != lDelimiterPosition || string::npos != lPreviousPosition )
     {

@@ -20,16 +20,16 @@ private:
   MappingCache* CacheA;
   MappingCache* CacheB;
 	
-	long mEndOfFilePosition;
+	long long mEndOfFilePosition;
 	string mPath;
-  long mPathStartOffset;
+  long long mPathStartOffset;
   string mIndexPath;
   bool mBundle;
   int ReadLength;
 	
 
 	map<string, vector<StoredMappingBlock> > mMappingIndexes;
-	map<string, pair<long,long> > mContigBorders; // do we even need this?
+	map<string, pair<long long,long long> > mContigBorders; // do we even need this?
 
   MappingUtilities * mMappingUtilities;
 
@@ -40,16 +40,16 @@ private:
 	void PopulateReadInformation();
   int DetermineCompressedMappingStartOffset();
   
-	MappingCache * GetCorrectCache( string lContigIdent, int aLeft, int aRight );
-	void RebuildCaches( string lContigIdent, int aLeft );
-	MappingCache * RebuildCache( string aContigIdent, int aLeft );
-	MappingCache * BuildEmptyCache( string aContigIdent, int aLeft, int aRight );
-	MappingCache * BuildCache( char * aBlock, string aContigIdent, int aLeft, int aRight );
+	MappingCache * GetCorrectCache( string lContigIdent, long long aLeft, long long aRight );
+	void RebuildCaches( string lContigIdent, long long aLeft );
+	MappingCache * RebuildCache( string aContigIdent, long long aLeft );
+	MappingCache * BuildEmptyCache( string aContigIdent, long long aLeft, long long aRight );
+	MappingCache * BuildCache( char * aBlock, string aContigIdent, long long aLeft, long long aRight );
 
-  void OffsetSeek( ifstream & aStream, long aPosition );
+  void OffsetSeek( ifstream & aStream, long long aPosition );
 
-  void DecompressBlock( char *&lBlock, int aStoredSize, int aBlockSize );
-  char * FetchBlock( string aContigIdent, int aStartingWindowIndex );
+  void DecompressBlock( char *&lBlock, long long aStoredSize, long long aBlockSize );
+  char * FetchBlock( string aContigIdent, long long aStartingWindowIndex );
 
 public:
 	map<string, int> NumberOfReads;
@@ -58,7 +58,7 @@ public:
 	//MappingEngine( string aPath, Sequences & aReferenceGenome );
 	MappingEngine( string aPath, string aIndexPath );
   MappingEngine( string aBundlePath );
-  Mappings * GetReads(string lContigIdent, int aLeft, int aRight );
+  Mappings * GetReads(string lContigIdent, long long aLeft, long long aRight );
   int GetReadLength();
 
   void Initialize();

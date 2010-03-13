@@ -5,7 +5,7 @@ string SAMMappingUtilities::GetContigIdent( string & aLine )
 return GetLineItem( 2, aLine );
 }
  
-int SAMMappingUtilities::GetIndex( string & aLine )
+long long SAMMappingUtilities::GetIndex( string & aLine )
 {
 return atoi( GetLineItem( 3, aLine ).c_str() );
 }

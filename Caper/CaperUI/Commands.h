@@ -21,8 +21,8 @@ public:
   } Action;
 
   string ContigIdent;
-  long Left;
-  long Right;
+  long long Left;
+  long long Right;
   bool PrettyMode;
 public:
   bool ProcessArguments(string & aLine, Sequences * aReferenceGenome, MappingEngine * aMappingEngine );

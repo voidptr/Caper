@@ -13,7 +13,7 @@ void Path::SetPathType()
 
   struct stat status;
 
-  if ( mPathString.length() > 0 && stat( mPathString.c_str(), &status ) )
+  if ( mPathString.length() > 0 && stat( mPathString.c_str(), &status ) == 0 )
   {
     if ( status.st_mode & S_IFDIR )
     {
@@ -92,7 +92,7 @@ string Path::DirectoryPath()
     return mPathString;
   }
 
-  throw string("GAH!");
+  throw string("File does not exist, no way to know its directory path.");
 //  return ""; // don't know what the correct behavior is here, since it doesn't exist, we don't know if it was intended as a directory or file.
 }
 

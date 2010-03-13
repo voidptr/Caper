@@ -5,9 +5,9 @@ string BowtieMappingUtilities::GetContigIdent( string & aLine )
 return GetLineItem( 2, aLine );
 }
  
-int BowtieMappingUtilities::GetIndex( string & aLine )
+long long BowtieMappingUtilities::GetIndex( string & aLine )
 {
-return atoi( GetLineItem( 3, aLine ).c_str() );
+return atoi( GetLineItem( 3, aLine ).c_str() ); // could be an overflow. :/
 }
  
 string BowtieMappingUtilities::GetSequence( string & aLine )

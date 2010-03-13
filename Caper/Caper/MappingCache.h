@@ -12,22 +12,22 @@ private:
 
 public:
   string ContigIdent;
-  int LeftIndex;
-  int RightIndex;
+  long long LeftIndex;
+  long long RightIndex;
   IndexedMappings * IndexedReads;
 
 public:
 	MappingCache( 
     IndexedMappings * lMappings, 
     string & aContigIdent, 
-    int & aLeftIndex, 
-    int & aRightIndex );
+    long long & aLeftIndex, 
+    long long & aRightIndex );
 
-  Mappings * GetReads( int aLeft, int aRight );
+  Mappings * GetReads( long long aLeft, long long aRight );
 
   ~MappingCache(void);
  
 private:
-  int PrivateIndex( int aPublicIndex );
+  int PrivateIndex( long long aPublicIndex );
   void DestroyMappings();
 };

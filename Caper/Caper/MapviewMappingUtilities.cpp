@@ -5,7 +5,7 @@ string MapviewMappingUtilities::GetContigIdent( string & aLine )
 	return GetLineItem( 1, aLine );	
 }
 
-int MapviewMappingUtilities::GetIndex( string & aLine )
+long long MapviewMappingUtilities::GetIndex( string & aLine )
 {
 	return atoi( GetLineItem( 2, aLine ).c_str() ) - 1;
 }

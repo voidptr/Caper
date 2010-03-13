@@ -41,16 +41,16 @@ void MappingEngine::Initialize()
   for (int i = 0; i < lCount; i++ )
   {
     string lContigIdent = "";
-    long lStart = 0;
-    long lEnd = 0;
+    long long lStart = 0;
+    long long lEnd = 0;
 
     lStream >> lContigIdent;
     lStream >> lStart;
     lStream >> lEnd;
 
-    mContigBorders.insert( pair<string, pair<long,long> >( 
+    mContigBorders.insert( pair<string, pair<long long,long long> >( 
       lContigIdent, 
-      pair<long,long>(lStart, lEnd)));
+      pair<long long,long long>(lStart, lEnd)));
   }
   
   //PopulateMappingIndex()
@@ -71,7 +71,7 @@ void MappingEngine::Initialize()
 
     for (int j = 0; j < lWindowsCount; j++ ) // could this break something? see where we are getting this window count.
     {
-      long lIndex = 0;
+      long long lIndex = 0;
       int lBlockSize = 0;
       int lStoredSize = 0;
       lStream >> lIndex; // TODO have the reading of these reside in the StoredMappingBlock class (which does not yet exist), same with the out. Need to decouple this crap.
@@ -129,19 +129,19 @@ void MappingEngine::PopulateReadInformation()
 }
 
 
-Mappings * MappingEngine::GetReads(string lContigIdent, int aLeft, int aRight )
+Mappings * MappingEngine::GetReads(string lContigIdent, long long aLeft, long long aRight )
 {
   Mappings * lResult = new Mappings();
 
-  int lStartingCache = aLeft / IndexIncrement;
-  int lEndingCache = aRight / IndexIncrement;      
-  int lCachesRequired = lEndingCache - lStartingCache + 1; // this many caches.
-  int lLeftPosition = aLeft; // starting position
+  long long lStartingCache = aLeft / IndexIncrement;
+  long long lEndingCache = aRight / IndexIncrement;      
+  long long lCachesRequired = lEndingCache - lStartingCache + 1; // this many caches.
+  long long lLeftPosition = aLeft; // starting position
          
-  int lCurrentCachePosition = lStartingCache;
-  for ( int i = 0; i < lCachesRequired; i++ ) // loop through the total number of caches required.
+  long long lCurrentCachePosition = lStartingCache;
+  for ( long long i = 0; i < lCachesRequired; ++i ) // loop through the total number of caches required.
   {
-    int lRightPosition = aRight < ( lCurrentCachePosition + 1 ) * IndexIncrement ?
+    long long lRightPosition = aRight < ( lCurrentCachePosition + 1 ) * IndexIncrement ?
       aRight : (( lCurrentCachePosition + 1 ) * IndexIncrement) - 1;
 
     MappingCache * lAppropriateCache = 
@@ -150,7 +150,7 @@ Mappings * MappingEngine::GetReads(string lContigIdent, int aLeft, int aRight )
     Mappings * lTmp = lAppropriateCache->GetReads( lLeftPosition, lRightPosition );
 
     if ( !lTmp->empty() )
-      for (int i = 0; i < lTmp->size(); i++)
+      for (long long i = 0; i < lTmp->size(); ++i)
         lResult->push_back( new Mapping(*(lTmp->at(i))) ); // make a copy of the mapping.
 
     delete lTmp;
@@ -164,7 +164,7 @@ Mappings * MappingEngine::GetReads(string lContigIdent, int aLeft, int aRight )
 }
 
 
-MappingCache* MappingEngine::GetCorrectCache(string aContigIdent, int aLeft, int aRight )
+MappingCache* MappingEngine::GetCorrectCache(string aContigIdent, long long aLeft, long long aRight )
 {
   if ( CacheA != NULL && 
     CacheA->ContigIdent == aContigIdent && 
@@ -183,9 +183,9 @@ MappingCache* MappingEngine::GetCorrectCache(string aContigIdent, int aLeft, int
   }
 }
 
-void MappingEngine::RebuildCaches(string aContigIdent, int aLeft ) // these define the left edge of the problem.
+void MappingEngine::RebuildCaches(string aContigIdent, long long aLeft ) // these define the left edge of the problem.
 {
-  int lStartingIndex = ( aLeft / IndexIncrement );
+  long long lStartingIndex = ( aLeft / IndexIncrement );
 
   delete CacheA;
   CacheA = RebuildCache( aContigIdent, lStartingIndex );
@@ -197,11 +197,11 @@ void MappingEngine::RebuildCaches(string aContigIdent, int aLeft ) // these defi
     CacheB = NULL;
 }
 
-char * MappingEngine::FetchBlock( string aContigIdent, int aStartingWindowIndex )
+char * MappingEngine::FetchBlock( string aContigIdent, long long aStartingWindowIndex )
 {
-  long lStartingPos = mMappingIndexes[aContigIdent][ aStartingWindowIndex ].first;
-  int lBlockSize = mMappingIndexes[aContigIdent][ aStartingWindowIndex ].second;
-  int lStoredSize = mMappingIndexes[aContigIdent][ aStartingWindowIndex ].third;
+  long long lStartingPos = mMappingIndexes[aContigIdent][ aStartingWindowIndex ].first;
+  long long lBlockSize = mMappingIndexes[aContigIdent][ aStartingWindowIndex ].second;
+  long long lStoredSize = mMappingIndexes[aContigIdent][ aStartingWindowIndex ].third;
 
   if ( lStartingPos == -1 )
     return NULL; // a valid return value, where there is no block to fetch.
@@ -226,7 +226,7 @@ char * MappingEngine::FetchBlock( string aContigIdent, int aStartingWindowIndex 
   return lBlock;
 }
 
-void MappingEngine::DecompressBlock( char *&lBlock, int aStoredSize, int aBlockSize )
+void MappingEngine::DecompressBlock( char *&lBlock, long long aStoredSize, long long aBlockSize )
 {
   Bytef *lUncompressed;
   unsigned long lUncompressedLength = aBlockSize; // do these go negative?
@@ -244,9 +244,9 @@ void MappingEngine::DecompressBlock( char *&lBlock, int aStoredSize, int aBlockS
 }
 
 
-MappingCache * MappingEngine::RebuildCache( string aContigIdent, int lStartingWindowIndex )
+MappingCache * MappingEngine::RebuildCache( string aContigIdent, long long lStartingWindowIndex )
 {  
-  long lStartingPos = mMappingIndexes[aContigIdent][ lStartingWindowIndex ].first;
+  long long lStartingPos = mMappingIndexes[aContigIdent][ lStartingWindowIndex ].first;
 
   char * lBlock = FetchBlock( aContigIdent, lStartingWindowIndex );
 
@@ -265,7 +265,7 @@ MappingCache * MappingEngine::RebuildCache( string aContigIdent, int lStartingWi
   return lCache;
 }
 
-void MappingEngine::OffsetSeek( ifstream & aStream, long aPosition )
+void MappingEngine::OffsetSeek( ifstream & aStream, long long aPosition )
 {
   if ( mBundle )
     aStream.seekg( mPathStartOffset + aPosition );
@@ -273,12 +273,12 @@ void MappingEngine::OffsetSeek( ifstream & aStream, long aPosition )
     aStream.seekg( aPosition );
 }
 
-MappingCache* MappingEngine::BuildEmptyCache( string aContigIdent, int aLeft, int aRight )
+MappingCache* MappingEngine::BuildEmptyCache( string aContigIdent, long long aLeft, long long aRight )
 {
   IndexedMappings * lMappings = new IndexedMappings();
 
   lMappings->reserve( aRight - aLeft ); // avoid dynamic reallocation.
-  for ( int i = aLeft; i <= aRight; i++ ) // do I need to do this, or just say resize()? What is the default value?
+  for ( long long i = aLeft; i <= aRight; ++i ) // do I need to do this, or just say resize()? What is the default value?
   {
     lMappings->push_back( Mappings() );
   }
@@ -287,7 +287,7 @@ MappingCache* MappingEngine::BuildEmptyCache( string aContigIdent, int aLeft, in
 }
 
 // This (and related) method should really be in a separate MappingCache Builder.
-MappingCache * MappingEngine::BuildCache( char * aBlock, string aContigIdent, int aLeft, int aRight )
+MappingCache * MappingEngine::BuildCache( char * aBlock, string aContigIdent, long long aLeft, long long aRight )
 {
   MappingCache * lCache = BuildEmptyCache( aContigIdent, aLeft, aRight );
 
@@ -303,8 +303,9 @@ MappingCache * MappingEngine::BuildCache( char * aBlock, string aContigIdent, in
     if ( lLine.length() < 1 )
       break;
 
-    int lIndex = mMappingUtilities->GetIndex( lLine );
+    long long lIndex = mMappingUtilities->GetIndex( lLine );
     if ( lIndex < aLeft ) {	// @CTB may only need to check for first pass?
+      throw string("WTF"); // TEMPORARY
       break; // @RCK this should never happen. Investigate further.
     }
 

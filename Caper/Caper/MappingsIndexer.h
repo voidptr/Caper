@@ -23,7 +23,7 @@ private:
   string TemporaryMappingFile;
   string BundleFile;
 
-	long mEndOfFilePosition;
+	long long mEndOfFilePosition;
 	string mMappingsPath;
   string mSavePath;
   MappingFileFormat mFormat;
@@ -36,7 +36,7 @@ private:
   MappingUtilities * mMappingUtilities;
 
   map<string, vector<StoredMappingBlock> > mMappingIndexes; // a map of contigs, containing vectors of positions and sizes of index interval windows.
-	map<string, pair<long,long> > mContigBorders;
+	map<string, pair<long long,long long> > mContigBorders;
 
 private:
   void DetermineFileNames();

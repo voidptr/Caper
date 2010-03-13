@@ -14,8 +14,8 @@ void FASequenceEngine::Initialize()
   for (int i = 0; i < lLocusCount; i++ )
   {
     string lLocus = "";
-    long lLocusStart = 0;
-    long lCount =0;
+    long long lLocusStart = 0;
+    long long lCount = 0;
 
     lIndexStream >> lLocus;
     lIndexStream >> lLocusStart;

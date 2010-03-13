@@ -16,14 +16,14 @@ private: // private member variables
 private: // private methods
 
 public: // public member variables (replace with accessors later)
-  long Length;
-  long mPosition;
+  long long Length;
+  long long mPosition;
 public: // public methods
 	Sequence( string aBases );
   Sequence( Sequence & aSequence );
-  Sequence( string & aPath, long & aPosition, long & aLength );
-  string Substring( long aIndex, long aCount );
-  string Substring( long aIndex );
+  Sequence( string & aPath, long long & aPosition, long long & aLength );
+  string Substring( long long aIndex, long long aCount );
+  string Substring( long long aIndex );
   string ToString();
   const char * ToStringP() { return ToString().c_str(); }
   ~Sequence(void);

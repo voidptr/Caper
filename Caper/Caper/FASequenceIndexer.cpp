@@ -14,8 +14,8 @@ void FASequenceIndexer::Index()
     throw string("Could not open reference genome file.");
   
   string lLocus = "";
-  long lLocusStart = 0;
-  long lCount = 0;
+  long long lLocusStart = 0;
+  long long lCount = 0;
 
   string lLine = "";
 

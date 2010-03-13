@@ -7,7 +7,7 @@ class Mapping
 {
 public:
   string Name;
-	int Index;
+	long long Index;
 	Sequence* mSequence;
   enum Orientation
   {
@@ -15,7 +15,7 @@ public:
     MINUS
   } Strand;
 public:
-	Mapping(string & aName, int & aPosition, Sequence* aSequence, Orientation aStrand);
+	Mapping(string & aName, long long & aPosition, Sequence* aSequence, Orientation aStrand);
   Mapping( Mapping & aMapping );
 	~Mapping(void);
 

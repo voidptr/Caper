@@ -109,14 +109,14 @@ vector<MappingIndex> * MappingsPreparer::ReadAndInterpretMappingLines()
   multimap<string,MappingIndex> lContigs;
 
   string lLine;
-  long lPos = -1;
+  long long lPos = -1;
   while (lStream.peek() > -1 )
   {      
-    lPos = lStream.tellg();
+    lPos = lStream.tellg(); // could underflow :/
     getline( lStream, lLine );
 
     string lContig = mMappingUtilities->GetContigIdent( lLine );
-    int lIndex = mMappingUtilities->GetIndex( lLine );
+    long long lIndex = mMappingUtilities->GetIndex( lLine );
 
     lContigs.insert( pair<string,MappingIndex>( lContig, MappingIndex( MappingKey( lContig, lIndex ), lPos ) ) );
   }

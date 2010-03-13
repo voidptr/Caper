@@ -1,6 +1,6 @@
 #include "Mapping.h"
 
-Mapping::Mapping(string & aName, int & aIndex, Sequence* aSequence, Orientation aStrand)
+Mapping::Mapping(string & aName, long long & aIndex, Sequence* aSequence, Orientation aStrand)
 {
   Name = aName;
 	Index = aIndex;

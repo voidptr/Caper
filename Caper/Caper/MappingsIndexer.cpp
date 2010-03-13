@@ -79,7 +79,7 @@ void MappingsIndexer::CompressFileAndIndex() // do the compression separately, i
   if ( !lOutStream.is_open() )
     throw string("Could not write to temporary compressed mapping file.");
 
-  unsigned long lPreviousEnd = -1;
+  unsigned long long lPreviousEnd = -1;
   map<string, vector<StoredMappingBlock> >::iterator lContigsIterator; // TODO make these iterators be typedefed where the class is typed.
   for ( lContigsIterator = mMappingIndexes.begin(); 
     lContigsIterator != mMappingIndexes.end(); lContigsIterator++ )
@@ -91,13 +91,13 @@ void MappingsIndexer::CompressFileAndIndex() // do the compression separately, i
 
       if ( lSectionIterator->first != -1 ) // nothing in this slot.
       {
-        long lSize = lSectionIterator->second; // the incoming block size
+        long long lSize = lSectionIterator->second; // the incoming block size
 
         lInStream.seekg( lSectionIterator->first, std::ios_base::beg );
 
         // TODO abstract this out.
         Bytef *lSource;
-        unsigned long lSourceLength = lSize;
+        unsigned long long lSourceLength = lSize;
         lSource = (Bytef *) malloc( lSourceLength ); // allocate the memory on the fly.
         assert( lSource != NULL ); // temporary. TODO handle this better, clean up after myself.
 
@@ -173,7 +173,7 @@ void MappingsIndexer::SaveMappingIndex()
 
   // saving the contig borders
   lStream << mContigBorders.size() << endl;
-  map<string, pair<long,long> >::iterator lContigBordersIterator;
+  map<string, pair<long long,long long> >::iterator lContigBordersIterator;
   for ( lContigBordersIterator = mContigBorders.begin(); 
     lContigBordersIterator != mContigBorders.end(); lContigBordersIterator++ )
   {
@@ -205,9 +205,9 @@ void MappingsIndexer::PopulateContigBorders()
     throw string("Could not open mappings file.");
 
   string lContig = "";
-  long lContigStartingPos = 0;
+  long long lContigStartingPos = 0;
   string lLine;
-  long lCurrentPosition = 0;
+  long long lCurrentPosition = 0;
 
   while ( lStream.peek() > -1 )
   {
@@ -218,18 +218,18 @@ void MappingsIndexer::PopulateContigBorders()
     {
       if ( lContig.length() > 0 ) // there was a previous one, so close it up
       {
-        mContigBorders.insert( pair<string, pair<long,long> >( 
+        mContigBorders.insert( pair<string, pair<long long,long long> >( 
           lContig, 
-          pair<long,long>(lContigStartingPos, lCurrentPosition - 1)));
+          pair<long long,long long>(lContigStartingPos, lCurrentPosition - 1)));
       }
       lContigStartingPos = lCurrentPosition;
       lContig = lCurrentContig;
     }
   }
   // close up the last contig
-  mContigBorders.insert( pair<string, pair<long,long> >( 
+  mContigBorders.insert( pair<string, pair<long long,long long> >( 
     lContig, 
-    pair<long,long>(lContigStartingPos, (long) lStream.tellg() - 1)));
+    pair<long long,long long>(lContigStartingPos, (long long) lStream.tellg() - 1)));
 
   lStream.close();
 }
@@ -260,7 +260,7 @@ void MappingsIndexer::PopulateMappingIndex()
     throw string("Could not open mappings file.");
 
   string lContig = "";
-  long lCurrentPosition = 0;
+  long long lCurrentPosition = 0;
   int lTargetIndex = 0;
   int lReadCount = 0;
   string lLastInsertedIntervalContig = "";

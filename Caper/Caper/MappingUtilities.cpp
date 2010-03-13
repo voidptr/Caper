@@ -21,16 +21,16 @@ vector<string> MappingUtilities::GetLinePieces( string & aLine )
 	return lPieces;
 }
 
-string MappingUtilities::GetLineItem( int aIndex, string & aLine )
+string MappingUtilities::GetLineItem( int aColumn, string & aLine ) // column, line
 {
-  string lBit;
+  string lValue;
   istringstream lStream( aLine );
-  for (int i = 0; i <= aIndex; i++)
+  for (int i = 0; i <= aColumn; i++)
   {
-    lBit = "";
-    lStream >> lBit;
+    lValue = "";
+    lStream >> lValue;
 
-    assert( lBit.length() > 0 ); // line doesn't have enough elements
+    assert( lValue.length() > 0 ); // line doesn't have enough elements
   }
-  return lBit;
+  return lValue;
 }
