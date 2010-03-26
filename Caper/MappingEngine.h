@@ -57,7 +57,9 @@ public:
 public:
 	//MappingEngine( string aPath, Sequences & aReferenceGenome );
 	MappingEngine( string aPath, string aIndexPath );
+  MappingEngine( char * aPath, char * aIndexPath );
   MappingEngine( string aBundlePath );
+  MappingEngine( char * aBundlePath );
   Mappings * GetReads(string lContigIdent, long long aLeft, long long aRight );
   int GetReadLength();
 

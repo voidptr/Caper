@@ -1,5 +1,11 @@
 #include "MappingsPreparer.h"
 
+MappingsPreparer::MappingsPreparer( char* aPath, char* aSavePath, MappingFileFormat aFormat )
+{
+  mPath = string(aPath);
+  mSavePath = string(aSavePath);
+  mFormat = aFormat;
+}
 
 MappingsPreparer::MappingsPreparer(string aPath, string aSavePath, MappingFileFormat aFormat)
 {

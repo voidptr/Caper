@@ -48,6 +48,7 @@ protected:
 
 public:
   MappingsPreparer(string aPath, string aSavePath, MappingFileFormat aFormat);
+  MappingsPreparer(char * aPath, char * aSavePath, MappingFileFormat aFormat);
   string PrepareMappings();
 };
 

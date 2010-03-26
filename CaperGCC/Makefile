@@ -1,7 +1,8 @@
 SRCDIR=../Caper
 UISRCDIR=../CaperUI
 ZLIBSRCDIR=../zlib123
-CXXFLAGS=-ggdb -fPIC -I$(SRCDIR) -I$(ZLIBSRCDIR)
+CXXFLAGS=-fPIC -I$(SRCDIR) -I$(ZLIBSRCDIR)
+CFLAGS=-fPIC
 
 #zlib .o's
 adler32.o: $(ZLIBSRCDIR)/zlib.h \
@@ -100,7 +101,7 @@ default: all
 all: CaperUI
 
 clean:
-	rm -f $(SRCDIR)/*.o $(UISRCDIR)/*.o $(ZLIBOBJ)/*.o Caper
+	rm -f $(SRCDIR)/*.o $(UISRCDIR)/*.o $(ZLIBSRCDIR)/*.o Caper
 
 CaperUI: $(UISRCDIR)/CaperUI.o $(OBJS) $(UIOBJ) $(ZLIBOBJ)
-	g++ -O3 -o Caper $(UISRCDIR)/CaperUI.o $(OBJS) $(UIOBJ) $(ZLIBOBJ)
+	g++ -Wall -O3 -o Caper $(UISRCDIR)/CaperUI.o $(OBJS) $(UIOBJ) $(ZLIBOBJ)

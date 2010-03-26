@@ -1,5 +1,18 @@
 #include "MappingEngine.h"
 
+MappingEngine::MappingEngine( char * aPath, char * aIndexPath )
+{
+  mPath = string(aPath);
+  mIndexPath = string(aIndexPath);
+
+  mPathStartOffset = 0;
+  mBundle = false;
+  ReadLength = -1;
+
+  CacheA = NULL;
+  CacheB = NULL;
+} 
+
 MappingEngine::MappingEngine( string aPath, string aIndexPath )
 {
 	mPath = aPath;

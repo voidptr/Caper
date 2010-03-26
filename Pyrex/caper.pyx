@@ -21,11 +21,11 @@ cdef extern from "Caper.h":
     void del_mappings "delete" (c_mappings * mappings)
 
     # SequenceEngine type -> c_sequence_engine
-    ctypedef void (*Initialize)(char *)
+    ctypedef void (*Initialize)()
     ctypedef struct c_sequence_engine "SequenceEngine":
         Initialize Initialize
 
-    c_sequence_engine *new_sequence_engine "new FASequenceEngine" (char * path)
+    c_sequence_engine *new_sequence_engine "new FASequenceEngine" (char * path, char * index_path)
     void del_sequence_engine "delete" (c_sequence_engine * engine)
 
     # MappingEngine type -> c_mapping_engine
@@ -34,16 +34,22 @@ cdef extern from "Caper.h":
         Initialize Initialize
         GetReads GetReads
 
-    # create c_mapping_engine from MapviewMappingEngine objects.
-    c_mapping_engine *new_mapping_engine "new MapviewMappingEngine" (char * path, c_sequence_engine * sequence_engine)
+    # create c_mapping_engine from MappingEngine objects.
+    c_mapping_engine *new_mapping_engine "new MappingEngine" (char * path, char * index_path)
     void del_mapping_engine "delete" (c_mapping_engine * engine)
 
-    # MapviewMappingsPreparer type -> c_mappings_preparer
+    # MappingsPreparer type -> c_mappings_preparer
     ctypedef char * (*PrepareMappingsPy)()
-    ctypedef struct c_mappings_preparer "MapviewMappingsPreparer":
+    ctypedef struct c_mappings_preparer "MappingsPreparer":
         PrepareMappingsPy PrepareMappingsPy
 
-    c_mappings_preparer *new_mappings_preparer "new MapviewMappingsPreparer" (char * path)
+    ctypedef enum c_mapping_file_format:
+        DEFAULT
+        MAPVIEW
+        BOWTIE
+        SAM
+
+    c_mappings_preparer *new_mappings_preparer "new MappingsPreparer" (char * path, char * save_path, c_mapping_file_format format)
     void del_mappings_preparer "delete" (c_mappings_preparer * prep)
 
 # END of annoying Pyrex definitions.
@@ -117,31 +123,20 @@ cdef class mapping:
         return align_start, align_stop, name, slice_start, slice_stop
 
 cdef class mapping_container:
-    cdef c_sequence_engine *thisseq
     cdef c_mapping_engine *thismap
     cdef int read_length
 
-    def __cinit__(self, map_path, map_index, sequence_path, sequence_index,
+    def __cinit__(self, map_path, map_index,
                   read_length):
-        self.thisseq = NULL
         self.thismap = NULL
 
-        self.thisseq = new_sequence_engine(sequence_path)
-        self.thisseq.Initialize(sequence_index)
-
-#        cdef c_mappings_preparer * map_prepper
-#        map_prepper = new_mappings_preparer(map_path)
-#        prep_path = map_prepper.PrepareMappingsPy()
-#        del_mappings_preparer(map_prepper)
-
-        self.thismap = new_mapping_engine(map_path, self.thisseq)
-        self.thismap.Initialize(map_index)
+#        self.thismap = new_mapping_engine(map_path, map_index) # self.thisseq)
+#        self.thismap.Initialize()
 
         self.read_length = read_length  # @CTB can retrieve from thismap
 
     def __dealloc__(self):
         del_mapping_engine(self.thismap)
-        del_sequence_engine(self.thisseq)
 
     def get_reads_at(self, seqname, start, stop):
         cdef mapping x
