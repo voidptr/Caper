@@ -38,16 +38,21 @@ cdef extern from "Caper.h":
     c_mapping_engine *new_mapping_engine "new MappingEngine" (char * path, char * index_path)
     void del_mapping_engine "delete" (c_mapping_engine * engine)
 
-    # MappingsPreparer type -> c_mappings_preparer
-    ctypedef char * (*PrepareMappingsPy)()
-    ctypedef struct c_mappings_preparer "MappingsPreparer":
-        PrepareMappingsPy PrepareMappingsPy
+#    # create c_mapping_engine from MappingEngine objects.
+#    c_mapping_engine_bundle *new_mapping_engine_bundle "new MappingEngine" (char * bundle_path)
+#    void del_mapping_engine_bundle "delete" (c_mapping_engine_bundle * engine)
 
+
+    # MappingsPreparer type -> c_mappings_preparer
     ctypedef enum c_mapping_file_format:
         DEFAULT
         MAPVIEW
         BOWTIE
         SAM
+
+    ctypedef char * (*PrepareMappingsPy)()
+    ctypedef struct c_mappings_preparer "MappingsPreparer":
+        PrepareMappingsPy PrepareMappingsPy
 
     c_mappings_preparer *new_mappings_preparer "new MappingsPreparer" (char * path, char * save_path, c_mapping_file_format format)
     void del_mappings_preparer "delete" (c_mappings_preparer * prep)
@@ -76,15 +81,15 @@ cdef class mapping:
     def __dealloc__(self):
         cdef int i
         cdef c_mappings * mappings
-        
+
         mappings = self.mappings
         i = 0
         n_mappings = mappings.size()
-        
+
         while i < n_mappings:
             del_mapping(mappings.at(i))
             i += 1
-            
+
         del_mappings(self.mappings)
 
     def __repr__(self):
@@ -98,7 +103,7 @@ cdef class mapping:
         """Return (start, sequence) of overlapping mapping."""
         if i < 0 or i >= self.mappings.size():
             raise IndexError
-        
+
         cdef c_mapping * q
         q = self.mappings.at(i)
 
@@ -126,12 +131,11 @@ cdef class mapping_container:
     cdef c_mapping_engine *thismap
     cdef int read_length
 
-    def __cinit__(self, map_path, map_index,
-                  read_length):
+    def __cinit__(self, map_path, map_index, read_length):
         self.thismap = NULL
 
-#        self.thismap = new_mapping_engine(map_path, map_index) # self.thisseq)
-#        self.thismap.Initialize()
+        self.thismap = new_mapping_engine(map_path, map_index) # self.thisseq)
+        self.thismap.Initialize()
 
         self.read_length = read_length  # @CTB can retrieve from thismap
 
