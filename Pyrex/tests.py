@@ -3,12 +3,16 @@ import os.path
 import caper
 from caper_pygr_bridge import CaperBridge
 from screed.screed_pygr_api import ScreedSequenceDB
-from pygr import seqdb, cnestedlist
+from pygr import cnestedlist
+
+sequence_path = 'data/REL606.gmc.fa'
+
+genome_index = 'data/cache/REL606.gmc.fa.genomeindex'
+sequence_index = 'data/cache/REL606.gmc.fa.indexed'
 
 map_path = 'data/REL606-maq-map.txt'
-map_index = 'data/cache/saved.index'
-sequence_path = 'data/REL606.gmc.fa'
-sequence_index = 'data/cache/saved.refgenomeindex'
+map_index = 'data/cache/REL606-maq-map.txt.mappingindex'
+
 
 def setup():
     assert os.path.exists(map_index), "run data/build-indexes.sh, please!"
@@ -19,9 +23,8 @@ def setup():
 class MappingContainer_Test(object):
     def setup(self):
         self.cont = caper.mapping_container(map_path, map_index,
-                                            sequence_path, sequence_index,
                                             35)
-        self.db = seqdb.SequenceFileDB('data/REL606.gmc.fa')
+        self.db = screed.ScreedSequenceDB('data/REL606.gmc.fa')
         self.seq = self.db['rel606']
 
     def test_retrieve(self):
@@ -55,7 +58,7 @@ class PygrBridge_Test(object):
     def setup(self):
         self.cont = caper.mapping_container(map_path, map_index,
                                             sequence_path, sequence_index, 35)
-        self.db = seqdb.SequenceFileDB('data/REL606.gmc.fa')
+        self.db = screed.ScreedSequenceDB('data/REL606.gmc.fa')
         self.seq = self.db['rel606']
         self.reads_db = ScreedSequenceDB('data/REL606-seqs.fastq')
 
