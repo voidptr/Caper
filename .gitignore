@@ -2,3 +2,5 @@
 *.so
 CaperGCC/Caper
 Pyrex/caper.cpp
+cache
+*_screed
