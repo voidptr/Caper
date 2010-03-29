@@ -212,6 +212,10 @@ void MappingEngine::RebuildCaches(string aContigIdent, long long aLeft ) // thes
 
 char * MappingEngine::FetchBlock( string aContigIdent, long long aStartingWindowIndex )
 {
+  if ( mMappingIndexes.find( aContigIdent ) == mMappingIndexes.end() || // non-existent contig
+    mMappingIndexes[aContigIdent].size() <= aStartingWindowIndex ) // overran the array
+    return NULL; 
+
   long long lStartingPos = mMappingIndexes[aContigIdent][ aStartingWindowIndex ].first;
   long long lBlockSize = mMappingIndexes[aContigIdent][ aStartingWindowIndex ].second;
   long long lStoredSize = mMappingIndexes[aContigIdent][ aStartingWindowIndex ].third;
@@ -259,11 +263,9 @@ void MappingEngine::DecompressBlock( char *&lBlock, long long aStoredSize, long 
 
 MappingCache * MappingEngine::RebuildCache( string aContigIdent, long long lStartingWindowIndex )
 {  
-  long long lStartingPos = mMappingIndexes[aContigIdent][ lStartingWindowIndex ].first;
-
   char * lBlock = FetchBlock( aContigIdent, lStartingWindowIndex );
 
-  if ( lBlock == NULL ) // no catch exists.
+  if ( lBlock == NULL ) // no cache exists.
   {
     return BuildEmptyCache( 
       aContigIdent, 
