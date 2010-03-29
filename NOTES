@@ -1,27 +1,19 @@
 Minor issues:
 -------------
 
-ReadMe.txt => README.txt
-	@RCK - Done
-
 remove print output from library!
+
+There should be a README.txt in the main directory.
+
+'all' target in Makefile should be first.
+
+why does 'all' constantly rebuild the Caper binary?
 
 FIXME:
 ------
 
-'-f' doesn't complain when the saved refgenomeindex file is not available;
-	@RCK - Fixed
-ditto for '-i'.
-	@RCK - Fixed
-
-silent failure if cache files can't be written to, as well.
-	@RCK - Fixed
-
 generate 'black box' cache: take in prefix, copy mapping file etc. under
 that prefix; following that, we can delete/rename/etc original files.
-
-orientation etc.
-	@RCK - Added as enum for +/- of strand
 
 Think about:
 ------------
@@ -52,3 +44,4 @@ copyright
 license
 
 benchmarking of course...
+
