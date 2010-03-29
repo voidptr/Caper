@@ -22,9 +22,8 @@ def setup():
         
 class MappingContainer_Test(object):
     def setup(self):
-        self.cont = caper.mapping_container(map_path, map_index,
-                                            35)
-        self.db = screed.ScreedSequenceDB('data/REL606.gmc.fa')
+        self.cont = caper.mapping_container(map_path, map_index, 35)
+        self.db = ScreedSequenceDB('data/REL606.gmc.fa')
         self.seq = self.db['rel606']
 
     def test_retrieve(self):
@@ -56,9 +55,8 @@ class MappingContainer_Test(object):
 
 class PygrBridge_Test(object):
     def setup(self):
-        self.cont = caper.mapping_container(map_path, map_index,
-                                            sequence_path, sequence_index, 35)
-        self.db = screed.ScreedSequenceDB('data/REL606.gmc.fa')
+        self.cont = caper.mapping_container(map_path, map_index, 35)
+        self.db = ScreedSequenceDB('data/REL606.gmc.fa')
         self.seq = self.db['rel606']
         self.reads_db = ScreedSequenceDB('data/REL606-seqs.fastq')
 
