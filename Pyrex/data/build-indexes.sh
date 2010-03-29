@@ -18,5 +18,5 @@ ${CAPER} interactive -f ${CACHE}/REL606.gmc.fa.genomeindex -g ${CACHE}/REL606.gm
 ###
 
 # also build the screed indexes
-type python
+python -m screed.fadbm data/REL606.gmc.fa
 python -m screed.fqdbm data/REL606-seqs.fastq
