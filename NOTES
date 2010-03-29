@@ -7,6 +7,8 @@ There should be a README.txt in the main directory.
 
 'all' target in Makefile should be first.
 
+why does 'all' constantly rebuild the Caper binary?
+
 FIXME:
 ------
 
