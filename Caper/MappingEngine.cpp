@@ -102,7 +102,7 @@ void MappingEngine::Initialize()
 
   PopulateReadInformation(); // this depends on having the index fully populated.
 
-  cout << "Done!" << endl;
+  // cout << "Done!" << endl;
 }
 
 int MappingEngine::GetReadLength()
