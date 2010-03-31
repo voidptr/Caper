@@ -1,14 +1,17 @@
 cdef extern from "Caper.h":
     # Sequence type -> c_sequence
     ctypedef char * (*ToStringP)()
+    ctypedef int (*OrientationI)()
     ctypedef struct c_sequence "Sequence":
         ToStringP ToStringP
+        OrientationI OrientationI
 
     # Mapping type -> c_mapping
     ctypedef struct c_mapping "Mapping":
         c_sequence * mSequence
         ToStringP NameP
         int Index
+        OrientationI GetOrientation
 
     # Mappings type -> c_mappings
     ctypedef int (*size)()
@@ -113,6 +116,8 @@ cdef class mapping:
         seq_stop = seq_start + seq_len
         name = q.NameP()
 
+        o = q.GetOrientation()
+
         slice_start = 0
         align_start = seq_start
         if seq_start < self.start:
@@ -125,7 +130,7 @@ cdef class mapping:
             slice_stop = seq_len - (seq_stop - self.stop)
             align_stop = self.stop
 
-        return align_start, align_stop, name, slice_start, slice_stop
+        return align_start, align_stop, name, slice_start, slice_stop, o
 
 cdef class mapping_container:
     cdef c_mapping_engine *thismap

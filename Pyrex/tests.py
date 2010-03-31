@@ -33,12 +33,12 @@ class MappingContainer_Test(object):
         
         x = list(matches)
         assert x == \
-               [(1, 5, 'HWI-EAS_4_PE-FC20GCB:1:146:930:514/1', 0, 4),
-                (3, 5, 'HWI-EAS_4_PE-FC20GCB:1:210:846:698/1', 0, 2),
-                (4, 5, 'HWI-EAS_4_PE-FC20GCB:1:285:772:762/1', 0, 1)]
+               [(1, 5, 'HWI-EAS_4_PE-FC20GCB:1:146:930:514/1', 0, 4, -1),
+                (3, 5, 'HWI-EAS_4_PE-FC20GCB:1:210:846:698/1', 0, 2, 1),
+                (4, 5, 'HWI-EAS_4_PE-FC20GCB:1:285:772:762/1', 0, 1, 1)], x
 
         # check lengths
-        for (tstart, tstop, _, bstart, bstop) in x:
+        for (tstart, tstop, _, bstart, bstop, o) in x:
             assert tstop - tstart == bstop - bstart
 
     def test_empty_retrieve(self):

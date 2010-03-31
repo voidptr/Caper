@@ -20,4 +20,5 @@ public:
 	~Mapping(void);
 
 	const char * NameP() { return Name.c_str(); }
+	const int GetOrientation() { if (Strand == PLUS) return +1; else return -1; }
 };
