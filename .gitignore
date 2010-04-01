@@ -1,0 +1,4 @@
+*.o
+*.so
+CaperGCC/Caper
+Pyrex/caper.cpp
