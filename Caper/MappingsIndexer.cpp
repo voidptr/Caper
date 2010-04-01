@@ -307,7 +307,7 @@ void MappingsIndexer::PopulateMappingIndex()
         if ( lLastInsertedIntervalContig.length() > 0 && lLastInsertedIntervalVectorIndex > -1 ) // check that there was one. 
         {
           // TODO, put this stuff in the StoredMappingBlock editor thing.
-          mMappingIndexes[ lLastInsertedIntervalContig ][ lLastInsertedIntervalVectorIndex ].second = 
+          mMappingIndexes[ lLastInsertedIntervalContig ][ lLastInsertedIntervalVectorIndex ].second = // from the end of the previous line (before we consumed the new line/contig)
             lCurrentPosition - mMappingIndexes[ lLastInsertedIntervalContig ][ lLastInsertedIntervalVectorIndex ].first; // dunno if I need to do a -1 here or not. we'll see. TODO
           mMappingIndexes[ lLastInsertedIntervalContig ][ lLastInsertedIntervalVectorIndex ].third = // stored size is the same as block size
             mMappingIndexes[ lLastInsertedIntervalContig ][ lLastInsertedIntervalVectorIndex ].second;
@@ -324,8 +324,8 @@ void MappingsIndexer::PopulateMappingIndex()
   // since it's all over, assign the final size value.
   if ( lLastInsertedIntervalContig.length() > 0 && lLastInsertedIntervalVectorIndex > -1 ) // check that there was one. 
   {
-    mMappingIndexes[ lLastInsertedIntervalContig ][ lLastInsertedIntervalVectorIndex ].second = // blocksize
-      lCurrentPosition - mMappingIndexes[ lLastInsertedIntervalContig ][ lLastInsertedIntervalVectorIndex ].first; // TODO, do I need to do a -1 here? probably. 
+    mMappingIndexes[ lLastInsertedIntervalContig ][ lLastInsertedIntervalVectorIndex ].second = // blocksize (from the end of the last line we could read)
+      (long long) lStream.tellg() - mMappingIndexes[ lLastInsertedIntervalContig ][ lLastInsertedIntervalVectorIndex ].first; // TODO, do I need to do a -1 here? probably. 
     mMappingIndexes[ lLastInsertedIntervalContig ][ lLastInsertedIntervalVectorIndex ].third = // stored size is the same as block size
       mMappingIndexes[ lLastInsertedIntervalContig ][ lLastInsertedIntervalVectorIndex ].second;
   }
