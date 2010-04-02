@@ -37,6 +37,9 @@ class CaperSlice(object):
     def keys(self):
         return list(iter(self))
 
+    def iterkeys(self):
+        return iter(self)
+
     def edges(self):
         ival = self.ival
         db = self.bridge.reads_db
@@ -44,9 +47,20 @@ class CaperSlice(object):
             if ival_start == ival_stop:
                 continue
 
-            yield ival.pathForward[ival_start:ival_stop], \
-                  db[match_name][start:stop], \
-                  None
+            if o == -1:
+                ival = ival.pathForward[ival_start:ival_stop]
+            else:
+                ival = ival.pathForward[ival_start:ival_stop]
+
+            if o == -1:
+                read = -db[match_name]
+            else:
+                read = db[match_name]
+
+            if start > stop:
+                start, stop = stop - 1, start - 1
+
+            yield ival, read[start:stop], None
 
     def __len__(self):
         return len(self.m)
