@@ -1,10 +1,26 @@
-all:
-	cd ../CaperGCC && make all
-	python setup.py build_ext -i
+all: Caper-Build caper.so
 
-tests:
+all_all: clean all indexes tests
+
+indexes: all
+	bash data/build-indexes.sh
+
+tests: all
 	nosetests
 
 clean:
+	# remove caper.pyx intermediate files.
+	rm -fr *.so caper.cpp
+	# remove cached indices etc from screed and caper
+	rm -fr data/*_screed data/cache
+	# reset C++ source build
 	cd ../CaperGCC && make clean
-	cd ../Pyrex
+
+caper.so: ../CaperGCC/Caper caper.cpp
+	python setup.py build_ext -i
+
+caper.cpp: caper.pyx
+	
+
+Caper-Build:
+	cd ../CaperGCC && make all

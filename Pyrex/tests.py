@@ -81,7 +81,7 @@ class PygrBridge_Test(object):
         m = self.cont.get_reads_at('rel606', 0, 200)
 
         # construct nlmsa
-        for ival_start, ival_stop, read_name, read_start, read_stop in m:
+        for ival_start, ival_stop, read_name, read_start, read_stop, o in m:
             if ival_start == ival_stop:
                 continue
 
