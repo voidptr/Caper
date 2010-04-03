@@ -1,3 +1,4 @@
+# @CTB to test: do our own mapping parsing & verify against caper, too.
 import os.path
 
 import caper
