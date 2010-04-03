@@ -3,7 +3,7 @@ import os.path
 import caper
 from caper_pygr_bridge import CaperBridge
 from screed.screed_pygr_api import ScreedSequenceDB
-from pygr import cnestedlist
+from pygr import cnestedlist, seqdb
 
 sequence_path = 'data/REL606.gmc.fa'
 
@@ -23,7 +23,8 @@ def setup():
 class MappingContainer_Test(object):
     def setup(self):
         self.cont = caper.mapping_container(map_path, map_index, 35)
-        self.db = ScreedSequenceDB('data/REL606.gmc.fa')
+        self.db = seqdb.SequenceFileDB('data/REL606.gmc.fa')
+        #self.db = ScreedSequenceDB('data/REL606.gmc.fa')
         self.seq = self.db['rel606']
 
     def test_retrieve(self):
@@ -55,8 +56,11 @@ class MappingContainer_Test(object):
 
 class PygrBridge_Test(object):
     def setup(self):
+        print 'XX'
         self.cont = caper.mapping_container(map_path, map_index, 35)
-        self.db = ScreedSequenceDB('data/REL606.gmc.fa')
+        print 'YY'
+        self.db = seqdb.SequenceFileDB('data/REL606.gmc.fa') #ScreedSequenceDB('data/REL606.gmc.fa')
+        #self.db = ScreedSequenceDB('data/REL606.gmc.fa')
         self.seq = self.db['rel606']
         self.reads_db = ScreedSequenceDB('data/REL606-seqs.fastq')
 
@@ -81,14 +85,19 @@ class PygrBridge_Test(object):
         m = self.cont.get_reads_at('rel606', 0, 200)
 
         # construct nlmsa
+        N=0
         for ival_start, ival_stop, read_name, read_start, read_stop, o in m:
+            N += 1
             if ival_start == ival_stop:
                 continue
 
             ival = self.seq[ival_start:ival_stop]
-            match_seq = self.reads_db[read_name]
-            match_ival = match_seq[read_start:read_stop]
+            if o == -1:
+                match_seq = -self.reads_db[read_name]
+            else:
+                match_seq = self.reads_db[read_name]
 
+            match_ival = match_seq[read_start:read_stop]
             nlmsa[ival] += match_ival
 
         nlmsa.build()
