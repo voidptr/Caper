@@ -1,4 +1,6 @@
 # @CTB to test: do our own mapping parsing & verify against caper, too.
+# @CTB refactor test_bridge_nlmsa_equiv to use the new pygr ival construction
+# lib code.
 import os.path
 
 import caper
@@ -112,3 +114,7 @@ class PygrBridge_Test(object):
         t = set(caper_slice.keys())
 
         assert s == t
+
+        for k, v, e in nlmsa[ival].edges():
+            print repr(k), repr(v), e.pIdentity(), v.orientation
+            assert e.pIdentity() >= 0.8, (repr(k), repr(v), e.pIdentity())
