@@ -106,3 +106,8 @@ UIOBJ=$(UISRCDIR)/Arguments.o \
 Caper: $(UISRCDIR)/CaperUI.o $(OBJS) $(UIOBJ) $(ZLIBOBJ)
 	g++ -Wall -O3 -o Caper $(UISRCDIR)/CaperUI.o $(OBJS) $(UIOBJ) \
 	$(ZLIBOBJ)
+
+depend:
+	makedepend -fmakefile.deps ../Caper/*.{h,cpp} ../CaperUI/*.{h,cpp} 
+
+include makefile.deps
