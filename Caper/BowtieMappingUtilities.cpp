@@ -24,4 +24,3 @@ string BowtieMappingUtilities::GetStrand( string & aLine )
 {
   return GetLineItem( 1, aLine );
 }
- 
