@@ -5,3 +5,5 @@ Pyrex/caper.cpp
 cache
 *_screed
 *.pyc
+makefile.deps
+makefile.deps.bak
