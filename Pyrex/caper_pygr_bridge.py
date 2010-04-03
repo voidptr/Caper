@@ -48,11 +48,6 @@ class CaperSlice(object):
                 continue
 
             if o == -1:
-                ival = ival.pathForward[ival_start:ival_stop]
-            else:
-                ival = ival.pathForward[ival_start:ival_stop]
-
-            if o == -1:
                 read = -db[match_name]
             else:
                 read = db[match_name]
