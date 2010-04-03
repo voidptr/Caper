@@ -1,3 +1,5 @@
+## note: to generate a full set of dependencies, use 'make depend'.
+
 SRCDIR=../Caper
 UISRCDIR=../CaperUI
 ZLIBSRCDIR=../zlib123
@@ -108,6 +110,7 @@ Caper: $(UISRCDIR)/CaperUI.o $(OBJS) $(UIOBJ) $(ZLIBOBJ)
 	$(ZLIBOBJ)
 
 depend:
+	touch makefile.deps
 	makedepend -fmakefile.deps ../Caper/*.{h,cpp} ../CaperUI/*.{h,cpp} 
 
 -include makefile.deps
