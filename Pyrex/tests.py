@@ -79,6 +79,8 @@ class PygrBridge_Test(object):
         slice = self.al[ival]
         assert len(slice) == 22
 
+        print self.reads_db.keys()
+
         for src, dest, _ in slice.edges():
             print src
             print dest
