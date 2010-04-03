@@ -23,6 +23,13 @@ fixed read length per database... can we make it variable?  is it important?
 python slicing vs caper intervals?  would it be easy to use Python
    slice coords, e.g. 'x:y' does not include y?
 
+Maybe have 'caper-index' (lower case please :) and 'caper-view' as binaries?
+
+Contemplate directory re-org.  If the Pyrex stuff depends on CaperGCC, we
+should merge them.
+
+Can we rename the thing to 'caper' instead of 'Caper'?
+
 Pyrex wrapping: for CTB
 -----------------------
 
