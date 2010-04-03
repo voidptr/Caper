@@ -7,3 +7,5 @@ cache
 *.pyc
 makefile.deps
 makefile.deps.bak
+*.pureseq
+*.seqlen
