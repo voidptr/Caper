@@ -3,6 +3,11 @@
 # lib code.
 import os.path
 
+try:
+    import screed
+except ImportError:
+    raise Exception, "you need to install screed!"
+
 import caper
 from caper_pygr_bridge import CaperBridge
 from screed.screed_pygr_api import ScreedSequenceDB
