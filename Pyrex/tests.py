@@ -64,9 +64,7 @@ class MappingContainer_Test(object):
 
 class PygrBridge_Test(object):
     def setup(self):
-        print 'XX'
         self.cont = caper.mapping_container(map_path, map_index, 35)
-        print 'YY'
         self.db = seqdb.SequenceFileDB('data/REL606.gmc.fa') #ScreedSequenceDB('data/REL606.gmc.fa')
         #self.db = ScreedSequenceDB('data/REL606.gmc.fa')
         self.seq = self.db['rel606']
@@ -78,8 +76,6 @@ class PygrBridge_Test(object):
         ival = self.seq[0:50]
         slice = self.al[ival]
         assert len(slice) == 22
-
-        print self.reads_db.keys()
 
         for src, dest, _ in slice.edges():
             print src
