@@ -10,7 +10,7 @@ except ImportError:
 
 import caper
 from caper_pygr_bridge import CaperBridge
-from screed.screed_pygr_api import ScreedSequenceDB
+from screed.pygr_api import ScreedSequenceDB
 from pygr import cnestedlist, seqdb
 
 sequence_path = 'data/REL606.gmc.fa'
