@@ -56,15 +56,6 @@ zutil.o: $(ZLIBSRCDIR)/zutil.h \
 	$(ZLIBSRCDIR)/zlib.h \
 	$(ZLIBSRCDIR)/zconf.h
 
-# Caper .o's
-#IndexAndOffset.o: $(SRCDIR)/IndexAndOffset.h
-#Line.o: $(SRCDIR)/Line.h
-#MappingFile.o: $(SRCDIR)/MappingFile.h
-#MappingIndexMap.o: $(SRCDIR)/MappingIndexMap.h
-#MappingMap.o: $(SRCDIR)/MappingMap.h
-#MappingWindowBlockInfo.o: $(SRCDIR)/MappingWindowBlockInfo.h
-
-
 OBJS=\
 	$(SRCDIR)/BowtieMappingUtilities.o \
 	$(SRCDIR)/FASequenceEngine.o \
