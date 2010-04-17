@@ -71,7 +71,7 @@ OBJS=\
 	$(SRCDIR)/SAMMappingUtilities.o \
 	$(SRCDIR)/Sequence.o \
 	$(SRCDIR)/SequenceEngine.o \
-	$(SRCDIR)/SequenceIndexer.o \	
+	$(SRCDIR)/SequenceIndexer.o \
 	$(SRCDIR)/Utilities.o
        
 ZLIBOBJ=$(ZLIBSRCDIR)/adler32.o \
