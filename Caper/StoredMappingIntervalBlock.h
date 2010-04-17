@@ -6,7 +6,7 @@ class StoredMappingIntervalBlock :
 {
 public:
 
-  StoredMappingIntervalBlock( long long aOffset, long long aBlockSize, long long aStoredSize) : triad( aOffset, aBlockSize, aStoredSize ) {}
+  StoredMappingIntervalBlock( long long aOffset, long long aBlockSize, long long aStoredSize) : Triad( aOffset, aBlockSize, aStoredSize ) {}
 
   // getters
   long long getOffset() const { return first; }
