@@ -1,5 +1,5 @@
 #pragma once
-#include "triad.h"
+#include "Triad.h"
 
 class StoredMappingIntervalBlock :
   public triad<long long, long long, long long>
