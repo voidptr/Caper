@@ -5,7 +5,8 @@
 #include "FASequenceIndexer.h"
 
 #include "MappingEngine.h"
-#include "MappingsIndexer.h"
+
+#include "MappingIndexPrep.h"
 
 #include "Arguments.h"
 #include "Commands.h"

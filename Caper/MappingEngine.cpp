@@ -51,20 +51,20 @@ void MappingEngine::Initialize()
   //PopulateContigBorders();
   int lCount = 0;
   lStream >> lCount; // get the count of contigs as the first line.
-  for (int i = 0; i < lCount; i++ )
-  {
-    string lContigIdent = "";
-    long long lStart = 0;
-    long long lEnd = 0;
+  //for (int i = 0; i < lCount; i++ )
+  //{
+  //  string lContigIdent = "";
+  //  long long lStart = 0;
+  //  long long lEnd = 0;
 
-    lStream >> lContigIdent;
-    lStream >> lStart;
-    lStream >> lEnd;
+  //  lStream >> lContigIdent;
+  //  lStream >> lStart;
+  //  lStream >> lEnd;
 
-    mContigBorders.insert( pair<string, pair<long long,long long> >( 
-      lContigIdent, 
-      pair<long long,long long>(lStart, lEnd)));
-  }
+  //  mContigBorders.insert( pair<string, pair<long long,long long> >( 
+  //    lContigIdent, 
+  //    pair<long long,long long>(lStart, lEnd)));
+  //}
   
   //PopulateMappingIndex()
   for ( int i = 0; i < lCount; i++ )
@@ -78,7 +78,7 @@ void MappingEngine::Initialize()
     lStream >> lWindowsCount;
 
     NumberOfReads.insert( pair<string, int>( lContigIdent, lReadCount ) );   
-    mMappingIndexes.insert( pair<string, vector<StoredMappingBlock> >( lContigIdent, vector<StoredMappingBlock>() ) );
+    mMappingIndexes.insert( pair<string, vector<StoredMappingIntervalBlock> >( lContigIdent, vector<StoredMappingIntervalBlock>() ) );
 
     mMappingIndexes[ lContigIdent ].reserve( lWindowsCount ); // preallocate the vector.
 
@@ -87,10 +87,10 @@ void MappingEngine::Initialize()
       long long lIndex = 0;
       int lBlockSize = 0;
       int lStoredSize = 0;
-      lStream >> lIndex; // TODO have the reading of these reside in the StoredMappingBlock class (which does not yet exist), same with the out. Need to decouple this crap.
+      lStream >> lIndex; // TODO have the reading of these reside in the StoredMappingIntervalBlock class (which does not yet exist), same with the out. Need to decouple this crap.
       lStream >> lBlockSize; // ditto
       lStream >> lStoredSize; // ditto
-      mMappingIndexes[ lContigIdent ].push_back( StoredMappingBlock( lIndex, lBlockSize, lStoredSize ) );
+      mMappingIndexes[ lContigIdent ].push_back( StoredMappingIntervalBlock( lIndex, lBlockSize, lStoredSize ) );
     }
   }
 
@@ -216,9 +216,9 @@ char * MappingEngine::FetchBlock( string aContigIdent, long long aStartingWindow
     mMappingIndexes[aContigIdent].size() <= aStartingWindowIndex ) // overran the array
     return NULL; 
 
-  long long lStartingPos = mMappingIndexes[aContigIdent][ aStartingWindowIndex ].first;
-  long long lBlockSize = mMappingIndexes[aContigIdent][ aStartingWindowIndex ].second;
-  long long lStoredSize = mMappingIndexes[aContigIdent][ aStartingWindowIndex ].third;
+  long long lStartingPos = mMappingIndexes[aContigIdent][ aStartingWindowIndex ].getOffset();
+  long long lBlockSize = mMappingIndexes[aContigIdent][ aStartingWindowIndex ].getBlockSize();
+  long long lStoredSize = mMappingIndexes[aContigIdent][ aStartingWindowIndex ].getStoredSize();
 
   if ( lStartingPos == -1 )
     return NULL; // a valid return value, where there is no block to fetch.

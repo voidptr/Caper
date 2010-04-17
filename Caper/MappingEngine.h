@@ -4,6 +4,7 @@
 #include "Mapping.h"
 #include "MappingUtilities.h"
 #include "MappingUtilitiesFactory.h"
+#include "StoredMappingIntervalBlock.h"
 #include "Typedefs.h"
 
 #include "zlib.h"
@@ -28,14 +29,14 @@ private:
   int ReadLength;
 	
 
-	map<string, vector<StoredMappingBlock> > mMappingIndexes;
-	map<string, pair<long long,long long> > mContigBorders; // do we even need this?
+	map<string, vector<StoredMappingIntervalBlock> > mMappingIndexes;
+//	map<string, pair<long long,long long> > mContigBorders; // do we even need this?
 
   MappingUtilities * mMappingUtilities;
 
 private:
 	void PopulateMappingIndex();	
-	void PopulateContigBorders();
+//	void PopulateContigBorders();
 	void PopulateNumberOfWindows();
 	void PopulateReadInformation();
   int DetermineCompressedMappingStartOffset();

@@ -61,7 +61,7 @@ template<class _Ty1,
 
 	_Ty1 first;	// the first stored value
 	_Ty2 second;	// the second stored value
-  _Ty3 third;
+  _Ty3 third; // the third stored value
 	};
 
 		// triad TEMPLATE FUNCTIONS

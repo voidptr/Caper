@@ -55,10 +55,10 @@ bool Commands::ParseReadCommand(string & aLine, Sequences * aReferenceGenome, Ma
   else
     Right = Left;
   
-  if ( Left - aMappingEngine->GetReadLength() < 0 )
-    Left = 0;
-  else
-    Left -= aMappingEngine->GetReadLength();
+//  if ( Left - aMappingEngine->GetReadLength() < 0 )
+//    Left = 0;
+//  else
+//    Left -= aMappingEngine->GetReadLength();
 
 
   if ( Left > Right || Left < 0 || Right < 0 )

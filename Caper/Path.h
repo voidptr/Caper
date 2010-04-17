@@ -7,12 +7,6 @@
 #include <sys/types.h>  // For stat().
 #include <sys/stat.h>   // For stat().
 
-#if defined( WIN32 )
-#define SLASH "\\" 
-#else
-#define SLASH "/"
-#endif
-
 class Path
 {
 private:

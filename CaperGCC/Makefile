@@ -56,23 +56,31 @@ zutil.o: $(ZLIBSRCDIR)/zutil.h \
 	$(ZLIBSRCDIR)/zlib.h \
 	$(ZLIBSRCDIR)/zconf.h
 
+# Caper .o's
+#IndexAndOffset.o: $(SRCDIR)/IndexAndOffset.h
+#Line.o: $(SRCDIR)/Line.h
+#MappingFile.o: $(SRCDIR)/MappingFile.h
+#MappingIndexMap.o: $(SRCDIR)/MappingIndexMap.h
+#MappingMap.o: $(SRCDIR)/MappingMap.h
+#MappingWindowBlockInfo.o: $(SRCDIR)/MappingWindowBlockInfo.h
+
+
 OBJS=\
-	$(SRCDIR)/MappingsIndexer.o \
-	$(SRCDIR)/FASequenceIndexer.o \
 	$(SRCDIR)/BowtieMappingUtilities.o \
 	$(SRCDIR)/FASequenceEngine.o \
+	$(SRCDIR)/FASequenceIndexer.o \
 	$(SRCDIR)/Mapping.o \
 	$(SRCDIR)/MappingCache.o \
 	$(SRCDIR)/MappingEngine.o \
-	$(SRCDIR)/MappingsPreparer.o \
-	$(SRCDIR)/SAMMappingUtilities.o \
+	$(SRCDIR)/MappingIndexPrep.o \
 	$(SRCDIR)/MappingUtilities.o \
 	$(SRCDIR)/MappingUtilitiesFactory.o \
 	$(SRCDIR)/MapviewMappingUtilities.o \
 	$(SRCDIR)/Path.o \
+	$(SRCDIR)/SAMMappingUtilities.o \
 	$(SRCDIR)/Sequence.o \
 	$(SRCDIR)/SequenceEngine.o \
-	$(SRCDIR)/SequenceIndexer.o \
+	$(SRCDIR)/SequenceIndexer.o \	
 	$(SRCDIR)/Utilities.o
        
 ZLIBOBJ=$(ZLIBSRCDIR)/adler32.o \

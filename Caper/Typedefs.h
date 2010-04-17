@@ -4,6 +4,8 @@
 #include "Sequence.h"
 #include "Mapping.h"
 
+#include "StoredMappingIntervalBlock.h"
+
 typedef map<string,Sequence*> Sequences;
 typedef pair<string, Sequence*> SequencePair;
 
@@ -15,10 +17,17 @@ typedef vector<Mappings> IndexedMappings;
 typedef pair<string, long long> MappingKey; // contig, index
 typedef pair<MappingKey, long long> MappingIndex; // contig/index, file offset of line
 
-// for storing the mapping indexes
-typedef triad<long long, long long, long long> StoredMappingBlock; // offset, block size, stored size
+// set of contigs with the vector of the blocks for each contig.
+typedef map<string, vector<StoredMappingIntervalBlock> > MappingIndexes;
 
-typedef pair<long long, long long> ContigBorders; // start, finish.
+//typedef map<string, vector<LineIndex> > MappingsMap;
+
+
+
+//// for storing the mapping indexes
+//typedef triad<long long, long long, long long> StoredMappingIntervalBlock; // offset, block size, stored size
+
+//typedef pair<long long, long long> ContigBorders; // start, finish.
 
 enum MappingFileFormat
 {

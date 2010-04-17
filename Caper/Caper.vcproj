@@ -186,6 +186,14 @@
 			>
 		</File>
 		<File
+			RelativePath=".\IndexAndOffset.h"
+			>
+		</File>
+		<File
+			RelativePath=".\Line.h"
+			>
+		</File>
+		<File
 			RelativePath=".\Mapping.cpp"
 			>
 		</File>
@@ -210,19 +218,23 @@
 			>
 		</File>
 		<File
-			RelativePath=".\MappingsIndexer.cpp"
+			RelativePath=".\MappingFile.h"
 			>
 		</File>
 		<File
-			RelativePath=".\MappingsIndexer.h"
+			RelativePath=".\MappingIndexMap.h"
 			>
 		</File>
 		<File
-			RelativePath=".\MappingsPreparer.cpp"
+			RelativePath=".\MappingIndexPrep.cpp"
 			>
 		</File>
 		<File
-			RelativePath=".\MappingsPreparer.h"
+			RelativePath=".\MappingIndexPrep.h"
+			>
+		</File>
+		<File
+			RelativePath=".\MappingMap.h"
 			>
 		</File>
 		<File
@@ -239,6 +251,10 @@
 		</File>
 		<File
 			RelativePath=".\MappingUtilitiesFactory.h"
+			>
+		</File>
+		<File
+			RelativePath=".\MappingWindowBlockInfo.h"
 			>
 		</File>
 		<File
@@ -295,6 +311,10 @@
 		</File>
 		<File
 			RelativePath=".\stdafx.h"
+			>
+		</File>
+		<File
+			RelativePath=".\tmp.h"
 			>
 		</File>
 		<File
