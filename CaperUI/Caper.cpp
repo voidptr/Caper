@@ -48,10 +48,10 @@ void Caper::IndexMappings( Arguments lArgs )
   //SequenceEngine * lSequenceEngine = new FASequenceEngine( lModeArgs->GenomePath, lModeArgs->ReferenceGenomeIndexPath );
   //lSequenceEngine->Initialize();
 
-  cout << "Preparing Mappings \"" << lModeArgs->MappingPath << "\"... " << endl;
-  cout.flush();
+ // cout << "Preparing Mappings \"" << lModeArgs->MappingPath << "\"... " << endl;
+ // cout.flush();
 
-  MappingIndexPrep lIndexer( lModeArgs->MappingPath, lModeArgs->MappingStyle, lModeArgs->SavePath, lModeArgs->Bundle );
+  MappingIndexer lIndexer( lModeArgs->MappingPath, lModeArgs->MappingStyle, lModeArgs->SavePath, lModeArgs->Bundle );
   lIndexer.CreateIndex();
 
 //  MappingsIndexer lIndexer( lModeArgs->MappingPath, lModeArgs->MappingStyle, lModeArgs->SavePath, lModeArgs->Bundle );

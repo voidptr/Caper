@@ -6,7 +6,7 @@
 
 #include "MappingEngine.h"
 
-#include "MappingIndexPrep.h"
+#include "MappingIndexer.h"
 
 #include "Arguments.h"
 #include "Commands.h"

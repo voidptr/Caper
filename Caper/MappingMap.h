@@ -4,7 +4,10 @@
 class MappingMap : public map<string, vector<IndexAndOffset> >
 {
 private:
-  bool mIsSorted;
+
+  bool mInsertionWasInSortedOrder;
+  bool mMapIsFinalized;
+  bool mMapWasRearrangedBySort;
 
   string mLastContig;
   long long mLastIndex;
@@ -24,22 +27,38 @@ public:
 
   MappingMap(void)
   {
-    mIsSorted = true; // assume it's sorted.
+    mInsertionWasInSortedOrder = true; // assume it came in sorted.
+    mMapIsFinalized = false; // hasn't been finalized.
+    mMapWasRearrangedBySort = false; // hasn't been done.
 
     mLastContig = "";
     mLastIndex = -1;
   }
 
-  bool IsSorted()
+  bool InsertionWasInSortedOrder()
   {
-    return mIsSorted;
+    return mInsertionWasInSortedOrder;
   }
 
-  void AddLine( string aContig, long long aIndex, long long aPosition )
+  bool MapIsFinalized()
   {
+    return mMapIsFinalized;
+  }
+
+  bool MapWasRearrangedBySort()
+  {
+    return mMapWasRearrangedBySort;
+  }
+
+  void AddLine( string aContig, long long aIndex, long long aPosition, long long aLength )
+  {
+    if ( mMapIsFinalized )
+      throw string("No new lines may be added. Mapping has been finalized");
+
     IndexAndOffset lIndexAndOffset;
     lIndexAndOffset.Index = aIndex;
     lIndexAndOffset.Offset = aPosition;
+    lIndexAndOffset.Length = aLength;
 
     if ( find( aContig ) == end() )
     {
@@ -51,22 +70,28 @@ public:
     ReevaluateSort( aContig, aIndex );
   }
 
-  void SortMap()
+  void Finalize()
   {
-    for ( MappingMap::iterator i = begin(); i != end(); ++i )
+    if ( !mInsertionWasInSortedOrder )
     {
-      sort( i->second.begin(), i->second.end(), SortMappings(this) );
+      for ( MappingMap::iterator i = begin(); i != end(); ++i )
+      {
+        sort( i->second.begin(), i->second.end(), SortMappings(this) );
+      }
+      mMapWasRearrangedBySort = true;
     }
-    mIsSorted = true;
+    mMapIsFinalized = true; // the map load has finished
   }
 
 private:
   void ReevaluateSort( string aContig, long long aIndex )
   {
-    if ( IsSorted() && mLastContig.compare( aContig ) > 0 && mLastIndex > aIndex )
-      mIsSorted = false;
+    if ( InsertionWasInSortedOrder() && mLastContig.compare( aContig ) > 0 && mLastIndex > aIndex )
+      mInsertionWasInSortedOrder = false;
     
     mLastContig = aContig;
     mLastIndex = aIndex;    
   }
 };
+
+
