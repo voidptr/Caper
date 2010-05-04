@@ -14,8 +14,8 @@ typedef vector<Mapping*> Mappings;
 typedef vector<Mappings> IndexedMappings;
 
 // for sorting
-typedef pair<string, long long> MappingKey; // contig, index
-typedef pair<MappingKey, long long> MappingIndex; // contig/index, file offset of line
+//typedef pair<string, long long> MappingKey; // contig, index
+//typedef pair<MappingKey, long long> MappingIndex; // contig/index, file offset of line
 
 // set of contigs with the vector of the blocks for each contig.
 typedef map<string, vector<StoredMappingIntervalBlock> > MappingIndexes;

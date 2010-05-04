@@ -222,15 +222,11 @@
 			>
 		</File>
 		<File
-			RelativePath=".\MappingIndexMap.h"
+			RelativePath=".\MappingIndex.h"
 			>
 		</File>
 		<File
-			RelativePath=".\MappingIndexPrep.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\MappingIndexPrep.h"
+			RelativePath=".\MappingIndexer.h"
 			>
 		</File>
 		<File
@@ -251,10 +247,6 @@
 		</File>
 		<File
 			RelativePath=".\MappingUtilitiesFactory.h"
-			>
-		</File>
-		<File
-			RelativePath=".\MappingWindowBlockInfo.h"
 			>
 		</File>
 		<File
