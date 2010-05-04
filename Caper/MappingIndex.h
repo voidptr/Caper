@@ -2,8 +2,8 @@
 
 struct MappingWindowBlockInfo
 {
-  MappingWindowBlockInfo( 
-    //MappingMap::mapped_type::reference aStartingLineReference, 
+  MappingWindowBlockInfo(
+    //MappingMap::mapped_type::reference aStartingLineReference,
     long long aSortedContigStartingLineNumber, long long aBlockOffset)// : StartingLineReference( aStartingLineReference )
   {
     NumberOfLines = -1;
@@ -11,7 +11,7 @@ struct MappingWindowBlockInfo
     BlockSizeInBytes = -1;
     CompressedBlockSizeInBytes = -1;
     SortedContigStartingLineNumber = aSortedContigStartingLineNumber;
-    
+
   }
 
   //MappingMap::mapped_type::reference StartingLineReference;
@@ -22,7 +22,7 @@ struct MappingWindowBlockInfo
   long long CompressedBlockSizeInBytes;
 };
 
-class MappingIndex : 
+class MappingIndex :
   public map<string, map<long long, MappingWindowBlockInfo> >
 {
 private:
@@ -32,12 +32,12 @@ private:
 public:
   MappingIndex(void)
   {
-    lCurrentContig = NULL;
+    //lCurrentContig = NULL;
     lFirstTime = true;
   }
 
-  void AddEntry( string aContig, 
-    long long aWindowNumber, 
+  void AddEntry( string aContig,
+    long long aWindowNumber,
     long long aSortedContigStartingLineNumber,
     long long aBlockOffset)
   {
@@ -46,13 +46,13 @@ public:
     {
       if ( find( aContig ) == end() )
         insert( MappingIndex::value_type( aContig, MappingIndex::mapped_type() ) );
-      
+
       lCurrentContig = find(aContig);
       lFirstTime = false;
     }
 
     MappingWindowBlockInfo lInfo( aSortedContigStartingLineNumber, aBlockOffset );
-    
+
     lCurrentContig->second.insert( MappingIndex::mapped_type::value_type( aWindowNumber, lInfo ) );
   }
 

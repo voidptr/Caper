@@ -63,7 +63,6 @@ OBJS=\
 	$(SRCDIR)/Mapping.o \
 	$(SRCDIR)/MappingCache.o \
 	$(SRCDIR)/MappingEngine.o \
-	$(SRCDIR)/MappingIndexPrep.o \
 	$(SRCDIR)/MappingUtilities.o \
 	$(SRCDIR)/MappingUtilitiesFactory.o \
 	$(SRCDIR)/MapviewMappingUtilities.o \
@@ -73,7 +72,7 @@ OBJS=\
 	$(SRCDIR)/SequenceEngine.o \
 	$(SRCDIR)/SequenceIndexer.o \
 	$(SRCDIR)/Utilities.o
-       
+
 ZLIBOBJ=$(ZLIBSRCDIR)/adler32.o \
 	$(ZLIBSRCDIR)/compress.o \
 	$(ZLIBSRCDIR)/crc32.o \

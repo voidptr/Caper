@@ -85,7 +85,7 @@ private:
     string lLine;
     long long lPos = -1;
     while (lStream.peek() > -1 )
-    {      
+    {
       lPos = lStream.tellg(); // could underflow :/
       getline( lStream, lLine );
 
@@ -109,7 +109,7 @@ private:
     long long lLastWindowSize = 0;
 
     long long lPos = 0;
-    MappingIndex::mapped_type::iterator lLastWindowInfo = NULL; // previous window pointer
+    MappingIndex::mapped_type::iterator lLastWindowInfo; // previous window pointer
     bool lNotFirst = false;
 
     for (MappingMap::iterator lContig = mMappingFileRepresentation.begin();
@@ -117,7 +117,7 @@ private:
       ++lContig)
     {
       long long lTargetWindow = 0;
- 
+
       int lLinesInThisContig = lContig->second.size();
       for (int lLineVectorIndex = 0; lLineVectorIndex < lLinesInThisContig; ++lLineVectorIndex)
       {
@@ -128,7 +128,7 @@ private:
         {
           if ( lIndex >= ((lTargetWindow + 1) * IndexIncrement) ) // overshot
             lTargetWindow = (lIndex / IndexIncrement); // reset the window to be the one we found.
-          
+
           if ( lNotFirst ) // there was a previous window.
           {
             lLastWindowInfo->second.NumberOfLines = lLastWindowLineCount; // apply the count
@@ -144,7 +144,7 @@ private:
           mMappingIndex.AddEntry( lContig->first, lTargetWindow, lLineVectorIndex, lPos );
 
           lLastWindowInfo = mMappingIndex.find( lContig->first )->second.find( lTargetWindow );
-        
+
           ++lTargetWindow;
         }
 
@@ -216,7 +216,7 @@ private:
 
     long long lPos = 0;
     // loop throught the contigs in the file
-    for( MappingIndex::iterator lContig = mMappingIndex.begin(); 
+    for( MappingIndex::iterator lContig = mMappingIndex.begin();
       lContig != mMappingIndex.end(); ++lContig )
     {
       string lContigName = lContig->first;
@@ -226,9 +226,9 @@ private:
         lWindow != lContig->second.end(); ++lWindow )
       {
         string lBlock;
-        ReadBlock( lSourceMappingFile, 
-          lContigName, 
-          lWindow->second.SortedContigStartingLineNumber, 
+        ReadBlock( lSourceMappingFile,
+          lContigName,
+          lWindow->second.SortedContigStartingLineNumber,
           lWindow->second.NumberOfLines, lBlock );
 
         string lCompressedBlock;
@@ -240,7 +240,7 @@ private:
         lWindow->second.CompressedBlockSizeInBytes = lCompressedBlock.size();
 
         lPos += lCompressedBlock.size();
-      }      
+      }
     }
 
     lSourceMappingFile.close();
@@ -262,7 +262,7 @@ private:
 
     //saving the mapping index
     MappingIndex::iterator lMappingIndexIterator;
-    for ( lMappingIndexIterator = mMappingIndex.begin(); 
+    for ( lMappingIndexIterator = mMappingIndex.begin();
       lMappingIndexIterator != mMappingIndex.end(); ++lMappingIndexIterator ) // loop through the contigs
     {
       //            Contig Name                             Number of Stored Windows
@@ -315,17 +315,17 @@ private:
     Path lSavePath(mSavePath);
 
     string lOutPath;
-    
-    
+
+
     if (!lSavePath.IsDirectory() ) //not a directory
     {
-      lOutPath = lSavePath.mPathString + lFilename.Filename() + aPostfix; 
+      lOutPath = lSavePath.mPathString + lFilename.Filename() + aPostfix;
     }
     else // is a directory, so append the file name, plus a postfix.
     {
       lSavePath = lSavePath / lFilename.Filename();
 
-      lOutPath = lSavePath.mPathString + aPostfix; 
+      lOutPath = lSavePath.mPathString + aPostfix;
     }
     return lOutPath;
   }
@@ -333,9 +333,9 @@ private:
   void ReadBlock( ifstream & aStream, string & aContig, long long aStart, int aCount, string & aBlock )
   {
     MappingMap::iterator lVectorPair = mMappingFileRepresentation.find( aContig );
-    
+
     for ( int lIndex = aStart; lIndex < aStart + aCount; ++lIndex )
-    { 
+    {
       MappingMap::mapped_type::reference lLine(lVectorPair->second.at(lIndex));
 
       char * lLineContent = new char[ lLine.Length ];
@@ -380,6 +380,6 @@ private:
     aCompressedBlock.append( (char*) lCompressed, lCompressedLength );
 
     free( lSource );
-    free( lCompressed );  
+    free( lCompressed );
   }
 };
