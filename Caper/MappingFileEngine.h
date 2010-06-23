@@ -84,7 +84,7 @@ public: // methods
     return lContig->first;
   }
 
-  long long BeginWindow( string & aContig=string("") )
+  long long BeginWindow( const string & aContig="" )
   {
     string lContig = aContig;
     if ( lContig == "" )
@@ -170,7 +170,7 @@ public: // methods
     }
   }
 
-  long long EndWindow( string & aContig=string() )
+  long long EndWindow( const string & aContig="" )
   {
     return -1; // const
   }

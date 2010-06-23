@@ -1,8 +1,8 @@
 SRCDIR=../Caper
 UISRCDIR=../CaperUI
 ZLIBSRCDIR=../zlib123
-CXXFLAGS=-fPIC -I$(SRCDIR) -I$(ZLIBSRCDIR)
-CFLAGS=-fPIC
+CXXFLAGS=-g -fPIC -I$(SRCDIR) -I$(ZLIBSRCDIR)
+CFLAGS=-g -fPIC
 
 #zlib .o's
 adler32.o: $(ZLIBSRCDIR)/zlib.h \
@@ -56,23 +56,6 @@ zutil.o: $(ZLIBSRCDIR)/zutil.h \
 	$(ZLIBSRCDIR)/zlib.h \
 	$(ZLIBSRCDIR)/zconf.h
 
-OBJS=\
-	$(SRCDIR)/BowtieMappingUtilities.o \
-	$(SRCDIR)/FASequenceEngine.o \
-	$(SRCDIR)/FASequenceIndexer.o \
-	$(SRCDIR)/Mapping.o \
-	$(SRCDIR)/MappingCache.o \
-	$(SRCDIR)/MappingEngine.o \
-	$(SRCDIR)/MappingUtilities.o \
-	$(SRCDIR)/MappingUtilitiesFactory.o \
-	$(SRCDIR)/MapviewMappingUtilities.o \
-	$(SRCDIR)/Path.o \
-	$(SRCDIR)/SAMMappingUtilities.o \
-	$(SRCDIR)/Sequence.o \
-	$(SRCDIR)/SequenceEngine.o \
-	$(SRCDIR)/SequenceIndexer.o \
-	$(SRCDIR)/Utilities.o
-
 ZLIBOBJ=$(ZLIBSRCDIR)/adler32.o \
 	$(ZLIBSRCDIR)/compress.o \
 	$(ZLIBSRCDIR)/crc32.o \
@@ -91,7 +74,6 @@ UIOBJ=$(UISRCDIR)/Arguments.o \
 	$(UISRCDIR)/IndexGenomeArguments.o \
 	$(UISRCDIR)/IndexMappingsArguments.o \
 	$(UISRCDIR)/Caper.o \
-	$(UISRCDIR)/Commands.o \
 	$(UISRCDIR)/XGetopt.o
 
 default: all
@@ -102,4 +84,4 @@ clean:
 	rm -f $(SRCDIR)/*.o $(UISRCDIR)/*.o $(ZLIBSRCDIR)/*.o Caper
 
 CaperUI: $(UISRCDIR)/CaperUI.o $(OBJS) $(UIOBJ) $(ZLIBOBJ)
-	g++ -Wall -O3 -o Caper $(UISRCDIR)/CaperUI.o $(OBJS) $(UIOBJ) $(ZLIBOBJ)
+	g++ -g -Wall -O3 -o Caper $(UISRCDIR)/CaperUI.o $(OBJS) $(UIOBJ) $(ZLIBOBJ)
