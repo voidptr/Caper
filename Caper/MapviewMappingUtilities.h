@@ -6,9 +6,9 @@
 class MapviewMappingUtilities : public MappingUtilities
 {
 public:	
-	string GetSequence( string & aLine );
-  long long GetIndex( string & aLine );    
-  string GetName( string & aLine );
-  string GetContigIdent( string & aLine );	
-  string GetStrand( string & aLine );	
+  int GetContigIdentColumn() { return 1; }
+  int GetIndexColumn() { return 2; }
+  int GetSequenceColumn() { return 14; }
+  int GetNameColumn() { return 0; }
+  int GetStrandColumn() { return 3; }
 };

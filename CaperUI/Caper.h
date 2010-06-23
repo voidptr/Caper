@@ -9,7 +9,7 @@
 #include "MappingIndexer.h"
 
 #include "Arguments.h"
-#include "Commands.h"
+#include "InteractiveCommands.h"
 
 #include "Typedefs.h"
 

@@ -30,6 +30,8 @@ private:
   string mSourceFilename;
   MappingFileFormat mSourceFormat;
 
+  long long mReadLength;
+
   MappingUtilities * mMappingUtils;
 
 public:
@@ -39,9 +41,12 @@ public:
     mSourceFilename = aSourceFilename;
     mSourceFormat = aSourceFormat;
 
+    mReadLength = -1;
+
     mMappingUtils = MappingUtilitiesFactory::BuildMappingUtilities( aSourceFormat );
   }
 
+  // this has a bad code smell. Should be using polymorphism for this, like the engine.
   void ProduceIndex(bool aCompress=false)
   {
     ReadMappingFile();
@@ -99,8 +104,12 @@ private:
       mMappingFileRepresentation.AddLine( lContig, lIndex, lPos, lLength );
     }
 
+    // set the read length from the last line, now that we're done with reading.
+    mReadLength = mMappingUtils->GetSequence( lLine ).length();
+
     lStream.close();
     mMappingFileRepresentation.Finalize(); // signal that we are done reading. do whatever, incl. sorting.
+
   }
 
   void GenerateIndex()
@@ -143,14 +152,13 @@ private:
 
           mMappingIndex.AddEntry( lContig->first, lTargetWindow, lLineVectorIndex, lPos );
 
-          lLastWindowInfo = mMappingIndex.find( lContig->first )->second.find( lTargetWindow );
+          lLastWindowInfo = mMappingIndex[ lContig->first ].find( lTargetWindow ); // TODO, replace this with a proper direct reference.
 
           ++lTargetWindow;
         }
 
         ++lLastWindowLineCount;
         lLastWindowSize += lLine.Length;
-
 
         lPos += lLine.Length;
       }
@@ -187,14 +195,6 @@ private:
         char * lLineContent = new char[ lLine->Length ];
         lSourceMappingFile.seekg( lLine->Offset );
         lSourceMappingFile.read( lLineContent, lLine->Length );
-        //getline( lSourceMappingFile, lLineContent );
-
-        // preserve the f'ing line endings
-        //int lExtraCharsToRead = (int)lSourceMappingFile.tellg() - lLineContent.length();
-        //char * lBuf = new char[ lExtraCharsToRead ];
-        //lSourceMappingFile.seekg( (int)lSourceMappingFile.tellg() - lExtraCharsToRead );
-        //lSourceMappingFile.read( lBuf, lExtraCharsToRead );
-        //lLineContent.append( lBuf, lExtraCharsToRead );
 
         lOutStream.write( lLineContent, lLine->Length );
         delete lLineContent;
@@ -257,6 +257,9 @@ private:
 
     lStream << MappingUtilitiesFactory::ToString( mSourceFormat ) << endl;
 
+    // saving the read length
+    lStream << mReadLength << endl;
+
     // saving the number of contigs
     lStream << mMappingIndex.size() << endl;
 
@@ -265,7 +268,8 @@ private:
     for ( lMappingIndexIterator = mMappingIndex.begin();
       lMappingIndexIterator != mMappingIndex.end(); ++lMappingIndexIterator ) // loop through the contigs
     {
-      //            Contig Name                             Number of Stored Windows
+      
+      //            Contig Name                             Number of Stored Windows           
       lStream << lMappingIndexIterator->first << Tab << lMappingIndexIterator->second.size() << endl;
 
       // loop through the windows
@@ -332,17 +336,20 @@ private:
 
   void ReadBlock( ifstream & aStream, string & aContig, long long aStart, int aCount, string & aBlock )
   {
-    MappingMap::iterator lVectorPair = mMappingFileRepresentation.find( aContig );
+    MappingMap::iterator lContig = mMappingFileRepresentation.find( aContig );
+
+    if ( lContig == mMappingFileRepresentation.end() )
+      throw string ("Could not find referenced contig.");
 
     for ( int lIndex = aStart; lIndex < aStart + aCount; ++lIndex )
     {
-      MappingMap::mapped_type::reference lLine(lVectorPair->second.at(lIndex));
+      MappingMap::mapped_type::reference lLine(lContig->second.at(lIndex));
 
-      char * lLineContent = new char[ lLine.Length ];
+      char * lLineContent = new char[ lLine.Length ]; 
       aStream.seekg( lLine.Offset );
       aStream.read( lLineContent, lLine.Length );
 
-      aBlock.append( lLineContent );
+      aBlock.append( lLineContent, lLine.Length );
 
       delete lLineContent;
     }
@@ -354,7 +361,7 @@ private:
     unsigned long long lSourceLength = aBlock.size() + 1;
     lSource = (Bytef *) calloc( lSourceLength, 1 ); // allocate the memory on the fly.
     assert( lSource != NULL ); // temporary. TODO handle this better, clean up after myself.
-    strcpy( (char*) lSource, aBlock.c_str() );
+    strcpy( (char*) lSource, aBlock.c_str() ); // this only works because the string is null terminated. :/ TODO, fix this.
     lSource[aBlock.size()] = NULL; // set null termination manually.
 
     Bytef *lCompressed;
@@ -365,17 +372,17 @@ private:
     int lErrorCode = compress( lCompressed, &lCompressedLength, lSource, lSourceLength );
     assert( lErrorCode == 0 ); // temporary. TODO handle this better, clean up after myself.
 
-    //// TEST CODE
-    //Bytef *lUncompressed;
-    //unsigned long lUncompressedLength = aBlock.size() + 1; // do these go negative?
-    //lUncompressed = new Bytef[ lUncompressedLength ]; // allocate the memory on the fly.
-    //assert( lUncompressed != NULL ); // temporary. TODO handle this better, clean up after myself.
+    // TEST CODE
+    Bytef *lUncompressed;
+    unsigned long lUncompressedLength = aBlock.size() + 1; // do these go negative?
+    lUncompressed = new Bytef[ lUncompressedLength ]; // allocate the memory on the fly.
+    assert( lUncompressed != NULL ); // temporary. TODO handle this better, clean up after myself.
 
-    //int lErrorCode2 = uncompress(lUncompressed, &lUncompressedLength, lCompressed, lCompressedLength);
-    //assert( lErrorCode2 == 0 ); // temporary. TODO handle this better, clean up after myself.
+    int lErrorCode2 = uncompress(lUncompressed, &lUncompressedLength, lCompressed, lCompressedLength);
+    assert( lErrorCode2 == 0 ); // temporary. TODO handle this better, clean up after myself.
 
-    //delete [] lUncompressed;
-    //// END TEST CODE
+    delete [] lUncompressed;
+    // END TEST CODE
 
     aCompressedBlock.append( (char*) lCompressed, lCompressedLength );
 

@@ -60,12 +60,16 @@ public:
     lIndexAndOffset.Offset = aPosition;
     lIndexAndOffset.Length = aLength;
 
-    if ( find( aContig ) == end() )
-    {
-      insert( pair<string, vector<IndexAndOffset> >( aContig, vector<IndexAndOffset>() ) );
-    }
+    //if ( find( aContig ) == end() )
+    //{
+    //  insert( pair<string, vector<IndexAndOffset> >( aContig, vector<IndexAndOffset>() ) );
+    //}
 
-    find( aContig )->second.push_back( lIndexAndOffset );
+
+    // Will this work? (TODO)
+    (*this)[ aContig ].push_back( lIndexAndOffset );
+
+//    find( aContig )->second.push_back( lIndexAndOffset );
 
     ReevaluateSort( aContig, aIndex );
   }
