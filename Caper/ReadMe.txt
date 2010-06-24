@@ -1,26 +1,38 @@
-Caper v0.4
-Usage: caper [-s SaveIndexesToPath] [-i SavedMappingIndexFile] [-f SavedReferenceGenomeIndexFile] <-g|-G> <referencegenome.fa> <-m|-M|-b|-B> <mappingsfile>
+Caper v0.5
+Usage:
+ caper indexmappings [-b] <-m mappingfile> <-t bowtie|mapview|sam> <-o savepath>
+ caper interactive <-m indexedmappingfile -i mappingfileindex|-b compressedmappingbundle>
 
--s : Save your indexes (both reference genome and mapping indexes) out to this directory
+Modes:
+ indexmappings: read and sort a Bowtie, Mapview, or Sam formatted mapping file, and produce an index.
 
--i : load this mapping file index. 
+  -b : Produce a compressed bundle containing the mapping file and index.
+  -m <path_to_file> : Path to mapping file
+  -t <format> : Mapping file format (bowtie, mapview, or sam)
+  -o <output_path> : Path to output directory. If path is not a directory, will attempt to use as prefix.
 
--f : load this reference genome index. If you use this option, it assumes your reference genome file has already been massaged by Caper in past.
-	 
--g : load this reference genome file. 
+  interactive: interactively query indexed mapping file
+  -m <path_to_file> : path to indexed mapping file
+  -i <path_to_file> : path mapping file index
 
--G : load this pre-massaged reference genome file.
+     alternatively,
 
--m : load this mapview mapping file.
+  -b <path_to_file> : path to compressed bundle file.
 
--M : load this pre-sorted mapview mapping file.
+Interactive Commands:
 
--b : load this bowtie mapping file. Don't use this at the same time as -m. Who knows what'll happen.
+In interactive mode, the Caper accepts the following commands
 
--B : load this pre-sorted bowtie mapping file. Don't use this at the same time as -m. Who knows what'll happen.
+interval <contig> <start_index> <end_index>
+    - returns the reads that intersect with the interval 
 
+intersect <contig> <index>
+    - returns the reads that intersect with this index.
+
+reads <contig> <index>
+    - returns the reads whose alignment STARTS at this index. 
 
 
 TODO
-- Add filetype to mapping index header.
-- Fix all the path crap.
+- finish populating Pyrex wrapper
+- beef up the test suite
