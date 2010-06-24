@@ -18,8 +18,6 @@ public: // public member variables (replace with accessors later)
   long long mPosition;
 
 public: // public methods
- 
-
   
   Sequence( string aBases )
   {

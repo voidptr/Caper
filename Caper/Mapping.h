@@ -7,8 +7,8 @@ class Mapping
 {
 public:
   string Name;
-	long long Index;
-	Sequence* mSequence;
+  long long Index;
+  Sequence* mSequence;
   enum Orientation
   {
     PLUS,
@@ -45,11 +45,6 @@ public:
     }
   }
 
-
-	//Mapping(string & aName, long long & aPosition, Sequence* aSequence, Orientation aStrand);
- // Mapping( Mapping & aMapping );
-	//~Mapping(void);
-
-	const char * NameP() { return Name.c_str(); }
+  const char * NameP() { return Name.c_str(); }
 
 };
