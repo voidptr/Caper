@@ -20,8 +20,7 @@ Modes:
   -b <path_to_file> : path to compressed bundle file.
 
 Interactive Commands:
-
-In interactive mode, the Caper accepts the following commands
+  In interactive mode, Caper accepts the following commands
 
 interval <contig> <start_index> <end_index>
     - returns the reads that intersect with the interval 
