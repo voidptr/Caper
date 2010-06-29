@@ -61,6 +61,11 @@ public:
       return mMappingEngine->GetReads( mContigName, mIndex );
     }
 
+    IndexedMappings * GetReadsIndexed()
+    {
+      return mMappingEngine->GetReadsIndexed( mContigName, mIndex );
+    }
+
     long long GetIndex()
     {
       return mIndex;
@@ -130,6 +135,15 @@ public:
   {
     PopulateCorrectCache( aContigIdent, IndexToWindowNumber(aIndex) );
     return mCurrentCache->GetReads( aIndex );
+  }
+
+  IndexedMappings * GetReadsIndexed( string & aContigIdent, long long aIndex )
+  {
+    IndexedMappings * lIndexedReads = new IndexedMappings();
+    
+    lIndexedReads->insert( IndexedMappings::value_type( aIndex, GetReads( aContigIdent, aIndex ) ) );
+    
+    return lIndexedReads;
   }
 
   long long GetReadLength()
