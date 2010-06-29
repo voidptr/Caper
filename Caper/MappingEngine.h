@@ -26,7 +26,7 @@ public:
 
   public:
     iterator( MappingEngine * aMappingEngine, 
-      string & aContigName=string(""), long long aIndex=-1)
+      const string & aContigName="", long long aIndex=-1)
     {
       mMappingEngine = aMappingEngine;
 
@@ -114,7 +114,7 @@ public:
     mFileEngine->Initialize();
   }
 
-  iterator Begin( string & aContigIdent=string() )
+  iterator Begin( const string & aContigIdent="" )
   {
     return iterator( this, aContigIdent );
   }
@@ -235,7 +235,7 @@ private:
     }
   }
 
-  long long GetEndIndex( string & aContig=string() )
+  long long GetEndIndex( const string & aContig="" )
   {
     return -1;
   }
