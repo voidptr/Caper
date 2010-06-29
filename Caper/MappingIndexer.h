@@ -1,17 +1,8 @@
 #pragma once
 
 #include "MappingFile.h"
-
-//#include "Path.h"
 #include "Typedefs.h"
-//#include "MappingUtilities.h"
-
-//#include "MappingIndexMap.h"
-
 #include "stdafx.h"
-//#include <time.h>
-//
-//#include "zlib.h"
 
 class MappingIndexer
 {

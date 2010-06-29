@@ -13,22 +13,22 @@ caper_path = os.path.join("..", "Caper")
 caper_ui_path = os.path.join("..", "CaperUI")
 zlib_path = os.path.join("..","zlib123")
 
-caperObjs = ["BowtieMappingUtilities.o",
-		"FASequenceEngine.o",
-		"Mapping.o",
-		"MappingCache.o", 
-		"MappingEngine.o",
-		"MappingsIndexer.o",
-		"MappingsPreparer.o",
-		"MappingUtilities.o",
-		"MappingUtilitiesFactory.o",
-		"MapviewMappingUtilities.o",
-        "Path.o",
-        "SAMMappingUtilities.o",
-        "Sequence.o",
-		"SequenceEngine.o", 
-		"SequenceIndexer.o",
-		"Utilities.o"]
+#caperObjs = ["BowtieMappingUtilities.o",
+#		"FASequenceEngine.o",
+#		"Mapping.o",
+#		"MappingCache.o", 
+#		"MappingEngine.o",
+#		"MappingsIndexer.o",
+#		"MappingsPreparer.o",
+#		"MappingUtilities.o",
+#		"MappingUtilitiesFactory.o",
+#		"MapviewMappingUtilities.o",
+#        "Path.o",
+#        "SAMMappingUtilities.o",
+#        "Sequence.o",
+#		"SequenceEngine.o", 
+#		"SequenceIndexer.o",
+#		"Utilities.o"]
        
 #caperUIObjs = ["Arguments.o",
 #	"Caper.o",
@@ -51,15 +51,15 @@ zlibObjs = ["adler32.o",
 	"uncompr.o",
 	"zutil.o"]
 
-caperObjs = [ os.path.join(caper_path, o) for o in caperObjs ]
+#caperObjs = [ os.path.join(caper_path, o) for o in caperObjs ]
 #caperUIObjs = [ os.path.join(caper_ui_path,o) for o in caperUIObjs ]
 zlibObjs = [ os.path.join(zlib_path, o) for o in zlibObjs ]
    
-extraObjs = caperObjs  + zlibObjs
+#extraObjs = caperObjs  + zlibObjs
+extraObjs = zlibObjs
  
 setup(
 	name = "caper",
-#        py_modules = ['screed'],
 	ext_modules=[
 		Extension(
 			"caper", 
