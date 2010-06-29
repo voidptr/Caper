@@ -256,19 +256,19 @@ cdef extern from "Caper.h":
 #         return mappings
 
 
-# cdef class mapping_container:
-#     cdef c_mapping_engine *thismap
-#
-#     def __cinit__(self, bundle_path):
-#         self.thismap = NULL
-#         self.thismap = new_mapping_engine(bundle_path)
-#         self.thismap.Initialize()
-#
-#     def __dealloc__(self):
-#         del_mapping_engine(self.thismap)
-#
-#     #def get_slice_iterator(self, seqname, start):
-#
-#
+cdef class mapping_container:
+    cdef c_mapping_engine *thismap
+
+    def __cinit__(self, bundle_path):
+        self.thismap = NULL
+        self.thismap = new_mapping_engine(bundle_path)
+        self.thismap.Initialize()
+
+    def __dealloc__(self):
+        del_mapping_engine(self.thismap)
+
+    #def get_slice_iterator(self, seqname, start):
+
+
 
 ####### END PYTHON CLASSES

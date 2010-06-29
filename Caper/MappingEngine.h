@@ -25,7 +25,7 @@ public:
     string mContigName;
 
   public:
-    iterator( MappingEngine * aMappingEngine, 
+    iterator( MappingEngine * aMappingEngine,
       const string & aContigName="", long long aIndex=-1)
     {
       mMappingEngine = aMappingEngine;
@@ -71,7 +71,7 @@ public:
       return mIndex;
     }
 
-    bool operator==(const iterator & aOther ) const 
+    bool operator==(const iterator & aOther ) const
     {
       if ( mIndex == aOther.mIndex && mContigName == aOther.mContigName )
         return true;
@@ -79,14 +79,14 @@ public:
       return false;
     }
 
-    bool operator!=(const iterator & aOther) const 
+    bool operator!=(const iterator & aOther) const
     {
       return !(*this == aOther);
     }
 
     IndexedMappings * Intersect()
     {
-      return mMappingEngine->GetIntersection( mContigName, mIndex, mIndex ); 
+      return mMappingEngine->GetIntersection( mContigName, mIndex, mIndex );
     }
 
   };
@@ -104,6 +104,16 @@ public:
   MappingEngine(string & aBundlePath)
   {
     mFileEngine = new BundleFileEngine( aBundlePath );
+    mMappingCacheFactory = new MappingCacheFactory( mFileEngine );
+
+    mCurrentCache = NULL;
+  }
+
+  MappingEngine(const char * aBundlePath)
+  {
+    string lBundlePath = string(aBundlePath);
+
+    mFileEngine = new BundleFileEngine( lBundlePath );
     mMappingCacheFactory = new MappingCacheFactory( mFileEngine );
 
     mCurrentCache = NULL;
@@ -140,9 +150,9 @@ public:
   IndexedMappings * GetReadsIndexed( string & aContigIdent, long long aIndex )
   {
     IndexedMappings * lIndexedReads = new IndexedMappings();
-    
+
     lIndexedReads->insert( IndexedMappings::value_type( aIndex, GetReads( aContigIdent, aIndex ) ) );
-    
+
     return lIndexedReads;
   }
 
@@ -164,7 +174,7 @@ public:
     {
       lReads->insert( IndexedMappings::value_type( lIt.GetIndex(), lIt.GetReads() ) );
     }
-  
+
     return lReads;
   }
 
@@ -175,7 +185,7 @@ public:
   }
 
 private:
-  
+
   long long GetNextIndex( string & aContig, long long aIndex )
   {
     PopulateCorrectCache( aContig, IndexToWindowNumber(aIndex) ); // init the current cache, if we haven't already.
@@ -203,11 +213,11 @@ private:
     {
       return GetEndIndex( aContig );
     }
-    
+
   }
 
   long long GetPreviousIndex( string & aContig, long long aIndex )
-  {    
+  {
     PopulateCorrectCache( aContig, IndexToWindowNumber(aIndex) ); // init the current cache, if we haven't already.
 
     if ( mCurrentCache != NULL ) // Hooray! We're in a proper window!
@@ -246,9 +256,9 @@ private:
   }
 
   void PopulateCorrectCache( string & aContigIdent, long long aWindowNumber )
-  { 
-    if ( mCurrentCache == NULL || 
-      mCurrentCache->ContigIdent != aContigIdent || 
+  {
+    if ( mCurrentCache == NULL ||
+      mCurrentCache->ContigIdent != aContigIdent ||
       IndexToWindowNumber( mCurrentCache->LeftIndex ) != aWindowNumber )
     {
       DestroyCache();
