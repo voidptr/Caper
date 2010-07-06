@@ -19,7 +19,7 @@ private:
 public:
   class iterator
   {
-  private:
+  protected:
     MappingEngine * mMappingEngine;
     long long mIndex;
     string mContigName;
@@ -89,6 +89,11 @@ public:
       return mMappingEngine->GetIntersection( mContigName, mIndex, mIndex );
     }
 
+    vector<ReadsAtIndex*> * IntersectFlat()
+    {
+        return mMappingEngine->GetIntersectionFlat( mContigName, mIndex, mIndex );
+    }
+
   };
 
 public:
@@ -101,7 +106,7 @@ public:
     mCurrentCache = NULL;
   }
 
-  MappingEngine(string & aBundlePath)
+  MappingEngine(string aBundlePath)
   {
     mFileEngine = new BundleFileEngine( aBundlePath );
     mMappingCacheFactory = new MappingCacheFactory( mFileEngine );
@@ -109,15 +114,15 @@ public:
     mCurrentCache = NULL;
   }
 
-  MappingEngine(const char * aBundlePath)
-  {
-    string lBundlePath = string(aBundlePath);
+   MappingEngine(const char * aBundlePath)
+   {
+     string lBundlePath = string(aBundlePath);
 
-    mFileEngine = new BundleFileEngine( lBundlePath );
-    mMappingCacheFactory = new MappingCacheFactory( mFileEngine );
+     mFileEngine = new BundleFileEngine( lBundlePath );
+     mMappingCacheFactory = new MappingCacheFactory( mFileEngine );
 
-    mCurrentCache = NULL;
-  }
+     mCurrentCache = NULL;
+   }
 
   void Initialize()
   {
@@ -134,6 +139,12 @@ public:
     return iterator( this, aContigIdent, aIndex );
   }
 
+  iterator At( const char * aContigIdent, long long aIndex ) // you can address one, but there may not be anything there.
+  {
+    string lContigIdent = string(aContigIdent);
+    return At( lContigIdent, aIndex );
+  }
+
   iterator End( string & aContigIdent )
   {
     iterator lIt ( this, aContigIdent ); // does this get destroyed too soon? :/
@@ -145,6 +156,12 @@ public:
   {
     PopulateCorrectCache( aContigIdent, IndexToWindowNumber(aIndex) );
     return mCurrentCache->GetReads( aIndex );
+  }
+
+  ReadsAtIndex * GetReads( const char * aContigIdent, long long aIndex )
+  {
+    string lContigIdent = string(aContigIdent);
+    return GetReads( lContigIdent, aIndex );
   }
 
   IndexedMappings * GetReadsIndexed( string & aContigIdent, long long aIndex )
@@ -170,12 +187,50 @@ public:
     IndexedMappings * lReads = new IndexedMappings();
 
     iterator lRight = At( aContigIdent, aRight ); // just a stake in the ground, probably nothing here.
+    bool lStart = true;
     for ( iterator lIt = At( aContigIdent, lIntersectLeft ); lIt != End( aContigIdent ) && lIt.GetIndex() <= lRight.GetIndex(); lIt.Next() )
     {
-      lReads->insert( IndexedMappings::value_type( lIt.GetIndex(), lIt.GetReads() ) );
+      if (!lStart || lIt.GetReads()->size() > 0 ) // kludge to avoid pushing an empty set of reads.
+          lReads->insert( IndexedMappings::value_type( lIt.GetIndex(), lIt.GetReads() ) );
+
+      lStart = false;
     }
 
     return lReads;
+  }
+
+  IndexedMappings * GetIntersection( const char * aContigIdent, long long aLeft, long long aRight )
+  {
+    string lContigIdent = string(aContigIdent);
+    return GetIntersection( lContigIdent, aLeft, aRight );
+  }
+
+  vector<ReadsAtIndex*> * GetIntersectionFlat( string & aContigIdent, long long aLeft, long long aRight )
+  {
+    long long lIntersectLeft = aLeft - GetReadLength();
+    if ( lIntersectLeft < 0 )
+      lIntersectLeft = 0;
+
+    vector<ReadsAtIndex*> * lReads = new vector<ReadsAtIndex*>();
+
+    iterator lRight = At( aContigIdent, aRight ); // just a stake in the ground, probably nothing here.
+    bool lStart = true;
+    for ( iterator lIt = At( aContigIdent, lIntersectLeft ); lIt != End( aContigIdent ) && lIt.GetIndex() <= lRight.GetIndex(); lIt.Next() )
+    {
+      if ( !lStart || lIt.GetReads()->size() > 0 ) // kludge to avoid pushing an empty set of reads.
+        lReads->push_back( lIt.GetReads() );
+
+      lStart = true;
+    }
+
+    return lReads;
+
+  }
+
+  vector<ReadsAtIndex*> * GetIntersectionFlat( const char * aContigIdent, long long aLeft, long long aRight )
+  {
+    string lContigIdent = string(aContigIdent);
+    return GetIntersectionFlat( lContigIdent, aLeft, aRight );
   }
 
   ~MappingEngine(void)

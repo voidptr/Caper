@@ -2,7 +2,7 @@
 
 void Caper::UserInterface(int argc, char * const argv[] )
 {
-  string lUsageString = 
+  string lUsageString =
     "Caper v0.5.0\nUsage:\n caper indexmappings [-b] <-m mappingfile> <-t bowtie|mapview|sam> <-o savepath>\n caper interactive <-m indexedmappingfile -i mappingfileindex|-b compressedmappingbundle>\n";
 
   try
@@ -34,7 +34,7 @@ void Caper::IndexMappings( Arguments lArgs )
 
   MappingIndexer lIndexer( lModeArgs->MappingPath, lModeArgs->MappingStyle, lModeArgs->SavePath, lModeArgs->Bundle );
   lIndexer.CreateIndex();
- 
+
 }
 
 void Caper::Interactive( Arguments lArgs )
