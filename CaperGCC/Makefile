@@ -85,8 +85,8 @@ UIOBJ=$(UISRCDIR)/Arguments.o \
 	$(UISRCDIR)/Caper.o \
 	$(UISRCDIR)/XGetopt.o
 
-Caper: $(UISRCDIR)/CaperUI.o $(OBJS) $(UIOBJ) $(ZLIBOBJ)
-	g++ -Wall -O3 -o Caper $(UISRCDIR)/CaperUI.o $(OBJS) $(UIOBJ) \
+Caper: $(UISRCDIR)/CaperUI.o $(UIOBJ) $(ZLIBOBJ)
+	g++ -Wall -O3 -o Caper $(UISRCDIR)/CaperUI.o $(UIOBJ) \
 	$(ZLIBOBJ)
 
 depend:
