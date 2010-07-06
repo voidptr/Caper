@@ -8,19 +8,6 @@
  #pragma warning(push,3)
 #endif  /* _MSC_VER */
 
-		// TEMPLATE FUNCTION swap (from <algorithm>)
-template<class _Ty> inline
-	void swap(_Ty& _Left, _Ty& _Right)
-	{	// exchange values stored at _Left and _Right
-	if (&_Left != &_Right)
-		{	// different, worth swapping
-		_Ty _Tmp = _Left;
-
-		_Left = _Right;
-		_Right = _Tmp;
-		}
-	}
-
 		// TEMPLATE STRUCT triad
 template<class _Ty1,
 	class _Ty2, 

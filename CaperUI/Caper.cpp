@@ -2,8 +2,8 @@
 
 void Caper::UserInterface(int argc, char * const argv[] )
 {
-  string lUsageString = 
-    "Caper v0.4.1\nUsage:\n caper indexgenome <-g referencegenome.fa> <-o savepath>\n caper indexmappings [-b] <-m mappingfile> <-t bowtie|mapview|sam> <-o savepath>\n caper interactive <-g indexedreferencegenome.fa> <-f referencegenomeindexfile> <-m indexedmappingfile -i mappingfileindex|-b compressedmappingbundle>\n";
+  string lUsageString =
+    "Caper v0.5.0\nUsage:\n caper indexmappings [-b] <-m mappingfile> <-t bowtie|mapview|sam> <-o savepath>\n caper interactive <-m indexedmappingfile -i mappingfileindex|-b compressedmappingbundle>\n";
 
   try
   {
@@ -14,9 +14,7 @@ void Caper::UserInterface(int argc, char * const argv[] )
       return;
     }
 
-    if ( lArgs.Mode == lArgs.INDEXGENOME )
-      IndexGenome( lArgs );
-		else if ( lArgs.Mode == lArgs.INDEXMAPPINGS )
+    if ( lArgs.Mode == lArgs.INDEXMAPPINGS )
       IndexMappings( lArgs );
 		else if ( lArgs.Mode == lArgs.INTERACTIVE )
       Interactive( lArgs );
@@ -30,30 +28,13 @@ void Caper::UserInterface(int argc, char * const argv[] )
   }
 }
 
-void Caper::IndexGenome( Arguments lArgs )
-{
-  IndexGenomeArguments * lModeArgs = (IndexGenomeArguments*) lArgs.ModeArgs;
-
-  cout << "Reading Genome \"" << lModeArgs->GenomePath << "\"... ";
-  cout.flush();
-
-  SequenceIndexer * lSequenceIndexer = new FASequenceIndexer( lModeArgs->GenomePath, lModeArgs->SavePath );
-  lSequenceIndexer->Index();
-}
-
 void Caper::IndexMappings( Arguments lArgs )
 {
   IndexMappingsArguments * lModeArgs = (IndexMappingsArguments *) lArgs.ModeArgs;
 
-  //SequenceEngine * lSequenceEngine = new FASequenceEngine( lModeArgs->GenomePath, lModeArgs->ReferenceGenomeIndexPath );
-  //lSequenceEngine->Initialize();
+  MappingIndexer lIndexer( lModeArgs->MappingPath, lModeArgs->MappingStyle, lModeArgs->SavePath, lModeArgs->Bundle );
+  lIndexer.CreateIndex();
 
-  cout << "Preparing Mappings \"" << lModeArgs->MappingPath << "\"... " << endl;
-  cout.flush();
-
-  MappingsIndexer lIndexer( lModeArgs->MappingPath, lModeArgs->MappingStyle, lModeArgs->SavePath, lModeArgs->Bundle );
-  lIndexer.IndexMappingsAndSave();
- 
 }
 
 void Caper::Interactive( Arguments lArgs )
@@ -61,9 +42,6 @@ void Caper::Interactive( Arguments lArgs )
   string lCommandString = "You can type: \"<contig ident>:<X>:<Y>\", or \"<contig ident>:<X>:<Y>:p\" (for pretty mode)";
 
   InteractiveArguments * lModeArgs = (InteractiveArguments*) lArgs.ModeArgs;
-
-  SequenceEngine * lSequenceEngine = new FASequenceEngine( lModeArgs->GenomePath, lModeArgs->ReferenceGenomeIndexPath );
-  lSequenceEngine->Initialize();
 
   MappingEngine * lMappingEngine;
   if ( lModeArgs->BundlePath.length() > 0 )
@@ -75,65 +53,63 @@ void Caper::Interactive( Arguments lArgs )
   cout << "> ";
 
   string lInput = "";
-  Commands lCommands;
+  InteractiveCommands lCommands;
 
-  while ( cin >> lInput )
+  while ( getline(cin, lInput) )
   {
-    if ( !lCommands.ProcessArguments( lInput, lSequenceEngine->mSequences, lMappingEngine ) )
+	  // debug code
+    //cout << "You typed: \"" << lInput << "\"" << endl;
+
+    if ( !lCommands.ProcessArguments( lInput, lMappingEngine ) )
     {
       cout << "Invalid Input: " << lCommandString << endl << "> " ;
       continue;
     }
 
-    if ( lCommands.Action == lCommands.GETREADS )
+    try
     {
-      Mappings * lMappings = lMappingEngine->GetReads(lCommands.ContigIdent, lCommands.Left, lCommands.Right );
-      if ( lCommands.PrettyMode ) // engage pretty mode
+      if ( lCommands.Action == lCommands.READS )
       {
-        cout << PadLeft( lMappingEngine->GetReadLength() ) << lCommands.Left + lMappingEngine->GetReadLength() << endl;
-        cout << PadLeft( lMappingEngine->GetReadLength() ) << PadLeft( lCommands.Right - lCommands.Left, "*") << endl;
+        MappingEngine::iterator lReadsIt = lMappingEngine->At( lCommands.ContigIdent, lCommands.Left );
+        ReadsAtIndex * lMappings = lReadsIt.GetReads();
 
-        string lGenome = "";
-
-        Sequence * lContig = (*lSequenceEngine->mSequences)[ lCommands.ContigIdent ];
-
-        int lTargetGenomeWidth = lCommands.Right - lCommands.Left + 1 + lMappingEngine->GetReadLength(); // FIX THIS LATER
-        if ( lTargetGenomeWidth < lContig->Length )
-          lGenome = lContig->Substring( lCommands.Left, lTargetGenomeWidth );
-        else
-          lGenome = lContig->Substring( lCommands.Left );
-
-        cout << lGenome << endl;
-
-        int lGenomeLength = lGenome.length();
-        for ( int i = 0 ; i < lMappings->size(); i++ )
+        for (ReadsAtIndex::iterator lIt = lMappings->begin(); lIt != lMappings->end(); ++lIt )
         {
-          string lHighlightedString = lMappings->at(i)->mSequence->ToString();
-          for ( int j = 0; j < lHighlightedString.length(); j++ )
+          cout << (*lIt)->Index << ": " << (*lIt)->Name << " - " << (*lIt)->mSequence->ToString() << "\n";
+        }
+
+        lMappings->Destroy(); // this is supposed to decrement the reference count... ?
+      }
+      else if ( lCommands.Action == lCommands.INTERSECT )
+      {
+        MappingEngine::iterator lReadsIt = lMappingEngine->At( lCommands.ContigIdent, lCommands.Left );
+        IndexedMappings * lMappings = lReadsIt.Intersect();
+
+        for ( IndexedMappings::iterator lInterval = lMappings->begin(); lInterval != lMappings->end(); ++lInterval )
+          for (ReadsAtIndex::iterator lIt = lInterval->second->begin(); lIt != lInterval->second->end(); ++lIt )
           {
-            int lTargetLocalIndexOnGenome = lMappings->at(i)->Index - lCommands.Left + j;
-            if ( lTargetLocalIndexOnGenome < lGenome.length() &&
-              lHighlightedString[j] != lGenome[ lTargetLocalIndexOnGenome ] )
-            {
-              if ( islower(lHighlightedString[j]) )
-                lHighlightedString[j] = toupper( lHighlightedString[j] );
-              else
-                lHighlightedString[j] = tolower( lHighlightedString[j] );
-            }
+            cout << (*lIt)->Index << ": " << (*lIt)->Name << " - " << (*lIt)->mSequence->ToString() << "\n";          }
+
+        delete lMappings; // this is supposed to decrement the reference count... ?
+        // don't know if I need to implement a Destroy method on IndexedMappings so it doesn't wipe out everything, or that it at least calls --ReferenceCount correctly, etc.
+      }
+      else if ( lCommands.Action == lCommands.INTERVAL )
+      {
+        IndexedMappings * lMappings = lMappingEngine->GetIntersection( lCommands.ContigIdent, lCommands.Left, lCommands.Right );
+
+        for ( IndexedMappings::iterator lInterval = lMappings->begin(); lInterval != lMappings->end(); ++lInterval )
+          for (ReadsAtIndex::iterator lIt = lInterval->second->begin(); lIt != lInterval->second->end(); ++lIt )
+          {
+            cout << (*lIt)->Index << ": " << (*lIt)->Name << " - " << (*lIt)->mSequence->ToString() << "\n";
           }
 
-          cout << PadLeft( lMappings->at(i)->Index - lCommands.Left ) << lHighlightedString << "\n";
-        }
+        delete lMappings; // this is supposed to decrement the reference count... ?
+        // don't know if I need to implement a Destroy method on IndexedMappings so it doesn't wipe out everything, or that it at least calls --ReferenceCount correctly, etc.
       }
-      else
-      {
-        for ( int i = 0 ; i < lMappings->size(); i++ )
-        {
-          cout << "Index " << lMappings->at(i)->Index << ": " << lMappings->at(i)->Name << " - " << lMappings->at(i)->mSequence->ToString() << "\n";
-        }
-      }
-
-      delete lMappings;
+    }
+    catch ( string aError )
+    {
+      cout << "Error: " << aError << endl;
     }
 
     cout << "> ";

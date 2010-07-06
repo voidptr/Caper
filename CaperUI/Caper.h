@@ -5,10 +5,11 @@
 #include "FASequenceIndexer.h"
 
 #include "MappingEngine.h"
-#include "MappingsIndexer.h"
+
+#include "MappingIndexer.h"
 
 #include "Arguments.h"
-#include "Commands.h"
+#include "InteractiveCommands.h"
 
 #include "Typedefs.h"
 

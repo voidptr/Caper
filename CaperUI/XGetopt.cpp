@@ -208,7 +208,9 @@ int XGetOpt::GetOpt(int argc, char * const argv[], char *optstring)
 		return '?';
 
 	lFoundLoc++;
-	if (string(optstring)[lFoundLoc] == ':')
+
+  string lOptions(optstring);
+  if ( lOptions.length() > lFoundLoc && lOptions[lFoundLoc] == ':')
 	{
 		if (*next != '\0')
 		{

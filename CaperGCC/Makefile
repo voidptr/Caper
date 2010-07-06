@@ -3,8 +3,8 @@
 SRCDIR=../Caper
 UISRCDIR=../CaperUI
 ZLIBSRCDIR=../zlib123
-CXXFLAGS=-fPIC -I$(SRCDIR) -I$(ZLIBSRCDIR)
-CFLAGS=-fPIC
+CXXFLAGS=-g -fPIC -I$(SRCDIR) -I$(ZLIBSRCDIR)
+CFLAGS=-g -fPIC
 
 all: Caper
 
@@ -65,25 +65,6 @@ zutil.o: $(ZLIBSRCDIR)/zutil.h \
 	$(ZLIBSRCDIR)/zlib.h \
 	$(ZLIBSRCDIR)/zconf.h
 
-OBJS=\
-	$(SRCDIR)/MappingsIndexer.o \
-	$(SRCDIR)/FASequenceIndexer.o \
-	$(SRCDIR)/BowtieMappingUtilities.o \
-	$(SRCDIR)/FASequenceEngine.o \
-	$(SRCDIR)/Mapping.o \
-	$(SRCDIR)/MappingCache.o \
-	$(SRCDIR)/MappingEngine.o \
-	$(SRCDIR)/MappingsPreparer.o \
-	$(SRCDIR)/SAMMappingUtilities.o \
-	$(SRCDIR)/MappingUtilities.o \
-	$(SRCDIR)/MappingUtilitiesFactory.o \
-	$(SRCDIR)/MapviewMappingUtilities.o \
-	$(SRCDIR)/Path.o \
-	$(SRCDIR)/Sequence.o \
-	$(SRCDIR)/SequenceEngine.o \
-	$(SRCDIR)/SequenceIndexer.o \
-	$(SRCDIR)/Utilities.o
-       
 ZLIBOBJ=$(ZLIBSRCDIR)/adler32.o \
 	$(ZLIBSRCDIR)/compress.o \
 	$(ZLIBSRCDIR)/crc32.o \
@@ -102,7 +83,6 @@ UIOBJ=$(UISRCDIR)/Arguments.o \
 	$(UISRCDIR)/IndexGenomeArguments.o \
 	$(UISRCDIR)/IndexMappingsArguments.o \
 	$(UISRCDIR)/Caper.o \
-	$(UISRCDIR)/Commands.o \
 	$(UISRCDIR)/XGetopt.o
 
 Caper: $(UISRCDIR)/CaperUI.o $(OBJS) $(UIOBJ) $(ZLIBOBJ)

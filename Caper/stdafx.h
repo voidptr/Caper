@@ -16,8 +16,18 @@
 #include <string>
 #include <assert.h>
 #include <algorithm>
+#include <string.h>
 
 #include "Triad.h"
+
+#if defined( WIN32 )
+#define SLASH "\\" 
+#define NEWLINE "\r\n"
+#else
+#define SLASH "/"
+#define NEWLINE "\n"
+#endif
+
 
 using namespace std;
 
