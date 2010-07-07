@@ -262,7 +262,7 @@ private:
   long long GetNextIndex( string & aContig, long long aIndex )
   {
  //   cout << "~~MappingEngine - GetNextIndex" << endl;
-    cout << "~~MappingEngine - GetNextIndex - Populating Correct Cache (1)" << endl;
+    cout << "~~MappingEngine - GetNextIndex - Populating Correct Cache (1): index: " << aIndex << endl;
     PopulateCorrectCache( aContig, IndexToWindowNumber(aIndex) ); // init the current cache, if we haven't already.
     cout << "~~MappingEngine - GetNextIndex - Done Populating Correct Cache (1)" << endl;
     
