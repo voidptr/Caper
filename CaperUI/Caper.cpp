@@ -101,9 +101,9 @@ void Caper::Interactive( Arguments lArgs )
             cout << (*lIt)->Index << ": " << (*lIt)->Name << " - " << (*lIt)->mSequence->ToString() << "\n";
           }
 
-        cout << "Caper - Interactive - Interval - delete lMappings" << endl;
+        //cout << "Caper - Interactive - Interval - delete lMappings" << endl;
         delete lMappings; // this is supposed to decrement the reference count... ?
-        cout << "Caper - Interactive - Interval - done" << endl;
+        //cout << "Caper - Interactive - Interval - done" << endl;
         // don't know if I need to implement a Destroy method on IndexedMappings so it doesn't wipe out everything, or that it at least calls --ReferenceCount correctly, etc.
       }
     }

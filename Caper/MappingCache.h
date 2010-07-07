@@ -22,7 +22,7 @@ private:
 public:
   MappingCache( string & aContigIdent, long long & aLeftIndex, long long & aRightIndex )
   {
-    cout << "~~MappingCache - Constructor: " << aContigIdent << aLeftIndex << " to " << aRightIndex << endl;
+    //cout << "~~MappingCache - Constructor: " << aContigIdent << aLeftIndex << " to " << aRightIndex << endl;
     ContigIdent = aContigIdent;
     LeftIndex = aLeftIndex;
     RightIndex = aRightIndex;
@@ -32,28 +32,28 @@ public:
 
   ReadsAtIndex * GetReads( long long aIndex ) // this could possibly be empty.
   {
-    cout << "~~MappingCache - GetReads" << endl;
+ //   cout << "~~MappingCache - GetReads" << endl;
     if ( mCachedIterator->first != aIndex )
       mCachedIterator = mMappings.find( aIndex );
 
     if ( mCachedIterator == mMappings.end() ) // empty! Likely we addressed an index that doesn't have an entry. This is fine.
       return new ReadsAtIndex();
 
-    cout << "~~MappingCache - GetReads - Incrementing Reference Count for " << aIndex
-        << " from " << mMappings[ aIndex ]->ReferenceCount << " to " << (mMappings[ aIndex ]->ReferenceCount)+1 << endl;
+    //cout << "~~MappingCache - GetReads - Incrementing Reference Count for " << aIndex
+    //    << " from " << mMappings[ aIndex ]->ReferenceCount << " to " << (mMappings[ aIndex ]->ReferenceCount)+1 << endl;
     mMappings[ aIndex ]->ReferenceCount++; // increment the reference count
     return mMappings[ aIndex ];
   }
 
   long long GetFirstIndex()
   {
-    cout << "~~MappingCache - GetFirstIndex() " << mMappings.begin()->first << endl;
+    //cout << "~~MappingCache - GetFirstIndex() " << mMappings.begin()->first << endl;
     return mMappings.begin()->first;
   }
 
   long long GetNextIndex( long long aIndex )
   {
-    cout << "~~MappingCache - GetNextIndex - index: " << aIndex << endl;
+    //cout << "~~MappingCache - GetNextIndex - index: " << aIndex << endl;
     // cached iterator is expired, or bogus.
     if ( mCachedIterator == mMappings.end() || mCachedIterator->first != aIndex ) // refresh, clean it up.
       mCachedIterator = mMappings.find( aIndex );
@@ -63,7 +63,7 @@ public:
     bool lFake = false; // flag to remember to delete the fake one.
     if ( mCachedIterator == mMappings.end() ) // there's not one where we are.
     {
-      cout << "~~MappingCache - GetNextIndex - fake" << endl;
+      //cout << "~~MappingCache - GetNextIndex - fake" << endl;
       lFake = true;
       mMappings[ aIndex ]; // insert the fake.
       mCachedIterator = mMappings.find( aIndex );
@@ -76,14 +76,14 @@ public:
     {
       if ( !lFake )
       {
-            cout << "~~MappingCache - GetNextIndex - not fake" << endl;
+            //cout << "~~MappingCache - GetNextIndex - not fake" << endl;
         return mCachedIterator->first;
       }
       else // delete whatever fake one we created
       {
         long long lNextIndex = mCachedIterator->first;
         mMappings.erase( aIndex );
-            cout << "~~MappingCache - GetNextIndex - found the next one" << endl;
+            //cout << "~~MappingCache - GetNextIndex - found the next one" << endl;
         return lNextIndex;
       }
     }
@@ -91,7 +91,7 @@ public:
     {
       if ( lFake ) // erase our futile fake one.
         mMappings.erase( aIndex );
-          cout << "~~MappingCache - GetNextIndex - we're at the end of the cache." << endl;
+          //cout << "~~MappingCache - GetNextIndex - we're at the end of the cache." << endl;
       return GetEndIndex(); // return our sad defeat
     }
   }
@@ -144,7 +144,7 @@ public:
 
   long long GetEndIndex()
   {
-        cout << "~~MappingCache - GetEndIndex (-1)" << endl;
+        //cout << "~~MappingCache - GetEndIndex (-1)" << endl;
     return -1;
   }
 

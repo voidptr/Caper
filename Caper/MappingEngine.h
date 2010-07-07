@@ -28,7 +28,7 @@ public:
     iterator( MappingEngine * aMappingEngine,
       const string & aContigName="", long long aIndex=-2)
     {
-      cout << "MappingEngine::iterator Constructor" << endl;
+      //cout << "MappingEngine::iterator Constructor" << endl;
       mMappingEngine = aMappingEngine;
 
       if ( aContigName == "" )
@@ -38,9 +38,9 @@ public:
       
       if ( aIndex == -2 ) // A bizarre first value, but still amenable to the following behaviour. This should be fixed in a future.
       {
-        cout << "MappingEngine::iterator Constructor (if mIndex == -1)" << endl;
+        //cout << "MappingEngine::iterator Constructor (if mIndex == -1)" << endl;
         mIndex = mMappingEngine->GetNextIndex( mContigName, mIndex ); 
-        cout << "MappingEngine::iterator Constructor - new index: " << mIndex << endl;
+        //cout << "MappingEngine::iterator Constructor - new index: " << mIndex << endl;
       }
       else
         mIndex = aIndex;
@@ -48,9 +48,9 @@ public:
 
     void Next()
     {
-      cout << "~~MappingEngine::iterator - Next - CurrentIndex: " << mIndex << endl;
+      //cout << "~~MappingEngine::iterator - Next - CurrentIndex: " << mIndex << endl;
       mIndex = mMappingEngine->GetNextIndex( mContigName, mIndex );
-      cout << "~~MappingEngine::iterator - Next - NextIndex: " << mIndex << endl;
+      //cout << "~~MappingEngine::iterator - Next - NextIndex: " << mIndex << endl;
     }
 
     void Previous()
@@ -60,7 +60,7 @@ public:
 
     void End()
     {
-      cout << "~~MappingEngine::iterator - End " << endl;
+      //cout << "~~MappingEngine::iterator - End " << endl;
       mIndex = mMappingEngine->GetEndIndex();
     }
 
@@ -144,7 +144,7 @@ public:
 
   iterator At( string & aContigIdent, long long aIndex ) // you can address one, but there may not be anything there.
   {
-    cout << "~~MappingEngine - At " << aIndex << endl;
+    //cout << "~~MappingEngine - At " << aIndex << endl;
     return iterator( this, aContigIdent, aIndex );
   }
 
@@ -159,7 +159,7 @@ public:
     // HOLY SHIT, THIS METHOD IS ALL WRONG. I'm getting a meaning collision between -1 as End value, and -1 as default starting. 
     // What an irritating bug.
 
-    cout << "~~MappingEngine - End(contig) - Initing a new one" << endl;
+    //cout << "~~MappingEngine - End(contig) - Initing a new one" << endl;
     iterator lIt ( this, aContigIdent, GetEndIndex() ); // does this get destroyed too soon? :/
 //    cout << "~~MappingEngine - End(contig) - Ending it" << endl;
 //    lIt.End();
@@ -169,10 +169,10 @@ public:
 
   ReadsAtIndex * GetReads( string & aContigIdent, long long aIndex )
   {
-    cout << "~~MappingEngine - GetReads - " << aContigIdent << " index " << aIndex  << " window " << IndexToWindowNumber(aIndex) << endl;
+    //cout << "~~MappingEngine - GetReads - " << aContigIdent << " index " << aIndex  << " window " << IndexToWindowNumber(aIndex) << endl;
 
     PopulateCorrectCache( aContigIdent, IndexToWindowNumber(aIndex) );
-    cout << "~~MappingEngine - GetReads - Done Populating Correct Cache" << endl;
+    //cout << "~~MappingEngine - GetReads - Done Populating Correct Cache" << endl;
     return mCurrentCache->GetReads( aIndex );
   }
 
@@ -204,24 +204,24 @@ public:
 
     IndexedMappings * lReads = new IndexedMappings();
 
-    cout << "**********~~MappingEngine - GetIntersection - outside the loop" << endl;
+    //cout << "**********~~MappingEngine - GetIntersection - outside the loop" << endl;
     iterator lRight = At( aContigIdent, aRight ); // just a stake in the ground, probably nothing here.
     bool lStart = true;
     for ( iterator lIt = At( aContigIdent, lIntersectLeft ); lIt != End( aContigIdent ) && lIt.GetIndex() <= lRight.GetIndex(); lIt.Next() )
     {
-      cout << "  ********~~MappingEngine - GetIntersection - start inside loop" << endl;
+      //cout << "  ********~~MappingEngine - GetIntersection - start inside loop" << endl;
       if (!lStart || lIt.GetReads()->size() > 0 ) // kludge to avoid pushing an empty set of reads.
       {
-        cout << "    ******~~MappingEngine - GetIntersection - yay! read to add" << endl;
+        //cout << "    ******~~MappingEngine - GetIntersection - yay! read to add" << endl;
           lReads->insert( IndexedMappings::value_type( lIt.GetIndex(), lIt.GetReads() ) );
       }
       else
-        cout << "    ******~~MappingEngine - GetIntersection - no read to add" << endl;
+        //cout << "    ******~~MappingEngine - GetIntersection - no read to add" << endl;
 
       lStart = false;
-      cout << "  ********~~MappingEngine - GetIntersection - end inside loop" << endl;
+      //cout << "  ********~~MappingEngine - GetIntersection - end inside loop" << endl;
     }
-    cout << "**********~~MappingEngine - GetIntersection - end the loop" << endl;
+    //cout << "**********~~MappingEngine - GetIntersection - end the loop" << endl;
 
     return lReads;
   }
@@ -273,20 +273,20 @@ private:
   long long GetNextIndex( string & aContig, long long aIndex )
   {
  //   cout << "~~MappingEngine - GetNextIndex" << endl;
-    cout << "~~MappingEngine - GetNextIndex - Populating Correct Cache (1): index: " << aIndex << endl;
+    //cout << "~~MappingEngine - GetNextIndex - Populating Correct Cache (1): index: " << aIndex << endl;
     PopulateCorrectCache( aContig, IndexToWindowNumber(aIndex) ); // init the current cache, if we haven't already.
-    cout << "~~MappingEngine - GetNextIndex - Done Populating Correct Cache (1)" << endl;
+    //cout << "~~MappingEngine - GetNextIndex - Done Populating Correct Cache (1)" << endl;
     
     if ( mCurrentCache != NULL ) // Hooray! We're in a proper window!
     {
-      cout << "~~MappingEngine - GetNextIndex - (mCurrentCache != NULL), so ask for the next one" << endl;
+      //cout << "~~MappingEngine - GetNextIndex - (mCurrentCache != NULL), so ask for the next one" << endl;
       // so, we're some place. No idea if it's a no-man's land.
       // so, let's go ahead and ask for it from the current cache.
       long long lNextIndex = mCurrentCache->GetNextIndex( aIndex ); // ask for the next index
-      cout << "~~MappingEngine - GetNextIndex - asked for the next one, which was: " << lNextIndex << endl;
+      //cout << "~~MappingEngine - GetNextIndex - asked for the next one, which was: " << lNextIndex << endl;
       if ( lNextIndex != mCurrentCache->GetEndIndex() ) // hey, we found one in this window!
       {
-        cout << "~~MappingEngine - GetNextIndex - (lNextIndex != mCurrentCache->GetEndIndex())" << endl;
+        //cout << "~~MappingEngine - GetNextIndex - (lNextIndex != mCurrentCache->GetEndIndex())" << endl;
         return lNextIndex;
       }
     }
@@ -296,15 +296,15 @@ private:
     long long lNextWindowNumber = mFileEngine->NextWindow( aContig, IndexToWindowNumber(aIndex) ); // figure out what the next cache up is, populate that, and then retrieve the first index.
     if ( lNextWindowNumber != mFileEngine->EndWindow( aContig ) ) // populate the next cache.
     {
-            cout << "~~MappingEngine - GetNextIndex - Populating Correct Cache (2)" << endl;
+            //cout << "~~MappingEngine - GetNextIndex - Populating Correct Cache (2)" << endl;
       PopulateCorrectCache( aContig, lNextWindowNumber ); // populate the cache with the next window.
-          cout << "~~MappingEngine - GetNextIndex - Done Populating Correct Cache (2)" << endl;
+          //cout << "~~MappingEngine - GetNextIndex - Done Populating Correct Cache (2)" << endl;
 
       return mCurrentCache->GetFirstIndex(); // yay! Here's the next index!
     }
     else // there is no next window. we're at the end of this contig.
     {
-      cout << "~~MappingEngine - GetNextIndex - There is no next window" << endl;
+      //cout << "~~MappingEngine - GetNextIndex - There is no next window" << endl;
       return GetEndIndex( aContig );
     }
 
@@ -312,11 +312,11 @@ private:
 
   long long GetPreviousIndex( string & aContig, long long aIndex )
   {
-      cout << "~~MappingEngine - GetPreviousIndex" << endl;
-    cout << "~~MappingEngine - GetPreviousIndex - Populating Correct Cache (1)" << endl;
+      //cout << "~~MappingEngine - GetPreviousIndex" << endl;
+    //cout << "~~MappingEngine - GetPreviousIndex - Populating Correct Cache (1)" << endl;
 
     PopulateCorrectCache( aContig, IndexToWindowNumber(aIndex) ); // init the current cache, if we haven't already.
-    cout << "~~MappingEngine - GetPreviousIndex - Done Populating Correct Cache (1)" << endl;
+    //cout << "~~MappingEngine - GetPreviousIndex - Done Populating Correct Cache (1)" << endl;
 
     if ( mCurrentCache != NULL ) // Hooray! We're in a proper window!
     {
@@ -334,10 +334,10 @@ private:
     long long lPreviousWindowNumber = mFileEngine->PreviousWindow( aContig, IndexToWindowNumber(aIndex) ); // figure out what the next cache up is, populate that, and then retrieve the first index.
     if ( lPreviousWindowNumber != mFileEngine->EndWindow( aContig ) ) // ok, we have a valid previous window
     {
-        cout << "~~MappingEngine - GetPreviousIndex - Populating Correct Cache (2)" << endl;
+        //cout << "~~MappingEngine - GetPreviousIndex - Populating Correct Cache (2)" << endl;
 
       PopulateCorrectCache( aContig, lPreviousWindowNumber ); // populate the cache with the previous window.
-          cout << "~~MappingEngine - GetPreviousIndex - Populating Correct Cache (2)" << endl;
+          //cout << "~~MappingEngine - GetPreviousIndex - Populating Correct Cache (2)" << endl;
 
       return mCurrentCache->GetLastIndex(); // yay! Here's the previous index!
     }
@@ -359,21 +359,21 @@ private:
 
   void PopulateCorrectCache( string & aContigIdent, long long aWindowNumber )
   {
-    cout << "~~MappingEngine - PopulateCorrectCache " << aWindowNumber << endl;
+    //cout << "~~MappingEngine - PopulateCorrectCache " << aWindowNumber << endl;
     if ( mCurrentCache == NULL ||
       mCurrentCache->ContigIdent != aContigIdent ||
       IndexToWindowNumber( mCurrentCache->LeftIndex ) != aWindowNumber )
     {
-      cout << "~~MappingEngine - PopulateCorrectCache - Rebuilding (Destroying, Rebuild)..." << endl;
+      //cout << "~~MappingEngine - PopulateCorrectCache - Rebuilding (Destroying, Rebuild)..." << endl;
       DestroyCache();
       mCurrentCache = mMappingCacheFactory->BuildMappingCache( aContigIdent, aWindowNumber );
-      cout << "~~MappingEngine - PopulateCorrectCache - Done Rebuilding" << endl;
+      //cout << "~~MappingEngine - PopulateCorrectCache - Done Rebuilding" << endl;
     }
     else
     {
-        cout << "~MappingEngine - PopulateCorrectCache - ALREADY AT CORRECT CACHE!" << endl;
+        //cout << "~MappingEngine - PopulateCorrectCache - ALREADY AT CORRECT CACHE!" << endl;
     }
-    cout << "~~MappingEngine - PopulateCorrectCache - Done" << endl;
+    //cout << "~~MappingEngine - PopulateCorrectCache - Done" << endl;
   }
 
   long long IndexToWindowNumber(long long aIndex )
