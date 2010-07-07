@@ -154,8 +154,9 @@ public:
 
   ReadsAtIndex * GetReads( string & aContigIdent, long long aIndex )
   {
-    cout << "~~MappingEngine - GetReads" << aContigIdent << " index " << aIndex << endl;
+    cout << "~~MappingEngine - GetReads" << aContigIdent << " index " << aIndex  << " window " << IndexToWindowNumber(aIndex) << endl;
     PopulateCorrectCache( aContigIdent, IndexToWindowNumber(aIndex) );
+    cout << "~~MappingEngine - GetReads - Done Populating Correct Cache" << endl;
     return mCurrentCache->GetReads( aIndex );
   }
 
@@ -246,7 +247,11 @@ private:
 
   long long GetNextIndex( string & aContig, long long aIndex )
   {
+    cout << "~~MappingEngine - GetNextIndex" << endl;
+    cout << "~~MappingEngine - GetNextIndex - Populating Correct Cache (1)" << endl;
     PopulateCorrectCache( aContig, IndexToWindowNumber(aIndex) ); // init the current cache, if we haven't already.
+    cout << "~~MappingEngine - GetNextIndex - Done Populating Correct Cache (1)" << endl;
+
 
     if ( mCurrentCache != NULL ) // Hooray! We're in a proper window!x`
     {
@@ -264,7 +269,10 @@ private:
     long long lNextWindowNumber = mFileEngine->NextWindow( aContig, IndexToWindowNumber(aIndex) ); // figure out what the next cache up is, populate that, and then retrieve the first index.
     if ( lNextWindowNumber != mFileEngine->EndWindow( aContig ) ) // populate the next cache.
     {
+            cout << "~~MappingEngine - GetNextIndex - Populating Correct Cache (2)" << endl;
       PopulateCorrectCache( aContig, lNextWindowNumber ); // populate the cache with the next window.
+          cout << "~~MappingEngine - GetNextIndex - Done Populating Correct Cache (2)" << endl;
+
       return mCurrentCache->GetFirstIndex(); // yay! Here's the next index!
     }
     else // there is no next window. we're at the end of this contig.
@@ -276,7 +284,11 @@ private:
 
   long long GetPreviousIndex( string & aContig, long long aIndex )
   {
+      cout << "~~MappingEngine - GetPreviousIndex" << endl;
+    cout << "~~MappingEngine - GetPreviousIndex - Populating Correct Cache (1)" << endl;
+
     PopulateCorrectCache( aContig, IndexToWindowNumber(aIndex) ); // init the current cache, if we haven't already.
+    cout << "~~MappingEngine - GetPreviousIndex - Done Populating Correct Cache (1)" << endl;
 
     if ( mCurrentCache != NULL ) // Hooray! We're in a proper window!
     {
@@ -294,7 +306,11 @@ private:
     long long lPreviousWindowNumber = mFileEngine->PreviousWindow( aContig, IndexToWindowNumber(aIndex) ); // figure out what the next cache up is, populate that, and then retrieve the first index.
     if ( lPreviousWindowNumber != mFileEngine->EndWindow( aContig ) ) // ok, we have a valid previous window
     {
+        cout << "~~MappingEngine - GetPreviousIndex - Populating Correct Cache (2)" << endl;
+
       PopulateCorrectCache( aContig, lPreviousWindowNumber ); // populate the cache with the previous window.
+          cout << "~~MappingEngine - GetPreviousIndex - Populating Correct Cache (2)" << endl;
+
       return mCurrentCache->GetLastIndex(); // yay! Here's the previous index!
     }
     else // there is no previous window. we're already at the front end of this contig.
@@ -320,8 +336,14 @@ private:
       mCurrentCache->ContigIdent != aContigIdent ||
       IndexToWindowNumber( mCurrentCache->LeftIndex ) != aWindowNumber )
     {
+      cout << "~~MappingEngine - PopulateCorrectCache - Rebuilding (Destroying, Rebuild)..." << endl;
       DestroyCache();
       mCurrentCache = mMappingCacheFactory->BuildMappingCache( aContigIdent, aWindowNumber );
+      cout << "~~MappingEngine - PopulateCorrectCache - Done Rebuilding" << endl;
+    }
+    else
+    {
+        cout << "~MappingEngine - PopulateCorrectCache - ALREADY AT CORRECT CACHE!" << endl;
     }
     cout << "~~MappingEngine - PopulateCorrectCache - Done" << endl;
   }

@@ -33,6 +33,7 @@ public:
 
   ReadsAtIndex * GetReads( long long aIndex ) // this could possibly be empty.
   {
+    cout << "~~MappingCache - GetReads" << endl;
     if ( mCachedIterator->first != aIndex )
       mCachedIterator = mMappings.find( aIndex );
 
@@ -152,8 +153,7 @@ public:
 
   ~MappingCache()
   {
-   // DestroyMappings();
-    cout << "~~MappingCache - Destructor" << endl;
+    DestroyMappings();
   }
 
 private:
