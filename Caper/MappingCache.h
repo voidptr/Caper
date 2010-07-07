@@ -22,7 +22,6 @@ private:
 public:
   MappingCache( string & aContigIdent, long long & aLeftIndex, long long & aRightIndex )
   {
-    cout << endl;
     cout << "~~MappingCache - Constructor: " << aContigIdent << aLeftIndex << " to " << aRightIndex << endl;
     ContigIdent = aContigIdent;
     LeftIndex = aLeftIndex;
@@ -53,6 +52,7 @@ public:
 
   long long GetNextIndex( long long aIndex )
   {
+    cout << "~~MappingCache - GetNextIndex" << endl;
     // cached iterator is expired, or bogus.
     if ( mCachedIterator == mMappings.end() || mCachedIterator->first != aIndex ) // refresh, clean it up.
       mCachedIterator = mMappings.find( aIndex );
@@ -62,6 +62,7 @@ public:
     bool lFake = false; // flag to remember to delete the fake one.
     if ( mCachedIterator == mMappings.end() ) // there's not one where we are.
     {
+      cout << "~~MappingCache - GetNextIndex - fake" << endl;
       lFake = true;
       mMappings[ aIndex ]; // insert the fake.
       mCachedIterator = mMappings.find( aIndex );
@@ -73,11 +74,15 @@ public:
     if ( mCachedIterator != mMappings.end() ) // there's something here, holy shit!
     {
       if ( !lFake )
+      {
+            cout << "~~MappingCache - GetNextIndex - not fake" << endl;
         return mCachedIterator->first;
+      }
       else // delete whatever fake one we created
       {
         long long lNextIndex = mCachedIterator->first;
         mMappings.erase( aIndex );
+            cout << "~~MappingCache - GetNextIndex - found the next one" << endl;
         return lNextIndex;
       }
     }
@@ -85,7 +90,7 @@ public:
     {
       if ( lFake ) // erase our futile fake one.
         mMappings.erase( aIndex );
-
+          cout << "~~MappingCache - GetNextIndex - we're at the end of the cache." << endl;
       return GetEndIndex(); // return our sad defeat
     }
   }
@@ -138,6 +143,7 @@ public:
 
   long long GetEndIndex()
   {
+        cout << "~~MappingCache - GetEndIndex (-1)" << endl;
     return -1;
   }
 
@@ -172,7 +178,6 @@ private:
 
   void DestroyMappings()
   {
-    cout << endl;
     cout << "~~MappingCache - DestroyMappings" << endl;
     for ( IndexedMappings::iterator lIt = mMappings.begin(); lIt != mMappings.end(); ++lIt )
     {
@@ -181,7 +186,6 @@ private:
       //delete lIt->second; // DELETE in destructor. Woo!
     }
     cout << "~~MappingCache - DONE KILLING " << endl;
-    cout << endl;
   }
 };
 

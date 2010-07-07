@@ -43,9 +43,9 @@ public:
 
     void Next()
     {
-      cout << "~~MappingEngine - Next - CurrentIndex: " << mIndex << endl;
+      cout << "~~MappingEngine::iterator - Next - CurrentIndex: " << mIndex << endl;
       mIndex = mMappingEngine->GetNextIndex( mContigName, mIndex );
-      cout << "~~MappingEngine - Next - NextIndex: " << mIndex << endl;
+      cout << "~~MappingEngine::iterator - Next - NextIndex: " << mIndex << endl;
     }
 
     void Previous()
@@ -255,15 +255,16 @@ private:
     cout << "~~MappingEngine - GetNextIndex - Populating Correct Cache (1)" << endl;
     PopulateCorrectCache( aContig, IndexToWindowNumber(aIndex) ); // init the current cache, if we haven't already.
     cout << "~~MappingEngine - GetNextIndex - Done Populating Correct Cache (1)" << endl;
-
-
+    
     if ( mCurrentCache != NULL ) // Hooray! We're in a proper window!x`
     {
+      cout << "~~MappingEngine - GetNextIndex - (mCurrentCache != NULL)" << endl;
       // so, we're some place. No idea if it's a no-man's land.
       // so, let's go ahead and ask for it from the current cache.
       long long lNextIndex = mCurrentCache->GetNextIndex( aIndex ); // ask for the next index
       if ( lNextIndex != mCurrentCache->GetEndIndex() ) // hey, we found one in this window!
       {
+        cout << "~~MappingEngine - GetNextIndex - (lNextIndex != mCurrentCache->GetEndIndex())" << endl;
         return lNextIndex;
       }
     }
@@ -281,6 +282,7 @@ private:
     }
     else // there is no next window. we're at the end of this contig.
     {
+      cout << "~~MappingEngine - GetNextIndex - There is no next window" << endl;
       return GetEndIndex( aContig );
     }
 
