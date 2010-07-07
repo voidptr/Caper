@@ -12,14 +12,14 @@ public:
   // this destructor is iffy.
   ~IndexedMappings(void) // not only does this deallocate the internal content, it deletes the pointer, which may not be what we want.
   {
-    cout << "~~IndexedMappings - Destructor" << endl;
+ //   cout << "~~IndexedMappings - Destructor" << endl;
     for ( IndexedMappings::iterator lIt = this->begin(); lIt != this->end(); ++lIt )
     {
-        cout << "~~IndexedMappings - Destructor - inside loop" << endl;
+//        cout << "~~IndexedMappings - Destructor - inside loop" << endl;
       lIt->second->Destroy();
-              cout << "~~IndexedMappings - Destructor - done loop" << endl;
+//              cout << "~~IndexedMappings - Destructor - done loop" << endl;
     }
-    cout << "~~IndexedMappings - Destructor - Done" << endl;
+//    cout << "~~IndexedMappings - Destructor - Done" << endl;
   }
 };
 

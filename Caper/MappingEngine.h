@@ -55,6 +55,7 @@ public:
 
     void End()
     {
+          cout << "~~MappingEngine::iterator - End " << endl;
       mIndex = mMappingEngine->GetEndIndex();
     }
 
@@ -138,6 +139,7 @@ public:
 
   iterator At( string & aContigIdent, long long aIndex ) // you can address one, but there may not be anything there.
   {
+    cout << "~~MappingEngine - At " << aIndex << endl;
     return iterator( this, aContigIdent, aIndex );
   }
 
@@ -156,7 +158,7 @@ public:
 
   ReadsAtIndex * GetReads( string & aContigIdent, long long aIndex )
   {
-    cout << "~~MappingEngine - GetReads" << aContigIdent << " index " << aIndex  << " window " << IndexToWindowNumber(aIndex) << endl;
+    cout << "~~MappingEngine - GetReads - " << aContigIdent << " index " << aIndex  << " window " << IndexToWindowNumber(aIndex) << endl;
 
     PopulateCorrectCache( aContigIdent, IndexToWindowNumber(aIndex) );
     cout << "~~MappingEngine - GetReads - Done Populating Correct Cache" << endl;
@@ -191,16 +193,22 @@ public:
 
     IndexedMappings * lReads = new IndexedMappings();
 
+    cout << "**********~~MappingEngine - GetIntersection - outside the loop" << endl;
     iterator lRight = At( aContigIdent, aRight ); // just a stake in the ground, probably nothing here.
     bool lStart = true;
-    cout << "**********~~MappingEngine - GetIntersection - outside the loop" << endl;
     for ( iterator lIt = At( aContigIdent, lIntersectLeft ); lIt != End( aContigIdent ) && lIt.GetIndex() <= lRight.GetIndex(); lIt.Next() )
     {
-      cout << "**********~~MappingEngine - GetIntersection - inside loop" << endl;
+      cout << "  ********~~MappingEngine - GetIntersection - start inside loop" << endl;
       if (!lStart || lIt.GetReads()->size() > 0 ) // kludge to avoid pushing an empty set of reads.
+      {
+        cout << "    ******~~MappingEngine - GetIntersection - yay! read to add" << endl;
           lReads->insert( IndexedMappings::value_type( lIt.GetIndex(), lIt.GetReads() ) );
+      }
+      else
+        cout << "    ******~~MappingEngine - GetIntersection - no read to add" << endl;
 
       lStart = false;
+      cout << "  ********~~MappingEngine - GetIntersection - end inside loop" << endl;
     }
     cout << "**********~~MappingEngine - GetIntersection - end the loop" << endl;
 
@@ -243,17 +251,17 @@ public:
 
   ~MappingEngine(void)
   {
-    cout << "MappingEngine - Destructor" << endl;
+//    cout << "MappingEngine - Destructor" << endl;
     delete mFileEngine;
     delete mMappingCacheFactory;
-    cout << "MappingEngine - Destructor - Done" << endl;
+//    cout << "MappingEngine - Destructor - Done" << endl;
   }
 
 private:
 
   long long GetNextIndex( string & aContig, long long aIndex )
   {
-    cout << "~~MappingEngine - GetNextIndex" << endl;
+ //   cout << "~~MappingEngine - GetNextIndex" << endl;
     cout << "~~MappingEngine - GetNextIndex - Populating Correct Cache (1)" << endl;
     PopulateCorrectCache( aContig, IndexToWindowNumber(aIndex) ); // init the current cache, if we haven't already.
     cout << "~~MappingEngine - GetNextIndex - Done Populating Correct Cache (1)" << endl;
@@ -365,9 +373,9 @@ private:
   {
     if ( mCurrentCache != NULL )
     {
-        cout << "~~MappingEngine - DestroyCache" << endl;
+//        cout << "~~MappingEngine - DestroyCache" << endl;
         delete mCurrentCache;
-        cout << "~~MappingEngine - DestroyCache - Done" << endl;
+//        cout << "~~MappingEngine - DestroyCache - Done" << endl;
         mCurrentCache = NULL;
     }
   }

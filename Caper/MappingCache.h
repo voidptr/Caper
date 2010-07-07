@@ -160,7 +160,7 @@ public:
   ~MappingCache()
   {
    // DestroyMappings();
-    cout << "~~MappingCache - Destructor" << endl;   
+ //   cout << "~~MappingCache - Destructor" << endl;   
   }
 
 private:
@@ -178,14 +178,14 @@ private:
 
   void DestroyMappings()
   {
-    cout << "~~MappingCache - DestroyMappings" << endl;
+ //   cout << "~~MappingCache - DestroyMappings" << endl;
     for ( IndexedMappings::iterator lIt = mMappings.begin(); lIt != mMappings.end(); ++lIt )
     {
-        cout << "~~MappingCache - DestroyMappings - KILL" << endl;
+ //       cout << "~~MappingCache - DestroyMappings - KILL" << endl;
       lIt->second->Destroy(); // if no one is using it, don't kill the entries.
       //delete lIt->second; // DELETE in destructor. Woo!
     }
-    cout << "~~MappingCache - DONE KILLING " << endl;
+ //   cout << "~~MappingCache - DONE KILLING " << endl;
   }
 };
 

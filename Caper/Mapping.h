@@ -41,11 +41,11 @@ public:
 
   ~Mapping(void) // I'm assuming this will work.
   {
-    cout << "~~Mapping - Destructor" << endl;
+//    cout << "~~Mapping - Destructor" << endl;
     --ReferenceCount;
     if ( ReferenceCount < 1 )
     {
-      cout << "~~Mapping - Destructor - DOING IT" << endl;
+//      cout << "~~Mapping - Destructor - DOING IT" << endl;
       delete mSequence;
     }
   }
