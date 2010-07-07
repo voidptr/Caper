@@ -53,7 +53,7 @@ public:
 
   long long GetNextIndex( long long aIndex )
   {
-    cout << "~~MappingCache - GetNextIndex" << endl;
+    cout << "~~MappingCache - GetNextIndex - index: " << aIndex << endl;
     // cached iterator is expired, or bogus.
     if ( mCachedIterator == mMappings.end() || mCachedIterator->first != aIndex ) // refresh, clean it up.
       mCachedIterator = mMappings.find( aIndex );

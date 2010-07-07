@@ -36,7 +36,11 @@ public:
         mContigName = aContigName;
 
       if ( mIndex == -1 )
-        mIndex = mMappingEngine->GetNextIndex( mContigName, mIndex );
+      {
+        cout << "MappingEngine::iterator Constructor (if mIndex == -1)" << endl;
+        mIndex = mMappingEngine->GetNextIndex( mContigName, mIndex ); // I think this should probably be getfirstindex
+        cout << "MappingEngine::iterator Constructor - new index: " << mIndex << endl;
+      }
       else
         mIndex = aIndex;
     }
@@ -266,12 +270,13 @@ private:
     PopulateCorrectCache( aContig, IndexToWindowNumber(aIndex) ); // init the current cache, if we haven't already.
     cout << "~~MappingEngine - GetNextIndex - Done Populating Correct Cache (1)" << endl;
     
-    if ( mCurrentCache != NULL ) // Hooray! We're in a proper window!x`
+    if ( mCurrentCache != NULL ) // Hooray! We're in a proper window!
     {
-      cout << "~~MappingEngine - GetNextIndex - (mCurrentCache != NULL)" << endl;
+      cout << "~~MappingEngine - GetNextIndex - (mCurrentCache != NULL), so ask for the next one" << endl;
       // so, we're some place. No idea if it's a no-man's land.
       // so, let's go ahead and ask for it from the current cache.
       long long lNextIndex = mCurrentCache->GetNextIndex( aIndex ); // ask for the next index
+      cout << "~~MappingEngine - GetNextIndex - asked for the next one, which was: " << lNextIndex << endl;
       if ( lNextIndex != mCurrentCache->GetEndIndex() ) // hey, we found one in this window!
       {
         cout << "~~MappingEngine - GetNextIndex - (lNextIndex != mCurrentCache->GetEndIndex())" << endl;
