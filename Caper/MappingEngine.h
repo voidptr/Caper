@@ -155,8 +155,14 @@ public:
 
   iterator End( string & aContigIdent )
   {
+    // HOLY SHIT, THIS METHOD IS ALL WRONG. I'm getting a meaning collision between -1 as End value, and -1 as default starting. 
+    // What an irritating bug.
+
+    cout << "~~MappingEngine - End(contig) - Initing a new one" << endl;
     iterator lIt ( this, aContigIdent ); // does this get destroyed too soon? :/
+    cout << "~~MappingEngine - End(contig) - Ending it" << endl;
     lIt.End();
+    cout << "~~MappingEngine - End(contig) - Done, returning it" << endl;
     return lIt;
   }
 
