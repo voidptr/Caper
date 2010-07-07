@@ -26,19 +26,20 @@ public:
 
   public:
     iterator( MappingEngine * aMappingEngine,
-      const string & aContigName="", long long aIndex=-1)
+      const string & aContigName="", long long aIndex=-2)
     {
+      cout << "MappingEngine::iterator Constructor" << endl;
       mMappingEngine = aMappingEngine;
 
       if ( aContigName == "" )
         mContigName = mMappingEngine->GetFirstContig();
       else
         mContigName = aContigName;
-
-      if ( mIndex == -1 )
+      
+      if ( aIndex == -2 ) // A bizarre first value, but still amenable to the following behaviour. This should be fixed in a future.
       {
         cout << "MappingEngine::iterator Constructor (if mIndex == -1)" << endl;
-        mIndex = mMappingEngine->GetNextIndex( mContigName, mIndex ); // I think this should probably be getfirstindex
+        mIndex = mMappingEngine->GetNextIndex( mContigName, mIndex ); 
         cout << "MappingEngine::iterator Constructor - new index: " << mIndex << endl;
       }
       else
@@ -59,7 +60,7 @@ public:
 
     void End()
     {
-          cout << "~~MappingEngine::iterator - End " << endl;
+      cout << "~~MappingEngine::iterator - End " << endl;
       mIndex = mMappingEngine->GetEndIndex();
     }
 
@@ -159,10 +160,10 @@ public:
     // What an irritating bug.
 
     cout << "~~MappingEngine - End(contig) - Initing a new one" << endl;
-    iterator lIt ( this, aContigIdent ); // does this get destroyed too soon? :/
-    cout << "~~MappingEngine - End(contig) - Ending it" << endl;
-    lIt.End();
-    cout << "~~MappingEngine - End(contig) - Done, returning it" << endl;
+    iterator lIt ( this, aContigIdent, GetEndIndex() ); // does this get destroyed too soon? :/
+//    cout << "~~MappingEngine - End(contig) - Ending it" << endl;
+//    lIt.End();
+//    cout << "~~MappingEngine - End(contig) - Done, returning it" << endl;
     return lIt;
   }
 
