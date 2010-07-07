@@ -47,6 +47,7 @@ public:
 
   long long GetFirstIndex()
   {
+    cout << "~~MappingCache - GetFirstIndex() " << mMappings.begin()->first << endl;
     return mMappings.begin()->first;
   }
 
