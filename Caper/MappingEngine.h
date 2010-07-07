@@ -193,14 +193,16 @@ public:
 
     iterator lRight = At( aContigIdent, aRight ); // just a stake in the ground, probably nothing here.
     bool lStart = true;
+    cout << "**********~~MappingEngine - GetIntersection - outside the loop" << endl;
     for ( iterator lIt = At( aContigIdent, lIntersectLeft ); lIt != End( aContigIdent ) && lIt.GetIndex() <= lRight.GetIndex(); lIt.Next() )
     {
-      cout << "~~MappingEngine - GetIntersection - inside loop" << endl;
+      cout << "**********~~MappingEngine - GetIntersection - inside loop" << endl;
       if (!lStart || lIt.GetReads()->size() > 0 ) // kludge to avoid pushing an empty set of reads.
           lReads->insert( IndexedMappings::value_type( lIt.GetIndex(), lIt.GetReads() ) );
 
       lStart = false;
     }
+    cout << "**********~~MappingEngine - GetIntersection - end the loop" << endl;
 
     return lReads;
   }
