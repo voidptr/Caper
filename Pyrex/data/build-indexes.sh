@@ -7,13 +7,15 @@ CACHE=data/cache
 rm -fr ${CACHE}
 mkdir ${CACHE}
 
-${CAPER} indexgenome -g data/REL606.gmc.fa -o ${CACHE}
+##${CAPER} indexgenome -g data/REL606.gmc.fa -o ${CACHE}
 
-${CAPER} indexmappings -m data/REL606-maq-map.txt -t mapview -o ${CACHE}
+## converted to bundle (for the pyrex wrapper)
+${CAPER} indexmappings -b -m data/REL606-maq-map.txt -t mapview -o ${CACHE}
 
 # test!
-echo rel606:0:20:p | \
-${CAPER} interactive -f ${CACHE}/REL606.gmc.fa.genomeindex -g ${CACHE}/REL606.gmc.fa.indexed -m data/REL606-maq-map.txt  -i ${CACHE}/REL606-maq-map.txt.mappingindex
+echo interval rel606 0 20 | \
+${CAPER} interactive -b ${CACHE}/REL606-maq-map.txt.bundle
+#-m data/REL606-maq-map.txt  -i ${CACHE}/REL606-maq-map.txt.mappingindex
 
 ###
 

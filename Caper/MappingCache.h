@@ -8,7 +8,7 @@ class MappingCache
 {
 private:
 	static const char Tab = '\t';
-  
+
 public:
   string ContigIdent;
   long long LeftIndex;
@@ -22,6 +22,8 @@ private:
 public:
   MappingCache( string & aContigIdent, long long & aLeftIndex, long long & aRightIndex )
   {
+    cout << endl;
+    cout << "~~MappingCache - Constructor: " << aContigIdent << aLeftIndex << " to " << aRightIndex << endl;
     ContigIdent = aContigIdent;
     LeftIndex = aLeftIndex;
     RightIndex = aRightIndex;
@@ -37,10 +39,12 @@ public:
     if ( mCachedIterator == mMappings.end() ) // empty! Likely we addressed an index that doesn't have an entry. This is fine.
       return new ReadsAtIndex();
 
+    cout << "~~MappingCache - GetReads - Incrementing Reference Count for " << aIndex
+        << " from " << mMappings[ aIndex ]->ReferenceCount << " to " << (mMappings[ aIndex ]->ReferenceCount)+1 << endl;
     mMappings[ aIndex ]->ReferenceCount++; // increment the reference count
     return mMappings[ aIndex ];
   }
-  
+
   long long GetFirstIndex()
   {
     return mMappings.begin()->first;
@@ -67,7 +71,7 @@ public:
 
     if ( mCachedIterator != mMappings.end() ) // there's something here, holy shit!
     {
-      if ( !lFake ) 
+      if ( !lFake )
         return mCachedIterator->first;
       else // delete whatever fake one we created
       {
@@ -78,11 +82,11 @@ public:
     }
     else // next one, if there is one, is off the end of this cache
     {
-      if ( lFake ) // erase our futile fake one. 
+      if ( lFake ) // erase our futile fake one.
         mMappings.erase( aIndex );
 
       return GetEndIndex(); // return our sad defeat
-    }    
+    }
   }
 
   // this method is effectively a fucking carbon copy of GetNextIndex, except for the -- in the very middle. FUUUUUU
@@ -107,7 +111,7 @@ public:
 
     if ( mCachedIterator != mMappings.end() ) // there's something here, holy shit!
     {
-      if ( !lFake ) 
+      if ( !lFake )
         return mCachedIterator->first;
       else // delete whatever fake one we created
       {
@@ -118,11 +122,11 @@ public:
     }
     else // next one, if there is one, is off the end of this cache
     {
-      if ( lFake ) // erase our futile fake one. 
+      if ( lFake ) // erase our futile fake one.
         mMappings.erase( aIndex );
 
       return GetEndIndex(); // return our sad defeat
-    }    
+    }
 
   }
 
@@ -150,12 +154,12 @@ public:
   {
     DestroyMappings();
   }
- 
+
 private:
   void AddMapping( Mapping * aMapping )
   { // I think this ought to work with the mappings.
 
-    IndexedMappings::iterator lIndex = mMappings.insert( IndexedMappings::value_type( aMapping->Index, new ReadsAtIndex() ) ).first;    
+    IndexedMappings::iterator lIndex = mMappings.insert( IndexedMappings::value_type( aMapping->Index, new ReadsAtIndex() ) ).first;
 		lIndex->second->push_back( aMapping );
   }
 
@@ -166,11 +170,16 @@ private:
 
   void DestroyMappings()
   {
+    cout << endl;
+    cout << "~~MappingCache - DestroyMappings" << endl;
     for ( IndexedMappings::iterator lIt = mMappings.begin(); lIt != mMappings.end(); ++lIt )
     {
+        cout << "~~MappingCache - DestroyMappings - KILL" << endl;
       lIt->second->Destroy(); // if no one is using it, don't kill the entries.
       //delete lIt->second; // DELETE in destructor. Woo!
     }
+    cout << "~~MappingCache - DONE KILLING " << endl;
+    cout << endl;
   }
 };
 

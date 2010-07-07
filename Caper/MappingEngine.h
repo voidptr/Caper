@@ -154,6 +154,7 @@ public:
 
   ReadsAtIndex * GetReads( string & aContigIdent, long long aIndex )
   {
+    cout << "~~MappingEngine - GetReads" << aContigIdent << " index " << aIndex << endl;
     PopulateCorrectCache( aContigIdent, IndexToWindowNumber(aIndex) );
     return mCurrentCache->GetReads( aIndex );
   }
@@ -235,8 +236,10 @@ public:
 
   ~MappingEngine(void)
   {
+    cout << "MappingEngine - Destructor" << endl;
     delete mFileEngine;
     delete mMappingCacheFactory;
+    cout << "MappingEngine - Destructor - Done" << endl;
   }
 
 private:
@@ -312,6 +315,7 @@ private:
 
   void PopulateCorrectCache( string & aContigIdent, long long aWindowNumber )
   {
+    cout << "~~MappingEngine - PopulateCorrectCache " << aWindowNumber << endl;
     if ( mCurrentCache == NULL ||
       mCurrentCache->ContigIdent != aContigIdent ||
       IndexToWindowNumber( mCurrentCache->LeftIndex ) != aWindowNumber )
@@ -319,6 +323,7 @@ private:
       DestroyCache();
       mCurrentCache = mMappingCacheFactory->BuildMappingCache( aContigIdent, aWindowNumber );
     }
+    cout << "~~MappingEngine - PopulateCorrectCache - Done" << endl;
   }
 
   long long IndexToWindowNumber(long long aIndex )
@@ -330,8 +335,10 @@ private:
   {
     if ( mCurrentCache != NULL )
     {
-      delete mCurrentCache;
-      mCurrentCache = NULL;
+        cout << "~~MappingEngine - DestroyCache" << endl;
+        delete mCurrentCache;
+        cout << "~~MappingEngine - DestroyCache - Done" << endl;
+        mCurrentCache = NULL;
     }
   }
 };

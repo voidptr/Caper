@@ -9,7 +9,7 @@ class CaperBridge(object):
     def __getitem__(self, ival):
         seq_id, start, stop = ival.id, ival.start, ival.stop
 
-        return CaperSlice(self, ival, self.map.get_reads_at(seq_id, start, stop))
+        return CaperSlice(self, ival, self.map.get_slice(seq_id, start, stop))
 
 class CaperSlice(object):
     def __init__(self, bridge, ival, m):
@@ -32,7 +32,7 @@ class CaperSlice(object):
                 start, stop = stop - 1, start - 1
 
             yield read[start:stop]
-                
+
 
     def keys(self):
         return list(iter(self))

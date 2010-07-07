@@ -3,12 +3,12 @@
 #include "stdafx.h"
 #include "Sequence.h"
 #include "Mapping.h"
-#include "ReadsAtIndex.h"
+#include "IndexedMappings.h"
 
 typedef map<string,Sequence*> Sequences;
 typedef pair<string, Sequence*> SequencePair;
 
-typedef map<long long, ReadsAtIndex *> IndexedMappings;
+//typedef map<long long, ReadsAtIndex *> IndexedMappings;
 
 // for storing the mapping indexes
 typedef triad<long long, long long, long long> StoredMappingBlock; // offset, block size, stored size

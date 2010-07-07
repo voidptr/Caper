@@ -20,7 +20,7 @@ public:
 
   const char * NameP() { return Name.c_str(); }
   const int GetOrientation() { if (Strand == PLUS) return +1; else return -1; }
-  
+
   Mapping(string & aName, long long & aIndex, Sequence* aSequence, Orientation aStrand)
   {
     Name = aName;
@@ -39,11 +39,13 @@ public:
     Strand = aMapping.Strand;
   }
 
-  ~Mapping(void) // I'm assuming this will work. 
+  ~Mapping(void) // I'm assuming this will work.
   {
+    cout << "~~Mapping - Destructor" << endl;
     --ReferenceCount;
     if ( ReferenceCount < 1 )
     {
+      cout << "~~Mapping - Destructor - DOING IT" << endl;
       delete mSequence;
     }
   }

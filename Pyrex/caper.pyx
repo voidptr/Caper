@@ -121,8 +121,10 @@ cdef class mappings:
     def __cinit__(self, seqname, index): #, c_reads_at_index * reads_at_index): ## __cinit__ can only take python parameters. :(
         self.seqname = seqname
         self.index = index
+        print "@@@INIT MAPPINGS", self.seqname, self.index
 
     def __dealloc__(self):
+        print "@@@KILLING MYSELF"
         self.mappings.Destroy()
 
     def __repr__(self): ## what does this do?
@@ -134,6 +136,7 @@ cdef class mappings:
 
     def __getitem__(self, i):
         """Return (start, sequence) of overlapping mapping."""
+        print ">>>RETRIEVING<<<"
         if i < 0 or i >= self.mappings.size():
             raise IndexError
 
@@ -142,8 +145,9 @@ cdef class mappings:
 
         name = item.NameP()
         index = item.Index
-
-        return index, name # we don't know anything about slicing in this context.
+        seq = item.mSequence.ToStringP()
+        orientation = item.GetOrientation()
+        return index, name, seq, orientation # we don't know anything about slicing in this context.
 
 cdef class mappingsinterval:
     """Two-dimensional dictionary of mappings (the collection of mappings at those indexes)"""
@@ -168,22 +172,68 @@ cdef class mappingsinterval:
 
     def __len__(self): ## this probably doesn't work.
         """Return number of overlapping mappings at this point."""
-        return self.mappings.size() ##
+        return self.mappings.size() ##this isn't correct. :(
 
     def __getitem__(self, i):
+        print "---RETRIEVING---"
+
         """Return (start, sequence) of overlapping mapping."""
         if i < 0 or i >= self.mappings.size():
             raise IndexError
 
-        cdef c_reads_at_index * item
-        item = self.mappings.at(i)
+        print ("Index: ", i)
+
+        cdef c_reads_at_index * reads_at_index
+        reads_at_index = self.mappings.at(i)
+    #    print "READS AT INDEX", reads_at_index.at(0).mSequence.ToStringP()
+
+        print ("#THING")
 
         cdef mappings reads
-        reads = mappings(self.seqname, i)
-        reads.mappings = item
+        print "#THING2"
+#        print (reads_at_index)
+        print "#THING2.0"
+        cdef c_mapping * thingy
+        thingy = reads_at_index.at(0)
+        print "#THING2.1"
+        print reads_at_index.size()
+        print thingy.mSequence.ToStringP()
+        print "#THING2.1.0"
+        thingy2 = thingy.Index
+        print "#THING2.2"
+        reads = mappings(self.seqname, reads_at_index.at(0).Index)
+        print "#THING3"
+        reads.mappings = reads_at_index
+    #    print "SEQNAME", self.seqname, reads ## no idea why this is 'stdout'
 
-        return reads # we don't know anything about slicing in this context.
+        print ("#OTHERTHING")
 
+        cdef c_mapping * read
+        read = reads_at_index.at(0) ## get the zeroth one
+        ## all the reads to be returned have the same info.
+
+        print "#HI"
+
+        seq = read.mSequence.ToStringP()
+        seq_len = len(seq)
+        seq_start = read.Index
+        seq_stop = seq_start + seq_len
+
+        slice_start = 0;
+        align_start = seq_start
+        if seq_start < self.slice_start:
+            slice_start = self.slice_start - seq_start
+            align_start = self.slice_start
+
+        slice_stop = seq_len
+        align_stop = seq_stop
+        if seq_stop > self.slice_stop:
+            slice_stop = seq_len - (seq_stop - self.slice_stop)
+            align_stop = self.slice_stop
+
+        print "#HIHI", align_start, align_stop, slice_start, slice_stop
+
+        return align_start, align_stop, slice_start, slice_stop, reads
 
 # cdef class slice_iterator:
 #     """Iterates through a slice of the genome."""
@@ -281,18 +331,21 @@ cdef class mapping_container:
         cdef mappingsinterval reads
         reads = mappingsinterval(seqname, index, index)
         reads.mappings = self.thismap.GetIntersectionFlat(seqname, index, index)
+#        print seqname
         return reads
 
     def get_slice(self, seqname, left, right ):
         cdef mappingsinterval reads
         reads = mappingsinterval(seqname, left, right)
         reads.mappings = self.thismap.GetIntersectionFlat(seqname, left, right)
+#        print seqname
         return reads
 
     def get_reads(self, seqname, index):
         cdef mappings reads
         reads = mappings(seqname, index)
         reads.mappings = self.thismap.GetReads(seqname, index)
+#        print seqname
         return reads
 
 ####### END PYTHON CLASSES

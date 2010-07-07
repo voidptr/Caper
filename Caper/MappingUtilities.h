@@ -47,12 +47,17 @@ public:
   virtual int GetContigIdentColumn() = 0;
   virtual int GetStrandColumn() = 0;
 
+  virtual long long StringToIndex( string & aIndex )
+  {
+    return atoi( aIndex.c_str() );
+  }
+
   virtual Mapping* BuildMapping( string & aLine )
   {
     vector<string> lPieces( GetLinePieces( aLine ) );
 
-    long long lIndex = atoi(lPieces[ GetIndexColumn() ].c_str()); // todo, move this conversion to the proper method. remove localized atoi use.
-     
+    long long lIndex = StringToIndex( lPieces[ GetIndexColumn() ] );
+
     string lSeq = lPieces[ GetSequenceColumn() ];
     string lName = lPieces[ GetNameColumn() ];
     string lStrand = lPieces[ GetStrandColumn() ];
@@ -65,7 +70,7 @@ public:
       lOrientation = Mapping::PLUS;
     else if ( lStrand[0] == '-' )
       lOrientation = Mapping::MINUS;
-    else 
+    else
       throw string("Unsupported Orientation Type (not + or -)");
 
     Mapping * lMapping = new Mapping( lName, lIndex, new Sequence( lSeq ), lOrientation );
@@ -76,22 +81,23 @@ public:
   {
     return GetLineItem( GetContigIdentColumn(), aLine );
   }
-   
+
   virtual long long GetIndex( string & aLine )
   {
-    return atoi( GetLineItem( GetIndexColumn(), aLine ).c_str() ); // could be an overflow. :/
+    string lIndex = GetLineItem( GetIndexColumn(), aLine );
+    return StringToIndex( lIndex ); // could be an overflow. :/
   }
-   
+
   virtual string GetSequence( string & aLine )
   {
     return GetLineItem( GetSequenceColumn(), aLine );
   }
-   
+
   virtual string GetName( string & aLine )
   {
     return GetLineItem( GetNameColumn(), aLine );
   }
-   
+
   virtual string GetStrand( string & aLine )
   {
     return GetLineItem( GetStrandColumn(), aLine );

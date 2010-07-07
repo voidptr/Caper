@@ -268,8 +268,8 @@ private:
     for ( lMappingIndexIterator = mMappingIndex.begin();
       lMappingIndexIterator != mMappingIndex.end(); ++lMappingIndexIterator ) // loop through the contigs
     {
-      
-      //            Contig Name                             Number of Stored Windows           
+
+      //            Contig Name                             Number of Stored Windows
       lStream << lMappingIndexIterator->first << Tab << lMappingIndexIterator->second.size() << endl;
 
       // loop through the windows
@@ -345,7 +345,7 @@ private:
     {
       MappingMap::mapped_type::reference lLine(lContig->second.at(lIndex));
 
-      char * lLineContent = new char[ lLine.Length ]; 
+      char * lLineContent = new char[ lLine.Length ];
       aStream.seekg( lLine.Offset );
       aStream.read( lLineContent, lLine.Length );
 
