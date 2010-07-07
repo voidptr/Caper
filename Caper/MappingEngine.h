@@ -43,7 +43,9 @@ public:
 
     void Next()
     {
+      cout << "~~MappingEngine - Next - CurrentIndex: " << mIndex << endl;
       mIndex = mMappingEngine->GetNextIndex( mContigName, mIndex );
+      cout << "~~MappingEngine - Next - NextIndex: " << mIndex << endl;
     }
 
     void Previous()
@@ -155,6 +157,7 @@ public:
   ReadsAtIndex * GetReads( string & aContigIdent, long long aIndex )
   {
     cout << "~~MappingEngine - GetReads" << aContigIdent << " index " << aIndex  << " window " << IndexToWindowNumber(aIndex) << endl;
+
     PopulateCorrectCache( aContigIdent, IndexToWindowNumber(aIndex) );
     cout << "~~MappingEngine - GetReads - Done Populating Correct Cache" << endl;
     return mCurrentCache->GetReads( aIndex );
@@ -192,6 +195,7 @@ public:
     bool lStart = true;
     for ( iterator lIt = At( aContigIdent, lIntersectLeft ); lIt != End( aContigIdent ) && lIt.GetIndex() <= lRight.GetIndex(); lIt.Next() )
     {
+      cout << "~~MappingEngine - GetIntersection - inside loop" << endl;
       if (!lStart || lIt.GetReads()->size() > 0 ) // kludge to avoid pushing an empty set of reads.
           lReads->insert( IndexedMappings::value_type( lIt.GetIndex(), lIt.GetReads() ) );
 
