@@ -84,6 +84,7 @@
     <ClInclude Include="FASequenceEngine.h" />
     <ClInclude Include="FASequenceIndexer.h" />
     <ClInclude Include="IndexAndOffset.h" />
+    <ClInclude Include="IndexedMappings.h" />
     <ClInclude Include="Line.h" />
     <ClInclude Include="Mapping.h" />
     <ClInclude Include="MappingCache.h" />

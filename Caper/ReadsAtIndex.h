@@ -32,6 +32,10 @@ public:
         cout << "~~ReadsAtIndex - Destroy - Decrementing:" << ReferenceCount << " to " << ReferenceCount -1 << endl;
        --ReferenceCount; // just decrement us, but don't delete the pointer itself. That would suck for other people who have to use the pointer.
      }
+     else
+     {
+       cout << "~~ReadsAtIndex - Destroy - Wut?" << endl;
+     }
      cout << "~~ReadsAtIndex - Destroy - Done" << endl;
   }
 

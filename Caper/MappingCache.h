@@ -152,7 +152,8 @@ public:
 
   ~MappingCache()
   {
-    DestroyMappings();
+   // DestroyMappings();
+    cout << "~~MappingCache - Destructor" << endl;
   }
 
 private:
