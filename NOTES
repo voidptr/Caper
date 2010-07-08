@@ -1,19 +1,28 @@
-Minor issues:
--------------
+Todo:
+-----
 
-remove print output from library!
+add mapquery stuff
+  - to CLI
+  - to pyrex wrapper
+  - to tests
 
-There should be a README.txt in the main directory.
+finish implementing iterators in python wrapper
+  - tests
 
-'all' target in Makefile should be first.
+finish reimplementing pygr-bridge
+  - tests
 
-why does 'all' constantly rebuild the Caper binary?
+do explicit recasting to remove the huge pile of warnings between signed/unsigned
 
-FIXME:
-------
-
-generate 'black box' cache: take in prefix, copy mapping file etc. under
-that prefix; following that, we can delete/rename/etc original files.
+beef up the testing suite to cover:
+  - iterators
+  - memory alloc/dealloc
+  - looking for memory leaks
+  - different sizes of input files (corner cases, etc)
+  - path tests
+  - engine intersect functionality
+  - engine getreads functionality
+  - all parameter combinations
 
 Think about:
 ------------
@@ -28,8 +37,6 @@ Maybe have 'caper-index' (lower case please :) and 'caper-view' as binaries?
 Contemplate directory re-org.  If the Pyrex stuff depends on CaperGCC, we
 should merge them.
 
-Can we rename the thing to 'caper' instead of 'Caper'?
-
 Pyrex wrapping: for CTB
 -----------------------
 
@@ -37,12 +44,8 @@ crashes on exceptions ;).  look at screed?
 
 NLMSASlice
 
-how can we extract read length from database.?
-
 Later:
 ------
-
-how do we want to deal with memory management?  silly to dup Mappings...?
 
 source consolidation?  move to google code?
 

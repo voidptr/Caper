@@ -1,6 +1,6 @@
 *.o
 *.so
-CaperGCC/Caper
+CaperGCC/caper
 Pyrex/caper.cpp
 cache
 *_screed
@@ -9,3 +9,12 @@ makefile.deps
 makefile.deps.bak
 *.pureseq
 *.seqlen
+*.user
+*.filters
+*.dll
+*.ilk
+*.suo
+CaperUI/Debug/
+CaperVS/Debug/
+zlib123/contrib/vstudio/vc8/x64/
+zlib123/contrib/vstudio/vc8/x86/
