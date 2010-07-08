@@ -11,7 +11,7 @@ import os.path
 import caper
 #from caper_pygr_bridge import CaperBridge
 #from screed.pygr_api import ScreedSequenceDB
-#from pygr import cnestedlist, seqdb
+from pygr import cnestedlist, seqdb
 
 #sequence_path = 'data/REL606.gmc.fa'
 
@@ -33,56 +33,50 @@ def setup():
 class MappingContainer_Test(object):
     def setup(self):
         self.cont = caper.mapping_container(map_bundle)
-# #        self.db = seqdb.SequenceFileDB('data/REL606.gmc.fa')
-# #        self.seq = self.db['rel606']
-#
+        self.db = seqdb.SequenceFileDB('data/REL606.gmc.fa')
+        self.seq = self.db['rel606']
+
     def test_retrieve(self):
         matches = self.cont.get_slice('rel606', 0, 5)
 
+        x = list()
         for item in matches:
-            print "array", item
             for read in item[4]:
-                print read
+                thing = (item[0], item[1], item[2], item[3], read[1], read[3]);
+                x.append(thing)
 
         assert len(matches) == 3
 
-#        val = matches[0][0]
-#        val1 = matches[0][1]
-#        val2 = matches[0][2]
-
-        print (matches[0][0], matches[0][2], 1, 2)
-        #print bleh
-
-#        item0 = (matches[0][0], matches[0][1], matches[0][2], matches[0][3], matches[0][4][1], matches[0][4][3])
-#        item1 = (matches[1][0], matches[1][1], matches[1][2], matches[1][3], matches[1][4][1], matches[1][4][3])
-
- #       x = list(item0, item1)
-#        print item0
-
-        assert false ## so it prints the stdout. :/
-
-
-#        x = list(matches)
         assert x == \
                [(1, 5, 0, 4, 'HWI-EAS_4_PE-FC20GCB:1:146:930:514/1', -1),
                 (3, 5, 0, 2, 'HWI-EAS_4_PE-FC20GCB:1:210:846:698/1', 1),
                 (4, 5, 0, 1, 'HWI-EAS_4_PE-FC20GCB:1:285:772:762/1', 1)], x
-#
-#         # check lengths
-#         for (tstart, tstop, _, bstart, bstop, o) in x:
-#             assert tstop - tstart == bstop - bstart
-#
-#     def test_empty_retrieve(self):
-#         matches = self.cont.get_slice('rel606', 14000, 14999)
-#         assert len(matches) == 0
-#
-#     def test_was_broken_boundary(self):
-#         matches = self.cont.get_slice('rel606', 0, 20000)
-#         assert len(matches) == 10000
-#
-#     def test_retrieve_all(self):
-#         matches = self.cont.get_slice('rel606', 0, len(self.seq))
-#         assert len(matches) == 10000
+        # check lengths
+        for (tstart, tstop, bstart, bstop, _, o) in x:
+            assert tstop - tstart == bstop - bstart
+
+    def test_empty_retrieve(self):
+        matches = self.cont.get_slice('rel606', 14000, 14999)
+        assert len(matches) == 0
+
+    def test_was_broken_boundary(self):
+        matches = self.cont.get_slice('rel606', 0, 20000)
+
+        count = 0;
+        for index in matches:
+            count = count + len(index[4])
+
+        assert count == 10000
+
+    def test_retrieve_all(self):
+        matches = self.cont.get_slice('rel606', 0, len(self.seq))
+
+        count = 0;
+        for index in matches:
+            count = count + len(index[4])
+
+        assert count == 10000
+
 
 # class PygrBridge_Test(object):
 #     def setup(self):
