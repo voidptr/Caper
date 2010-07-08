@@ -2,7 +2,7 @@ import caper
 #bundle_path = '/scratch2/rose/capertestdata/out/s_1_sequence.map.trim3-20.bundle'
 #contig = 'Contig0'
 
-bundle_path = 'data/cache/REL606-maq-map_7entries.txt.bundle'
+bundle_path = 'data/cache/REL606-maq-map.txt.bundle'
 contig = 'rel606'
 engine = caper.mapping_container(bundle_path)
 
@@ -31,56 +31,55 @@ print "GET SLICE TEST"
 
 print "0-5"
 slice = engine.get_slice(contig,0, 5)
-print "1001-1005"
-slice3 = engine.get_slice(contig, 1001, 1005)
-print "0-5 again"
-slice2 = engine.get_slice(contig,0, 5)
+# print "1001-1005"
+# slice3 = engine.get_slice(contig, 1001, 1005)
+# print "0-5 again"
+# slice2 = engine.get_slice(contig,0, 5)
+#
+# print "FETCHING FROM the original 0-5"
+# print
+# print "## ROOT"
+# print "======================================================"
+# val = slice[0]
+# print ("VAL: ", val)
+# print "------------------------------------------------------"
+# print ("SLICE[0]: ", slice[0])
+# print "------------------------------------------------------"
+#
+# print
+# print
+# print "##0th"
+# print "======================================================"
+#
+# print ("VAL[0]: ",val[0])
+# print "------------------------------------------------------"
+# print ("SLICE[0][0]: ",slice[0][0])
+# print "------------------------------------------------------"
+#
+# print
+# print
+# print "##1st"
+# print "======================================================"
+#
+# print ("VAL[1]: ",val[1])
+# print "------------------------------------------------------"
+# print ("SLICE[0][1]: ",slice[0][1])
+# print "------------------------------------------------------"
+#
+# print
+# print
+# print "##2nd"
+# print "======================================================"
+#
+# print ("VAL[2]: ",val[2])
+# print "------------------------------------------------------"
+# print ("SLICE[0][2]: ",slice[0][2])
+# print "------------------------------------------------------"
 
-print "FETCHING FROM the original 0-5"
-print
-print "## ROOT"
-print "======================================================"
-val = slice[0]
-print ("VAL: ", val)
-print "------------------------------------------------------"
-print ("SLICE[0]: ", slice[0])
-print "------------------------------------------------------"
 
-print
-print
-print "##0th"
-print "======================================================"
-
-print ("VAL[0]: ",val[0])
-print "------------------------------------------------------"
-print ("SLICE[0][0]: ",slice[0][0])
-print "------------------------------------------------------"
-
-print
-print
-print "##1st"
-print "======================================================"
-
-print ("VAL[1]: ",val[1])
-print "------------------------------------------------------"
-print ("SLICE[0][1]: ",slice[0][1])
-print "------------------------------------------------------"
-
-print
-print
-print "##2nd"
-print "======================================================"
-
-print ("VAL[2]: ",val[2])
-print "------------------------------------------------------"
-print ("SLICE[0][2]: ",slice[0][2])
-print "------------------------------------------------------"
-
-
-#for item in slice:
-#    print "array", item
-#    for read in item[4]:
-#        print read
+for ival_start, ival_stop, start, stop, matches in slice:
+    for index, name, sequence, orientation in matches:
+        print index, name, sequence, orientation
 
 
 

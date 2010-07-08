@@ -19,19 +19,20 @@ class CaperSlice(object):
 
     def __iter__(self):
         db = self.bridge.reads_db
-        for ival_start, ival_stop, match_name, start, stop, o in self.m:
-            if ival_start == ival_stop:
-                continue
+        for ival_start, ival_stop, start, stop, matches in self.m:
+            for index, match_name, sequence, orientation in matches:
+                if ival_start == ival_stop:
+                    continue
 
-            if o == -1:
-                read = -db[match_name]
-            else:
-                read = db[match_name]
+                if orientation == -1:
+                    read = -db[match_name]
+                else:
+                    read = db[match_name]
 
-            if start > stop:
-                start, stop = stop - 1, start - 1
+                if start > stop:
+                    start, stop = stop - 1, start - 1
 
-            yield read[start:stop]
+                yield read[start:stop]
 
 
     def keys(self):
@@ -43,19 +44,24 @@ class CaperSlice(object):
     def edges(self):
         ival = self.ival
         db = self.bridge.reads_db
-        for ival_start, ival_stop, match_name, start, stop, o in self.m:
-            if ival_start == ival_stop:
-                continue
+        for ival_start, ival_stop, start, stop, matches in self.m:
+            for index, match_name, sequence, orientation in matches:
+                if ival_start == ival_stop:
+                    continue
 
-            if o == -1:
-                read = -db[match_name]
-            else:
-                read = db[match_name]
+                if orientation == -1:
+                    read = -db[match_name]
+                else:
+                    read = db[match_name]
 
-            if start > stop:
-                start, stop = stop - 1, start - 1
+                if start > stop:
+                    start, stop = stop - 1, start - 1
 
-            yield ival, read[start:stop], None
+                yield ival, read[start:stop], None
 
     def __len__(self):
-        return len(self.m)
+        #return len(self.m)
+        count = 0;
+        for index in self.m:
+            count = count + len(index[4])
+        return count

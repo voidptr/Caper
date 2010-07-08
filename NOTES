@@ -9,9 +9,6 @@ add mapquery stuff
 finish implementing iterators in python wrapper
   - tests
 
-finish reimplementing pygr-bridge
-  - tests
-
 do explicit recasting to remove the huge pile of warnings between signed/unsigned
 
 beef up the testing suite to cover:

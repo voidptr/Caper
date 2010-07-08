@@ -364,7 +364,7 @@ private:
     lSource = (Bytef *) calloc( lSourceLength, 1 ); // allocate the memory on the fly.
     assert( lSource != NULL ); // temporary. TODO handle this better, clean up after myself.
     strcpy( (char*) lSource, aBlock.c_str() ); // this only works because the string is null terminated. :/ TODO, fix this.
-    lSource[aBlock.size()] = NULL; // set null termination manually.
+    lSource[aBlock.size()] = 0; // set null termination manually.
 
     Bytef *lCompressed;
     unsigned long lCompressedLength = compressBound( lSourceLength );
