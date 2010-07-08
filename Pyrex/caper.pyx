@@ -36,7 +36,7 @@ cdef extern from "Caper.h":
     # declared as c_reads_at_indexes (vector of ReadsAtIndex*)
 
     ctypedef c_reads_at_index * (*at_reads)(int)
-    ctypedef struct c_reads_at_indexes "vector<ReadsAtIndex*>":
+    ctypedef struct c_reads_at_indexes "IndexedMappingsFlat":
         size size
         at_reads at
 
@@ -121,11 +121,11 @@ cdef class mappings:
     def __cinit__(self, seqname, index): #, c_reads_at_index * reads_at_index): ## __cinit__ can only take python parameters. :(
         self.seqname = seqname
         self.index = index
-        print "@@@INIT MAPPINGS", self.seqname, self.index
+       # print "@@@INIT MAPPINGS", self.seqname, self.index
 
-    def __dealloc__(self):
-        print "@@@KILLING MYSELF"
-        self.mappings.Destroy()
+    #def __dealloc__(self):
+        #print "@@@DEALLOC MAPPINGS"
+        #self.mappings.Destroy()
 
     def __repr__(self): ## what does this do?
         return "mappings('%s', %d)" % (self.seqname, self.index)
@@ -136,7 +136,7 @@ cdef class mappings:
 
     def __getitem__(self, i):
         """Return (start, sequence) of overlapping mapping."""
-        print ">>>RETRIEVING<<<"
+        #print ">>>RETRIEVING<<<"
         if i < 0 or i >= self.mappings.size():
             raise IndexError
 
@@ -161,11 +161,13 @@ cdef class mappingsinterval:
         self.seqname = seqname
         self.slice_start = slice_start
         self.slice_stop = slice_stop
+        #print "@@@INIT MAPPINGSINTERVAL", self.seqname, self.slice_start, self.slice_stop
 
     def __dealloc__(self):
         cdef c_reads_at_indexes * mappings
         mappings = self.mappings
         del_reads_at_indexes(mappings) ## this should work, since it should call the right destructor... maybe.
+        #print "@@@DEALLOC MAPPINGSINTERVAL"
 
     def __repr__(self): ## what does this do?
         return "mappingsinterval('%s', %d, %d)" % (self.seqname, self.start, self.stop)
@@ -175,44 +177,27 @@ cdef class mappingsinterval:
         return self.mappings.size() ##this isn't correct. :(
 
     def __getitem__(self, i):
-        print "---RETRIEVING---"
+        #print "---RETRIEVING---"
+        #print ("Index: ", i)
 
         """Return (start, sequence) of overlapping mapping."""
         if i < 0 or i >= self.mappings.size():
             raise IndexError
 
-        print ("Index: ", i)
-
         cdef c_reads_at_index * reads_at_index
         reads_at_index = self.mappings.at(i)
-    #    print "READS AT INDEX", reads_at_index.at(0).mSequence.ToStringP()
 
-        print ("#THING")
 
         cdef mappings reads
-        print "#THING2"
-#        print (reads_at_index)
-        print "#THING2.0"
         cdef c_mapping * thingy
         thingy = reads_at_index.at(0)
-        print "#THING2.1"
-        print reads_at_index.size()
-        print thingy.mSequence.ToStringP()
-        print "#THING2.1.0"
         thingy2 = thingy.Index
-        print "#THING2.2"
         reads = mappings(self.seqname, reads_at_index.at(0).Index)
-        print "#THING3"
         reads.mappings = reads_at_index
-    #    print "SEQNAME", self.seqname, reads ## no idea why this is 'stdout'
-
-        print ("#OTHERTHING")
 
         cdef c_mapping * read
         read = reads_at_index.at(0) ## get the zeroth one
         ## all the reads to be returned have the same info.
-
-        print "#HI"
 
         seq = read.mSequence.ToStringP()
         seq_len = len(seq)
@@ -230,8 +215,6 @@ cdef class mappingsinterval:
         if seq_stop > self.slice_stop:
             slice_stop = seq_len - (seq_stop - self.slice_stop)
             align_stop = self.slice_stop
-
-        print "#HIHI", align_start, align_stop, slice_start, slice_stop
 
         return align_start, align_stop, slice_start, slice_stop, reads
 
@@ -337,8 +320,9 @@ cdef class mapping_container:
     def get_slice(self, seqname, left, right ):
         cdef mappingsinterval reads
         reads = mappingsinterval(seqname, left, right)
+        #print "FETCHING SLICE"
         reads.mappings = self.thismap.GetIntersectionFlat(seqname, left, right)
-#        print seqname
+        #print "DONE FETCHING SLICE"
         return reads
 
     def get_reads(self, seqname, index):

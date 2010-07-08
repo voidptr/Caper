@@ -5,6 +5,7 @@
 #include "BundleFileEngine.h"
 #include "MappingCache.h"
 #include "MappingCacheFactory.h"
+#include "IndexedMappingsFlat.h"
 
 class MappingEngine
 {
@@ -35,11 +36,11 @@ public:
         mContigName = mMappingEngine->GetFirstContig();
       else
         mContigName = aContigName;
-      
+
       if ( aIndex == -2 ) // A bizarre first value, but still amenable to the following behaviour. This should be fixed in a future.
       {
         //cout << "MappingEngine::iterator Constructor (if mIndex == -1)" << endl;
-        mIndex = mMappingEngine->GetNextIndex( mContigName, mIndex ); 
+        mIndex = mMappingEngine->GetNextIndex( mContigName, mIndex );
         //cout << "MappingEngine::iterator Constructor - new index: " << mIndex << endl;
       }
       else
@@ -97,7 +98,7 @@ public:
       return mMappingEngine->GetIntersection( mContigName, mIndex, mIndex );
     }
 
-    vector<ReadsAtIndex*> * IntersectFlat()
+    IndexedMappingsFlat * IntersectFlat()
     {
         return mMappingEngine->GetIntersectionFlat( mContigName, mIndex, mIndex );
     }
@@ -156,14 +157,8 @@ public:
 
   iterator End( string & aContigIdent )
   {
-    // HOLY SHIT, THIS METHOD IS ALL WRONG. I'm getting a meaning collision between -1 as End value, and -1 as default starting. 
-    // What an irritating bug.
-
-    //cout << "~~MappingEngine - End(contig) - Initing a new one" << endl;
+    //cout << "~~MappingEngine - End" << endl;
     iterator lIt ( this, aContigIdent, GetEndIndex() ); // does this get destroyed too soon? :/
-//    cout << "~~MappingEngine - End(contig) - Ending it" << endl;
-//    lIt.End();
-//    cout << "~~MappingEngine - End(contig) - Done, returning it" << endl;
     return lIt;
   }
 
@@ -232,29 +227,37 @@ public:
     return GetIntersection( lContigIdent, aLeft, aRight );
   }
 
-  vector<ReadsAtIndex*> * GetIntersectionFlat( string & aContigIdent, long long aLeft, long long aRight )
+  IndexedMappingsFlat * GetIntersectionFlat( string & aContigIdent, long long aLeft, long long aRight )
   {
+    //cout << "~~MappingEngine - GetIntersectionFlat" << endl;
     long long lIntersectLeft = aLeft - GetReadLength();
     if ( lIntersectLeft < 0 )
       lIntersectLeft = 0;
 
-    vector<ReadsAtIndex*> * lReads = new vector<ReadsAtIndex*>();
+    IndexedMappingsFlat * lSetOfReads = new IndexedMappingsFlat();
 
     iterator lRight = At( aContigIdent, aRight ); // just a stake in the ground, probably nothing here.
     bool lStart = true;
-    for ( iterator lIt = At( aContigIdent, lIntersectLeft ); lIt != End( aContigIdent ) && lIt.GetIndex() <= lRight.GetIndex(); lIt.Next() )
+    for ( iterator lIt = At( aContigIdent, lIntersectLeft );
+        lIt != End( aContigIdent ) && lIt.GetIndex() <= lRight.GetIndex();
+        lIt.Next() )
     {
-      if ( !lStart || lIt.GetReads()->size() > 0 ) // kludge to avoid pushing an empty set of reads.
-        lReads->push_back( lIt.GetReads() );
+      //cout << "~~MappingEngine - GetIntersectionFlat - Loop" << endl;
+      ReadsAtIndex * lReads = lIt.GetReads();
+
+      if ( !lStart || lReads->size() > 0 ) // kludge to avoid pushing an empty set of reads.
+        lSetOfReads->push_back( lReads );
 
       lStart = true;
+      //cout << "~~MappingEngine - GetIntersectionFlat - Loop Done" << endl;
     }
 
-    return lReads;
+    //cout << "~~MappingEngine - GetIntersectionFlat - Done" << endl;
+    return lSetOfReads;
 
   }
 
-  vector<ReadsAtIndex*> * GetIntersectionFlat( const char * aContigIdent, long long aLeft, long long aRight )
+  IndexedMappingsFlat * GetIntersectionFlat( const char * aContigIdent, long long aLeft, long long aRight )
   {
     string lContigIdent = string(aContigIdent);
     return GetIntersectionFlat( lContigIdent, aLeft, aRight );
@@ -262,10 +265,10 @@ public:
 
   ~MappingEngine(void)
   {
-//    cout << "MappingEngine - Destructor" << endl;
+    //cout << "MappingEngine - Destructor" << endl;
     delete mFileEngine;
     delete mMappingCacheFactory;
-//    cout << "MappingEngine - Destructor - Done" << endl;
+    //cout << "MappingEngine - Destructor - Done" << endl;
   }
 
 private:
@@ -276,7 +279,7 @@ private:
     //cout << "~~MappingEngine - GetNextIndex - Populating Correct Cache (1): index: " << aIndex << endl;
     PopulateCorrectCache( aContig, IndexToWindowNumber(aIndex) ); // init the current cache, if we haven't already.
     //cout << "~~MappingEngine - GetNextIndex - Done Populating Correct Cache (1)" << endl;
-    
+
     if ( mCurrentCache != NULL ) // Hooray! We're in a proper window!
     {
       //cout << "~~MappingEngine - GetNextIndex - (mCurrentCache != NULL), so ask for the next one" << endl;
@@ -385,9 +388,9 @@ private:
   {
     if ( mCurrentCache != NULL )
     {
-//        cout << "~~MappingEngine - DestroyCache" << endl;
+        //cout << "~~MappingEngine - DestroyCache" << endl;
         delete mCurrentCache;
-//        cout << "~~MappingEngine - DestroyCache - Done" << endl;
+        //cout << "~~MappingEngine - DestroyCache - Done" << endl;
         mCurrentCache = NULL;
     }
   }

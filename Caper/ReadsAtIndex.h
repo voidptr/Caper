@@ -21,33 +21,33 @@ public:
 
   void Destroy()
   {
- //    cout << "~~ReadsAtIndex - Destroy:" << ReferenceCount << endl;
+     //cout << "~~ReadsAtIndex - Destroy:" << ReferenceCount << endl;
      if ( ReferenceCount == 1 ) // call the destructor to wipe us all out.
      {
- //      cout << "~~ReadsAtIndex - Destroy - Doing It: " << ReferenceCount << endl;
+       //cout << "~~ReadsAtIndex - Destroy - Doing It: " << ReferenceCount << endl;
        delete this; // woo! It's all over. Kill the pointer too.
      }
      else if (ReferenceCount > 1 ) // do the decrement
      {
- //       cout << "~~ReadsAtIndex - Destroy - Decrementing:" << ReferenceCount << " to " << ReferenceCount -1 << endl;
+        //cout << "~~ReadsAtIndex - Destroy - Decrementing:" << ReferenceCount << " to " << ReferenceCount -1 << endl;
        --ReferenceCount; // just decrement us, but don't delete the pointer itself. That would suck for other people who have to use the pointer.
      }
      else
      {
- //      cout << "~~ReadsAtIndex - Destroy - Wut?" << endl;
+       //cout << "~~ReadsAtIndex - Destroy - Wut?" << endl;
      }
- //    cout << "~~ReadsAtIndex - Destroy - Done" << endl;
+     //cout << "~~ReadsAtIndex - Destroy - Done" << endl;
   }
 
   // this destructor is iffy.
   ~ReadsAtIndex(void) // not only does this deallocate the internal content, it deletes the pointer, which may not be what we want.
   {
-//    cout << "~~ReadsAtIndex - Destructor" << endl;
+    //cout << "~~ReadsAtIndex - Destructor" << endl;
     --ReferenceCount;
-//    cout << "~~ReadsAtIndex - Destructor - ReferenceCount: " << ReferenceCount << endl;
+    //cout << "~~ReadsAtIndex - Destructor - ReferenceCount: " << ReferenceCount << endl;
     if ( ReferenceCount == 0 ) // we dont' want to do this again if we already did it
     {
-//        cout << "~~ReadsAtIndex - Destructor - REALLY DOING IT THIS TIME" << endl;
+        //cout << "~~ReadsAtIndex - Destructor - REALLY DOING IT THIS TIME" << endl;
         for ( ReadsAtIndex::iterator lIt = this->begin(); lIt != this->end(); ++lIt )
        {
          delete *lIt;
@@ -55,7 +55,7 @@ public:
     }
     else
     {
-//        cout << "~~GAH!" << endl;
+        //cout << "~~GAH!" << endl;
     }
   }
 };
