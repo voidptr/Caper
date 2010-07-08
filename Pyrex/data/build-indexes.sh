@@ -1,7 +1,7 @@
 #! /bin/bash
 export PYTHONPATH=/u/t/dev/screed
 
-CAPER=../CaperGCC/Caper
+CAPER=../CaperGCC/caper
 CACHE=data/cache
 
 rm -fr ${CACHE}

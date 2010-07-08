@@ -6,7 +6,7 @@ ZLIBSRCDIR=../zlib123
 CXXFLAGS=-g -fPIC -I$(SRCDIR) -I$(ZLIBSRCDIR)
 CFLAGS=-g -fPIC
 
-all: Caper
+all: caper
 
 default: all
 
@@ -85,12 +85,12 @@ UIOBJ=$(UISRCDIR)/Arguments.o \
 	$(UISRCDIR)/Caper.o \
 	$(UISRCDIR)/XGetopt.o
 
-Caper: $(UISRCDIR)/CaperUI.o $(UIOBJ) $(ZLIBOBJ)
-	g++ -Wall -O3 -o Caper $(UISRCDIR)/CaperUI.o $(UIOBJ) \
+caper: $(UISRCDIR)/CaperUI.o $(UIOBJ) $(ZLIBOBJ)
+	g++ -Wall -O3 -o caper $(UISRCDIR)/CaperUI.o $(UIOBJ) \
 	$(ZLIBOBJ)
 
 depend:
 	touch makefile.deps
-	makedepend -fmakefile.deps ../Caper/*.{h,cpp} ../CaperUI/*.{h,cpp} 
+	makedepend -fmakefile.deps ../Caper/*.{h,cpp} ../CaperUI/*.{h,cpp}
 
 -include makefile.deps

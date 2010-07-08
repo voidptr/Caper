@@ -310,7 +310,9 @@ private:
     lInStream.close();
     lOutStream.close();
 
-    // TODO, delete the tmp compressed file.
+    if ( remove( aSourcePath.c_str() ) != 0 )
+      cerr << "Could not remove temporary compressed mapping file: " << aSourcePath << endl;
+
   }
 
   string GenerateSavePathFilename(string aFilename, string aPostfix)
