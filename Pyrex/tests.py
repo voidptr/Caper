@@ -278,7 +278,7 @@ class MappingContainer_Test(object):
 
         assert count == 10000
 
-    def test_retrieve_all(self):
+    def test_slice_retrieve_all(self):
         """Test that slice retrieves all the reads in the whole genome"""
         matches = self.cont.get_slice(contig, 0, len(self.seq))
 
@@ -287,6 +287,273 @@ class MappingContainer_Test(object):
             count = count + len(index[4])
 
         assert count == 10000
+
+    def test_iterator_edge_cases(self):
+        """Test that at the edges, that the iterator doesn't return anything weird"""
+        iterator = self.cont.get_iterator(contig, -1)
+
+        get_reads_minus_1 = iterator.get_reads()
+        assert len(get_reads_minus_1) == 0
+        intersect_minus_1 = iterator.get_intersection()
+        assert len(intersect_minus_1) == 0
+
+        iterator.next() ## the next index is the one at 2 (1)
+
+        get_reads_next = iterator.get_reads()
+        assert len(get_reads_next) == 1 ## a single read is present
+        assert get_reads_next[0][0] == 1 ## and has an index of 1
+
+        intersect_next = iterator.get_intersection()
+        assert len(intersect_next) == 1 ## only one index intersects here
+        assert len(intersect_next[0][4]) == 1 ## and that one index has one read
+        assert intersect_next[0][4][0][0] == 1 ## and the single read's index is 1
+
+        iterator.next() ## the next index is the one at 4 (3)
+
+        get_reads_next = iterator.get_reads()
+        assert len(get_reads_next) == 1 ## a single read is present
+        assert get_reads_next[0][0] == 3 ## and has an index of 3
+
+        intersect_next = iterator.get_intersection()
+        assert len(intersect_next) == 2 ## two indices intersects here
+        assert len(intersect_next[0][4]) == 1 ## first index has one read
+        assert intersect_next[0][4][0][0] == 1 ## and the single read's index is 1
+        assert len(intersect_next[1][4]) == 1 ## second index has one read
+        assert intersect_next[1][4][0][0] == 3 ## and the single read's index is 3
+
+        ### last position to get a read in the genome
+        iterator = self.cont.get_iterator(contig, 13779)
+        get_reads_last_indexed_front = iterator.get_reads()
+        assert len(get_reads_last_indexed_front) == 1
+
+        intersect_last_indexed_front = iterator.get_intersection()
+        assert len(intersect_last_indexed_front) == 18
+
+        iterator.next()
+
+        get_reads_past_last_indexed_front = iterator.get_reads()
+        assert len(get_reads_past_last_indexed_front) == 0
+
+        ### last position to get an intersection in the genome
+        iterator = self.cont.get_iterator(contig, 13814)
+
+        get_reads_last_indexed_back = iterator.get_reads()
+        assert len(get_reads_last_indexed_back) == 0
+
+        intersect_last_indexed_back = iterator.get_intersection()
+        assert len(intersect_last_indexed_back) == 1
+
+        iterator.next()
+
+        intersect_past_last_indexed_back = iterator.get_reads()
+        assert len(intersect_past_last_indexed_back) == 0
+
+        ### past the last window
+        iterator = self.cont.get_iterator(contig, 14815)
+
+        get_reads_past_the_last_window = iterator.get_reads()
+        assert len(get_reads_past_the_last_window) == 0
+
+        intersect_past_the_last_window = iterator.get_intersection()
+        assert len(intersect_past_the_last_window) == 0
+
+        iterator.next()
+
+        get_reads_past_the_last_window_next = iterator.get_reads()
+        assert len(get_reads_past_the_last_window_next) == 0
+
+        intersect_past_the_last_window_next = iterator.get_intersection()
+        assert len(intersect_past_the_last_window_next) == 0
+
+    def test_iterator_get_reads_retrieve(self):
+        """Test retrieval of reads indexed at a particular index"""
+        iterator = self.cont.get_iterator(contig, 13)
+        reads = iterator.get_reads()
+
+        assert len(reads) == 2
+
+        reads_result = list()
+        for index, name, sequence, orientation in reads:
+           thing = (index, name, sequence, orientation)
+           reads_result.append(thing)
+
+        assert reads_result == \
+            [(13, 'HWI-EAS_4_PE-FC20GCB:1:212:153:213/1', 'gactgcaacgggcaatatgtctctgtgtggattaaa', 1),
+             (13, 'HWI-EAS_4_PE-FC20GCB:1:246:99:950/1', 'gactgcaacgggcaatatgtctctgcgtggattcaa', 1)], reads_result
+
+    def test_iterator_intesect_retrieve(self):
+        """Test retrieval of iterated intersections"""
+        iterator = self.cont.get_iterator(contig, 5)
+        intersect = iterator.get_intersection()
+
+        intersect_result = list()
+        for ival_start, ival_stop, start, stop, matches in intersect:
+            for index, name, sequence, orientation in matches:
+                thing = (ival_start, ival_stop, start, stop, name, orientation);
+                intersect_result.append(thing)
+
+        assert len(intersect) == 3
+
+        assert intersect_result == \
+               [(5, 5, 4, 4, 'HWI-EAS_4_PE-FC20GCB:1:146:930:514/1', -1),
+                (5, 5, 2, 2, 'HWI-EAS_4_PE-FC20GCB:1:210:846:698/1', 1),
+                (5, 5, 1, 1, 'HWI-EAS_4_PE-FC20GCB:1:285:772:762/1', 1)], intersect_result
+
+        # check lengths
+        for (tstart, tstop, bstart, bstop, _, o) in intersect_result:
+            assert tstop - tstart == bstop - bstart
+
+    def test_iterator_intersect_and_engine_intersect_equivalency(self):
+        iterator = self.cont.get_iterator(contig, 5)
+        it_intersect = iterator.get_intersection()
+
+        it_intersect_result = list()
+        for ival_start, ival_stop, start, stop, matches in it_intersect:
+            for index, name, sequence, orientation in matches:
+                thing = (ival_start, ival_stop, start, stop, name, orientation);
+                it_intersect_result.append(thing)
+                print thing
+
+        intersect = self.cont.get_intersect(contig, 5)
+        intersect_result = list()
+        for ival_start, ival_stop, start, stop, matches in intersect:
+            for index, name, sequence, orientation in matches:
+                thing = (ival_start, ival_stop, start, stop, name, orientation);
+                intersect_result.append(thing)
+                print thing
+
+        assert len(intersect_result) == len(it_intersect_result) == 3
+
+        assert it_intersect_result == intersect_result
+
+    def test_iterated_slice_retrieve(self):
+        """Test retrieval of slices"""
+        iterator = self.cont.get_slice_iterator(contig, 0)
+
+        slice_result = list()
+        for i in range(4): #(0->1->3->4->)
+            reads = iterator.get_reads()
+            for ival_start, ival_stop, start, stop, matches in reads:  ## not thrilled that the iterator is returning weird stuff for the ival start/stop
+                for index, name, sequence, orientation in matches:
+                    thing = (index, name, orientation);
+                    slice_result.append(thing)
+                    print thing
+
+            iterator.next()
+
+        print len(slice_result)
+        assert len(slice_result) == 3
+
+        assert slice_result == \
+               [(1, 'HWI-EAS_4_PE-FC20GCB:1:146:930:514/1', -1),
+                (3, 'HWI-EAS_4_PE-FC20GCB:1:210:846:698/1', 1),
+                (4, 'HWI-EAS_4_PE-FC20GCB:1:285:772:762/1', 1)], slice_result
+
+    def test_iterated_slice_retrieval_and_engine_slice_retrieval_equivalency(self): ## minus the ival start and stop, since there's really no way to make that work
+        """Test that an engine slice retrieval and an iterated slice retrieval are equivalent"""
+        iterator = self.cont.get_slice_iterator(contig, 0)
+
+        iterated_slice_result = list()
+        for i in range(4): #(0->1->3->4->)
+            reads = iterator.get_reads()
+            for ival_start, ival_stop, start, stop, matches in reads:  ## not thrilled that the iterator is returning weird stuff for the ival start/stop
+                for index, name, sequence, orientation in matches:
+                    thing = (index, name, orientation);
+                    iterated_slice_result.append(thing)
+                    print thing
+
+            iterator.next()
+
+        print len(iterated_slice_result)
+        assert len(iterated_slice_result) == 3
+
+        engine_slice = self.cont.get_slice(contig, 0, 5)
+
+        engine_slice_result = list()
+        for ival_start, ival_stop, start, stop, matches in engine_slice:
+            for index, name, sequence, orientation in matches:
+                thing = (index, name, orientation);
+                print thing
+                engine_slice_result.append(thing)
+
+        assert len(engine_slice_result) == 3
+
+        assert iterated_slice_result == engine_slice_result == \
+               [(1, 'HWI-EAS_4_PE-FC20GCB:1:146:930:514/1', -1),
+                (3, 'HWI-EAS_4_PE-FC20GCB:1:210:846:698/1', 1),
+                (4, 'HWI-EAS_4_PE-FC20GCB:1:285:772:762/1', 1)], iterated_slice_result
+
+    def test_iterated_simulated_slice_retrieval_and_slice_iterator_equivalency(self):
+        """Test retrieval of slices"""
+        iterator = self.cont.get_slice_iterator(contig, 0)
+
+        slice_result = list()
+        for i in range(4): #(0->1->3->4->)
+            reads = iterator.get_reads()
+            for ival_start, ival_stop, start, stop, matches in reads:  ## not thrilled that the iterator is returning weird stuff for the ival start/stop
+                for index, name, sequence, orientation in matches:
+                    thing = (index, name, orientation);
+                    slice_result.append(thing)
+                    print thing
+
+            iterator.next()
+
+        print len(slice_result)
+        assert len(slice_result) == 3
+
+        assert slice_result == \
+               [(1, 'HWI-EAS_4_PE-FC20GCB:1:146:930:514/1', -1),
+                (3, 'HWI-EAS_4_PE-FC20GCB:1:210:846:698/1', 1),
+                (4, 'HWI-EAS_4_PE-FC20GCB:1:285:772:762/1', 1)], slice_result
+
+        iterator = self.cont.get_iterator(contig, 0)
+
+        sim_slice_result = list()
+        for i in range(4): #(0->1->3->4->)
+            if ( i == 0 ):
+                reads = iterator.get_intersection()
+                for ival_start, ival_stop, start, stop, matches in reads:  ## not thrilled that the iterator is returning weird stuff for the ival start/stop
+                    for index, name, sequence, orientation in matches:
+                        thing = (index, name, orientation);
+                        sim_slice_result.append(thing)
+                        print thing
+            else:
+                reads = iterator.get_reads()
+                for index, name, sequence, orientation in reads:
+                    thing = (index, name, orientation);
+                    sim_slice_result.append(thing)
+                    print thing
+
+            iterator.next()
+
+        print len(sim_slice_result)
+        assert len(sim_slice_result) == 3
+
+        assert sim_slice_result == slice_result
+
+    def test_iterated_restricted_slice_and_iterated_intersect_equivalency(self):
+        """Test that the values returned by intersect at a particular index, and slice restricted to that index are the same"""
+        slice_iterator = self.cont.get_slice_iterator(contig, 5)
+        slice = slice_iterator.get_reads()
+        slice_result = list()
+        for ival_start, ival_stop, start, stop, matches in slice: ## not thrilled that the iterator is returning weird stuff for the ival start/stop
+            for index, name, sequence, orientation in matches:
+                thing = (ival_start, ival_stop, start, stop, name, orientation);
+                slice_result.append(thing)
+
+        assert len(slice) == 3
+
+        iterator = self.cont.get_iterator(contig, 5)
+        intersect = iterator.get_intersection()
+        intersect_result = list()
+        for ival_start, ival_stop, start, stop, matches in intersect:
+            for index, name, sequence, orientation in matches:
+                thing = (ival_start, ival_stop, start, stop, name, orientation);
+                intersect_result.append(thing)
+
+        assert len(intersect) == len(slice) == 3
+
+        assert slice_result == intersect_result
 
 class PygrBridge_Test(object):
     def setup(self):
