@@ -108,13 +108,54 @@ class MappingContainer_Test(object):
         ## the last result shouldn't be the same, since we pick up a new read at index 37
         assert inter36[13][4][0][0] != inter37[13][4][0][0]
 
+    def test_get_reads_edge_case(self):
+        """Test that at the edges, that get_reads doesn't return anything weird"""
+        get_reads_minus_1 = self.cont.get_reads(contig, -1) ## this should just zero out
+        assert len(get_reads_minus_1) == 0
+
+        get_reads0 = self.cont.get_reads(contig, 0) ## nothing at this index, but ok.
+        assert len(get_reads0) == 0
+
+        get_reads_last_read_indexed_front = self.cont.get_reads(contig, 13779) ## the last read starts here
+        assert len(get_reads_last_read_indexed_front) == 1
+
+        get_reads_last_read_indexed_back = self.cont.get_reads(contig, 13814) ## the last read ends here (nothing)
+        print len(get_reads_last_read_indexed_back)
+        assert len(get_reads_last_read_indexed_back) == 0
+
+        get_reads_just_past_last_read_indexed = self.cont.get_reads(contig, 13815) ## nothing here
+        print len(get_reads_just_past_last_read_indexed)
+        assert len(get_reads_just_past_last_read_indexed) == 0
+
+        get_reads_past_the_last_window = self.cont.get_reads(contig, 14815) ## nothing here
+        print len(get_reads_past_the_last_window)
+        assert len(get_reads_past_the_last_window) == 0
+
     def test_intersect_edge_case(self):
-        """Test that at the 0th interval, that intersect doesn't return anything weird"""
-        inter0 = self.cont.get_intersect(contig, 0)
-        assert len(inter0) == 0
+        """Test that at the edges, that intersect doesn't return anything weird"""
+        intersect_minus_1 = self.cont.get_intersect(contig, -1) ## this should just zero out
+        assert len(intersect_minus_1) == 0
+
+        intersect0 = self.cont.get_intersect(contig, 0) ## nothing at this index, but ok.
+        assert len(intersect0) == 0
+
+        intersect_last_read_indexed_front = self.cont.get_intersect(contig, 13779) ## the last read starts here
+        assert len(intersect_last_read_indexed_front) == 18
+
+        intersect_last_read_indexed_back = self.cont.get_intersect(contig, 13814) ## the last read ends here
+        print len(intersect_last_read_indexed_back)
+        assert len(intersect_last_read_indexed_back) == 1
+
+        intersect_just_past_last_read_indexed = self.cont.get_intersect(contig, 13815) ## nothing here
+        print len(intersect_just_past_last_read_indexed)
+        assert len(intersect_just_past_last_read_indexed) == 0
+
+        intersect_past_the_last_window = self.cont.get_intersect(contig, 14815) ## nothing here
+        print len(intersect_past_the_last_window)
+        assert len(intersect_past_the_last_window) == 0
 
     def test_slice_edge_cases(self):
-        """Test that at the edges, that intersect doesn't return anything weird"""
+        """Test that at the edges, that slice doesn't return anything weird"""
         slice_minus_1 = self.cont.get_slice(contig, -1, -1) ## this should just zero out
         assert len(slice_minus_1) == 0
 
@@ -132,11 +173,14 @@ class MappingContainer_Test(object):
         print len(slice_just_past_last_read_indexed)
         assert len(slice_just_past_last_read_indexed) == 0
 
+        slice_last_read_indexed_back_to_the_next_window = self.cont.get_slice(contig, 13814, 14815) ## nothing here
+        print len(slice_last_read_indexed_back_to_the_next_window)
+        assert len(slice_last_read_indexed_back_to_the_next_window) == 1
+
         slice_just_past_last_read_indexed_to_the_next_window = self.cont.get_slice(contig, 13815, 14815) ## nothing here
         print len(slice_just_past_last_read_indexed_to_the_next_window)
         assert len(slice_just_past_last_read_indexed_to_the_next_window) == 0
 
-        ## this causes a segfault. Fix!
         slice_start_over_one_window_past_last_read_indexed = self.cont.get_slice(contig, 14815, 14815) ## nothing here
         print len(slice_start_over_one_window_past_last_read_indexed)
         assert len(slice_start_over_one_window_past_last_read_indexed) == 0
