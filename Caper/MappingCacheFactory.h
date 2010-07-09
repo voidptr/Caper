@@ -20,9 +20,10 @@ public:
 
   MappingCache * BuildMappingCache( string & aContig, long long aWindowNumber )
   {
-    //cout << "~~MappingCacheFactory - BuildMappingCache " << aContig << " window " << aWindowNumber << endl;
+//    cout << "~~MappingCacheFactory - BuildMappingCache " << aContig << " window " << aWindowNumber << endl;
 	vector<Mapping*> * lMappings = mFileEngine->FetchMappings( aContig, aWindowNumber );
 
+//    cout << "~~MappingCacheFactory - BuildMappingCache " << aContig << " window " << aWindowNumber << endl;
     if ( lMappings == NULL ) // no window!
       return NULL;
 

@@ -49,6 +49,7 @@ cdef extern from "Caper.h":
     ctypedef void (*previous)()
     ctypedef void (*end)()
     ctypedef c_reads_at_index * (*get_reads)()
+    ctypedef c_reads_at_indexes * (*get_reads_indexed_flat)()
     ctypedef int (*get_index)()
     ctypedef c_reads_at_indexes * (*intersect_flat)()
     ctypedef struct c_mapping_engine_iterator "MappingEngine::iterator":
@@ -58,6 +59,7 @@ cdef extern from "Caper.h":
         get_index GetIndex
         get_reads GetReads
         intersect_flat IntersectFlat
+        get_reads_indexed_flat GetReadsIndexedFlat
 
     void del_mapping_engine_iterator "delete" (c_mapping_engine_iterator * iterator)
 
@@ -65,18 +67,18 @@ cdef extern from "Caper.h":
     # declared as c_mapping_engine (only the bundle version :/)
 
     ctypedef void (*Initialize)()
-    ctypedef c_mapping_engine_iterator (*begin)(char *)
+#    ctypedef c_mapping_engine_iterator * (*begin)(char *)
     ctypedef c_mapping_engine_iterator * (*at_iter)(char *, int)
-    ctypedef c_mapping_engine_iterator (*end_iter)(char *)
+#    ctypedef c_mapping_engine_iterator * (*end_iter)(char *)
     ctypedef c_reads_at_index * (*GetReads)(char *, int)
     ctypedef c_reads_at_indexes * (*GetIntersectionFlat)(char *, int, int)
     ctypedef int (*GetReadLength)()
 
     ctypedef struct c_mapping_engine "MappingEngine":
         Initialize Initialize
-        begin Begin
-        at_iter At
-        end_iter End
+#        begin Begin
+        at_iter AtPtr
+#        end_iter End
         GetReads GetReads
         GetIntersectionFlat GetIntersectionFlat
         GetReadLength GetReadLength
@@ -121,11 +123,8 @@ cdef class mappings:
     def __cinit__(self, seqname, index): #, c_reads_at_index * reads_at_index): ## __cinit__ can only take python parameters. :(
         self.seqname = seqname
         self.index = index
-       # print "@@@INIT MAPPINGS", self.seqname, self.index
 
-    #def __dealloc__(self):
-        #print "@@@DEALLOC MAPPINGS"
-        #self.mappings.Destroy()
+    ## no specific deallocator is required. It takes care of itself... I think?
 
     def __repr__(self): ## what does this do?
         return "mappings('%s', %d)" % (self.seqname, self.index)
@@ -136,12 +135,11 @@ cdef class mappings:
 
     def __getitem__(self, i):
         """Return (start, sequence) of overlapping mapping."""
-        #print ">>>RETRIEVING<<<"
         if i < 0 or i >= self.mappings.size():
             raise IndexError
 
         cdef c_mapping * item
-        item = self.mappings.at(i) ## don't know if this still works. Does "at" still work?
+        item = self.mappings.at(i)
 
         name = item.NameP()
         index = item.Index
@@ -161,26 +159,21 @@ cdef class mappingsinterval:
         self.seqname = seqname
         self.slice_start = slice_start
         self.slice_stop = slice_stop
-        #print "@@@INIT MAPPINGSINTERVAL", self.seqname, self.slice_start, self.slice_stop
 
     def __dealloc__(self):
         cdef c_reads_at_indexes * mappings
         mappings = self.mappings
         del_reads_at_indexes(mappings) ## this should work, since it should call the right destructor... maybe.
-        #print "@@@DEALLOC MAPPINGSINTERVAL"
 
-    def __repr__(self): ## what does this do?
-        return "mappingsinterval('%s', %d, %d)" % (self.seqname, self.start, self.stop)
+    def __repr__(self):
+        return "mappingsinterval('%s', %d, %d)" % (self.seqname, self.slice_start, self.slice_stop)
 
     def __len__(self): ## this probably doesn't work.
         """Return number of overlapping mappings at this point."""
         return self.mappings.size() ##this isn't correct. :(
 
-    def __getitem__(self, i):
-        #print "---RETRIEVING---"
-        #print ("Index: ", i)
-
-        """Return (start, sequence) of overlapping mapping."""
+    def __getitem__(self, i):  ## thinking about making this a slightly smarter iterator so that it returns the reads not the read index container
+        """Return (align_start, align_stop, slice_start, slice_stop, and the set of reads) at this spot."""
         if i < 0 or i >= self.mappings.size():
             raise IndexError
 
@@ -218,68 +211,65 @@ cdef class mappingsinterval:
 
         return align_start, align_stop, slice_start, slice_stop, reads
 
-# cdef class slice_iterator:
-#     """Iterates through a slice of the genome."""
-#     cdef c_mapping_engine_iterator thisiterator
-#     cdef public int start, current
-#
-#     def __cinit__(self, start):
-#         self.start = start
-#         self.current = start
-#
-#     cdef init(self, c_mapping_engine_iterator iterator):
-#         self.thisiterator = iterator;
-#
-#     def next(self):
-#         self.thisiterator.Next()
-#         self.current += self.thisiterator.GetIndex()
-#
-#     def get_reads(self):
-#         cdef c_indexed_mappings * reads
-#         if self.current != self.start:
-#             reads = self.thisiterator.Intersect()
-#         else:
-#             reads = self.thisiterator.GetReadsIndexed()
-#
-#         cdef mappingsinterval x
-#         x.mappings = reads
-#
-#         return x
-#
-#cdef class iterator:
-#    """Iterates through the genome, one index at a time."""
-#    cdef c_mapping_engine_iterator * thisiterator
-#    cdef public char * seqname
-#    cdef public int start
+cdef class iterator:
+    """Iterates through the genome, one index at a time."""
+    cdef c_mapping_engine_iterator * thisiterator
+    cdef public char * seqname
+    cdef public int start, current
 
-#    def __cinit__(self, seqname, start):
-#        self.start = start
- #       self.seqname = seqname
-#
-#     cdef init(self, c_mapping_engine_iterator iterator):
-#         self.thisiterator = iterator;
-#
-#     def next(self):
-#         self.thisiterator.Next()
-#         self.current += self.thisiterator.GetIndex()
-#
-#     def get_reads(self):
-#         cdef c_reads_at_index * reads
-#         reads = self.thisiterator.GetReads()
-#
-#         cdef mappings x ## this class init is missing some crucial bits...
-#         x.mappings = reads
-#
-#         return x
-#
-#     def get_intersection(self):
-#         cdef c_indexed_mappings * reads
-#         reads = self.thisiterator.Intersect()
-#
-#         cdef mappingsinterval x
-#         x.mappings = reads
-#
-#         return x
+    def __cinit__(self, seqname, start):
+        self.start = start
+        self.seqname = seqname
+        self.current = start
+
+    def __repr__(self):
+        return "iterator('%s', %d, %d)" % (self.seqname, self.start, self.current)
+
+    def next(self):
+        self.thisiterator.Next()
+        self.current = self.thisiterator.GetIndex()
+
+    def get_reads(self):
+        cdef c_reads_at_index * reads
+        reads = self.thisiterator.GetReads()
+        cdef mappings x
+        x = mappings(self.seqname, self.current)
+        x.mappings = reads
+        return x
+
+    def get_intersection(self):
+        cdef c_reads_at_indexes * reads
+        reads = self.thisiterator.IntersectFlat()
+        cdef mappingsinterval x
+        x = mappingsinterval(self.seqname, self.current, self.current)
+        x.mappings = reads
+        return x
+
+cdef class slice_iterator:
+    """Iterates through a slice of the genome."""
+    cdef c_mapping_engine_iterator * thisiterator
+    cdef public char * seqname
+    cdef public int start, current
+
+    def __cinit__(self, seqname, start):
+        self.start = start
+        self.current = start
+        self.seqname = seqname
+
+    def next(self):
+        self.thisiterator.Next()
+        self.current = self.thisiterator.GetIndex()
+
+    def get_reads(self):
+        cdef c_reads_at_indexes * reads
+        if self.current == self.start:
+            reads = self.thisiterator.IntersectFlat()
+        else:
+            reads = self.thisiterator.GetReadsIndexedFlat()
+        cdef mappingsinterval x
+        x = mappingsinterval(self.seqname, self.current, self.current)
+        x.mappings = reads
+        return x
 
 cdef class mapping_container:
     cdef c_mapping_engine *thismap
@@ -296,40 +286,34 @@ cdef class mapping_container:
         length = self.thismap.GetReadLength()
         return length
 
-#    def get_iterator(self, seqname, start):
-#        cdef iterator x
-#        x.start = start
-#        x.seqname = seqname
-#        x.thisiterator = self.thismap.At(seqname, start);
-#        return x
+    def get_iterator(self, seqname, start):
+        cdef iterator x
+        x = iterator(seqname, start)
+        x.thisiterator = self.thismap.AtPtr(seqname, start);
+        return x
 
-# #     def get_slice_iterator(self, seqname, start):
-# #         cdef slice_iterator x
-# #         x.start = start
-# #         x.seqname = seqname
-# #         x.init(self.thismap.At(seqname, start))
-# #         return x
-#
+    def get_slice_iterator(self, seqname, start):
+        cdef slice_iterator x
+        x = slice_iterator(seqname, start)
+        x.thisiterator = self.thismap.AtPtr(seqname, start)
+        return x
+
     def get_intersect(self, seqname, index):
         cdef mappingsinterval reads
         reads = mappingsinterval(seqname, index, index)
         reads.mappings = self.thismap.GetIntersectionFlat(seqname, index, index)
-#        print seqname
         return reads
 
     def get_slice(self, seqname, left, right ):
         cdef mappingsinterval reads
         reads = mappingsinterval(seqname, left, right)
-        #print "FETCHING SLICE"
         reads.mappings = self.thismap.GetIntersectionFlat(seqname, left, right)
-        #print "DONE FETCHING SLICE"
         return reads
 
     def get_reads(self, seqname, index):
         cdef mappings reads
         reads = mappings(seqname, index)
         reads.mappings = self.thismap.GetReads(seqname, index)
-#        print seqname
         return reads
 
 ####### END PYTHON CLASSES

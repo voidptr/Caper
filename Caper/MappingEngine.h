@@ -29,7 +29,7 @@ public:
     iterator( MappingEngine * aMappingEngine,
       const string & aContigName="", long long aIndex=-2)
     {
-      //cout << "MappingEngine::iterator Constructor" << endl;
+//      cout << "MappingEngine::iterator Constructor" << endl;
       mMappingEngine = aMappingEngine;
 
       if ( aContigName == "" )
@@ -39,9 +39,9 @@ public:
 
       if ( aIndex == -2 ) // A bizarre first value, but still amenable to the following behaviour. This should be fixed in a future.
       {
-        //cout << "MappingEngine::iterator Constructor (if mIndex == -1)" << endl;
+//        cout << "MappingEngine::iterator Constructor (if mIndex == -1)" << endl;
         mIndex = mMappingEngine->GetNextIndex( mContigName, mIndex );
-        //cout << "MappingEngine::iterator Constructor - new index: " << mIndex << endl;
+//        cout << "MappingEngine::iterator Constructor - new index: " << mIndex << endl;
       }
       else
         mIndex = aIndex;
@@ -49,9 +49,9 @@ public:
 
     void Next()
     {
-      //cout << "~~MappingEngine::iterator - Next - CurrentIndex: " << mIndex << endl;
+//      cout << "~~MappingEngine::iterator - Next - CurrentIndex: " << mIndex << endl;
       mIndex = mMappingEngine->GetNextIndex( mContigName, mIndex );
-      //cout << "~~MappingEngine::iterator - Next - NextIndex: " << mIndex << endl;
+//      cout << "~~MappingEngine::iterator - Next - NextIndex: " << mIndex << endl;
     }
 
     void Previous()
@@ -67,12 +67,13 @@ public:
 
     ReadsAtIndex * GetReads()
     {
+//      cout << "~~MappingEngine::iterator - GetReads - CurrentIndex: " << mIndex << endl;
       return mMappingEngine->GetReads( mContigName, mIndex );
     }
 
-    IndexedMappings * GetReadsIndexed()
+    IndexedMappingsFlat * GetReadsIndexedFlat()
     {
-      return mMappingEngine->GetReadsIndexed( mContigName, mIndex );
+      return mMappingEngine->GetReadsIndexedFlat( mContigName, mIndex );
     }
 
     long long GetIndex()
@@ -100,6 +101,7 @@ public:
 
     IndexedMappingsFlat * IntersectFlat()
     {
+//        cout << "~~MappingEngine::iterator - IntersectFlat - CurrentIndex: " << mIndex << endl;
         return mMappingEngine->GetIntersectionFlat( mContigName, mIndex, mIndex );
     }
 
@@ -145,14 +147,20 @@ public:
 
   iterator At( string & aContigIdent, long long aIndex ) // you can address one, but there may not be anything there.
   {
-    //cout << "~~MappingEngine - At " << aIndex << endl;
+//    cout << "~~MappingEngine - At " << aIndex << endl;
     return iterator( this, aContigIdent, aIndex );
   }
 
-  iterator At( const char * aContigIdent, long long aIndex ) // you can address one, but there may not be anything there.
+  iterator * AtPtr( string & aContigIdent, long long aIndex ) // you can address one, but there may not be anything there.
+  {
+//    cout << "~~MappingEngine - At " << aIndex << endl;
+    return new iterator( this, aContigIdent, aIndex );
+  }
+
+  iterator * AtPtr( const char * aContigIdent, long long aIndex ) // you can address one, but there may not be anything there.
   {
     string lContigIdent = string(aContigIdent);
-    return At( lContigIdent, aIndex );
+    return AtPtr( lContigIdent, aIndex );
   }
 
   iterator End( string & aContigIdent )
@@ -164,10 +172,9 @@ public:
 
   ReadsAtIndex * GetReads( string & aContigIdent, long long aIndex )
   {
-    //cout << "~~MappingEngine - GetReads - " << aContigIdent << " index " << aIndex  << " window " << IndexToWindowNumber(aIndex) << endl;
-
+//    cout << "~~MappingEngine - GetReads - " << aContigIdent << " index " << aIndex  << " window " << IndexToWindowNumber(aIndex) << endl;
     PopulateCorrectCache( aContigIdent, IndexToWindowNumber(aIndex) );
-    //cout << "~~MappingEngine - GetReads - Done Populating Correct Cache" << endl;
+//    cout << "~~MappingEngine - GetReads - Done Populating Correct Cache" << endl;
     return mCurrentCache->GetReads( aIndex );
   }
 
@@ -177,11 +184,11 @@ public:
     return GetReads( lContigIdent, aIndex );
   }
 
-  IndexedMappings * GetReadsIndexed( string & aContigIdent, long long aIndex )
+  IndexedMappingsFlat * GetReadsIndexedFlat( string & aContigIdent, long long aIndex )
   {
-    IndexedMappings * lIndexedReads = new IndexedMappings();
+    IndexedMappingsFlat * lIndexedReads = new IndexedMappingsFlat();
 
-    lIndexedReads->insert( IndexedMappings::value_type( aIndex, GetReads( aContigIdent, aIndex ) ) );
+    lIndexedReads->push_back( GetReads( aContigIdent, aIndex ) );
 
     return lIndexedReads;
   }
@@ -193,7 +200,7 @@ public:
 
   IndexedMappings * GetIntersection( string & aContigIdent, long long aLeft, long long aRight )
   {
-    long long lIntersectLeft = aLeft - GetReadLength();
+    long long lIntersectLeft = aLeft - (GetReadLength() - 1); // count backward appropriately
     if ( lIntersectLeft < 0 )
       lIntersectLeft = 0;
 
@@ -230,7 +237,7 @@ public:
   IndexedMappingsFlat * GetIntersectionFlat( string & aContigIdent, long long aLeft, long long aRight )
   {
     //cout << "~~MappingEngine - GetIntersectionFlat" << endl;
-    long long lIntersectLeft = aLeft - GetReadLength();
+    long long lIntersectLeft = aLeft - (GetReadLength() - 1); // count backward appropriately
     if ( lIntersectLeft < 0 )
       lIntersectLeft = 0;
 
@@ -362,21 +369,22 @@ private:
 
   void PopulateCorrectCache( string & aContigIdent, long long aWindowNumber )
   {
-    //cout << "~~MappingEngine - PopulateCorrectCache " << aWindowNumber << endl;
+//    cout << "~~MappingEngine - PopulateCorrectCache " << aWindowNumber << endl;
     if ( mCurrentCache == NULL ||
       mCurrentCache->ContigIdent != aContigIdent ||
       IndexToWindowNumber( mCurrentCache->LeftIndex ) != aWindowNumber )
     {
-      //cout << "~~MappingEngine - PopulateCorrectCache - Rebuilding (Destroying, Rebuild)..." << endl;
+//      cout << "~~MappingEngine - PopulateCorrectCache - Rebuilding (Destroying)..." << endl;
       DestroyCache();
+//      cout << "~~MappingEngine - PopulateCorrectCache - Rebuilding (Rebuild)..." << endl;
       mCurrentCache = mMappingCacheFactory->BuildMappingCache( aContigIdent, aWindowNumber );
-      //cout << "~~MappingEngine - PopulateCorrectCache - Done Rebuilding" << endl;
+//      cout << "~~MappingEngine - PopulateCorrectCache - Done Rebuilding" << endl;
     }
     else
     {
-        //cout << "~MappingEngine - PopulateCorrectCache - ALREADY AT CORRECT CACHE!" << endl;
+//        cout << "~MappingEngine - PopulateCorrectCache - ALREADY AT CORRECT CACHE!" << endl;
     }
-    //cout << "~~MappingEngine - PopulateCorrectCache - Done" << endl;
+//    cout << "~~MappingEngine - PopulateCorrectCache - Done" << endl;
   }
 
   long long IndexToWindowNumber(long long aIndex )
