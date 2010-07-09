@@ -33,7 +33,7 @@ public:
   ReadsAtIndex * GetReads( long long aIndex ) // this could possibly be empty.
   {
     //cout << "~~MappingCache - GetReads" << endl;
-    if ( mCachedIterator->first != aIndex )
+    if ( mCachedIterator == mMappings.end() || mCachedIterator->first != aIndex ) // we're not anywhere, or we don't match up, try to find it.
       mCachedIterator = mMappings.find( aIndex );
 
     if ( mCachedIterator == mMappings.end() ) // empty! Likely we addressed an index that doesn't have an entry. This is fine.

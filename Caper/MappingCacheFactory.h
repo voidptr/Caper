@@ -21,12 +21,8 @@ public:
   MappingCache * BuildMappingCache( string & aContig, long long aWindowNumber )
   {
 //    cout << "~~MappingCacheFactory - BuildMappingCache " << aContig << " window " << aWindowNumber << endl;
-	vector<Mapping*> * lMappings = mFileEngine->FetchMappings( aContig, aWindowNumber );
-
-//    cout << "~~MappingCacheFactory - BuildMappingCache " << aContig << " window " << aWindowNumber << endl;
-    if ( lMappings == NULL ) // no window!
-      return NULL;
-
+	  vector<Mapping*> * lMappings = mFileEngine->FetchMappings( aContig, aWindowNumber );
+    
     long long aLeft = aWindowNumber * IndexIncrement;
     long long aRight = ( aWindowNumber * IndexIncrement ) + IndexIncrement - 1;
     MappingCache * lCache = new MappingCache( aContig, aLeft, aRight );

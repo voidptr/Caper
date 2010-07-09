@@ -184,7 +184,7 @@ public: // methods
     MappingIndex::mapped_type::iterator lWindowIterator = lContigIterator->second.find(aWindowNumber); 
 
     if ( lWindowIterator == lContigIterator->second.end() ) // non-existent window!
-      return NULL;
+      return new vector<Mapping *>();
 
     char * lBlock = new char[ lWindowIterator->second.BlockSizeInBytes + 1 ]; 
     ReadBlock( lWindowIterator->second.BlockOffset, lWindowIterator->second.CompressedBlockSizeInBytes );
