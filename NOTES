@@ -6,20 +6,17 @@ add mapquery stuff
   - to pyrex wrapper
   - to tests
 
-finish implementing iterators in python wrapper
-  - tests
-
 do explicit recasting to remove the huge pile of warnings between signed/unsigned
 
 beef up the testing suite to cover:
-  - iterators
   - memory alloc/dealloc
   - looking for memory leaks
   - different sizes of input files (corner cases, etc)
   - path tests
-  - engine intersect functionality
-  - engine getreads functionality
   - all parameter combinations
+
+rearrange the directories so it uses the standard-ish directory structures
+(see khmer for an example)
 
 Think about:
 ------------
@@ -38,8 +35,6 @@ Pyrex wrapping: for CTB
 -----------------------
 
 crashes on exceptions ;).  look at screed?
-
-NLMSASlice
 
 Later:
 ------
