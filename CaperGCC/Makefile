@@ -4,7 +4,7 @@ SRCDIR=../Caper
 UISRCDIR=../CaperUI
 ZLIBSRCDIR=../zlib123
 CXXFLAGS=-g -fPIC -I$(SRCDIR) -I$(ZLIBSRCDIR)
-CFLAGS=-g -fPIC
+CFLAGS=-g -fPIC -Wno-write-strings
 
 all: caper
 

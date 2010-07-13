@@ -7,7 +7,9 @@ from Pyrex.Distutils import build_ext, Extension
 from distutils import sysconfig
 
 sysconfig.get_config_vars("CFLAGS") # Set gcc's flags
-sysconfig._config_vars["CFLAGS"] = "-fno-strict-aliasing -DNDBUG -g -Wall"
+sysconfig._config_vars["CFLAGS"] = "-fno-strict-aliasing -DNDBUG -g -Wall " +\
+                                   "-Wno-write-strings"
+# @CTB don't suppress warnings... fix 'em!
 
 caper_path = os.path.join("..", "Caper")
 caper_ui_path = os.path.join("..", "CaperUI")
