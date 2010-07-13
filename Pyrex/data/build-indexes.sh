@@ -22,3 +22,6 @@ ${CAPER} interactive -b ${CACHE}/REL606-maq-map.txt.bundle
 # also build the screed indexes
 python -m screed.fadbm data/REL606.gmc.fa
 python -m screed.fqdbm data/REL606-seqs.fastq
+
+# one more conversion
+${CAPER} indexmappings -b -m data/REL606-maq-map_7entries.txt -t mapview -o ${CACHE}

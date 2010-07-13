@@ -222,12 +222,22 @@ cdef class iterator:
         self.seqname = seqname
         self.current = start
 
+    def __iter__(self):
+        return self
+
     def __repr__(self):
         return "iterator('%s', %d, %d)" % (self.seqname, self.start, self.current)
 
-    def next(self):
+    # Conform to Pyrex's iterator protocol, which asks for a __next__ on
+    # iterator objects.
+    # @CTB can we add current to mappings()?
+    # @CTB note, 'next()' is reserved by Pyrex
+    def __next__(self):
         self.thisiterator.Next()
         self.current = self.thisiterator.GetIndex()
+        if self.current == -1:
+            raise StopIteration
+        return (self.current, self.get_reads())
 
     def get_reads(self):
         cdef c_reads_at_index * reads

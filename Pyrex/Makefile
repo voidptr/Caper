@@ -5,6 +5,8 @@ all_all: clean all indexes tests
 indexes: all
 	bash data/build-indexes.sh
 
+test: tests
+
 tests: all indexes
 	nosetests
 

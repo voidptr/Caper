@@ -330,10 +330,15 @@ class MappingContainer_Test(object):
         intersect_last_indexed_front = iterator.get_intersection()
         assert len(intersect_last_indexed_front) == 18
 
-        iterator.next()
+        try:
+            iterator.next()
+            assert 0
+        except StopIteration:
+            pass
 
-        get_reads_past_last_indexed_front = iterator.get_reads()
-        assert len(get_reads_past_last_indexed_front) == 0
+        # @CTB
+        #get_reads_past_last_indexed_front = iterator.get_reads()
+        #assert len(get_reads_past_last_indexed_front) == 0
 
         ### last position to get an intersection in the genome
         iterator = self.cont.get_iterator(contig, 13814)
@@ -344,7 +349,11 @@ class MappingContainer_Test(object):
         intersect_last_indexed_back = iterator.get_intersection()
         assert len(intersect_last_indexed_back) == 1
 
-        iterator.next()
+        try:
+            iterator.next()
+            assert 0
+        except StopIteration:
+            pass
 
         intersect_past_last_indexed_back = iterator.get_reads()
         assert len(intersect_past_last_indexed_back) == 0
@@ -358,7 +367,11 @@ class MappingContainer_Test(object):
         intersect_past_the_last_window = iterator.get_intersection()
         assert len(intersect_past_the_last_window) == 0
 
-        iterator.next()
+        try:
+            iterator.next()
+            assert 0
+        except StopIteration:
+            pass
 
         get_reads_past_the_last_window_next = iterator.get_reads()
         assert len(get_reads_past_the_last_window_next) == 0
