@@ -16,11 +16,8 @@ clean:
 	# reset C++ source build
 	cd ../CaperGCC && make clean
 
-caper.so: ../CaperGCC/caper caper.cpp
+caper.so: ../CaperGCC/caper caper.pyx
 	python setup.py build_ext -i
-
-caper.cpp: caper.pyx
-	
 
 Caper-Build:
 	cd ../CaperGCC && make all
