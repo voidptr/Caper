@@ -2,15 +2,16 @@
 # @CTB refactor test_bridge_nlmsa_equiv to use the new pygr ival construction
 # lib code.
 import os.path
+from nose import SkipTest
 
 try:
     import screed
+    from screed.pygr_api import ScreedSequenceDB
 except ImportError:
-    raise Exception, "you need to install screed!"
+    pass
 
 import caper
 from caper_pygr_bridge import CaperBridge
-from screed.pygr_api import ScreedSequenceDB
 from pygr import cnestedlist, seqdb
 
 sequence_path = 'data/REL606.gmc.fa'
@@ -557,6 +558,11 @@ class MappingContainer_Test(object):
 
 class PygrBridge_Test(object):
     def setup(self):
+        try:
+            screed
+        except NameError:
+            raise SkipTest
+        
         self.cont = caper.mapping_container(map_bundle)
         self.db = seqdb.SequenceFileDB(sequence_path) #ScreedSequenceDB('data/REL606.gmc.fa')
         self.db = ScreedSequenceDB(sequence_path)
