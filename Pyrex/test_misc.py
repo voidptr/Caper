@@ -37,18 +37,22 @@ class Test_Basic(object):
 
     def test_get_reads_int_2(self):
         reads = self.engine.get_intersect(contig, 2)
-        assert 0, list(reads)
-    test_get_reads_int_2.failing = True
+        assert len(reads) == 1, list(reads)
+#        assert 0, list(reads)
+#    test_get_reads_int_2.failing = True
 
     def test_get_reads_slice(self):
-        reads = self.engine.get_slice(contig, 0, 2)
-        assert 0, list(reads)
-    test_get_reads_slice.failing = True
-        
+        reads = self.engine.get_slice(contig, 0, 4)
+        assert len(reads) == 3, list(reads)
+        #assert 0, list(reads)
+#    test_get_reads_slice.failing = True
+
     def test_get_reads_slice_iterator(self):
-        reads = self.engine.get_slice_iterator(contig, 0)
-        assert 0, list(reads)
-    test_get_reads_slice_iterator.failing = True
+        iterator = self.engine.get_slice_iterator(contig, 0)
+        reads = iterator.get_reads()
+        assert len(reads) == 0
+#        assert 0, list(reads)
+#    test_get_reads_slice_iterator.failing = True
 
     def test_get_iterator(self):
         x = [ index for (index, item) in self.engine.get_iterator(contig, 0) ]
@@ -57,4 +61,4 @@ class Test_Basic(object):
 if __name__ == '__main__':
     import nose
     nose.main()
-    
+

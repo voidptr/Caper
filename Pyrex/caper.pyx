@@ -266,9 +266,18 @@ cdef class slice_iterator:
         self.current = start
         self.seqname = seqname
 
-    def next(self):
+    def __iter__(self):
+        return self
+
+    def __repr__(self):
+        return "slice_iterator('%s', %d, %d)" % (self.seqname, self.start, self.current)
+
+    def __next__(self):
         self.thisiterator.Next()
         self.current = self.thisiterator.GetIndex()
+        if self.current == -1:
+            raise StopIteration
+        return (self.current, self.get_reads())
 
     def get_reads(self):
         cdef c_reads_at_indexes * reads
