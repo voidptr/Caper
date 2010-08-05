@@ -23,12 +23,12 @@ for item in reads:
     print item
 
 
-# print
-# print "ITERATE - GET READS - INTERSECTION 2-200"
-#
-# reads = engine.get_reads(contig,2,200,1)
-# for item in reads:
-#     print item
+print
+print "ITERATE - GET READS - INTERSECTION 2-200"
+# I see no use for this whatsoever.
+reads = engine.get_reads(contig,2,200,1) ## the last parameter is intersect=true
+for item in reads:
+    print item
 
 
 # print
