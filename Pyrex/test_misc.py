@@ -21,7 +21,7 @@ class Test_Basic(object):
         length = self.engine.get_read_length()
         assert length == 36, length
 
-    def test_get_reads_at_4(self):
+    def test_get_reads_overlap_4(self):
         reads = self.engine.get_reads(contig, 4, 4)
 
         bleh = 0
@@ -30,16 +30,16 @@ class Test_Basic(object):
             bleh = read
             count += 1
 
-        assert count == 1
-        (contig_pos, read_name, read_seq, o) = bleh
+        assert count == 3
+        (contig_pos, read_name, read_seq, o) = bleh ## the last read
 
         assert contig_pos == 4
         assert read_name == 'HWI-EAS_4_PE-FC20GCB:1:285:772:762/1'
         assert read_seq == 'tttcattctgactgcaacgggcaatatgtctctgtg'
         assert o == 1
 
-    def test_get_reads_at_2(self):
-        reads = self.engine.get_reads(contig, 2, 2)
+    def test_get_reads_overlap_0(self):
+        reads = self.engine.get_reads(contig, 0, 0)
 
         count = 0
         for read in reads:
