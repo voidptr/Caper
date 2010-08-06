@@ -46,6 +46,7 @@ public:
   virtual int GetNameColumn() = 0;
   virtual int GetContigIdentColumn() = 0;
   virtual int GetStrandColumn() = 0;
+  virtual int GetSequenceLengthColumn() = 0;
 
   virtual long long StringToIndex( string & aIndex )
   {
@@ -101,6 +102,12 @@ public:
   virtual string GetStrand( string & aLine )
   {
     return GetLineItem( GetStrandColumn(), aLine );
+  }
+
+  virtual long long GetSequenceLength( string & aLine )
+  {
+    string lLength = GetLineItem( GetSequenceLengthColumn(), aLine );
+    return StringToIndex( lLength ); // could be an overflow. :/
   }
 
 };

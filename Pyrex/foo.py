@@ -16,11 +16,26 @@ length = engine.get_read_length()
 print length
 
 print
-print "ITERATE - GET SLICE - 41-200"
+print "ITERATE - GET SLICE - 47"
 
-reads = engine.get_reads(contig,41,200)
+reads = engine.get_reads(contig,47,47)
+count = 0
 for item in reads:
     print item
+    count += 1
+
+print count
+
+print
+print "ITERATE - GET SLICE - 48"
+
+reads = engine.get_reads(contig,48,48)
+count = 0
+for item in reads:
+    print item
+    count += 1
+
+print count
 
 print
 print "ITERATE - GET SLICE - 0 to the end"

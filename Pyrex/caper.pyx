@@ -67,18 +67,14 @@ cdef extern from "Caper.h":
     # declared as c_mapping_engine (only the bundle version :/)
 
     ctypedef void (*Initialize)()
-#    ctypedef c_mapping_engine_iterator * (*begin)(char *)
     ctypedef c_mapping_engine_iterator * (*at_iter)(char *, int)
-#    ctypedef c_mapping_engine_iterator * (*end_iter)(char *)
     ctypedef c_reads_at_index * (*GetReads)(char *, int)
     ctypedef c_reads_at_indexes * (*GetIntersectionFlat)(char *, int, int)
     ctypedef int (*GetReadLength)()
 
     ctypedef struct c_mapping_engine "MappingEngine":
         Initialize Initialize
-#        begin Begin
         at_iter AtPtr
-#        end_iter End
         GetReads GetReads
         GetIntersectionFlat GetIntersectionFlat
         GetReadLength GetReadLength
@@ -119,6 +115,7 @@ cdef class iterator:
     def __cinit__(self, seqname, start, stop, reverse):
         self.seqname = seqname ## the name of the contig
         self.start_genome_position = start ## where in the genome we want to start.
+        self.current_genome_position = start
         self.stop_genome_position = stop ## where should we stop.
         self.reverse = reverse ## whether we should be moving in reverse ## TODO, THIS DOES NOTHING
         self.first_time = 1
@@ -129,14 +126,11 @@ cdef class iterator:
     def __repr__(self):
         return "iterator('%s', %d, %d)" % (self.seqname, self.start, self.current)
 
-    # Conform to Pyrex's iterator protocol, which asks for a __next__ on
-    # iterator objects.
-    # @CTB can we add current to mappings()?
-    # @CTB note, 'next()' is reserved by Pyrex
     def __next__(self):
         if (self.first_time == 1):
             self.first_time = 0
             self.init_cache()
+
         ## are we at the end of the line? (this is the END)
         if (self.current_genome_position < 0):
             raise StopIteration
@@ -151,6 +145,8 @@ cdef class iterator:
         cdef c_mapping * item
         item = self.cache.at(self.cache_normalized_position).at(self.read_number) ## this should always have a value
 
+        current_index = self.current_genome_position
+
         ## then iterate.
         self.move_next()
 
@@ -159,6 +155,10 @@ cdef class iterator:
         index = item.Index
         seq = item.mSequence.ToStringP()
         orientation = item.GetOrientation()
+
+        if ( index + len(seq) <= current_index ):
+            return self.next()
+
         return (index, name, seq, orientation) # we don't know anything about slicing in this context.
 
     def move_next(self):
@@ -233,42 +233,6 @@ cdef class mappingsinterval:
 #     def __len__(self): ## this probably doesn't work.
 #         """Return number of overlapping mappings at this point."""
 #         return self.mappings.size() ##this isn't correct. :(
-
-### @RCK Commented out until I know what this would even be for.
-# cdef class slice_iterator:
-#     """Iterates through a slice of the genome."""
-#     cdef c_mapping_engine_iterator * thisiterator
-#     cdef public char * seqname
-#     cdef public int start, current
-#
-#     def __cinit__(self, seqname, start):
-#         self.start = start
-#         self.current = start
-#         self.seqname = seqname
-#
-#     def __iter__(self):
-#         return self
-#
-#     def __repr__(self):
-#         return "slice_iterator('%s', %d, %d)" % (self.seqname, self.start, self.current)
-#
-#     def __next__(self):
-#         self.thisiterator.Next()
-#         self.current = self.thisiterator.GetIndex()
-#         if self.current == -1:
-#             raise StopIteration
-#         return (self.current, self.get_reads())
-#
-#     def get_reads(self):
-#         cdef c_reads_at_indexes * reads
-#         if self.current == self.start:
-#             reads = self.thisiterator.IntersectFlat()
-#         else:
-#             reads = self.thisiterator.GetReadsIndexedFlat()
-#         cdef mappingsinterval x
-#         x = mappingsinterval(self.seqname, self.current, self.current)
-#         x.mappings = reads
-#         return x
 
 cdef class mapping_container:
     cdef c_mapping_engine *thismap

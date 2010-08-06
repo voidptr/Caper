@@ -48,7 +48,7 @@ HWI-EAS_4_PE-FC20GCB:1:172:430:569/1    11 (10)        tctgactgcaacgggcaatatgtct
 HWI-EAS_4_PE-FC20GCB:1:1:563:116/1      12 (11)         ctgactgcaacgggcaatatgtctctgtgcagaata
 HWI-EAS_4_PE-FC20GCB:1:113:162:700/1    13 (12)          tgactgcaacgggcaatatgtctctgtgtggattaa
 HWI-EAS_4_PE-FC20GCB:1:212:153:213/1    14 (13)           gactgcaacgggcaatatgtctctgtgtggattaaa
-HWI-EAS_4_PE-FC20GCB:1:246:99:950/1	    14 (13)           gactgcaacgggcaatatgtctctgcgtggattcaa
+HWI-EAS_4_PE-FC20GCB:1:246:99:950/1	    14 (13)           gactgcaacgggcaatatgtctctgcgtggattca ## notice this one is only 35 long
 HWI-EAS_4_PE-FC20GCB:1:278:188:572/1    19 (18)                caacgggcaatatgtctctgtgtggattaaaaaaag
 HWI-EAS_4_PE-FC20GCB:1:267:373:737/1    20 (19)                 aacgggcaatatgtctctgtgtggattaaaaaaaga
 HWI-EAS_4_PE-FC20GCB:1:306:568:350/1    26 (25)                       aaatatgtctctgtgtggattaaaaaaagagtgtct
@@ -60,6 +60,7 @@ HWI-EAS_4_PE-FC20GCB:1:160:122:568/1    38 (37)                                 
 HWI-EAS_4_PE-FC20GCB:1:23:564:736/1	    39 (38)                                    tgtggattaaaaaaagagtgtctgatagcagcttct
 HWI-EAS_4_PE-FC20GCB:1:166:896:40/1	    39 (38)                                    tgtggattaaaaaaagagtgtctgatagcagcttct
 HWI-EAS_4_PE-FC20GCB:1:133:865:549/1    42 (41)                                       ggattaaaaaaagagtgtctgatagcagtttttgaa
+
 
 A single read 36bp in length:
 
@@ -146,7 +147,27 @@ class MappingContainer_Test(object):
              (11, 'HWI-EAS_4_PE-FC20GCB:1:1:563:116/1', 'ctgactgcaacgggcaatatgtctctgtgcagaata', 1),
              (12, 'HWI-EAS_4_PE-FC20GCB:1:113:162:700/1', 'tgactgcaacgggcaatatgtctctgtgtggattaa', -1),
              (13, 'HWI-EAS_4_PE-FC20GCB:1:212:153:213/1', 'gactgcaacgggcaatatgtctctgtgtggattaaa', 1),
-             (13, 'HWI-EAS_4_PE-FC20GCB:1:246:99:950/1', 'gactgcaacgggcaatatgtctctgcgtggattcaa', 1)], reads_result
+             (13, 'HWI-EAS_4_PE-FC20GCB:1:246:99:950/1', 'gactgcaacgggcaatatgtctctgcgtggattca', 1)], reads_result
+
+    def test_get_reads_trimmed(self):
+        """Test proper retrieval of reads that, while they start at the proper backing index, don't overlap with the index in question."""
+        reads = self.cont.get_reads(contig, 47, 47)
+
+        count = 0
+        for index, name, sequence, orientation in reads:
+           count += 1
+
+        print "test_get_reads_trimmed - start at 47 Expect: 17, Actual: ", count
+        assert count == 17
+
+        reads = self.cont.get_reads(contig, 48, 48)
+
+        count = 0
+        for index, name, sequence, orientation in reads:
+           count += 1
+
+        print "test_get_reads_trimmed - start at 48 Expect: 15, Actual: ", count
+        assert count == 15
 
     def test_slice_was_broken_boundary(self):
         """Test that slice returns the proper set of reads, even if we overrun the edge of the known reads for a given contig"""

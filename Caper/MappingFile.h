@@ -98,14 +98,15 @@ private:
 
       string lContig = mMappingUtils->GetContigIdent( lLine );
       long long lIndex = mMappingUtils->GetIndex( lLine );
+      long long lSeqLength = mMappingUtils->GetSequenceLength( lLine );
+
+      if ( mReadLength < lSeqLength ) // find the longest sequence that we must deal with.
+        mReadLength = lSeqLength;
 
       //lLine.append( NEWLINE );
 
       mMappingFileRepresentation.AddLine( lContig, lIndex, lPos, lLength );
     }
-
-    // set the read length from the last line, now that we're done with reading.
-    mReadLength = mMappingUtils->GetSequence( lLine ).length();
 
     lStream.close();
     mMappingFileRepresentation.Finalize(); // signal that we are done reading. do whatever, incl. sorting.

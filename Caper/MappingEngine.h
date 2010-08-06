@@ -206,24 +206,15 @@ public:
 
     IndexedMappings * lReads = new IndexedMappings();
 
-    //cout << "**********~~MappingEngine - GetIntersection - outside the loop" << endl;
     iterator lRight = At( aContigIdent, aRight ); // just a stake in the ground, probably nothing here.
     bool lStart = true;
     for ( iterator lIt = At( aContigIdent, lIntersectLeft ); lIt != End( aContigIdent ) && lIt.GetIndex() <= lRight.GetIndex(); lIt.Next() )
     {
-      //cout << "  ********~~MappingEngine - GetIntersection - start inside loop" << endl;
       if (!lStart || lIt.GetReads()->size() > 0 ) // kludge to avoid pushing an empty set of reads.
-      {
-        //cout << "    ******~~MappingEngine - GetIntersection - yay! read to add" << endl;
-          lReads->insert( IndexedMappings::value_type( lIt.GetIndex(), lIt.GetReads() ) );
-      }
+        lReads->insert( IndexedMappings::value_type( lIt.GetIndex(), lIt.GetReads() ) );
       else
-        //cout << "    ******~~MappingEngine - GetIntersection - no read to add" << endl;
-
-      lStart = false;
-      //cout << "  ********~~MappingEngine - GetIntersection - end inside loop" << endl;
+        lStart = false;
     }
-    //cout << "**********~~MappingEngine - GetIntersection - end the loop" << endl;
 
     return lReads;
   }
@@ -254,8 +245,8 @@ public:
 
       if ( !lStart || lReads->size() > 0 ) // kludge to avoid pushing an empty set of reads.
         lSetOfReads->push_back( lReads );
-
-      lStart = true;
+      else
+        lStart = false;
       //cout << "~~MappingEngine - GetIntersectionFlat - Loop Done" << endl;
     }
 

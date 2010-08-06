@@ -5,7 +5,7 @@ HWI-EAS_4_PE-FC20GCB:1:172:430:569/1	rel606	11	-	0	0	32	32	32	0	0	1	0	36	tctgact
 HWI-EAS_4_PE-FC20GCB:1:1:563:116/1	rel606	12	+	0	0	32	32	32	3	3	1	0	36	ctgactgcaacgggcaatatgtctctgtgcagaata	%#%%%#$%%%%#$"$%%"#%""#""%""""""""""
 HWI-EAS_4_PE-FC20GCB:1:113:162:700/1	rel606	13	-	0	0	32	32	32	0	0	1	0	36	tgactgcaacgggcaatatgtctctgtgtggattaa	"$##"$"%"%%%%$%$%%%%%%%%%%%%%%%%%%%%
 HWI-EAS_4_PE-FC20GCB:1:212:153:213/1	rel606	14	+	0	0	32	32	32	0	0	1	0	36	gactgcaacgggcaatatgtctctgtgtggattaaa	%%%%%%%%%%%%%%%%%%%%%%%%#$%%%"#$$$#"
-HWI-EAS_4_PE-FC20GCB:1:246:99:950/1	rel606	14	+	0	0	31	31	31	2	2	0	1	36	gactgcaacgggcaatatgtctctgcgtggattcaa	%%%%%%%"%%%%%""%""""%#%#""""""""""""
+HWI-EAS_4_PE-FC20GCB:1:246:99:950/1	rel606	14	+	0	0	31	31	31	2	2	0	1	35	gactgcaacgggcaatatgtctctgcgtggattca	%%%%%%%"%%%%%""%""""%#%#"""""""""""
 HWI-EAS_4_PE-FC20GCB:1:278:188:572/1	rel606	19	+	0	0	32	32	32	0	0	1	0	36	caacgggcaatatgtctctgtgtggattaaaaaaag	%%%%%%%%%%%#%%%%%%%#%%%"#"%%""""$"$"
 HWI-EAS_4_PE-FC20GCB:1:267:373:737/1	rel606	20	-	0	0	32	32	32	0	0	1	0	36	aacgggcaatatgtctctgtgtggattaaaaaaaga	""""""""""%"%"""""%"%%%%%%"%%%%%"%%%
 HWI-EAS_4_PE-FC20GCB:1:306:568:350/1	rel606	26	-	0	0	32	32	32	1	1	1	0	36	aaatatgtctctgtgtggattaaaaaaagagtgtct	"##"$"#""""$%%%%#"%$"%%%%%%%%%$%%%%%

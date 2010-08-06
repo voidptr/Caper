@@ -15,6 +15,6 @@ public:
   int GetSequenceColumn() { return 14; }
   int GetNameColumn() { return 0; }
   int GetStrandColumn() { return 3; }
-
+  int GetSequenceLengthColumn() { return 13; }
 
 };
